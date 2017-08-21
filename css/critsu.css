@@ -1233,7 +1233,7 @@ body {
     font-weight: normal;
     line-height: inherit;
     position: absolute;
-    margin-left: -1em;
+    margin-left: 0em;
     padding-right: 0.5em;
 }
 
@@ -1268,9 +1268,10 @@ select {
     font-size: 13px;
 }
 
-a#cleanRead {
+.side-catalog .catalog-title a.cleanRead,
+.fixed.mobile-device a.cleanRead {
     background-color: #009688;
-    width: 6em;
+    width: 7em;
     margin-bottom: 1em;
     color: white !important;
     padding: 3px;
@@ -1280,15 +1281,34 @@ a#cleanRead {
     text-align: center;
 }
 
-a#cleanRead:hover {
-    background-color: #00c7b3;
+.fixed.mobile-device {
+    position: fixed;
+    bottom: 2em;
+    right: 2em;
+    font-size: 13px;
+    text-align: center;
+    display: none;
+}
+.fixed.mobile-device a {
+    display: block;
 }
 
-#cleanRead::after {
+@media (max-width: 1200px) {
+    .fixed.mobile-device {
+        display: block!important;
+    }
+}
+
+a.cleanRead:hover {
+    background-color: #00c7b3;
+    text-decoration: none;
+}
+
+.cleanRead::after {
     content: "Clean Read";
 }
 
-#cleanRead.hided::after {
+.cleanRead.hided::after {
     content: "Fully Read";
 }
 
@@ -1304,33 +1324,11 @@ a#cleanRead:hover {
     height: inherit;
 }
 
-.post-container.post-content-page h1::before,
-.post-container.post-content-page h2::before,
-.post-container.post-content-page h3::before {
-    content: '-';
-    position: relative;
-    display: inline-block;
-    text-align: center;
-    width: 1em;
-}
-
-.post-container.post-content-page h1.contents-fold::before,
-.post-container.post-content-page h2.contents-fold::before,
-.post-container.post-content-page h3.contents-fold::before {
-    content: '+';
-}
-
 .post-container.post-content-page h1:hover,
 .post-container.post-content-page h2:hover,
 .post-container.post-content-page h3:hover {
     cursor: pointer;
     color: #0054ad;
-}
-
-.post-container.post-content-page h1,
-.post-container.post-content-page h2,
-.post-container.post-content-page h3 {
-    margin-left: -1em;
 }
 
 body {
@@ -1339,4 +1337,34 @@ body {
 
 .post-container img {
     box-shadow: 0 0 20px 5px grey;
+}
+
+
+@media only screen and (min-width: 800px) {
+
+    .post-container.post-content-page h1,
+    .post-container.post-content-page h2,
+    .post-container.post-content-page h3 {
+        margin-left: -1em;
+    }
+
+    .post-container.post-content-page h1::before,
+    .post-container.post-content-page h2::before,
+    .post-container.post-content-page h3::before {
+        content: '・';
+        position: relative;
+        display: inline-block;
+        text-align: center;
+        width: 1em;
+    }
+
+    .post-container.post-content-page h1.contents-fold::before,
+    .post-container.post-content-page h2.contents-fold::before,
+    .post-container.post-content-page h3.contents-fold::before {
+        content: '+';
+    }
+
+    .anchorjs-link {
+        margin-left: -1em!important;
+    }
 }

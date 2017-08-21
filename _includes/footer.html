@@ -228,7 +228,7 @@
 <script type="text/javascript">
     var pre = "（", suf = "）";
     transformCleanNodes(pre, suf);
-    $("#cleanRead").on("click", function(e){
+    $(".cleanRead").on("click", function(e){
         e.preventDefault();
         $(".clean-read").fadeToggle();
         $(this).toggleClass("hided");
