@@ -1,3 +1,4 @@
+<!--suppress ALL -->
 <!-- Footer -->
 <footer>
     <div class="container">
@@ -86,7 +87,7 @@
 <script src="{{ "/js/bootstrap.min.js " | prepend: site.baseurl }}"></script>
 
 <!-- Custom Theme JavaScript -->
-<script src="{{ "/js/critsu.min.js " | prepend: site.baseurl }}"></script>
+<script src="{{ "/js/critsu.js " | prepend: site.baseurl }}"></script>
 
 
 <!-- async load function -->
@@ -176,5 +177,118 @@
       var s = document.getElementsByTagName("script")[0];
       s.parentNode.insertBefore(hm, s);
     })();
+</script>
+{% endif %}
+
+<!-- Side Catalog -->
+{% if page.catalog %}
+<script type="text/javascript">
+    function generateCatalog (selector) {
+        var P = $('div.post-container'),a,n,t,l,i,c;
+        a = P.find('h1,h2,h3,h4,h5,h6');
+        a.each(function () {
+            n = $(this).prop('tagName').toLowerCase();
+            i = "#"+$(this).prop('id');
+            t = $(this).text();
+            c = $('<a href="'+i+'" rel="nofollow">'+t+'</a>');
+            l = $('<li class="'+n+'_nav"></li>').append(c);
+            $(selector).append(l);
+        });
+        return true;
+    }
+    generateCatalog(".catalog-body");
+    // toggle side catalog
+    $(".catalog-toggle").click((function(e){
+        e.preventDefault();
+        $('.side-catalog').toggleClass("fold")
+        $('.catalog-body').slideToggle();
+    }))
+    /*
+     * Doc: https://github.com/davist11/jQuery-One-Page-Nav
+     * Fork by Hux to support padding
+     */
+    async("{{ '/js/jquery.nav.js' | prepend: site.baseurl }}", function () {
+        $('.catalog-body').onePageNav({
+            currentClass: "active",
+            changeHash: !1,
+            easing: "swing",
+            filter: "",
+            scrollSpeed: 700,
+            scrollOffset: 0,
+            scrollThreshold: .2,
+            begin: null,
+            end: null,
+            scrollChange: null,
+            padding: 80
+        });
+    });
+</script>
+
+<!-- For Clean Read -->
+<script type="text/javascript">
+    var pre = "（", suf = "）";
+    transformCleanNodes(pre, suf);
+    $("#cleanRead").on("click", function(e){
+        e.preventDefault();
+        $(".clean-read").fadeToggle();
+        $(this).toggleClass("hided");
+    });
+    function transformCleanNodes(pre, suf) {
+        var $p = $('.post-container p'),
+            html, start, end;
+        if (!!$p) {
+            $p.each(function() {
+                var $this = $(this);
+                html = $this.html();
+                html = insertNodes(html, pre, suf);
+                $this.html(html);
+            });
+        }
+    }
+    function insertNodes(html, pre, suf) {
+        if(!html) return html; // avoid the invalid call
+        var temp = html,
+            start = 0, end = 0;
+        index = temp.lastIndexOf("</span>");
+        index = index >= 0 ? index + 7 : 0;
+        start = temp.indexOf(pre, index);
+        end = temp.indexOf(suf, index);
+        if(start < 0 || end < 0) return temp; // not exists pairs of （）
+        if(start > end) return temp; // the ） exists before the （  
+        temp = temp.slice(0, start) + "<span class='clean-read'>" + temp.slice(start, end + 1) + "</span>" + temp.slice(end + 1);
+        return insertNodes(temp, pre, suf);
+    }
+</script>
+
+<!-- Contents Foldable support -->
+<script type="text/javascript">
+    function contentsFoldable() {
+        var $h = $('.post-container').find("h1, h2, h3"),
+            target, $this, tagName, $temp, hName = ["h1", "h2", "h3"];
+        if (!!$h) {
+            $h.on("click", function () {
+                target = []; // init for each click 
+                $this = $(this);
+                tagName = $this.next().prop('tagName').toLowerCase();
+                $temp = $this.next();
+                while (!hName.includes(tagName)) {
+                    if ("hr" !== tagName) {
+                        target.push($temp);
+                    } else {
+                        if ("end-flg" === $temp.attr("id"))
+                        break;
+                    }
+                    $temp = $temp.next();
+                    tagName = $temp.prop('tagName').toLowerCase();
+                }
+                if (target.length === 0) return;
+                $this.toggleClass("contents-fold");
+                $.each(target, function(){
+                    $(this).slideToggle();
+                });
+            });
+        }
+    }
+    contentsFoldable();
 </script>
 {% endif %}

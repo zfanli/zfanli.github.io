@@ -16,7 +16,7 @@ weibo_username:     210100026
 #zhihu_username:     huxpro
 github_username:    critsu
 twitter_username:   RitsuCyan
-facebook_username:  RitsuCyan
+#facebook_username:  RitsuCyan
 
 
 
@@ -49,13 +49,6 @@ kramdown:
 # Disqus settings
 disqus_username: mrrick
 
-# Duoshuo settings
-# duoshuo_username: huxblog
-# Share component is depend on Comment so we can NOT use share only.
-# duoshuo_share: true                     # set to false if you want to use Comment without Sharing
-
-
-
 
 # Analytics settings
 # Baidu Analytics
@@ -68,7 +61,7 @@ ga_domain: auto
 
 # Sidebar settings
 sidebar: true                           # whether or not using Sidebar.
-sidebar-about-description: "This is Rick."
+sidebar-about-description: "我不是末影人，我是程序猿。"
 sidebar-avatar: /img/avatar-mc.png      # use absolute URL, seeing it's used in both `/` and `/about/`
 
 

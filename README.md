@@ -1,9 +1,8 @@
 # Rick's blog
 
-空白。  
-啥也没写。  
+直接去看吧。
 
-再来一次测试。
+[我的博客](https://critsu.github.io)。
 
 
 *修改自 [Hux Blog](http://huangxuan.me/huxblog-boilerplate/)*
