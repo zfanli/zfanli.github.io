@@ -117,7 +117,6 @@ article {
 
 blockquote {
     color: #808080;
-    font-style: italic;
     font-size: 0.95em;
     margin: 20px 0 20px;
 }
@@ -1282,25 +1281,55 @@ select {
 }
 
 .fixed.mobile-device {
-    position: fixed;
-    bottom: 2em;
-    right: 2em;
-    font-size: 13px;
-    text-align: center;
     display: none;
 }
-.fixed.mobile-device a {
-    display: block;
-}
-
 @media (max-width: 1200px) {
     .fixed.mobile-device {
+        position: fixed;
+        bottom: 2em;
+        right: 2em;
+        font-size: 13px;
+        text-align: center;
         display: block!important;
+    }
+
+    .fixed.mobile-device a {
+        display: block;
+        text-decoration: none!important;
+    }
+
+    .fixed.mobile-device .cleanRead::after {
+        content: "Clean";
+    }
+
+    .fixed.mobile-device .cleanRead.hided::after {
+        content: "Fully";
+    }
+
+    .fixed.mobile-device a.cleanRead {
+        width: 3.5em;
+        margin-bottom: 0;
+    }
+    .fixed.mobile-device hr {
+        margin-top: 5px;
+        margin-bottom: 5px;
+        border-top: 1px solid #000;
+    }
+    .fixed.mobile-device a[href='#top'] {
+        background-color: #ffffff;
+        -moz-border-radius: 4px;
+        -webkit-border-radius: 4px;
+        padding: 3px;
+    }
+    .fixed.mobile-device a[href='#top']:hover {
+        text-decoration: none;
+        color: #009688;
     }
 }
 
+
 a.cleanRead:hover {
-    background-color: #00c7b3;
+    background-color: #00c7b3!important;
     text-decoration: none;
 }
 
@@ -1317,7 +1346,7 @@ a.cleanRead:hover {
 }
 
 .side-catalog {
-    position: relative;
+    position: absolute;
     padding-bottom: 0 !important;
     margin-top: 3em !important;
     overflow: visible;
@@ -1366,5 +1395,37 @@ body {
 
     .anchorjs-link {
         margin-left: -1em!important;
+    }
+}
+
+@media only screen and (max-width: 799px) {
+
+    .post-container.post-content-page h1::after,
+    .post-container.post-content-page h2::after,
+    .post-container.post-content-page h3::after {
+        content: ' ';
+        position: relative;
+        display: inline-block;
+        bottom: -0.2em;
+        border-top: 0.5em solid;
+        border-left: 0.25em solid transparent;
+        border-right: 0.25em solid transparent;
+        height: 0;
+        width: 0;
+        margin-left: 0.2em;
+    }
+
+    .post-container.post-content-page h1.contents-fold::after,
+    .post-container.post-content-page h2.contents-fold::after,
+    .post-container.post-content-page h3.contents-fold::after {
+        content: ' ';
+        border-top: 0.15em solid;
+        border-left: 0.25em solid;
+        border-right: 0.25em solid;
+        bottom: 0.15em;
+    }
+
+    .anchorjs-link {
+        margin-left: 1em!important;
     }
 }

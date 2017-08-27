@@ -234,7 +234,7 @@
         $(this).toggleClass("hided");
     });
     function transformCleanNodes(pre, suf) {
-        var $p = $('.post-container p'),
+        var $p = $('.post-container p, .post-container ul'), // add ul to target
             html, start, end;
         if (!!$p) {
             $p.each(function() {
@@ -249,7 +249,7 @@
         if(!html) return html; // avoid the invalid call
         var temp = html,
             start = 0, end = 0;
-        index = temp.lastIndexOf("</span>");
+        index = temp.lastIndexOf("</span>"); // count the start point of search
         index = index >= 0 ? index + 7 : 0;
         start = temp.indexOf(pre, index);
         end = temp.indexOf(suf, index);
@@ -262,18 +262,17 @@
 
 <!-- Contents Foldable support -->
 <script type="text/javascript">
-    function contentsFoldable() {
+    (function() {
         var $h = $('.post-container').find("h1, h2, h3"),
             target, $this, tagName, $temp, hName = ["h1", "h2", "h3"];
-        if (!!$h) {
-            $h.on("click", function () {
-                target = []; // init for each click 
-                $this = $(this);
-                tagName = $this.next().prop('tagName').toLowerCase();
-                $temp = $this.next();
+            
+        var getTarget = function (node) {
+                var result = [];
+                tagName = node.next().prop('tagName').toLowerCase();
+                $temp = node.next();
                 while (!hName.includes(tagName)) {
                     if ("hr" !== tagName) {
-                        target.push($temp);
+                        result.push($temp);
                     } else {
                         if ("end-flg" === $temp.attr("id"))
                         break;
@@ -281,14 +280,50 @@
                     $temp = $temp.next();
                     tagName = $temp.prop('tagName').toLowerCase();
                 }
+                return result;
+            };
+    
+        if (!!$h) {
+            $h.on("click", function () {
+                target = []; // init for each click 
+                $this = $(this);
+                target = getTarget($this);
                 if (target.length === 0) return;
                 $this.toggleClass("contents-fold");
                 $.each(target, function(){
                     $(this).slideToggle();
                 });
             });
+            // if found "<hide>" in the titel nodes then hides it by default 
+            $h.each(function() {
+                $this = $(this);
+                if ($this.find("hide").length > 0) {
+                    $this.addClass("contents-fold");
+                    target = []; // init for each click 
+                    target = getTarget($this);
+                    if (target.length === 0) return;
+                    $.each(target, function(){
+                        $(this).css("display", "none");
+                    });
+                }
+            });
         }
-    }
-    contentsFoldable();
+        
+        // catalog support 
+        // expand if it was hidden when it's catalog be clicked
+        $(".side-catalog .catalog-body li a").on("click", function(){
+            $id= $($(this).attr("href"));
+            if (!!$id.attr("class") && $id.attr("class").includes("contents-fold")) {
+                $id.removeClass("contents-fold");
+                target = []; // init for each click 
+                target = getTarget($id);
+                if (target.length === 0) return;
+                $.each(target, function(){
+                    $(this).slideDown();
+                });
+            }
+        });
+        
+    })();
 </script>
 {% endif %}

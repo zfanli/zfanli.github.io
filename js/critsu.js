@@ -76,7 +76,7 @@ jQuery(document).ready(function($) {
 
                 //adjust the appearance of side-catalog
                 $catalog.show();
-                if (currentTop >= catalogTop) {
+                if (currentTop >= (catalogTop + 41)) {
                     $catalog.removeClass('fixed');
                     temp = catalogTop - $(".post-container").offset().top;
                     $catalog.css("top", temp);
@@ -86,7 +86,6 @@ jQuery(document).ready(function($) {
                 } else {
                     $catalog.addClass('fixed');
                     $catalog.removeAttr("style");
-                    $catalog.css("height", parseInt($catalog.css("height")) - 20); // why the height was be added 20px on fixed position? this is for fix
                 }
             });
     }

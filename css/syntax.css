@@ -82,3 +82,24 @@
 .highlight .vi { color: teal; }
 .highlight .il { color: #009999; }
 .highlight .gc { color: #999; background-color: #EAF2F5; }
+
+
+/*
+    Customized by Rick.
+ */
+.highlighter-rouge .highlight .table {
+    margin-bottom: 0px!important;
+}
+.highlighter-rouge .highlight .table td {
+    padding: 0px;
+}
+.highlighter-rouge .highlight .table-responsive {
+    background-color: #f8f8f8;
+    border: 1px solid #ccc;
+    border-radius: 5px 5px 0 0;
+}
+.highlighter-rouge .highlight pre {
+    border: none!important;
+    border-radius: 0px!important;
+    margin-bottom: 0px!important;
+}
