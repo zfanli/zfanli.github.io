@@ -1429,3 +1429,7 @@ body {
         margin-left: 1em!important;
     }
 }
+
+.post-container p {
+    text-indent: 1em;
+}

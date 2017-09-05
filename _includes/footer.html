@@ -73,7 +73,7 @@
                 <p class="copyright text-muted">
                     Copyright &copy; {{ site.title }} {{ site.time | date: '%Y' }}
                     <br>
-                    Thanks for the author of the Theme, <a href="http://huangxuan.me" target="_blank">Hux</a>.
+                    Based on <a href="http://huangxuan.me" target="_blank">Hux's Theme</a> | Powered by <a href="http://jekyllrb.com/" target="_blank">Jekyll</a>.
                 </p>
             </div>
         </div>
@@ -206,7 +206,7 @@
     /*
      * Doc: https://github.com/davist11/jQuery-One-Page-Nav
      * Fork by Hux to support padding
-     */
+    */
     async("{{ '/js/jquery.nav.js' | prepend: site.baseurl }}", function () {
         $('.catalog-body').onePageNav({
             currentClass: "active",
@@ -248,10 +248,20 @@
     function insertNodes(html, pre, suf) {
         if(!html) return html; // avoid the invalid call
         var temp = html,
+            index, 
+            searchEnd, // should not be search after this point 
+            searchHtml, // should get the index from this text
             start = 0, end = 0;
-        index = temp.lastIndexOf("</span>"); // count the start point of search
+        if (temp.includes("<pre")) {
+            searchEnd = temp.indexOf("<pre");
+            searchHtml = temp.substring(0, searchEnd);
+        } else {
+            searchHtml = temp;
+        }
+        index = searchHtml.lastIndexOf("</span>"); // count the start point of search
         index = index >= 0 ? index + 7 : 0;
         start = temp.indexOf(pre, index);
+        if (start > searchEnd) return temp;
         end = temp.indexOf(suf, index);
         if(start < 0 || end < 0) return temp; // not exists pairs of （）
         if(start > end) return temp; // the ） exists before the （  
@@ -324,6 +334,36 @@
             }
         });
         
+    })();
+</script>
+
+<script type="text/javascript">
+    (function() {
+        var timer;
+        $(".catalog-footer").on("click", function(e) {
+            e.preventDefault();
+            var top = $(window).scrollTop();
+            timer = setInterval(scroll, 10, top);
+        });
+        var x = 0,
+            temp = 0;
+        function scroll(top) {
+            x = x === 0 ? top : x;
+            temp = temp === 0 ? top / 60 : temp;
+            
+            x = x - temp;
+            x = x > 0 ? x : 0;
+            if (x === 0){
+                temp = 0;
+                clearInterval(timer);
+                window.scrollTo(0,0);
+                return;
+            }
+            
+            
+            window.scrollTo(0,x);
+                
+        };
     })();
 </script>
 {% endif %}
