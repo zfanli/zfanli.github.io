@@ -339,17 +339,21 @@
 
 <script type="text/javascript">
     (function() {
-        var timer;
+        var timer,
+            used = false;
         $(".catalog-footer").on("click", function(e) {
+            if (used) return; // 状态机
             e.preventDefault();
+            console.log(1);
             var top = $(window).scrollTop();
             timer = setInterval(scroll, 10, top);
         });
         var x = 0,
             temp = 0;
         function scroll(top) {
+        
             x = x === 0 ? top : x;
-            temp = temp === 0 ? top / 60 : temp;
+            temp = temp === 0 ? top / 50 : temp;
             
             x = x - temp;
             x = x > 0 ? x : 0;
@@ -357,12 +361,13 @@
                 temp = 0;
                 clearInterval(timer);
                 window.scrollTo(0,0);
+                used = false;
                 return;
             }
             
             
             window.scrollTo(0,x);
-                
+            used = true;
         };
     })();
 </script>

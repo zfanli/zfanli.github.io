@@ -1430,6 +1430,6 @@ body {
     }
 }
 
-.post-container p {
-    text-indent: 1em;
-}
+/*.post-container.post-content-page p {*/
+    /*text-indent: 1em;*/
+/*}*/

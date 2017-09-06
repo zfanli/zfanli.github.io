@@ -79,7 +79,7 @@ jQuery(document).ready(function($) {
                 if (currentTop >= (catalogTop + 41)) {
                     $catalog.removeClass('fixed');
                     temp = catalogTop - $(".post-container").offset().top;
-                    $catalog.css("top", temp);
+                    $catalog.css("top", temp + 21);
                 } else if (currentTop < (bannerHeight + 41)) {
                     $catalog.removeClass('fixed');
                     $catalog.removeAttr("style");
