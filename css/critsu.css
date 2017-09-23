@@ -1291,6 +1291,7 @@ select {
         font-size: 13px;
         text-align: center;
         display: block!important;
+        z-index: 99;
     }
 
     .fixed.mobile-device a {
@@ -1430,6 +1431,5 @@ body {
     }
 }
 
-/*.post-container.post-content-page p {*/
-    /*text-indent: 1em;*/
-/*}*/
+
+
