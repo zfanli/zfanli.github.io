@@ -1,10 +1,6 @@
 /* to make lines scroll instead of wrap */
 /* from http://stackoverflow.com/a/23393920 */
 
-.highlight pre code * {
-  white-space: nowrap;    // this sets all children inside to nowrap
-}
-
 .highlight pre {
   overflow-x: auto;       // this sets the scrolling in x
 }
@@ -20,7 +16,7 @@
  */
 
 .highlight pre, pre, .highlight .hll { background-color: #f8f8f8; border: 1px solid #ccc; padding: 6px 10px; border-radius: 3px; }
-.highlight .c { color: #999988; font-style: italic; }
+.highlight .c { color: #999988; font-style: normal; }
 .highlight .err { color: #a61717; background-color: #e3d2d2; }
 .highlight .k { font-weight: bold; }
 .highlight .o { font-weight: bold; }
@@ -95,7 +91,7 @@
 }
 .highlighter-rouge .highlight .table-responsive {
     background-color: #f8f8f8;
-    border: 1px solid #ccc;
+    /*border: 1px solid #ccc;*/
     border-radius: 5px 5px 0 0;
 }
 .highlighter-rouge .highlight pre {
@@ -104,6 +100,17 @@
     margin-bottom: 0px!important;
 }
 
-td.gutter.gl {
+.lineno {
     width: 2.6em;
+}
+pre.highlight {
+    padding: 0;
+}
+.rouge-gutter.gl,
+.gutter.gl {
+    text-align: right;
+    width: 2.6em;
+}
+div.highlight {
+    margin-top: 10px;
 }
