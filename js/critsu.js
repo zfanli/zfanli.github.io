@@ -90,3 +90,58 @@ jQuery(document).ready(function($) {
             });
     }
 });
+
+
+//img scale show apply
+$(document).ready(function() {
+    var $post = $(".post-content-page");
+    var $body = $("body");
+    $post.find("img").on("click",function(){
+        var $mask = $body.find(".mask");
+        var height = document.documentElement.clientHeight;
+        var width = document.documentElement.clientWidth;
+        if ($mask.length === 0){
+            var mask = $("<div></div>");
+            mask
+                .attr("class","mask")
+                .attr("onclick","closeMaskAndImg()");
+            $body.append(mask);
+            $mask = mask;
+        }
+        $mask
+            .empty()
+            .css("height",height)
+            .css("width",width)
+            .css("line-height",height + "px");
+        var $img = $("<img>");
+        $img
+            .attr("src",$(this).attr("src"))
+            .attr("class","scale-show")
+            .attr("onclick","closeMaskAndImg()");
+        var imgHeight = $(this)[0].naturalHeight;
+        var imgWidth = $(this)[0].naturalWidth;
+        // 设置图片显示大小
+        if (imgHeight < height && imgWidth < width) {
+            $img.css("width", imgWidth);
+        } else if (imgWidth > width && imgHeight < height) {
+            $img.css("width", width - 20);
+        } else if (imgHeight > height && imgWidth < width) {
+            $img.css("height", height -20);
+        } else {
+            var temp = imgWidth / imgHeight;
+            $img.css("width", temp * height - 20);
+        }
+
+        $mask.append($img);
+        $mask.css("display","block");
+    });
+});
+
+
+
+//img scale show apply
+//global method
+function closeMaskAndImg() {
+    $(".mask").css("display","none");
+}
+

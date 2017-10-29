@@ -135,7 +135,8 @@ br + small.img-hint {
     margin-top: -40px;
 }
 
-img.shadow {
+img.shadow,
+.mask img.scale-show {
     box-shadow: rgba(0, 0, 0, 0.258824) 0px 2px 5px 0px;
 }
 
@@ -1450,5 +1451,27 @@ table tr:hover {
 table {
     cursor: cell;
 }
+
+
+/*img scale show apply*/
+.post-content-page img {
+    cursor: pointer;
+}
+.mask {
+    position: fixed;
+    top: 0;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 99;
+    text-align: center;
+}
+
+.mask img.scale-show {
+    position: relative;
+    display: inline-block;
+}
+
+
+
+
 
 
