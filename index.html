@@ -3,8 +3,15 @@ layout: page
 description: "学习笔记 | 《程序猿修炼笔记》连载 | 嗨，你好，我叫Rick。"
 ---
 
-{% for post in paginator.posts %}
-<div class="post-preview">
+
+<div class="progressing">
+    <!--<div class="glyphicon glyphicon-bookmark"></div>-->
+    <div class="title">正在进行</div>
+</div>
+
+{% for post in site.posts %}
+{% if post.stickies %}
+<div class="post-preview in-progress">
     <a href="{{ post.url | prepend: site.baseurl }}">
         <h2 class="post-title">
             {{ post.title }}
@@ -14,15 +21,52 @@ description: "学习笔记 | 《程序猿修炼笔记》连载 | 嗨，你好，
             {{ post.subtitle }}
         </h3>
         {% endif %}
-        <div class="post-content-preview">
-            {{ post.content | strip_html | truncate:150 }}
-        </div>
     </a>
+</div>
+{% endif %}
+{% endfor %}
+
+<div class="post-preview in-progress">
+    <a href="/timeline/">
+        <h2 class="post-title">
+            TIMELINE
+        </h2>
+        <h3 class="post-subtitle">
+            一个进度时间轴。
+        </h3>
+    </a>
+</div>
+
+<div class="newest">
+    <p>近期更新</p>
+</div>
+
+{% for post in paginator.posts %}
+<div class="post-preview">
+    <div>
+        <div class="preview-avatar">
+            <img src="{{site.sidebar-avatar}}" />
+        </div>
+        {% if post.subtitle %}
+        <div class="preview-subtitle">
+                {{ post.subtitle }}
+        </div>
+        {% endif %}
+    </div>
+    <div class="preview-content">
+        <a href="{{ post.url | prepend: site.baseurl }}">
+            <h2 class="post-title">
+                {{ post.title }}
+            </h2>
+            <div class="post-content-preview">
+                {{ post.content | strip_html | truncate:300 }}
+            </div>
+        </a>
+    </div>
     <p class="post-meta">
         Posted by {% if post.author %}{{ post.author }}{% else %}{{ site.title }}{% endif %} on {{ post.date | date: "%B %-d, %Y %H:%M:%S" }}
     </p>
 </div>
-<hr>
 {% endfor %}
 
 <!-- Pager -->

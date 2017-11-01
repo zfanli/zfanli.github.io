@@ -6,6 +6,7 @@ date:       2017-10-27 00:15:35 +0800
 author:     "Rick"
 header-img: "img/post-bg/sunshine-dog.jpg"
 catalog:    true
+stickies:   true
 tags:
     - SSM
     - 搭建环境

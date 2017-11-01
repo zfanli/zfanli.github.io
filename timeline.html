@@ -1,0 +1,43 @@
+---
+layout: page
+title: "TIMELINE"
+description: "嗨，你好呀，别来无恙啊！"
+header-img: "img/green.jpg"
+---
+
+<div class="timeline">
+    {% for post in site.posts %}
+    <div class="tl-container right">
+        <div class="content">
+            <div class="time">{{ post.date | date: "%Y.%m.%d" }}</div>
+            <p>{{ post.title }}</p>
+            {% if post.subtitle %}
+            <small>
+                {{ post.subtitle }}
+            </small>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+
+<script src="/js/jquery.min.js "></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $(".sidebar-container").fadeOut(300, function(){
+            $(".container").attr("class", "");
+            $(".post-container").attr("id","post-container").removeAttr("class")
+                .css("width", "100%")
+                .css("top", "-50px")
+                .css("border-radius", "50px")
+                .css("background-color", "#419089")
+                .css("padding", "25px 0");
+            $(".timeline").fadeIn();
+        });
+        $("body").css("background-color", "#419089");
+        $(".intro-header .site-heading").css("padding","50px 0 150px 0");
+        $(".copyright, .copyright a").css("color","#f3f3f3");
+    });
+</script>
+
