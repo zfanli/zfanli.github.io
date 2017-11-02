@@ -102,11 +102,16 @@ $(document).ready(function() {
         var width = document.documentElement.clientWidth;
         if ($mask.length === 0){
             var mask = $("<div></div>");
+            var maskBody = $("<div></div>");
             mask
                 .attr("class","mask")
                 .attr("onclick","closeMaskAndImg()");
+            maskBody
+                .attr("class","mask-body");
+
             $body.append(mask);
             $mask = mask;
+            $mask.after(maskBody);
         }
         $mask
             .empty()
@@ -134,6 +139,7 @@ $(document).ready(function() {
 
         $mask.append($img);
         $mask.css("display","block");
+        $mask.next().css("display","block");
     });
 });
 
@@ -142,6 +148,6 @@ $(document).ready(function() {
 //img scale show apply
 //global method
 function closeMaskAndImg() {
-    $(".mask").css("display","none");
+    $(".mask, .mask-body").css("display","none");
 }
 

@@ -7,13 +7,26 @@
 
 @media (min-width: 768px) {
     .post-container {
-        padding-right: 5%;
+        padding-right: 0;
     }
 }
+
+@media (max-width: 767px) {
+    .post-container {
+        padding-right: 0;
+        padding-left: 0;
+    }
+    .post-container.post-content-page {
+        padding-right: 15px;
+        padding-left: 15px;
+    }
+}
+
 
 .sidebar-container {
     color: #888888;
     font-size: 14px;
+    padding-left: 30px;
 }
 
 .sidebar-container h5 {
@@ -70,7 +83,7 @@ body {
     font-size: 14px;
     color: #404040;
     overflow-x: hidden;
-    background-color: #ababab;
+    background-color: white;
 }
 
 p {
@@ -796,8 +809,9 @@ form .row:first-child .floating-label-form-group {
     font-weight: 800;
     letter-spacing: 1px;
     padding: 10px;
-    background-color: white;
+    background-color: rgba(0, 188, 212, 0.22);;
     border-radius: 0;
+    width: 35%;
 }
 
 @media only screen and (min-width: 768px) {
@@ -1131,6 +1145,9 @@ body {
     color: #ddd;
 }
 
+
+/*目录优化*/
+
 .catalog-container {
     padding: 0px;
 }
@@ -1245,7 +1262,7 @@ body {
 }
 
 .post-container hr {
-    border-top: 1px solid #9E9E9E;
+    border-top: none;
 }
 
 .side-catalog .catalog-title a {
@@ -1370,7 +1387,7 @@ a.cleanRead:hover {
 }
 
 body {
-    background-color: #f3f3f3;
+    background-color: white;
 }
 
 .post-container img {
@@ -1460,6 +1477,7 @@ table {
 }
 
 
+/*图片点击展示优化*/
 /*img scale show apply*/
 .post-content-page img {
     cursor: pointer;
@@ -1467,7 +1485,6 @@ table {
 .mask {
     position: fixed;
     top: 0;
-    background-color: rgba(0,0,0,0.5);
     z-index: 99;
     text-align: center;
 }
@@ -1475,42 +1492,22 @@ table {
 .mask img.scale-show {
     position: relative;
     display: inline-block;
+    z-index: 1;
 }
 
-.post-preview {
-    background-color: white;
-    padding: 1px 10px;
-    border-radius: 5px;
-    margin: 30px 0;
-}
-
-.preview-avatar img {
-    box-shadow: none;
-    max-width: 64px;
-    padding: 0;
-    margin: 0;
-    cursor: pointer;
-    position: relative;
-    top: -7px;
-    left: -7px;
-}
-
-.preview-avatar {
-    width: 50px;
-    height: 50px;
-    overflow: hidden;
-    border-radius: 50px;
-    position: relative;
-    float: left;
-    margin-right: 10px;
-    top: -20px;
-}
-
-.preview-subtitle {
-    margin-top: 0.5em;
+.mask-body {
+    background-color: rgba(0,0,0,0.5);
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
 }
 
 
+
+
+
+/*时间线页面优化*/
 
 /*timeline*/
 /* The actual timeline (the vertical ruler) */
@@ -1519,13 +1516,14 @@ table {
     max-width: 1200px;
     margin: 0 auto;
     display: none;
+    padding-top: 25px;
 }
 .timeline:after {
     content: '';
     position: absolute;
     width: 6px;
     background-color: #56bdef;
-    top: 0;
+    top: 25px;
     bottom: 0;
     left: 30%;
     margin-left: -3px;
@@ -1540,7 +1538,7 @@ table {
 /*}*/
 .timeline .tl-container.right {
     position: relative;
-    width: 70%;
+    max-width: 70%;
     left: 30%;
 }
 .timeline .tl-container {
@@ -1577,6 +1575,7 @@ table {
     position: absolute;
     left: -90px;
     color: #f3f3f3;
+    text-align: center;
 }
 
 .timeline .tl-container.right::before {
@@ -1592,10 +1591,44 @@ table {
     border-color: transparent white transparent transparent;
 }
 
+.timeline-container {
+    top: -50px;
+    background-color: #419089;
+    border-radius: 15px;
+}
+
+@media (max-width: 768px)  {
+    .timeline .tl-container .content .time {
+        left: 30px;
+        top: 0;
+        text-align: right;
+    }
+    .timeline .tl-container .content .time br {
+        display: none;
+    }
+    .timeline .tl-container .content .time span {
+        padding-left: 0.5em;
+    }
+    .timeline .tl-container.right {
+        left: 10%;
+        max-width: 90%;
+    }
+    .timeline:after {
+        left: 10%;
+    }
+}
+
+
+
+
+
 #post-container {
     position: relative;
     min-width: 400px;
 }
+
+
+/*统一套用过渡效果*/
 
 body,
 .intro-header,
@@ -1604,7 +1637,8 @@ body,
 .post-container,
 #post-container,
 .intro-header .site-heading,
-.timeline .tl-container .content {
+.timeline .tl-container .content,
+.timeline .tl-container .content .time {
     -webkit-transition: all 0.3s ease;
     -moz-transition: all 0.3s ease;
     -ms-transition: all 0.3s ease;
@@ -1613,9 +1647,11 @@ body,
 }
 
 
+/*首页优化*/
 
 .container .newest p {
-    color: #a3a3a3;
+    margin: 0 0 10px !important;
+    color: #808080;
 }
 .container .progressing {
     position: relative;
@@ -1627,8 +1663,57 @@ body,
     color: blue;
 }
 .container .progressing .title {
-    color: #a3a3a3;
+    color: #808080;
+    margin: 0 0 10px !important;
 }
 .in-progress .post-title {
     margin-top: 10px!important;
 }
+.post-preview.in-progress {
+    padding-bottom: 20px;
+}
+
+@media only screen and (max-width: 767px) {
+    .container .progressing {
+        margin-top: 15px;
+    }
+}
+
+
+
+.post-preview {
+    background-color: white;
+    padding: 1px 10px;
+    border-radius: 5px;
+    margin: 5px 0;
+    box-shadow: 0 0 55px #cacaca;
+    word-wrap: break-word;
+}
+
+.preview-avatar img {
+    box-shadow: none;
+    max-width: 64px;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    position: relative;
+    top: -7px;
+    left: -7px;
+}
+
+.preview-avatar {
+    width: 50px;
+    height: 50px;
+    overflow: hidden;
+    border-radius: 50px;
+    position: relative;
+    float: left;
+    margin-right: 10px;
+    top: -20px;
+}
+
+.preview-subtitle {
+    margin-top: 0.5em;
+}
+
+
