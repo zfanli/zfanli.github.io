@@ -3,84 +3,76 @@ layout: page
 description: "学习笔记 | 《程序猿修炼笔记》连载 | 嗨，你好，我叫Rick。"
 ---
 
-
 <div class="progressing">
     <!--<div class="glyphicon glyphicon-bookmark"></div>-->
     <div class="title">正在进行</div>
 </div>
+<div id="sticky">
 
-{% for post in site.posts %}
-{% if post.stickies %}
-<div class="post-preview in-progress">
-    <a href="{{ post.url | prepend: site.baseurl }}">
-        <h2 class="post-title">
+    {% for post in site.posts %}
+    {% if post.stickies %}
+    <div class="post-preview in-progress" onclick="javascript:window.location.href='{{ post.url | prepend: site.baseurl }}'">
+        <h3 class="post-title">
             {{ post.title }}
-        </h2>
+        </h3>
         {% if post.subtitle %}
-        <h3 class="post-subtitle">
+        <div class="progress-subtitle">
             {{ post.subtitle }}
-        </h3>
+        </div>
         {% endif %}
-    </a>
-</div>
-{% endif %}
-{% endfor %}
+    </div>
+    {% endif %}
+    {% endfor %}
 
-<div class="post-preview in-progress">
-    <a href="/timeline/">
-        <h2 class="post-title">
+    <div class="post-preview in-progress preview-timeline" onclick="javascript:window.location.href='/timeline/'">
+        <h3 class="post-title">
             TIMELINE
-        </h2>
-        <h3 class="post-subtitle">
-            一个进度时间轴。
         </h3>
-    </a>
+        <div class="progress-subtitle">
+            垂直进展时间轴，这里记载了学习的足迹和个人项目的进展。这一眼看下去，就是各种跑偏...
+        </div>
+    </div>
 </div>
 
 <div class="newest">
     <p>近期更新</p>
 </div>
-
-{% for post in paginator.posts %}
-<div class="post-preview">
-    <div>
-        <div class="preview-avatar">
-            <img src="{{site.sidebar-avatar}}" />
-        </div>
-        {% if post.subtitle %}
-        <div class="preview-subtitle">
-                {{ post.subtitle }}
-        </div>
-        {% endif %}
-    </div>
-    <div class="preview-content">
-        <a href="{{ post.url | prepend: site.baseurl }}">
-            <h2 class="post-title">
-                {{ post.title }}
-            </h2>
-            <div class="post-content-preview">
-                {{ post.content | strip_html | truncate:150 }}
+<div id="post-list">
+    {% for post in paginator.posts %}
+    <div class="post-preview" onclick="javascript:window.location.href='{{ post.url | prepend: site.baseurl }}'">
+        <div>
+            <div class="preview-avatar">
+                <img src="{{site.sidebar-avatar}}" />
             </div>
-        </a>
+            {% if post.subtitle %}
+            <div class="preview-subtitle">
+                    {{ post.subtitle | truncate:54 }}
+            </div>
+            {% endif %}
+        </div>
+        <div class="preview-cover">
+            <div class="preview-content">
+                    <h3 class="post-title">
+                        {{ post.title }}
+                    </h3>
+                    <div class="post-content-preview">
+                        {{ post.content | strip_html | truncate:200 }}
+                    </div>
+            </div>
+        </div>
+        <p class="post-meta">
+            Posted by {% if post.author %}{{ post.author }}{% else %}{{ site.title }}{% endif %} on {{ post.date | date: "%Y.%m.%d, %H:%M:%S" }}
+        </p>
     </div>
-    <p class="post-meta">
-        Posted by {% if post.author %}{{ post.author }}{% else %}{{ site.title }}{% endif %} on {{ post.date | date: "%B %-d, %Y %H:%M:%S" }}
-    </p>
+    {% endfor %}
 </div>
-{% endfor %}
 
 <!-- Pager -->
 {% if paginator.total_pages > 1 %}
-<ul class="pager">
-    {% if paginator.previous_page %}
-    <li class="previous">
-        <a href="{{ paginator.previous_page_path | prepend: site.baseurl | replace: '//', '/' }}">&larr; 后退</a>
-    </li>
-    {% endif %}
     {% if paginator.next_page %}
-    <li class="next">
-        <a href="{{ paginator.next_page_path | prepend: site.baseurl | replace: '//', '/' }}">前进 &rarr;</a>
-    </li>
+    <div class="load-more">
+        <button id="load-button" value="{{ paginator.next_page_path }}">点击加载更多</button>
+        <div id="loader"></div>
+    </div>
     {% endif %}
-</ul>
 {% endif %}

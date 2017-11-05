@@ -18,7 +18,7 @@ layout: default
 </header>
 
 <!-- Main Content -->
-<div class="container container-bgcolor">
+<div class="container-fluid container-bgcolor">
     <div class="row">
         {% if site.sidebar == false %}
 <!-- NO SIDEBAR -->
@@ -65,8 +65,8 @@ layout: default
 <!-- USE SIDEBAR -->
     <!-- Post Container -->
             <div class="
-                col-lg-8 col-lg-offset-1
-                col-md-8 col-md-offset-1
+                col-lg-10
+                col-md-9
                 col-sm-12
                 col-xs-12
                 post-container
@@ -75,8 +75,8 @@ layout: default
             </div>
     <!-- Sidebar Container -->
             <div class="
-                col-lg-3 col-lg-offset-0
-                col-md-3 col-md-offset-0
+                col-lg-2
+                col-md-3
                 col-sm-12
                 col-xs-12
                 sidebar-container
@@ -99,11 +99,11 @@ layout: default
                 {% endif %}
 
                 <!-- Short About -->
-                <section class="visible-md visible-lg">
+                <section class="about-section">
                     <hr><h5><a href="{{'/about/' | prepend: site.baseurl }}">ABOUT ME</a></h5>
                     <div class="short-about">
                         {% if site.sidebar-avatar %}
-                            <img src="{{site.sidebar-avatar}}" />
+                            <img class="about-avatar" src="{{site.sidebar-avatar}}" />
                         {% endif %}
                         {% if site.sidebar-about-description %}
                             <p>{{site.sidebar-about-description}}</p>
@@ -186,4 +186,5 @@ layout: default
             </div>
         {% endif %}
     </div>
+
 </div>

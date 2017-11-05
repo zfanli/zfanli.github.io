@@ -151,3 +151,61 @@ function closeMaskAndImg() {
     $(".mask, .mask-body").css("display","none");
 }
 
+
+// loading Animation options
+var opts = {
+    lines: 9 // The number of lines to draw
+    , length: 0 // The length of each line
+    , width: 16 // The line thickness
+    , radius: 40 // The radius of the inner circle
+    , scale: 0.25 // Scales overall size of the spinner
+    , corners: 1 // Corner roundness (0..1)
+    , color: '#000' // #rgb or #rrggbb or array of colors
+    , opacity: 0.1 // Opacity of the lines
+    , rotate: 0 // The rotation offset
+    , direction: 1 // 1: clockwise, -1: counterclockwise
+    , speed: 1 // Rounds per second
+    , trail: 60 // Afterglow percentage
+    , fps: 20 // Frames per second when using setTimeout() as a fallback for CSS
+    , zIndex: 2e9 // The z-index (defaults to 2000000000)
+    , className: 'spinner' // The CSS class to assign to the spinner
+    , top: '50%' // Top position relative to parent
+    , left: '50%' // Left position relative to parent
+    , shadow: false // Whether to render a shadow
+    , hwaccel: false // Whether to use hardware acceleration
+    , position: 'relative' // Element positioning
+};
+
+var spinner = new Spinner(opts);
+
+$(function(){
+    $("#load-button").click(function () {
+        var path = $(this).val();
+        $.ajax({
+            type: "GET",
+            timeout: 5000,
+            url: path,
+            beforeSend: function(){
+                $("#load-button").css("display", "none");
+                spinner.spin($("#loader")[0]);
+            },
+            success: function(tar){
+                var $tar = $(tar);
+                var newPath = $tar.find("#load-button").val();
+                $("#post-list").append($tar.find("#post-list").children());
+                spinner.spin();
+                if (!!newPath) {
+                    $("#load-button").val(newPath).html("点击加载更多").fadeIn(300);
+                } else {
+                    $("#load-button").after($("<div class=\"no-more\"><p>没有更多了哟</p></div>"))
+                }
+            },
+            error: function (event,xhr,options,exc) {
+                spinner.spin();
+                $("#load-button").html("出了点问题...点击重试").fadeIn(300);
+            }
+        });
+    });
+});
+
+
