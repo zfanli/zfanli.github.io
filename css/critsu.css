@@ -1656,6 +1656,7 @@ body,
 }
 .progress-subtitle {
     font-size: 16px;
+    vertical-align: top;
     margin-bottom: 5px;
 }
 .post-preview.in-progress.preview-timeline {

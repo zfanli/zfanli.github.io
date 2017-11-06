@@ -181,6 +181,8 @@ var spinner = new Spinner(opts);
 $(function(){
     $("#load-button").click(function () {
         var path = $(this).val();
+        var reg = /[/]$/;
+        if (!reg.test(path)) path += "/";
         $.ajax({
             type: "GET",
             timeout: 5000,
