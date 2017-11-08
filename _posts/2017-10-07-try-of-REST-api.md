@@ -6,6 +6,7 @@ date:       2017-10-7 13:07:00 +0800
 author:     "Rick"
 header-img: "img/post-bg/sunshine-dog.jpg"
 catalog:    true
+class:      "usage"
 tags:
     - REST
     - 笔记

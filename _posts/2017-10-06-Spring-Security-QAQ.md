@@ -6,6 +6,7 @@ date:       2017-10-6 10:26:16 +0800
 author:     "Rick"
 header-img: "img/post-bg/sunshine-dog.jpg"
 catalog:    true
+class:      "usage"
 tags:
     - 安全
     - Q&A

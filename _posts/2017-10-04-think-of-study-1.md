@@ -6,6 +6,7 @@ date:       2017-10-4 19:50:23 +0800
 author:     "Rick"
 header-img: "img/post-bg/sunshine-dog.jpg"
 catalog:    true
+class:      "summary"
 tags:
     - 学习感悟
     - 学习总结

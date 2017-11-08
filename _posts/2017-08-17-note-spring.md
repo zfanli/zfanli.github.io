@@ -6,6 +6,7 @@ date:       2017-9-10 08:03:51 +0800
 author:     "Rick"
 header-img: "img/post-bg/sunshine-dog.jpg"
 catalog:    true
+class:      "study"
 tags:
     - 笔记
     - Spring

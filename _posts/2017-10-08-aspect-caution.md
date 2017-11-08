@@ -6,6 +6,7 @@ date:       2017-10-8 21:01:00 +0800
 author:     "Rick"
 header-img: "img/post-bg/sunshine-dog.jpg"
 catalog:    true
+class:      "usage"
 tags:
     - 问题
     - 笔记

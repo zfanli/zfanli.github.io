@@ -7,6 +7,7 @@ author:     "Rick"
 header-img: "img/post-bg/sunshine-dog.jpg"
 catalog:    true
 stickies:   true
+class:      "major"
 tags:
     - SSM
     - 搭建环境

@@ -7,8 +7,8 @@ header-img: "img/green.jpg"
 
 <div class="timeline">
     {% for post in site.posts %}
-    <div class="tl-container right">
-        <div class="content">
+    <div class="tl-container right {{ post.class }}">
+        <div class="content" onclick="javascript:window.location.href='{{ post.url | prepend: site.baseurl }}'">
             <div class="time">{{ post.date | date: "%Y.%m.%d" }}<br><span>{{ post.date | date: "%H:%M:%S" }}</span></div>
             <p>{{ post.title }}</p>
             {% if post.subtitle %}

@@ -6,6 +6,7 @@ date:       2017-10-29 15:20:10 +0800
 author:     "Rick"
 header-img: "img/post-bg/sunshine-dog.jpg"
 catalog:    true
+class:      ""
 tags:
     - 笔记
     - VBA
@@ -261,7 +262,7 @@ Loop While 循环条件
 
 我们做个小例子。
 
-### 实验使用 VBA
+### 尝试使用 VBA
 ***
 
 在说VBA基本实现的时候我们举得那个小例子，我们再次升级一下，我们在sheet里放两个按钮，其中一个点击写书据到当前sheet，另一个用来清除这些数据。想想该怎么写，不知道操作什么？录制宏帮助你排忧解难！
