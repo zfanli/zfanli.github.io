@@ -113,7 +113,7 @@ public class StrangeSecurityConfig {
 
 `StrangeSecurityConfig`这个等实现控制器的时候再来配置吧。
 
-下面是web上下文的内容。
+下面是web上下文的内容。这里我们设置了一个`html`文件的视图解析器和一个资源处理器，可以看到在资源处理器中我们不仅将`res`文件夹内的资源暴露出来，还暴露了顶层的`html`文件，这是为了方便访问DEMO页面而设置的。
 
 ```java
 package io.critsu.config;
@@ -149,6 +149,101 @@ public class StrangeWebConfig extends WebMvcConfigurerAdapter {
 
 ```
 
+### 测试一下 MVC
+***
+
+Spring 和 MVC 很快就搭建好了，我们来测试一下 MVC 框架能不能正常的使用。我们先准备一个控制器，放在`io.critsu.controllers`包里，我们的`StrangeWebConfig`开启了对这个包的自动扫描，所以我们不必手动配置Bean了。我们准备的控制器如下。
+
+```java
+package io.critsu.controllers;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+@Controller
+@RequestMapping("/h")
+public class HomeController {
+    @RequestMapping(method = RequestMethod.GET)
+    public String showHome(){
+        System.out.println("Home pages");
+        return "home";
+    }
+}
+```
+
+随意准备一个`home.html`，内容无所谓，留空也行。这个控制器将处理`/h`路径的请求，并将`home.html`的内容展现给用户，在显示页面之前会打一句话到控制台。
+
+对MVC框架的测试，或者说对 Controller 的测试一般有两种方法。我们先来看看发布到服务器中确认的方法。
+
+我们先新建一个 Tomcat 服务器，将项目在服务器中发布。我们启动服务器，访问`127.0.0.1:9082/Strange/h`路径。在控制台我们得到了下面的输出。
+
+```text
+Home pages
+```
+
+这就说明 MVC 框架搭建成功了。是不是很简单？
+
+在这个测试框架是否搭建成功的简单场景中使用发布到服务器中的方式确认确实很轻松，但是如果项目有了一定规模之后，每次都要启动服务确认或许不够效率。
+
+同时最重要的问题是当我们的逻辑复杂之后我们想测试一块代码的时候往往要先满足另外很多块前提逻辑。我们只是想对部分代码做个单元测试呀。没关系，轮到 Mock 出场了。
+
+使用 Mock 进行测试将我们需要测试的代码同其他代码解耦，让我们只关注目标代码是否正确。
+
+这也是我们进行TDD 测试驱动开发的重要环节之一。
+
+新建一个测试类，我们的 Mock 测试代码如下，与 JUnit 结合使用效果更佳。
+
+```java
+package test.controllers;
+
+
+import io.critsu.config.StrangeWebConfig;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
+
+@RunWith(SpringRunner.class)
+@WebAppConfiguration
+@ContextConfiguration(classes = StrangeWebConfig.class)
+public class HomeControllerTest {
+
+    @Autowired
+    private WebApplicationContext wac;
+
+    private MockMvc mock;
+
+    @Before
+    public void setUp () {
+        this.mock = MockMvcBuilders.webAppContextSetup(this.wac).build();
+    }
+
+    @Test
+    public void testHome() throws Exception {
+        mock.perform(MockMvcRequestBuilders.get("/h"))
+                .andExpect(MockMvcResultMatchers.view().name("home"));
+    }
+
+}
+
+```
+
+注意测试类的三个注解，这些注解让 JUnit 模拟服务器环境并且创建了应用上下文。我们使用这个上下文创建 MockMvc 对象并藉此测试。
+
+运行的结果我们看到了预期的输出和绿条。说明一切正常。
+
+在复杂环境中 Mock 测试的方法得以解耦关联性，让我们测试关注的部分，所以更为实用一些。
+
+上面测试也测试玩了，接下来整合下一块，MyBatis！
 
 
 
