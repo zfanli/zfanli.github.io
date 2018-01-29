@@ -99,10 +99,6 @@ import pygal
 from random import randint
 
 
-global_base_path = '../../out/'  # temporary directory
-size = 10
-
-
 def get_random_data(s=10):
     """Random data generator."""
     result = []
@@ -117,8 +113,8 @@ def dot_chart():
     dot.x_labels = ['DOT TARGET {}'.format(x) for x in range(10)]
     for i in range(3):
         dot.add('Item {}'.format(i), get_random_data(size))
-    dot.add('Neg exists', [x - 100 for x in get_random_data(size)])
-    dot.render_to_file(get_file_name(inspect.stack()[0][3]))
+    dot.add('Neg exists', [x - 100 for x in get_random_data()])
+    dot.render_to_file('DOT_CHART_TEST.svg')
 
 
 if __name__ == '__main__':
@@ -126,7 +122,7 @@ if __name__ == '__main__':
 
 ```
 
-除去假数据的生成之外，真正生成图表的代码只有从18行到24行几句。
+除去假数据的生成之外，真正生成图表的代码只有从14行到20行几句。
 
 在 Python 的生态环境中，有大量的实用类库可以免去我们造车轮的烦恼，生成上面这个分析图表我们不必从创造生成工具 pygal 开始，我们只需要知道 pygal 暴露给我们的接口，藉此我们可以只关注我们想做的事情。
 
