@@ -1830,3 +1830,22 @@ body,
         text-align: center;
     }
 }
+
+a[title='refactored'],
+.refactor {
+    color: white;
+    background: #ff7c7c;
+    display: inline-block;
+    border-radius: 5px;
+    padding: 2px;
+    box-shadow: 0 1px 1px #80808078;
+}
+
+.timeline-refactor {
+    color: white;
+    background: #9e9e9e;
+    display: inline;
+    border-radius: 3px;
+    padding: 1px 4px;
+    font-size: 10px;
+}
