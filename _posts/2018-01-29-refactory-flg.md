@@ -7,7 +7,10 @@ author:     "Rick"
 header-img: "img/post-bg/sunshine-dog.jpg"
 catalog:    true
 class:      ""
+refactor:   "refactor"
+stickies:   false
 tags:
+    - refactored
     - ToDo List
     - Flag
 ---
@@ -39,6 +42,20 @@ tags:
 3. 文章内容标记重构完成时间
 
 上面大致是对内容的重构。
+
+>2018-01-30 22:14:10 记录
+>
+>重构标签制作完成。
+>
+>首页重构标签效果：<span class='refactor' style='height:20px;display:inline;'>refactored</span>
+>
+>文章页面使用重构Tag，显示效果：<span class="tags"><a class="tag" href="/tags/#refactored" title="refactored">refactored</a></span>
+>
+>Timeline页面重构标签效果：<span class='timeline-refactor'>refactored</span>
+>
+>接下来开始重构内容。
+>
+
 
 ### Blog整体重构
 ***
