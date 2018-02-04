@@ -38,22 +38,43 @@ tags:
 ### 文档 List
 ***
 
+**Update time: 2018-02-05 01:38:19**
+
+
 >[M101P: MongoDB for Developers](https://university.mongodb.com/courses/M101P/about)
 
 MongoDB开发者Tutorial。
 
-**进度：开头**
+**进度：基础（可以使用）**
 
-MongoDB官方的教程要预约还有deadline...虽然感觉很良心...但是英语+deadline有点...
+MongoDB官方的教程要预约还有deadline...~~然感觉很良心...但是英语+deadline有点...~~
 
-先看看情况再说。
+~~先看看情况再说。~~
+
+[Introduction to MongoDB](https://docs.mongodb.com/manual/introduction/)
+
+官方技术文档。
+
+[MongoDB简介](http://docs.mongoing.com/introduction.html)
+
+中文社区汉化的技术文档，低0.2个版本，还是以英文文档为主，中文文档做参考。
+
 
 >[Flask Quickstart](http://flask.pocoo.org/docs/0.12/quickstart/)
 
 Flask的Quickstart，然后转战RESTful。
 
-**进度：开头**
+**进度：基础（可以使用）**
 
+[Flask-RESTPlus](http://flask-restplus.readthedocs.io/en/latest/quickstart.html)
+
+RESTful的API实现还是使用Flask的扩展，选择RESTPlus的原因是可以使用装饰器`route(url)`映射，flask-restful看到目前还是只能使用`app.add_resource(cls, url)`绑定路径。
+
+>[Tutorial: Intro To React](https://reactjs.org/tutorial/tutorial.html)
+
+React的官方教程。这个可以用来构建Event-Driven的UI，也可以做服务器，但是服务器用的是Node.js，先mark一下，考虑REST的customer做成什么形式的
+
+**进度：开头**
 
 （阅读新文档开始的时候再补充地址和进度）
 
