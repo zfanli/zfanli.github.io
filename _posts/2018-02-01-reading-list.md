@@ -74,7 +74,14 @@ RESTful的API实现还是使用Flask的扩展，选择RESTPlus的原因是可以
 
 React的官方教程。这个可以用来构建Event-Driven的UI，也可以做服务器，但是服务器用的是Node.js，先mark一下，考虑REST的customer做成什么形式的
 
-**进度：开头**
+**进度：基础**
+
+跟着React的教程做了一个XO棋盘的游戏，基本了解了它的概念和结构。感觉还不错。
+
+React有一个props验证的机制，在项目膨胀时可以有效控制传参引发的各种Bug，贴一下参考文档以供以后翻阅。
+
+[Typechecking With PropTypes](https://reactjs.org/docs/typechecking-with-proptypes.html#proptypes)
+
 
 （阅读新文档开始的时候再补充地址和进度）
 
