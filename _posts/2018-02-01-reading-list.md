@@ -38,7 +38,8 @@ tags:
 ### 文档 List
 ***
 
-**Update time: 2018-02-05 01:38:19**
+0. **Update time: 2018-02-05 01:38:19**
+0. **Update time: 2018-02-08 22:54:19**
 
 
 >[M101P: MongoDB for Developers](https://university.mongodb.com/courses/M101P/about)
@@ -82,6 +83,13 @@ React有一个props验证的机制，在项目膨胀时可以有效控制传参�
 
 [Typechecking With PropTypes](https://reactjs.org/docs/typechecking-with-proptypes.html#proptypes)
 
+> [Bootstrap](https://v4.bootcss.com/docs/4.0/layout/grid/)
+
+Bootstrap 4.0，敏捷构建简单UI，这个大致看看文档就好，具体需要什么功能再回来翻阅。
+
+话说之前学习过3.0版本，使用方法还有个大概的印象，现在升级到4.0版本套路没有变，而且因为Flexbox的支持变得更加便利了。
+
+**进度：基础（可以使用）**
 
 （阅读新文档开始的时候再补充地址和进度）
 
