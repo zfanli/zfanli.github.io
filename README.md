@@ -2,13 +2,8 @@
 
 直接去看吧。
 
-[我的博客](https://critsu.github.io)。
+[我的博客](https://zfanli.github.io)。
 
+# 18.5.9 UPDATE
 
-### 关于版本号
-
-> v1.6
-
-小数点前为具体版本，在功能添加或者UI变更时才累加。
-
-小数点后为post提交次数和UI微调。
+更改了 Username，地址变更。
