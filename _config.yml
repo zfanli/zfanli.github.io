@@ -14,7 +14,7 @@ baseurl: ""         # for example, '/blog' if your blog hosted on 'host/blog'
 RSS: false
 weibo_username:     210100026
 #zhihu_username:     1
-github_username:    critsu
+github_username:    zfanli
 #twitter_username:   RitsuCyan
 #facebook_username:  RitsuCyan
 
@@ -89,7 +89,7 @@ featured-condition-size: 1              # A tag will be featured if the size of 
 friends: [
     {
         title: "我自己",
-        href: "https://critsu.github.io/"
+        href: "https://zfanli.github.io/"
 #    },{
 #        title: "Foo",
 #        href: "#"
