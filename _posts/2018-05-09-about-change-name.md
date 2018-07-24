@@ -2,7 +2,7 @@
 layout:     post
 title:      "关于更改用户名-zfanli"
 subtitle:   "原来的用户名不方便记了，改成现在这个了。"
-date:       2017-9-5 19:43:54 +0800
+date:       2015-5-9 19:43:54 +0800
 author:     "Rick"
 header-img: "img/post-bg/sunshine-dog.jpg"
 catalog:    true
