@@ -1,9 +1,3 @@
-# Rick's blog
+# [Richard's Blog](https://zfanli.github.io/)
 
-直接去看吧。
-
-[我的博客](https://zfanli.github.io)。
-
-# 18.5.9 UPDATE
-
-更改了 Username，地址变更。
+[Development Repository](https://github.com/zfanli/richardzg)
