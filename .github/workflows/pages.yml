@@ -36,9 +36,11 @@ jobs:
           npm run build
           git config --global user.email "zfanli@outlook.com"
           git config --global user.name "Richard"
-          git add .
-          git commit -m "ACTION: APPLY PLUGINS"
-          git push origin hexo-source
+          if [ -n "$(git diff --exit-code)" ]; then
+            git add .
+            git commit -m "ACTION: APPLY PLUGINS"
+            git push origin hexo-source
+          fi
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
