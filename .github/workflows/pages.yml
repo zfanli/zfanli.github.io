@@ -35,3 +35,4 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./public
           publish_branch: hexo-pages # deploying branch
+          cname: richard.bizcat.xyz
