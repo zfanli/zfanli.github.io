@@ -1,0 +1,4615 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>1004. Max Consecutive Ones III (Medium)</title>
+    <url>/post/leetcode/1004-Max-Consecutive-Ones-III-Medium/</url>
+    <content><![CDATA[<p>思路 1，滑动窗口。</p>
+<p>提示说的很清楚，题目要求找出最长的连续出现的 <code>1</code>，那么用 2 个指针实现一个滑动窗口是一个合适的选择。</p>
+<p>用一个数组储存所有遇到 <code>0</code> 的位置，当数组长度超过 <code>k</code>，将左边指针设为第一个 <code>0</code> 位置的下一位，并将第一个 <code>0</code> 从数组删除。</p>
+<p>每一步都保存一下当前连续的最大值。</p>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def longestOnes(self, nums: List[int], k: int) -&gt; int:
+        ans, i, zeros &#x3D; 0, 0, []
+        for j in range(len(nums)):
+            if nums[j] &#x3D;&#x3D; 0:
+                zeros.append(j)
+                if len(zeros) &gt; k:
+                    i &#x3D; zeros.pop(0) + 1
+            ans &#x3D; max(ans, j - i + 1)
+        return ans</code></pre>
+
+<p>思路 2，滑动窗口+内存优化。</p>
+<p>我们可以优化思路 1 的数组方法，仅使用一个计数器来提醒我们是否需要将左边的指针移动到下一个位置。</p>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def longestOnes(self, nums: List[int], k: int) -&gt; int:
+        ans, i &#x3D; 0, 0
+        for j in range(len(nums)):
+            if nums[j] &#x3D;&#x3D; 0:
+                if k &#x3D;&#x3D; 0:
+                    while nums[i] !&#x3D; 0:
+                        i +&#x3D; 1
+                    i +&#x3D; 1
+                else:
+                    k -&#x3D; 1
+            ans &#x3D; max(ans, j - i + 1)
+        return ans</code></pre>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>Array</tag>
+        <tag>Binary Search</tag>
+        <tag>Sliding Window</tag>
+        <tag>Prefix Sum</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>102. Binary Tree Level Order Traversal (Medium)</title>
+    <url>/post/leetcode/102-Binary-Tree-Level-Order-Traversal-Medium/</url>
+    <content><![CDATA[<p>遍历树的方式除了通常的前序遍历、中序遍历和后序遍历之外，还有本题的层序遍历。</p>
+<p>层序遍历的顺序是从左到右依次遍历同层级到节点，然后在进入下一层级重复这个过程，直到不再存在下一层级。这是一个典型的宽度优先搜索（BFS）算法。</p>
+<p>完成层序遍历，我们可以利于先进先出的队列来记录每一个层级的节点数。</p>
+<p>具体过程如下：</p>
+<ul>
+<li>将 root 放入队列，开始进入迭代；</li>
+<li>每次迭代开始先取得队列的长度，这个长度表示当前层级的节点数；</li>
+<li>循环依次取出所有当前层级的节点，将其子节点按照左右顺序放入队列，并将当前节点的值存入新的列表；</li>
+<li>将列表放入答案列表，重复迭代直到队列清空。</li>
+</ul>
+<p>需要注意的一点是，虽然我们在放入子节点的时候会进行存在判定，但是 root 本身也存在为空（None）的情况，下面代码中我们新建了一个 Dummy 节点来处理这个问题，将 root 作为 Dummy 节点的子节点，然后在放入子节点的过程中进行存在判定，这样就规避了 root 节点本身不存在的问题。</p>
+<p>最终在返回结果时，将位于数组 0 位置的 Dummy 节点的值删除。</p>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def levelOrder(self, root: TreeNode) -&gt; List[List[int]]:
+        ans, queue &#x3D; [], [TreeNode(-1, root)]
+
+        while len(queue) &gt; 0:
+            lst, n &#x3D; [], len(queue)
+            for _ in range(n):
+                node &#x3D; queue.pop(0)
+                if node.left:
+                    queue.append(node.left)
+                if node.right:
+                    queue.append(node.right)
+                lst.append(node.val)
+            ans.append(lst)
+
+        return ans[1:]</code></pre>
+
+<hr>
+<p>bk，旧思路，这个方法会额外创建 log n 个新数组，这个额外空间其实没有必要。</p>
+<ul>
+<li>同级的元素全都放到一个数组；</li>
+<li>按照顺序提取元素的值放到答案数组；</li>
+<li>同时将存在的子节点放到新的数组；</li>
+<li>重复这个过程直到不存在任何子节点；</li>
+<li>此时答案数组已经编辑完成。</li>
+</ul>
+<pre class="language-python" data-language="python"><code class="language-python"># Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val&#x3D;0, left&#x3D;None, right&#x3D;None):
+#         self.val &#x3D; val
+#         self.left &#x3D; left
+#         self.right &#x3D; right
+class Solution:
+    def levelOrder(self, root: TreeNode) -&gt; List[List[int]]:
+        ans, lv &#x3D; [], [root]
+        while len(lv) !&#x3D; 0:
+            _ans, _lv &#x3D; [], []
+            for n in lv:
+                if n:
+                    _ans.append(n.val)
+                    _lv.append(n.left)
+                    _lv.append(n.right)
+            if len(_ans) &gt; 0:
+                ans.append(_ans)
+            lv &#x3D; _lv
+        return ans</code></pre>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>Tree</tag>
+        <tag>BFS</tag>
+        <tag>Binary Tree</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>104. Maximum Depth of Binary Tree (Easy)</title>
+    <url>/post/leetcode/104-Maximum-Depth-of-Binary-Tree-Easy/</url>
+    <content><![CDATA[<p>求二叉树的最大深度。</p>
+<p>思路 1，Top-Down，递归</p>
+<p>在递归过程中，我们先根据当前层的深度更新结果，然后针对子节点进行递归调用，重复这个过程直到遍历完整棵树。这是从上至下的解题方法，顺序体现在我们何时处理当前节点的值。</p>
+<p>这个思路可以解决问题，但是从逻辑上来说，如果存在子节点，那么当前节点的深度肯定不是最终答案，Top-Down 方法或许不是最符合这道题目逻辑的方法。</p>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def maxDepth(self, root: TreeNode) -&gt; int:
+        ans &#x3D; 0
+
+        def traverse(node, depth):
+            if not node:
+                return
+            nonlocal ans
+            ans &#x3D; max(ans, depth)
+            traverse(node.left, depth + 1)
+            traverse(node.right, depth + 1)
+
+        traverse(root, 1)
+        return ans</code></pre>
+
+<p>思路 2，Bottom-Up，递归</p>
+<p>在从下至上的方法中，我们先去计算以当前节点开始其子节点的最大深度，在结果的基础上 +1 作为当前节点的深度结束递归过程。</p>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def maxDepth(self, root: TreeNode) -&gt; int:
+
+        def traverse(node):
+            if not node:
+                return 0
+            return 1 + max(traverse(node.left),
+                           traverse(node.right))
+
+        return traverse(root)</code></pre>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>Tree</tag>
+        <tag>BFS</tag>
+        <tag>Binary Tree</tag>
+        <tag>DFS</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>1047. Remove All Adjacent Duplicates In String (Easy)</title>
+    <url>/post/leetcode/1047-Remove-All-Adjacent-Duplicates-In-String-Easy/</url>
+    <content><![CDATA[<p>用 Stack 依次确认每一个字符。</p>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def removeDuplicates(self, s: str) -&gt; str:
+        stack &#x3D; []
+        for c in s:
+            if len(stack) !&#x3D; 0 and stack[-1] &#x3D;&#x3D; c:
+                stack.pop()
+            else:
+                stack.append(c)
+        return &quot;&quot;.join(stack)</code></pre>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>String</tag>
+        <tag>Stack</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>1048. Longest String Chain (Medium)</title>
+    <url>/post/leetcode/1048-Longest-String-Chain-Medium/</url>
+    <content><![CDATA[<p>思路 1，hash table + memoization。明确一下要找出最长的链，我们需要完成下面的步骤才能最终确认：</p>
+<ul>
+<li>遍历所有 word，找到所有可能的 predecessor</li>
+<li>遍历所有的 predecessor，找到它的所有可能的 predecessor；如此反复</li>
+</ul>
+<p>我们可以观察到如果有两个词找到同一个词能作为它的 predecessor，这个被找到的对象就发生了重复计算。我们可以用 memoization 解决这个问题。</p>
+<p>此外，寻找 predecessor 的过程也可以用 Hash Table 来进行加速。具体的做法是，我们使用一个 Map 来做 memoization，用 word 作为 key，value 储存它的 predecessor 的数量。</p>
+<p>针对每一个词，我们枚举出它的所有可能的 predecessor，到 Hash 表中进行匹配，如果值在表中存在则用这个词继续进行枚举过程。</p>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def longestStrChain(self, words: List[str]) -&gt; int:
+        memo &#x3D; &#123;&#125;
+        for w in words:
+            memo[w] &#x3D; -1
+
+        def dfs(w):
+            if memo[w] !&#x3D; -1:
+                return memo[w]
+            c &#x3D; 0
+            for i in range(len(w)):
+                _w &#x3D; w[:i] + w[i+1:]
+                if _w in memo:
+                    c &#x3D; max(c, dfs(_w))
+            memo[w] &#x3D; c + 1
+            return memo[w]
+
+        for w in words:
+            dfs(w)
+
+        # print(memo)
+        return max(memo.values())</code></pre>
+
+<p>思路 2，DP。思路 1 的非递归版本。</p>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def longestStrChain(self, words: List[str]) -&gt; int:
+        words.sort(key&#x3D;lambda x: len(x))
+        dp &#x3D; &#123;&#125;
+        for w in words:
+            c &#x3D; 1
+            for i in range(len(w)):
+                _w &#x3D; w[:i] + w[i+1:]
+                if _w in dp:
+                    c &#x3D; max(c, 1 + dp[_w])
+            dp[w] &#x3D; c
+        return max(dp.values())</code></pre>
+
+<p>此外还有按长度分组 Hash 等方法，但性能上比上面两个思路没有优势，逻辑还更加复杂了，就不讨论了。</p>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>Hash Table</tag>
+        <tag>DP</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>1074. Number of Submatrices That Sum to Target (Hard)</title>
+    <url>/post/leetcode/1074-Number-of-Submatrices-That-Sum-to-Target-Hard/</url>
+    <content><![CDATA[<p>With solutions both in Python and Java.</p>
+<p>这是一道困难题，先读题。</p>
+<blockquote>
+<p>Given a <code>matrix</code> and a <code>target</code>, return the number of non-empty submatrices that sum to target.</p>
+<p>A submatrix <code>x1, y1, x2, y2</code> is the set of all cells <code>matrix[x][y]</code> with <code>x1 &lt;= x &lt;= x2</code> and <code>y1 &lt;= y &lt;= y2</code>.</p>
+<p>Two submatrices (<code>x1, y1, x2, y2</code>) and (<code>x1&#39;, y1&#39;, x2&#39;, y2&#39;</code>) are different if they have some coordinate that is different: for example, if <code>x1</code> != <code>x1&#39;</code>.</p>
+</blockquote>
+<p>理解一下。</p>
+<ul>
+<li>参数是 1 个矩阵，一个目标值；</li>
+<li>需要返回的是子矩阵的数量，这些子矩阵需要满足：<ul>
+<li>非空；</li>
+<li>和等于目标值。</li>
+</ul>
+</li>
+</ul>
+<p>看看例子。</p>
+<p>Example 1:</p>
+<p><img src="./resources/1074.eg.jpg" alt="1074.eg.jpg"></p>
+<pre class="language-console" data-language="console"><code class="language-console">Input: matrix &#x3D; [[0,1,0],[1,1,1],[0,1,0]], target &#x3D; 0
+Output: 4
+Explanation: The four 1x1 submatrices that only contain 0.</code></pre>
+
+<p>这个例子中矩阵如图，需要找出所有和为 0 的子矩阵。可见只有四个角的元素满足，这四个子矩阵只能有一个元素。</p>
+<p>Example 2:</p>
+<pre class="language-console" data-language="console"><code class="language-console">Input: matrix &#x3D; [[1,-1],[-1,1]], target &#x3D; 0
+Output: 5
+Explanation: The two 1x2 submatrices, plus the two 2x1 submatrices, plus the 2x2 submatrix.</code></pre>
+
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center">y1</th>
+<th align="center">y2</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><strong>x1</strong></td>
+<td align="center">1</td>
+<td align="center">-1</td>
+</tr>
+<tr>
+<td align="center"><strong>x2</strong></td>
+<td align="center">-1</td>
+<td align="center">1</td>
+</tr>
+</tbody></table>
+<p>这个例子中，所有元素字面量都不为 0，所以排除 1x1 子矩阵之后，只有尺寸为 2x1 / 1x2 和 2x2 的子矩阵的和可能为 0。</p>
+<p>我们来输出一下 2 个元素的组合（2x1/1x2），去除对角线的两种不满足条件的组合，可以发现剩余的四种组合的和都为 0。而唯一一种 2x2 的组合我们也能一眼看出来其和为 0，所以这个例子的答案是 5。</p>
+<pre class="language-python" data-language="python"><code class="language-python">&gt;&gt;&gt; [(x, sum(x)) for x in combinations([1,-1,1,-1], 2)]
+[((1, -1), 0), ((1, 1), 2), ((1, -1), 0), ((-1, 1), 0), ((-1, -1), -2), ((1, -1), 0)]</code></pre>
+
+<p>Example 3:</p>
+<pre class="language-console" data-language="console"><code class="language-console">Input: matrix &#x3D; [[904]], target &#x3D; 0
+Output: 0</code></pre>
+
+<p>当不存在满足条件的子矩阵时返回 0。</p>
+<p>这道题的限制条件比较重要。</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= matrix.length &lt;= 100</code></li>
+<li><code>1 &lt;= matrix[0].length &lt;= 100</code></li>
+<li><code>-1000 &lt;= matrix[i] &lt;= 1000</code></li>
+<li><code>-10^8 &lt;= target &lt;= 10^8</code></li>
+</ul>
+<p>矩阵的尺寸从最小一个元素到最大 100*100 个元素，并且元素的值可能为负数，这意味着没有取巧的办法，对于每一种子矩阵的组合我们都必须算出和才能断定是否符合条件。</p>
+<h3 id="思路-amp-Solutions"><a href="#思路-amp-Solutions" class="headerlink" title="思路 &amp; Solutions"></a>思路 &amp; Solutions</h3><p><strong>递归方法（X 超时）</strong></p>
+<p>乍一看题可能你会感觉没有思路，难道只能：</p>
+<ul>
+<li>遍历长宽得出所有子矩阵尺寸；</li>
+<li>遍历每种尺寸去匹配可能出现的子矩阵，硬算矩阵和。</li>
+</ul>
+<p>（没错，我一开始这样做的…）</p>
+<p>这样确实可以计算出答案，问题是计算量指数爆炸，100*100 的 input 必然超过时间限制。</p>
+<p><strong>动态规划（DP）</strong></p>
+<p>仔细一看这道题有给一个提示，也别客气直接来看看提示。</p>
+<blockquote>
+<p>Using a 2D prefix sum, we can query the sum of any submatrix in O(1) time. Now for each (r1, r2), we can find the largest sum of a submatrix that uses every row in [r1, r2] in linear time using a sliding window.</p>
+</blockquote>
+<p>提示给出的思路分为两步：</p>
+<ul>
+<li>求出矩阵每个元素的前缀和（prefix sum），这一步时间复杂度是 O(n)，但是后续查询某个子矩阵的和只需要 O(1)；</li>
+<li>用滑动窗口（Sliding Window）遍历每一个子矩阵，检查和是否等于目标值。</li>
+</ul>
+<p>要应用这个思路，我们可以得到两种方法。</p>
+<p><strong>方法一，计算矩阵所有元素的前缀和</strong></p>
+<ul>
+<li>首先计算矩阵所有元素的前缀和；<ul>
+<li>prefixSum[x][y] = matrix[x][y] + prefixSum[x-1][y] + prefixSum[x][y-1] - prefixSum[x-1][y-1]<ul>
+<li><code>prefixSum[x][y]</code> -&gt; 以<code>(0, 0)</code>为左上角，矩阵中对应位置为右下角的子矩阵的和；</li>
+<li><code>matrix[x][y]</code> -&gt; 矩阵对应位置的元素的值；</li>
+<li><code>prefixSum[x-1][y]</code> -&gt; 矩阵上一行同列的值，这个值已经计算过了；</li>
+<li><code>prefixSum[x][y-1]</code> -&gt; 矩阵上一列同行的值，这个值也已经计算过了；</li>
+<li><code>prefixSum[x-1][y-1]</code> -&gt; 需要注意的是，这个值在上面两个子矩阵中被计算了两次，所以这里减去一次。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>使用滑动窗口来遍历行或列；<ul>
+<li>比如当遍历行时，对于 <code>(r1, r2)</code> （即第一行和第二行中的子矩阵）的情况，我们逐列遍历：<ul>
+<li>初始化一个哈希表，初始化 <code>key</code> 为 0 时的值为 1，这一步是为了处理子矩阵的和刚好为目标值的情况；</li>
+<li>我们查询 <code>((0,0), (1, 1))</code> 的和，并检查这个和减去目标值后的值在哈希表中对应的值；<ul>
+<li>子矩阵的和减去目标值后的数，其实就是之前记录过的和为该值的子矩阵；</li>
+<li>如果存在的话，那么意味着现在检查的这个子矩阵减去这个子矩阵，就能得到一个满足条件的子矩阵；</li>
+<li>由于在下一步我们按列将每次检查的结果存入列哈希表中，哈希表的 <code>key</code> 对应的值是指 <code>key</code> 出现的次数；</li>
+<li>这也就意味着如果同一个值出现了多次，那么就存在这么多子矩阵可以满足条件，所以我们将答案加上哈希表中对应的次数。</li>
+</ul>
+</li>
+<li>将其作为 <code>key</code> 存入一个哈希表中，将值+<code>1（key</code> 不存在的情况设为 1）；</li>
+<li>对行的组合重复这一步。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>下面是 Java 代码可以配合理解。</p>
+<pre class="language-java" data-language="java"><code class="language-java">class Solution &#123;
+    public int numSubmatrixSumTarget(int[][] matrix, int target) &#123;
+        int rows &#x3D; matrix.length,
+            cols &#x3D; matrix[0].length,
+            ans &#x3D; 0;
+
+        &#x2F;&#x2F; 初始化一个前缀和2D数组
+        int[][] prefixSum &#x3D; new int[rows][cols];
+
+        &#x2F;&#x2F; 为避免处理数组越界，我们对第一行数据单独进行遍历
+        prefixSum[0][0] &#x3D; matrix[0][0];
+        for (int c &#x3D; 1; c &lt; cols; c++) &#123;
+            &#x2F;&#x2F; 对于第一行数据，当前值加等于前一个值
+            prefixSum[0][c] &#x3D; prefixSum[0][c-1] + matrix[0][c];
+        &#125;
+
+        &#x2F;&#x2F; 剩下的数据逐行逐列遍历
+        for (int r &#x3D; 1; r &lt; rows; r++) &#123;
+            for (int c &#x3D; 0; c &lt; cols; c++) &#123;
+                &#x2F;&#x2F; 对应位置的前缀和等于上一行对应位置的值和上一列对应位置的值之和，减去重复计算的区域的值
+                prefixSum[r][c] &#x3D; matrix[r][c] + prefixSum[r-1][c]
+                    + (c &#x3D;&#x3D; 0 ? 0 : prefixSum[r][c-1] - prefixSum[r-1][c-1]);
+            &#125;
+        &#125;
+
+        &#x2F;&#x2F; 计算完前缀和，我们对行进行组合遍历
+        for (int sr &#x3D; 0; sr &lt; rows; sr++) &#123;
+            for (int er &#x3D; sr; er &lt; rows; er++) &#123;
+                &#x2F;&#x2F; 初始化一个哈希表来存储次数
+                Map&lt;Integer, Integer&gt; map &#x3D; new HashMap&lt;&gt;();
+                map.put(0, 1);
+                for (int c &#x3D; 0; c &lt; cols; c++) &#123;
+                    &#x2F;&#x2F; 计算第一列到当前列组成的矩阵的和
+                    int cur &#x3D; prefixSum[er][c] - (sr &#x3D;&#x3D; 0 ? 0 : prefixSum[sr-1][c]);
+                    &#x2F;&#x2F; 查询当前窗口中，需要减去的矩阵是否存在&#x2F;存在几个
+                    if (map.get(cur - target) !&#x3D; null) &#123;
+                        ans +&#x3D; map.get(cur - target);
+                    &#125;
+                    &#x2F;&#x2F; 将当前矩阵的值存入哈希表，将次数+1
+                    map.put(cur, map.get(cur) &#x3D;&#x3D; null ? 1 : map.get(cur) + 1);
+                &#125;
+            &#125;
+        &#125;
+
+        return ans;
+    &#125;
+&#125;</code></pre>
+
+<p><strong>方法二，仅按行或列计算前缀和</strong></p>
+<ul>
+<li>与方法一最大的区别在于，方法二不去计算一个 2D 矩阵的前缀和，而是逐行计算这一行的前缀和；</li>
+<li>这个前缀和数组由循环外部的变量，变成列循环内部的变量，随着基础行的变化而重置；</li>
+<li>除去计算前缀和的变化，在滑动窗口内的操作与方法一一致，因此降低了空间复杂度。</li>
+</ul>
+<p>下面是 Python 帮助理解。</p>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def numSubmatrixSumTarget(self, matrix: List[List[int]], target: int) -&gt; int:
+        rows, cols, ans &#x3D; len(matrix), len(matrix[0]), 0
+
+        for sr in range(rows):
+            colsum &#x3D; [0] * cols
+            for er in range(sr, rows):
+                d, cur &#x3D; &#123;0:1&#125;, 0
+                for c in range(cols):
+                    colsum[c] +&#x3D; matrix[er][c]
+                    cur +&#x3D; colsum[c]
+                    ans +&#x3D; d.get(cur-target, 0)
+                    d[cur] &#x3D; d.get(cur, 0) + 1
+
+        return ans</code></pre>
+
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>这是一道困难的题，难点在于把计算计划到规定的复杂度中。</p>
+<p>要得到答案，需要一些前置的知识：</p>
+<ul>
+<li>前缀和的应用；</li>
+<li>动态规划的应用；</li>
+<li>滑动窗口的应用。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>Array</tag>
+        <tag>Prefix Sum</tag>
+        <tag>Hash Table</tag>
+        <tag>Matrix</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>109. Convert Sorted List to Binary Search Tree (Medium)</title>
+    <url>/post/leetcode/109-Convert-Sorted-List-to-Binary-Search-Tree-Medium/</url>
+    <content><![CDATA[<p>Topics:</p>
+<p>Linked-list, DFS.</p>
+<p>比较简洁的解法是快慢指针。</p>
+<pre class="language-java" data-language="java"><code class="language-java">&#x2F;**
+ * Definition for singly-linked list.
+ * public class ListNode &#123;
+ *     int val;
+ *     ListNode next;
+ *     ListNode() &#123;&#125;
+ *     ListNode(int val) &#123; this.val &#x3D; val; &#125;
+ *     ListNode(int val, ListNode next) &#123; this.val &#x3D; val; this.next &#x3D; next; &#125;
+ * &#125;
+ *&#x2F;
+&#x2F;**
+ * Definition for a binary tree node.
+ * public class TreeNode &#123;
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() &#123;&#125;
+ *     TreeNode(int val) &#123; this.val &#x3D; val; &#125;
+ *     TreeNode(int val, TreeNode left, TreeNode right) &#123;
+ *         this.val &#x3D; val;
+ *         this.left &#x3D; left;
+ *         this.right &#x3D; right;
+ *     &#125;
+ * &#125;
+ *&#x2F;
+class Solution &#123;
+    public TreeNode sortedListToBST(ListNode head) &#123;
+        return tree(head, null);
+    &#125;
+
+    private TreeNode tree(ListNode b, ListNode e) &#123;
+        if (b &#x3D;&#x3D; e) return null;
+        ListNode fast &#x3D; b;
+        ListNode slow &#x3D; b;
+        while (fast.next !&#x3D; e &amp;&amp; fast.next.next !&#x3D; e) &#123;
+            fast &#x3D; fast.next.next;
+            slow &#x3D; slow.next;
+        &#125;
+        TreeNode root &#x3D; new TreeNode(slow.val);
+        root.left &#x3D; tree(b, slow);
+        root.right &#x3D; tree(slow.next, e);
+        return root;
+    &#125;
+&#125;</code></pre>
+
+<p>Python 强行和官方答案匹配。</p>
+<pre class="language-python" data-language="python"><code class="language-python"># Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val&#x3D;0, next&#x3D;None):
+#         self.val &#x3D; val
+#         self.next &#x3D; next
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val&#x3D;0, left&#x3D;None, right&#x3D;None):
+#         self.val &#x3D; val
+#         self.left &#x3D; left
+#         self.right &#x3D; right
+class Solution:
+    def sortedListToBST(self, head: ListNode) -&gt; TreeNode:
+
+        def tree(head, end):
+            if head &#x3D;&#x3D; end:
+                return None
+
+            fast &#x3D; slow &#x3D; head
+
+            while fast.next !&#x3D; end:
+                fast, slow &#x3D; fast.next, slow.next
+                if fast.next !&#x3D; end:
+                    fast &#x3D; fast.next
+
+            root &#x3D; TreeNode(slow.val)
+            root.left &#x3D; tree(head, slow)
+            root.right &#x3D; tree(slow.next, end)
+            return root
+
+        return tree(head, None)</code></pre>
+
+<p>下面是基于长度二分。</p>
+<pre class="language-python" data-language="python"><code class="language-python"># Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val&#x3D;0, next&#x3D;None):
+#         self.val &#x3D; val
+#         self.next &#x3D; next
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val&#x3D;0, left&#x3D;None, right&#x3D;None):
+#         self.val &#x3D; val
+#         self.left &#x3D; left
+#         self.right &#x3D; right
+class Solution:
+    def sortedListToBST(self, head: ListNode) -&gt; TreeNode:
+        self.head, n &#x3D; head, 0
+        while head:
+            head &#x3D; head.next
+            n +&#x3D; 1
+
+        def dfs(b, e):
+            if b &gt;&#x3D; e:
+                return None
+            m &#x3D; b + e &gt;&gt; 1
+            left &#x3D; dfs(b, m)
+            root &#x3D; TreeNode(self.head.val, left)
+            self.head &#x3D; self.head.next
+            root.right &#x3D; dfs(m + 1, e)
+            return root
+
+        return dfs(0, n)</code></pre>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>DFS</tag>
+        <tag>Linked List</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>114. Flatten Binary Tree to Linked List (Medium)</title>
+    <url>/post/leetcode/114-Flatten-Binary-Tree-to-Linked-List-Medium/</url>
+    <content><![CDATA[<p>思路 1，有序递归。重复先左后右的递归，用递归方法实现 O(1)的难点在于将右节点挂在左节点的末尾，这里我们将递归函数的返回值设为递归最后一个元素，来解决这个难题。</p>
+<pre class="language-python" data-language="python"><code class="language-python"># Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val&#x3D;0, left&#x3D;None, right&#x3D;None):
+#         self.val &#x3D; val
+#         self.left &#x3D; left
+#         self.right &#x3D; right
+class Solution:
+    def flatten(self, root: TreeNode) -&gt; None:
+        &quot;&quot;&quot;
+        Do not return anything, modify root in-place instead.
+        &quot;&quot;&quot;
+        if root is None:
+            return root
+        def _flatten(node):
+            left, right &#x3D; node.left, node.right
+            if left:
+                left &#x3D; _flatten(left)
+                left.right &#x3D; node.right
+                node.right &#x3D; node.left
+                node.left &#x3D; None
+            if right:
+                right &#x3D; _flatten(right)
+            else:
+                right &#x3D; left
+            return right if right else node
+
+        _flatten(root)</code></pre>
+
+<p>思路 2，学习题解的思路。如果我们发现有左节点，找到左节点最下端的右节点，将 root 的右节点挂在上面，将左节点替换为 root 的右节点，重置 root 的左节点为空，root 节点向右进一位，检查左节点，如此往复，直到最后一个左节点消失，二分树转链表结束。</p>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def flatten(self, root: TreeNode) -&gt; None:
+        &quot;&quot;&quot;
+        Do not return anything, modify root in-place instead.
+        &quot;&quot;&quot;
+        while root:
+            if root.left:
+                left &#x3D; root.left
+                while left.right:
+                    left &#x3D; left.right
+                left.right &#x3D; root.right
+                root.right &#x3D; root.left
+                root.left &#x3D; None
+            root &#x3D; root.right</code></pre>
+
+<p>思路 3，和之前思路不同之处在于，这次我们从下而上的去将二叉树转化为链表，转化的顺序是 right -&gt; left -&gt; node，因为我们需要先 node，再 left，再 right 的顺序去组成这个链表。我们用递归来帮助完成这个过程，使用一个全局变量 <code>head</code> 来储存当前处理的节点，因为我们已经确保有序递归，所以 <code>head</code> 将从空（链表最后一个节点的子节点）开始，每次指向上一个节点，直到达到 <code>root</code> 节点。</p>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def flatten(self, root: TreeNode) -&gt; None:
+        &quot;&quot;&quot;
+        Do not return anything, modify root in-place instead.
+        &quot;&quot;&quot;
+        self.head &#x3D; None
+
+        def f(node):
+            if node.right:
+                f(node.right)
+            if node.left:
+                f(node.left)
+            node.left, node.right, self.head &#x3D; None, self.head, node
+
+        if root:
+            f(root)</code></pre>
+
+<p>相同思路的 Java 代码。</p>
+<pre class="language-java" data-language="java"><code class="language-java">&#x2F;**
+ * Definition for a binary tree node.
+ * public class TreeNode &#123;
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() &#123;&#125;
+ *     TreeNode(int val) &#123; this.val &#x3D; val; &#125;
+ *     TreeNode(int val, TreeNode left, TreeNode right) &#123;
+ *         this.val &#x3D; val;
+ *         this.left &#x3D; left;
+ *         this.right &#x3D; right;
+ *     &#125;
+ * &#125;
+ *&#x2F;
+class Solution &#123;
+    private TreeNode head &#x3D; null;
+    public void flatten(TreeNode root) &#123;
+        if (root !&#x3D; null) f(root);
+    &#125;
+    private void f(TreeNode node) &#123;
+        if (node.right !&#x3D; null) f(node.right);
+        if (node.left !&#x3D; null) f(node.left);
+        node.left &#x3D; null; node.right &#x3D; head; head &#x3D; node;
+    &#125;
+&#125;</code></pre>
+
+<p>JS 代码。</p>
+<pre class="language-js" data-language="js"><code class="language-js">&#x2F;**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) &#123;
+ *     this.val &#x3D; (val&#x3D;&#x3D;&#x3D;undefined ? 0 : val)
+ *     this.left &#x3D; (left&#x3D;&#x3D;&#x3D;undefined ? null : left)
+ *     this.right &#x3D; (right&#x3D;&#x3D;&#x3D;undefined ? null : right)
+ * &#125;
+ *&#x2F;
+&#x2F;**
+ * @param &#123;TreeNode&#125; root
+ * @return &#123;void&#125; Do not return anything, modify root in-place instead.
+ *&#x2F;
+var flatten &#x3D; function (root) &#123;
+  let head &#x3D; null;
+  const f &#x3D; (node) &#x3D;&gt; &#123;
+    if (node.right) f(node.right);
+    if (node.left) f(node.left);
+    (node.left &#x3D; null), (node.right &#x3D; head), (head &#x3D; node);
+  &#125;;
+  if (root) f(root);
+&#125;;</code></pre>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>Tree</tag>
+        <tag>DFS</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>118. Pascal&#39;s Triangle (Easy)</title>
+    <url>/post/leetcode/118-Pascal-s-Triangle-Easy/</url>
+    <content><![CDATA[<p>杨辉三角，做完这题发现，这就是 DP 呀，简明扼要。思路就是用当前行计算下一行，每一个值都等于上一行相同位置加上前一位，注意首位两个特殊 case 即可。</p>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def generate(self, numRows: int) -&gt; List[List[int]]:
+        ans &#x3D; [[1]]
+        for n in range(1, numRows):
+            curr, nxt &#x3D; ans[-1], []
+            for i in range(n + 1):
+                if i - 1 &lt; 0 or i &#x3D;&#x3D; n:
+                    nxt.append(1)
+                else:
+                    nxt.append(curr[i - 1] + curr[i])
+            ans.append(nxt)
+        return ans</code></pre>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>Array</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>1192. Critical Connections in a Network (Hard)</title>
+    <url>/post/leetcode/1192-Critical-Connections-in-a-Network-Hard/</url>
+    <content><![CDATA[<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def criticalConnections(self, n: int, connections: List[List[int]]) -&gt; List[List[int]]:
+        # make adjacency-list of connections
+        adj &#x3D; defaultdict(list)
+        for u, v in connections:
+            adj[u].append(v)
+            adj[v].append(u)
+
+        # define dfs
+        def dfs(u, prev, id, ids, ans):
+            ids[u] &#x3D; id
+            for v in adj[u]:
+                if v &#x3D;&#x3D; prev:
+                    continue
+                elif ids[v] &#x3D;&#x3D; -1:
+                    ids[u] &#x3D; min(ids[u], dfs(v, u, id+1, ids, ans))
+                else:
+                    ids[u] &#x3D; min(ids[u], ids[v])
+
+            if id !&#x3D; 0 and ids[u] &#x3D;&#x3D; id:
+                ans.append([u, prev])
+
+            return ids[u]
+
+        ans &#x3D; []
+        ids &#x3D; [-1] * n
+        dfs(0, -1, 0, ids, ans)
+
+        return ans
+</code></pre>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>DFS</tag>
+        <tag>Graph</tag>
+        <tag>Biconnected Component</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>120. Triangle (Medium)</title>
+    <url>/post/leetcode/120-Triangle-Medium/</url>
+    <content><![CDATA[<blockquote>
+<p>Given a <code>triangle</code> array, return the minimum path sum from top to bottom.</p>
+<p>For each step, you may move to an adjacent number of the row below. More formally, if you are on index <code>i</code> on the current row, you may move to either index <code>i</code> or index <code>i + 1</code> on the next row.</p>
+</blockquote>
+<p>Example 1:</p>
+<pre class="language-none"><code class="language-none">Input: triangle &#x3D; [[2],[3,4],[6,5,7],[4,1,8,3]]
+Output: 11
+Explanation: The triangle looks like:
+   2
+  3 4
+ 6 5 7
+4 1 8 3
+The minimum path sum from top to bottom is 2 + 3 + 5 + 1 &#x3D; 11 (underlined above).</code></pre>
+
+<p>Example 2:</p>
+<pre class="language-none"><code class="language-none">Input: triangle &#x3D; [[-10]]
+Output: -10</code></pre>
+
+<p>Constraints:</p>
+<p>1 &lt;= triangle.length &lt;= 200<br>triangle[0].length == 1<br>triangle[i].length == triangle[i - 1].length + 1<br>-104 &lt;= triangle[i][j] &lt;= 104</p>
+<h3 id="思路-amp-Solutions"><a href="#思路-amp-Solutions" class="headerlink" title="思路 &amp; Solutions"></a>思路 &amp; Solutions</h3><pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def minimumTotal(self, triangle: List[List[int]]) -&gt; int:
+        for depth in range(1, len(triangle)):
+            lastsz &#x3D; len(triangle[depth-1])
+            for pos, x in enumerate(triangle[depth]):
+                if pos &#x3D;&#x3D; 0:
+                    prev &#x3D; triangle[depth-1][pos]
+                elif pos &#x3D;&#x3D; lastsz:
+                    prev &#x3D; triangle[depth-1][-1]
+                else:
+                    prev &#x3D; min(triangle[depth-1][pos-1], triangle[depth-1][pos])
+                triangle[depth][pos] &#x3D; x + prev
+
+        return min(triangle[-1])</code></pre>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>Array</tag>
+        <tag>DP</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>128. Longest Consecutive Sequence (Medium)</title>
+    <url>/post/leetcode/128-Longest-Consecutive-Sequence-Medium/</url>
+    <content><![CDATA[<p><code>nums</code> 数组的元素可以构成诺干个连续的子数组，我们需要找到最大的子数组，返回其长度。</p>
+<p>要找到最大的子数组，首先我们要找到子数组的第一个元素，可以将 <code>nums</code> 转成一个 HashSet，然后遍历它：</p>
+<ul>
+<li>查询每个元素的前一个值（<code>n - 1</code>）是否存在；<ul>
+<li>存在则表示这个元素不是子数组的最小值，直接跳过；</li>
+<li>不存在时，循环查询这个值的下一个值是否存在（<code>n + 1</code>），直到下一个值不存在为止；</li>
+<li>在查询下一个值的过程中保持一个计数器，一直计数到不存在下一个值；</li>
+<li>将其和全局变量取一个最大值；</li>
+</ul>
+</li>
+<li>返回全局最大值。</li>
+</ul>
+<p>因为我们只在子数组的最小值开始遍历，所以能避免不需要的运算，让时间复杂度在 O(n)。</p>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def longestConsecutive(self, nums: List[int]) -&gt; int:
+        ans, nums &#x3D; 0, set(nums)
+        for n in nums:
+            if n - 1 not in nums:
+                count &#x3D; 1
+                while n + 1 in nums:
+                    n, count &#x3D; n + 1, count + 1
+                ans &#x3D; max(ans, count)
+        return ans</code></pre>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>Array</tag>
+        <tag>Union Find</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>1302. Deepest Leaves Sum (Medium)</title>
+    <url>/post/leetcode/1302-Deepest-Leaves-Sum-Medium/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>Tree</tag>
+        <tag>BFS</tag>
+        <tag>Binary Tree</tag>
+        <tag>DFS</tag>
+        <tag>Not Solved</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>135. Candy (Hard)</title>
+    <url>/post/leetcode/135-Candy-Hard/</url>
+    <content><![CDATA[<blockquote>
+<p>做完后才意识到是一道 hard 难度的题。</p>
+</blockquote>
+<p>思路 1，<del>野路子</del> 提取依赖。</p>
+<p>最初的想法是根据左右位置的 <code>rating</code> 值决定当前位置的糖果数量，但是仅仅如此的话会由于无法预知后面的值是否被改变，从而造成漏算；要解决漏算，可以根据 <code>rating</code> 值计算出当前位置的糖果数量是否依赖左右的值，这样遍历一次列表之后我们就获得了所有位置的依赖。</p>
+<p>接着我们准备一个递归函数来根据这些依赖，最终去计算糖果数量。</p>
+<p>数据结构上，对于无依赖项，我们直接储存字面量（int），如果存在依赖则存入 list。</p>
+<p>递归时，如果目标是字面量则直接返回，如果存在进一步的依赖则调用递归进一步计算。这样可以在 O(n) 时间内完成递归。</p>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def candy(self, ratings: List[int]) -&gt; int:
+        n &#x3D; len(ratings)
+        c &#x3D; [-1] * n
+        for i in range(n):
+            res &#x3D; []
+            if i &gt; 0 and ratings[i - 1] &lt; ratings[i]:
+                res.append(i - 1)
+            if i &lt; n - 1 and ratings[i + 1] &lt; ratings[i]:
+                res.append(i + 1)
+            c[i] &#x3D; 1 if len(res) &#x3D;&#x3D; 0 else res
+
+        def cal(idx):
+            if type(c[idx]) &#x3D;&#x3D; int:
+                return c[idx]
+            res &#x3D; []
+            for x in c[idx]:
+                res.append(cal(x) + 1)
+            c[idx] &#x3D; max(res)
+            return c[idx]
+
+
+        for i in range(n):
+            cal(i)
+
+        return sum(c)</code></pre>
+
+<p>思路 2，双列表。</p>
+<p>换一个角度看下思路一，我们能发现从左到右遍历列表时，我们无法预知右边的值是否会变动，但是我们知道左边的值都是看过的，不会发生变动。于是，我们可以准备另一个列表从右到左的遍历一次列表，这样我们就获得了一个能确保右边值都考虑到了的数据。</p>
+<p>要保证每个位置的糖果都符合题目要求，我们需要对两个列表相同位置的糖果取最大值，结果将是我们的答案。</p>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def candy(self, ratings: List[int]) -&gt; int:
+        n &#x3D; len(ratings)
+        left, right &#x3D; [1] * n, [1] * n
+
+        for i in range(n):
+            if i &gt; 0 and ratings[i - 1] &lt; ratings[i]:
+                left[i] &#x3D; left[i - 1] + 1
+
+        for i in range(n - 1, -1, -1):
+            if i &lt; n - 1 and ratings[i + 1] &lt; ratings[i]:
+                right[i] &#x3D; right[i + 1] + 1
+
+        ans &#x3D; 0
+        for i in range(n):
+            ans +&#x3D; max(left[i], right[i])
+
+        return ans</code></pre>
+
+<p>思路 3，单列表。思路 2 的优化版本，使用双列表时，实际上我们没有同时使用到它们，所以优化的思路就是在第二次遍历时对列表进行更新，而不是重新准备一个列表。</p>
+<p>这样完成第二次遍历之后，列表的和就是答案。</p>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def candy(self, ratings: List[int]) -&gt; int:
+        n &#x3D; len(ratings)
+        c &#x3D; [1] * n
+
+        for i in range(n):
+            if i &gt; 0 and ratings[i - 1] &lt; ratings[i]:
+                c[i] &#x3D; c[i - 1] + 1
+
+        for i in range(n - 1, -1, -1):
+            if i &lt; n - 1 and ratings[i + 1] &lt; ratings[i]:
+                c[i] &#x3D; max(c[i], c[i + 1] + 1)
+
+        return sum(c)</code></pre>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>Array</tag>
+        <tag>Greedy</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>1354. Construct Target Array With Multiple Sums (Hard)</title>
+    <url>/post/leetcode/1354-Construct-Target-Array-With-Multiple-Sums-Hard/</url>
+    <content><![CDATA[<p>Topics:</p>
+<p>Greedy.</p>
+<p>Highlight:</p>
+<ul>
+<li>Backward from the max value</li>
+<li>Mod operation on max value with rest sum to get replacement value</li>
+<li>Push replacement value back to heap</li>
+<li>Repeat the procedure until the max value becomes to 1, which means succeed</li>
+<li>Or until the exception occurs and return <code>False</code><ul>
+<li>when the rest sum is greater than the max value</li>
+<li>when the rest sum less than 1</li>
+</ul>
+</li>
+</ul>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def isPossible(self, target: List[int]) -&gt; bool:
+
+        total &#x3D; sum(target)
+        # Transform min heap to max heap.
+        heap &#x3D; [-x for x in target]
+        heapify(heap)
+
+        # If the max value of heap is
+        while -heap[0] !&#x3D; 1:
+            # Get max value of current heap.
+            num &#x3D; -heap[0]
+            # Get the rest sum except the max value.
+            total +&#x3D; heappop(heap)
+            # print(num, total, heap)
+            if total &gt;&#x3D; num or total &#x3D;&#x3D; 0:
+                return False
+            # Get last replacement value.
+            # It&#39;s the point to reduce time complicity.
+            # With using the mod operator, we avoid to iterate through every step.
+            num %&#x3D; total
+            # Add up the replacement and add to heap.
+            total +&#x3D; num
+            heappush(heap, -num or -total)
+
+        return True</code></pre>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>Greedy</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>1383. Maximum Performance of a Team (Hard)</title>
+    <url>/post/leetcode/1383-Maximum-Performance-of-a-Team-Hard/</url>
+    <content><![CDATA[<p>解题思路是先计算局部最优解，再计算全局的最优解，是典型的贪心算法的应用场景。但这道题困难之处在于需要保持两个排序，而意识到这个解决方案需要一定的直觉。</p>
+<p>读完题我们可以了解到团队的表现计算公式为：<code>sum(speeds) * min(efficiencies)</code>，这里的细节是选择的团队成员最多可以达到<code>k</code>位，意味着当团队人数少于<code>k</code>能取得更好的表现时的结果可以作为局部最优解。</p>
+<p>据此我们开始思考，暴力解法最大的问题在于做了很多没有意义的运算，如果能找到一个方法对暴力算法进行剪枝，我们就能更快的得到答案。这道题的瓶颈在于 <code>efficiency</code> 取其最小值，而换句话来说，如果我们指定了一个队员的 <code>efficiency</code> 为最小值，那么此时的局部最优解将会是所有效率高于这个队员的人之中速度最快的前 <code>k-1</code> 个人加上这个队员的速度（我们一共选了 <code>k</code> 个人），将结果乘以这个队员的效率（因为这个队员是最小值）。</p>
+<p>要实现这个思路需要保持 2 个排序：</p>
+<ul>
+<li><code>efficiency</code> 降序：将队员按照效率以降序排序，这样遍历的时候当前的队员永远是效率低于前面队员的；</li>
+<li><code>speed</code> 动态排序：按照效率遍历，每次挑选一个队员，动态计算出速度的排序，还需要关注几个细节：<ul>
+<li><code>speed</code> 排序元素的长度达到 <code>k</code> 时意味着接下来如果我们加了一个队员，就一定要放走一个已有的队员，我们放走速度最慢的队员；</li>
+<li>堆的数据结构非常适合 <code>speed</code> 排序，我们可以将新的值丢入堆中，每次从堆顶移出一个最小值。</li>
+</ul>
+</li>
+</ul>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def maxPerformance(self, n: int, speed: List[int], efficiency: List[int], k: int) -&gt; int:
+        es &#x3D; sorted(zip(efficiency, speed), key&#x3D;lambda x: -x[0])
+        ans, total, q &#x3D; 0, 0, []
+        for e, s in es:
+            total, ans &#x3D; total + s, max(ans, (total + s) * e)
+            heapq.heappush(q, s)
+            if len(q) &#x3D;&#x3D; k:
+                total -&#x3D; heapq.heappop(q)
+        return ans % (10 ** 9 + 7)</code></pre>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>Greedy</tag>
+        <tag>Sort</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>1423. Maximum Points You Can Obtain from Cards (Medium)</title>
+    <url>/post/leetcode/1423-Maximum-Points-You-Can-Obtain-from-Cards-Medium/</url>
+    <content><![CDATA[<h1 id="1423-Maximum-Points-You-Can-Obtain-from-Cards-Medium"><a href="#1423-Maximum-Points-You-Can-Obtain-from-Cards-Medium" class="headerlink" title="1423. Maximum Points You Can Obtain from Cards (Medium)"></a>1423. Maximum Points You Can Obtain from Cards (Medium)</h1><p>Topics:</p>
+<p>Array, DP, sliding window.</p>
+<p>思路 1，用滑动窗口检查 k 以外的连续元素的最小值，然后用数组和减去这个最小值。计算过程用 DP 简化，仅需计算数组前缀和。优势是思路简单，前缀和使用 in-place 不会占用额外空间。虽然思路简单，但是代码不算简洁。</p>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def maxScore(self, cp: List[int], k: int) -&gt; int:
+        n &#x3D; len(cp)
+
+        # Calculate prefix sum.
+        for i in range(1, n):
+            cp[i] +&#x3D; cp[i - 1]
+
+        if n &#x3D;&#x3D; k:
+            return cp[-1]
+
+        sz &#x3D; n - k
+        m &#x3D; cp[sz - 1]
+
+        for i in range(sz, n):
+            m &#x3D; min(m, cp[i] - cp[i - sz])
+
+        return cp[-1] - m</code></pre>
+
+<p>思路 2 就是直接按照提问的思路，计算所有组合并且求最大值，逻辑捋清楚之后也比较简单，这里只需要滑动窗口，每次减去离开窗口的值、加上进入窗口的值，然后取最大值。思路捋清楚后代码比较简洁.</p>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def maxScore(self, cp: List[int], k: int) -&gt; int:
+        ans &#x3D; curr &#x3D; sum(cp[:k])
+        # From k - 1 to 0
+        for i in range(k - 1, -1, -1):
+            curr +&#x3D; cp[i - k] - cp[i]
+            ans &#x3D; max(ans, curr)
+        return ans</code></pre>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>Array</tag>
+        <tag>Sliding Window</tag>
+        <tag>DP</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>144. Binary Tree Preorder Traversal (Easy)</title>
+    <url>/post/leetcode/144-Binary-Tree-Preorder-Traversal-Easy/</url>
+    <content><![CDATA[<p>遍历树有三种方法，分别是前序 pre-order、中序 in-order 和后序 post-order 遍历。这道题是前序遍历。</p>
+<p>前序遍历的递归写法没有难度。</p>
+<p>思路 1，递归</p>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def preorderTraversal(self, root: TreeNode) -&gt; List[int]:
+        ans &#x3D; []
+
+        def traverse(node):
+            if node is None:
+                return
+            ans.append(node.val)
+            traverse(node.left)
+            traverse(node.right)
+
+        traverse(root)
+        return ans</code></pre>
+
+<p>思路 2，遍历</p>
+<p>使用 stack 或队列按顺序记录需要检查的节点，需要关注的是：</p>
+<ul>
+<li>stack 是先进后出，要保证先左后右的顺序，需要先放入右 child，再放入左 child；</li>
+<li>队列是先进先出，按正常顺序放入左右 child 即可。</li>
+</ul>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def preorderTraversal(self, root: TreeNode) -&gt; List[int]:
+        ans, stack &#x3D; [], [root]
+
+        while len(stack) &gt; 0:
+            node &#x3D; stack.pop()
+            if node is None:
+                continue
+            ans.append(node.val)
+            stack.append(node.right)
+            stack.append(node.left)
+
+        return ans</code></pre>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>Tree</tag>
+        <tag>Binary Tree</tag>
+        <tag>DFS</tag>
+        <tag>Stack</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>145. Binary Tree Postorder Traversal (Easy)</title>
+    <url>/post/leetcode/145-Binary-Tree-Postorder-Traversal-Easy/</url>
+    <content><![CDATA[<p>遍历树通常有三种方法，分别是前序遍历（pre-order traversal）、中序遍历（in-order traversal）和后序遍历（post-order traversal）。这道题是后序遍历。</p>
+<p>思路 1，递归</p>
+<p>三种递归遍历方式的区别仅在于处理的顺序。</p>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def postorderTraversal(self, root: TreeNode) -&gt; List[int]:
+        ans &#x3D; []
+
+        def traverse(node):
+            if node is None:
+                return
+            traverse(node.left)
+            traverse(node.right)
+            ans.append(node.val)
+
+        traverse(root)
+        return ans</code></pre>
+
+<p>思路 2，迭代遍历</p>
+<p>后序遍历按照 left -&gt; right -&gt; root 的顺序遍历树，你会发现这和前序遍历相似，我们只需要将前序遍历方法中左右子节点的遍历顺序对调，并将其结果颠倒一下顺序，即可得到后序遍历的结果。</p>
+<p>但是这样不够优雅。</p>
+<p>我们延续 stack 的思路，通过观察我们知道要完成后序遍历，每次迭代过程中我们可以把当前节点、右节点、左节点按顺序放入 stack 中，针对当前节点，需要将其左右子节点置空表示已经遍历过。</p>
+<p>我们的 Base Case 的条件是当前节点没有左右子节点，这表示该节点是叶子节点，或是已经遍历过的节点，针对这两种情况我们直接记录它的值。</p>
+<p>重复这个过程，直到完成遍历。</p>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def postorderTraversal(self, root: TreeNode) -&gt; List[int]:
+        ans, stack &#x3D; [], [root]
+
+        while len(stack) &gt; 0:
+            curr &#x3D; stack.pop()
+            if not curr:
+                continue
+            left, right &#x3D; curr.left, curr.right
+            if not left and not right:
+                ans.append(curr.val)
+                continue
+            curr.left, curr.right &#x3D; None, None
+            stack.append(curr)
+            stack.append(right)
+            stack.append(left)
+
+        return ans</code></pre>
+
+<p>思路 3，迭代遍历，基于中序迭代遍历优化</p>
+<p>由于 root 的值是最后记录的，在当前节点存在右节点的情况，还需要将当前节点的右节点置空，重新存入 stack。在空间复杂度上比思路 2 而言没有太大优化。</p>
+<p>这个思路下，我们先到达左节点的最下层左节点（即最后一个左节点，该节点的左节点为空），然后根据右节点发生下面分支：</p>
+<ul>
+<li>右节点不存在：The Base Case，这个节点是叶子节点或访问过的节点，记录它的值；</li>
+<li>右节点存在：置空当前节点的右节点并存入 stack，将右节点标记为当前节点进入下一个迭代过程。</li>
+</ul>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def postorderTraversal(self, root: TreeNode) -&gt; List[int]:
+        ans, stack, curr &#x3D; [], [], root
+
+        while curr or len(stack) &gt; 0:
+            while curr:
+                stack.append(curr)
+                curr &#x3D; curr.left
+            curr &#x3D; stack.pop()
+            if curr.right:
+                stack.append(curr)
+                # 置空当前节点的右节点，标记右节点为当前节点
+                curr.right, curr &#x3D; None, curr.right
+                continue
+            ans.append(curr.val)
+            # 节点已经遍历完成，注意需要清空指针
+            curr &#x3D; None
+
+        return ans</code></pre>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>Tree</tag>
+        <tag>Binary Tree</tag>
+        <tag>DFS</tag>
+        <tag>Stack</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>1465. Maximum Area of a Piece of Cake After Horizontal and Vertical Cuts (Medium)</title>
+    <url>/post/leetcode/1465-Maximum-Area-of-a-Piece-of-Cake-After-Horizontal-and-Vertical-Cuts-Medium/</url>
+    <content><![CDATA[<p>将横切和竖切排序，不要忘记加上最大的长宽 <code>h</code> 和 <code>w</code>，对每条切线求出实际长度（当前长度减去前一条线的长度），保留最大值。对取得的最大长宽求面积，结果用 1e9 + 7 取模。</p>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def maxArea(self, h: int, w: int, horizontalCuts: List[int], verticalCuts: List[int]) -&gt; int:
+        horizontalCuts.sort()
+        horizontalCuts.append(h)
+        verticalCuts.sort()
+        verticalCuts.append(w)
+        mh, mv &#x3D; horizontalCuts[0], verticalCuts[0]
+        for i in range(len(horizontalCuts) - 1, 0, -1):
+            mh &#x3D; max(mh, horizontalCuts[i] - horizontalCuts[i-1])
+        for i in range(len(verticalCuts) - 1, 0, -1):
+            mv &#x3D; max(mv, verticalCuts[i] - verticalCuts[i-1])
+        return (mh * mv) % (10**9 + 7)</code></pre>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>Array</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>1480. Running Sum of 1d Array (Easy)</title>
+    <url>/post/leetcode/1480-Running-Sum-of-1d-Array-Easy/</url>
+    <content><![CDATA[<p>Topics:</p>
+<p>Array.</p>
+<p>连续几天 Hard 题目突然蹦出来一道 Easy 还有点不适应，提交之前都在想肯定没这么简单，有那里没考虑到，结果就 Accepted 了。</p>
+<p>简直 leetcode pstd。</p>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def runningSum(self, nums: List[int]) -&gt; List[int]:
+        for i in range(1, len(nums)):
+            nums[i] +&#x3D; nums[i - 1]
+        return nums</code></pre>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>Array</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>150. Evaluate Reverse Polish Notation (Medium)</title>
+    <url>/post/leetcode/150-Evaluate-Reverse-Polish-Notation-Medium/</url>
+    <content><![CDATA[<p>反向波兰表示法是一种使用 Stack 达到方便计算目的的一种数学方法。</p>
+<p>使用递归或 Stack 都能简单的完成计算。使用 Stack 为例，算法过程如下：</p>
+<ul>
+<li>遍历 tokens<ul>
+<li>遇到数字则加到栈顶</li>
+<li>遇到操作符和取出栈顶的 2 个数字做运算，运算结果放回栈顶</li>
+</ul>
+</li>
+<li>最终栈中存在的元素就是答案</li>
+</ul>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def evalRPN(self, tokens: List[str]) -&gt; int:
+        stack &#x3D; []
+
+        for t in tokens:
+            if t not in &#123;&quot;+&quot;, &quot;-&quot;, &quot;*&quot;, &quot;&#x2F;&quot;&#125;:
+                stack.append(int(t))
+            else:
+                right, left &#x3D; stack.pop(), stack.pop()
+                # print(left, t, right)
+                if t &#x3D;&#x3D; &#39;+&#39;:
+                    stack.append(left + right)
+                elif t &#x3D;&#x3D; &#39;-&#39;:
+                    stack.append(left - right)
+                elif t &#x3D;&#x3D; &#39;*&#39;:
+                    stack.append(left * right)
+                else:
+                    stack.append(trunc(left &#x2F; right))
+
+        return stack[0]</code></pre>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>Stack</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>164. Maximum Gap (Hard)</title>
+    <url>/post/leetcode/164-Maximum-Gap-Hard/</url>
+    <content><![CDATA[<p>桶排序实现常数 n 的 O(n)复杂度。</p>
+<p>桶排序是指将数据划分为诺干子数组，称之为桶，在桶内使用一般排序算法（比如 O(n^2)的插入排序等）排序，等到每一个桶就完成各自的排序之后，将所有桶按照顺序组合起来，获得最终排序完成的数组。</p>
+<p>这样做的优势，通过一个例子可以清晰的明白：我们有一个长度为 10 的数组需要排序；</p>
+<ul>
+<li>使用插入排序，O(n^2)的情况下最差的情况将进行 10*10=100 次操作；</li>
+<li>使用桶排序，选择最大的桶将数组分为两个长度为 5 的子数组，分别应用排序，最差情况将进行 10（分桶）+5*5（插入排序）*2（2 个桶） =60 次操作。</li>
+</ul>
+<p>但是桶的尺寸为 2 对于这个场景并不是最优的选择，这个例子解释了就算用极限分桶，也比单独使用插入排序高效。</p>
+<p>桶排序的重点在于决定桶的尺寸，这直接影响到排序效率，对于这道题来说，通过数学归纳可以得知，最大间距的最小可能应该是间距的平均值，而当所有数的间隔都是平均分布的时候才会遇到这个场景，比如 <code>[0, 5, 10, 15]</code>，其中总间距为最大值减去最小值，即 <code>15-0=15</code>，通过观察得知间距的数量为数组长度减去 <code>1</code>，即 <code>4-1=3</code>，那么平均间距为 <code>15/3=5</code>，对于这个数组来说，平均间距就是最大间距，但是一旦其中任何一个值变大或变小任意长度，比如 <code>[0, 4, 10, 15]</code>，第一个间距从 <code>5</code> 变为 <code>4</code>，就必定意味着第二个间距从 <code>5</code> 变为 <code>6</code>。</p>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def maximumGap(self, nums: List[int]) -&gt; int:
+        ans, n, hi, lo &#x3D; 0, len(nums), max(nums), min(nums)
+        if n &lt; 2: return 0
+        # Set 1 for case that max gap less than its length.
+        bsize &#x3D; (hi - lo) &#x2F;&#x2F; (n - 1) or 1
+        buckets &#x3D; [[-1, -1] for _ in range((hi - lo) &#x2F;&#x2F; bsize + 1)]
+        for x in nums:
+            b &#x3D; (x - lo) &#x2F;&#x2F; bsize
+            buckets[b][0] &#x3D; min(buckets[b][0], x) if buckets[b][0] !&#x3D; -1 else x
+            buckets[b][1] &#x3D; max(buckets[b][1], x)
+        prev &#x3D; buckets[0][1]
+        for i in range(1, len(buckets)):
+            if buckets[i][0] &#x3D;&#x3D; -1:
+                continue
+            ans &#x3D; max(ans, buckets[i][0] - prev)
+            prev &#x3D; buckets[i][1]
+        return ans</code></pre>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>Sort</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>1642. Furthest Building You Can Reach (Medium)</title>
+    <url>/post/leetcode/1642-Furthest-Building-You-Can-Reach-Medium/</url>
+    <content><![CDATA[<p>Topics:</p>
+<p>Binary search (what?), heap.</p>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def furthestBuilding(self, h: List[int], bricks: int, ladders: int) -&gt; int:
+        lv &#x3D; []
+
+        for x in range(1, len(h)):
+            gap &#x3D; h[x] - h[x-1]
+            if gap &lt;&#x3D; 0:
+                continue
+            lv.append(gap)
+            if gap &lt;&#x3D; bricks:
+                bricks -&#x3D; gap
+                continue
+            elif ladders !&#x3D; 0:
+                lv.sort()
+                ladders -&#x3D; 1
+                bricks +&#x3D; lv.pop() - gap
+                continue
+            else:
+                return x - 1
+
+        return len(h) - 1</code></pre>
+
+<p>Ver 2.0 using max heap.</p>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def furthestBuilding(self, heights: List[int], bricks: int, ladders: int) -&gt; int:
+        heap &#x3D; []
+
+        for i in range(1, len(heights)):
+            if heights[i] &gt; heights[i - 1]:
+                h &#x3D; heights[i] - heights[i - 1]
+                heappush(heap, -h)
+                bricks -&#x3D; h
+                if bricks &gt;&#x3D; 0:
+                    continue
+                elif ladders !&#x3D; 0:
+                    bricks -&#x3D; heappop(heap)
+                    ladders -&#x3D; 1
+                else:
+                    return i - 1
+
+        return len(heights) - 1</code></pre>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>Binary Search</tag>
+        <tag>Heap</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>1689. Partitioning Into Minimum Number Of Deci-Binary Numbers (Medium)</title>
+    <url>/post/leetcode/1689-Partitioning-Into-Minimum-Number-Of-Deci-Binary-Numbers-Medium/</url>
+    <content><![CDATA[<p>???Medium??? Seriously?!</p>
+<pre class="language-java" data-language="java"><code class="language-java">class Solution &#123;
+    public int minPartitions(String n) &#123;
+        int ans &#x3D; 0;
+        for (char c : n.toCharArray()) &#123;
+            if (c - &#39;0&#39; &gt; ans) ans &#x3D; c - &#39;0&#39;;
+            if (ans &#x3D;&#x3D; 9) return ans;
+        &#125;
+        return ans;
+    &#125;
+&#125;</code></pre>
+
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def minPartitions(self, n: str) -&gt; int:
+        return max(int(x) for x in n)</code></pre>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>Greedy</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>1695. Maximum Erasure Value (Medium)</title>
+    <url>/post/leetcode/1695-Maximum-Erasure-Value-Medium/</url>
+    <content><![CDATA[<p>双指针 Sliding Window + nmap。入参数值上限 10^4，所以我们可以准备一个能容纳最大数字的数组来储存每个数字出现的次数。</p>
+<p>双指针方法，准备 <code>left</code>、<code>right</code> 两个指针，<code>right</code> 指针遍历整个数组，每次迭代计算合计值和最大值，当数字出现次数超过 1 时，迭代 <code>left</code> 指针直到数字出现次数回到 1，迭代过程中将移出窗口的数字从合计值中减去。重复这个过程直到 <code>right</code> 到达终点。</p>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def maximumUniqueSubarray(self, nums: List[int]) -&gt; int:
+        score, left, total, mask &#x3D; 0, 0, 0, [0] * 10001
+        for right in nums:
+            mask[right] +&#x3D; 1
+            total +&#x3D; right
+            while mask[right] &gt; 1:
+                mask[nums[left]] -&#x3D; 1
+                total -&#x3D; nums[left]
+                left +&#x3D; 1
+            score &#x3D; max(score, total)
+        return score</code></pre>
+
+<pre class="language-java" data-language="java"><code class="language-java">class Solution &#123;
+    public int maximumUniqueSubarray(int[] nums) &#123;
+        int[] map &#x3D; new int[10001];
+        int score &#x3D; 0, left &#x3D; 0, total &#x3D; 0;
+        for (int right : nums) &#123;
+            total +&#x3D; right;
+            map[right]++;
+            while (map[right] &gt; 1) &#123;
+                total -&#x3D; nums[left];
+                map[nums[left++]]--;
+            &#125;
+            score &#x3D; Math.max(score, total);
+        &#125;
+        return score;
+    &#125;
+&#125;</code></pre>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>Two Pointers</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>1696. Jump Game VI (Medium)</title>
+    <url>/post/leetcode/1696-Jump-Game-VI-Medium/</url>
+    <content><![CDATA[<p>思路 1，DP + Heap。这道题很容易想到用 DP 来解决，我们记录 k 步以内的值，每一次用最大值来计算下一个值，可以用 O(n*k) 的复杂度完成计算，但是可惜 k 的最大值能到 10^5，O(n*k) 无法通过测试 case。</p>
+<p>我们需要减少计算最大值的次数，可以考虑用大根堆数据结构来处理最大值的计算，但是这道题的复杂度在于我我们需要根据下标来判断这个值能不能选用，毕竟如果下标不在跳跃的范围内，这个最大值对我们来说就失效了。</p>
+<p>为了处理这个问题，我们在创建大根堆的时候以 <code>(value, index)</code> 形式将值和下标建立联系。在每次迭代过程中，我们将失效的最大值从堆中移出掉，再去计算当前应该放入堆中的值。</p>
+<p>使用 Python 时需要注意 hqapq 没有原生提供大根堆的支持，我们可以在存值的使用使用负号颠倒一下值的大小，达到大根堆的效果。</p>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def maxResult(self, nums: List[int], k: int) -&gt; int:
+        ans, q &#x3D; nums[0], [(-nums[0], 0)]
+        for i in range(1, len(nums)):
+            while i - q[0][1] &gt; k:
+                heappop(q)
+            ans &#x3D; nums[i] - q[0][0]
+            heappush(q, (-ans, i))
+        return ans</code></pre>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>Dequeue</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>1710. Maximum Units on a Truck (Easy)</title>
+    <url>/post/leetcode/1710-Maximum-Units-on-a-Truck-Easy/</url>
+    <content><![CDATA[<p>将 <code>boxTypes</code> 按照 <code>units</code> 排序，从最大的 <code>units</code> 开始装入卡车，直到装满 <code>truckSize</code> 的数量。</p>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def maximumUnits(self, boxTypes: List[List[int]], truckSize: int) -&gt; int:
+        boxTypes.sort(key&#x3D;lambda x: x[1], reverse&#x3D;True)
+        ans &#x3D; 0
+        for nums, units in boxTypes:
+            if truckSize &lt;&#x3D; nums:
+                return ans + truckSize * units
+            else:
+                ans +&#x3D; nums * units
+                truckSize -&#x3D; nums
+        return ans</code></pre>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>Greedy</tag>
+        <tag>Sort</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>19. Remove Nth Node From End of List (Medium)</title>
+    <url>/post/leetcode/19-Remove-Nth-Node-From-End-of-List-Medium/</url>
+    <content><![CDATA[<p>With solutions both in Java and Python.</p>
+<p>先读题。</p>
+<blockquote>
+<p>Given the <code>head</code> of a linked list, remove the <code>nth</code> node from the <strong>end of the list</strong> and return its <code>head</code>.</p>
+<p><strong>Follow up</strong>: Could you do this in one pass?</p>
+</blockquote>
+<p>移除一个 linked list 末尾第 n 个节点，返回这个 linked list 的 head。最好是 One-pass 算法， 即一个流程里面获得想要的结果。</p>
+<p>Example 1:</p>
+<pre class="language-none"><code class="language-none">Input: head &#x3D; [1,2,3,4,5], n &#x3D; 2
+Output: [1,2,3,5]</code></pre>
+
+<p>Example 2:</p>
+<pre class="language-none"><code class="language-none">Input: head &#x3D; [1], n &#x3D; 1
+Output: []</code></pre>
+
+<p>Example 3:</p>
+<pre class="language-none"><code class="language-none">Input: head &#x3D; [1,2], n &#x3D; 1
+Output: [1]</code></pre>
+
+<p>Constraints:</p>
+<ul>
+<li>The number of nodes in the list is <code>sz</code>.</li>
+<li>1 &lt;= <code>sz</code> &lt;= 30</li>
+<li>0 &lt;= <code>Node.val</code> &lt;= 100</li>
+<li>1 &lt;= <code>n</code> &lt;= <code>sz</code></li>
+</ul>
+<h3 id="思路-amp-Solutions"><a href="#思路-amp-Solutions" class="headerlink" title="思路 &amp; Solutions"></a>思路 &amp; Solutions</h3><p>最简单的方法是先遍历一遍 Linked list 获得列表长度，然后重新遍历一次，在 <code>L - n - 1</code> 处停下，删掉下一个节点。</p>
+<p>但是这样就不算 One-pass 算法了。</p>
+<p>为了达成 One-pass 算法，我们可以维护 2 个指针。</p>
+<ul>
+<li>用 2 个指针，first 指向底部，一直遍历到最后；</li>
+<li>second 指向需要删除的节点的上一个节点，与 first 维持 <code>n + 1</code> 的距离。</li>
+</ul>
+<p>为了避免处理例子 2 中的那种删除唯一节点的情况，我们初始化一个 dummy 节点，从这里开始遍历。</p>
+<p>下面是 Python 代码。</p>
+<pre class="language-python" data-language="python"><code class="language-python"># Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val&#x3D;0, next&#x3D;None):
+#         self.val &#x3D; val
+#         self.next &#x3D; next
+class Solution:
+    def removeNthFromEnd(self, head: ListNode, n: int) -&gt; ListNode:
+        dummy &#x3D; first &#x3D; second &#x3D; ListNode()
+        dummy.next &#x3D; head
+        dis &#x3D; 1
+
+        while first.next is not None:
+            first &#x3D; first.next
+            # 注意由于second指向需要删除的节点的上一个节点，所以需要与first保持n+1的距离
+            if dis !&#x3D; n + 1:
+                dis +&#x3D; 1
+            else:
+                second &#x3D; second.next
+
+        second.next &#x3D; second.next.next
+        return dummy.next</code></pre>
+
+<p>下面是相同逻辑的 Java 代码。</p>
+<pre class="language-java" data-language="java"><code class="language-java">&#x2F;**
+ * Definition for singly-linked list.
+ * public class ListNode &#123;
+ *     int val;
+ *     ListNode next;
+ *     ListNode() &#123;&#125;
+ *     ListNode(int val) &#123; this.val &#x3D; val; &#125;
+ *     ListNode(int val, ListNode next) &#123; this.val &#x3D; val; this.next &#x3D; next; &#125;
+ * &#125;
+ *&#x2F;
+class Solution &#123;
+    public ListNode removeNthFromEnd(ListNode head, int n) &#123;
+        ListNode dummy &#x3D; new ListNode();
+        ListNode first &#x3D; dummy;
+        ListNode second &#x3D; dummy;
+        dummy.next &#x3D; head;
+
+        int dis &#x3D; 1;
+
+        while (first.next !&#x3D; null) &#123;
+            first &#x3D; first.next;
+            &#x2F;&#x2F; 注意由于second指向需要删除的节点的上一个节点，所以需要与first保持n+1的距离
+            if (dis !&#x3D; n + 1) &#123;
+                dis++;
+            &#125; else &#123;
+                second &#x3D; second.next;
+            &#125;
+        &#125;
+
+        second.next &#x3D; second.next.next;
+        return dummy.next;
+    &#125;
+&#125;</code></pre>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>Linked List</tag>
+        <tag>Two Pointers</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>204. Count Primes (Easy)</title>
+    <url>/post/leetcode/204-Count-Primes-Easy/</url>
+    <content><![CDATA[<p>Topics:</p>
+<p>Hash table, math.</p>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def countPrimes(self, n: int) -&gt; int:
+
+        isprime &#x3D; [1] * n
+
+        for i in range(2, int(math.sqrt(n)) + 1):
+            if isprime[i] !&#x3D; 0:
+                for j in range(i ** 2, n, i):
+                    isprime[j] &#x3D; 0
+
+        # 0 and 1 are not prime.
+        ans &#x3D; sum(isprime) - 2
+        return ans if ans &gt; 0 else 0</code></pre>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>Hash Table</tag>
+        <tag>Math</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>22. Generate Parentheses (Medium)</title>
+    <url>/post/leetcode/22-Generate-Parentheses-Medium/</url>
+    <content><![CDATA[<p>把括号转换成数字，我们可以观察到其中的规律。转数字的方法在于对括号嵌套的层级进行计数，比如 <code>((()))</code> 一共嵌套了 3 层，所以转化为数字为 <code>123</code>，而 <code>()(())</code> 可以转化为 <code>112</code>。</p>
+<blockquote>
+<p>Input: n = 3</p>
+<p>Output: [“((()))”,”(()())”,”(())()”,”()(())”,”()()()”]</p>
+</blockquote>
+<blockquote>
+<p>Layout: [123, 122, 121, 112, 111]</p>
+</blockquote>
+<p>规律在答案中的所有组合都属于 <code>1..n</code> 到 <code>1..1</code> 的枚举。比如 <code>123, 122, 121</code> 的过程中最高位 3 被枚举到 1，而下一个数第二位 2 降为 1，第三位从第二位原本的值开始继续枚举到 1。</p>
+<p>我们可以将其转化为算法，计算出所有可能的嵌套布局，然后用一个 <code>draw</code> 方法来将布局转化为实际的括号字符串。转化过程有三种模式：</p>
+<ul>
+<li>对排列的最后一个元素的处理：插入一对括号，然后关闭其他所有括号；</li>
+<li>对当前元素 &gt;= 下一个元素的处理：插入一对括号，关闭到下一个元素为止层级的括号；</li>
+<li>对当前元素 &lt; 下一个元素对处理：插入左半边括号。</li>
+</ul>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def generateParenthesis(self, n: int) -&gt; List[str]:
+        ans &#x3D; []
+        def generate(layout:[int] &#x3D; [1]):
+            if len(layout) &#x3D;&#x3D; n:
+                ans.append(draw(layout))
+                return
+            for i in range(int(layout[-1]) + 1, 0, -1):
+                generate(layout + [i])
+
+        def draw(layout:[int]):
+            res &#x3D; &quot;&quot;
+            for i in range(n):
+                if i &#x3D;&#x3D; n - 1:
+                    # Add a left parentheses and close all others.
+                    res +&#x3D; &quot;(&quot;  + &quot;)&quot; * layout[i]
+                elif layout[i] &gt;&#x3D; layout[i + 1]:
+                    # Add a left parentheses and close all others.
+                    res +&#x3D; &quot;(&quot;  + &quot;)&quot; * (layout[i] - layout[i + 1] + 1)
+                else:
+                    # Add a left parentheses only.
+                    res +&#x3D; &quot;(&quot;
+            return res
+
+        generate()
+        return ans</code></pre>
+
+<p>上面的思路只是找到了题目的答案，但是算不上优雅。对字符串的编辑可以在计算布局的适合完成，或者说，一旦我们知道了布局的规律，我们就可以完全没有额外操作的找到所有组合。</p>
+<p>但是在编辑字符串的适合很容易陷入到对多种情况的考虑，但是只要换一个角度想想问题就可以解决：括号会出现在哪里？</p>
+<p>实际上合理的括号只会出现在两个位置：当前括号的里面（嵌套变深），当前括号的右边（非嵌套）。</p>
+<p>下一个问题是，哪些括号放在里面，哪些放在右边呢？答案是，从 <code>n</code> 到 <code>1</code> 遍历，当前的 <code>index</code> 在括号里面，<code>n - index</code> 在括号的右边，当然反之亦然，影响的只是答案中每个元素出现的顺序而已。</p>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def generateParenthesis(self, n: int) -&gt; List[str]:
+        if n &#x3D;&#x3D; 0:
+            return [&#39;&#39;]
+        ans &#x3D; []
+        for i in range(n):
+            for left in self.generateParenthesis(i):
+                for right in self.generateParenthesis(n - 1 - i):
+                    ans.append(f&quot;(&#123;left&#125;)&#123;right&#125;&quot;)
+        return ans</code></pre>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>String</tag>
+        <tag>Backtracking</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>303. Range Sum Query - Immutable (Easy)</title>
+    <url>/post/leetcode/303-Range-Sum-Query-Immutable-Easy/</url>
+    <content><![CDATA[<p>前缀和，然后查询区间，最右减去最左，注意一个 index 的 offset。</p>
+<p>查询 0 开始的范围，需要减去 -1 下标的和，这不合理，所以遇到 -1 可以选择重置为 0，但这不优雅。</p>
+<p>通过向数组左端添加一个 0，可以避免处理 query 范围左端为 -1 的场景。</p>
+<pre class="language-python" data-language="python"><code class="language-python">class NumArray:
+
+    def __init__(self, nums: List[int]):
+        self.q &#x3D; [0]
+        for n in nums:
+            self.q.append(self.q[-1] + n)
+
+
+    def sumRange(self, left: int, right: int) -&gt; int:
+        return self.q[right + 1] - self.q[left]</code></pre>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>Array</tag>
+        <tag>Prefix Sum</tag>
+        <tag>Design</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>304. Range Sum Query 2D - Immutable (Medium)</title>
+    <url>/post/leetcode/304-Range-Sum-Query-2D-Immutable-Medium/</url>
+    <content><![CDATA[<p>Topics:</p>
+<p>DP.</p>
+<p>类似 1074，先求 Prefix Sum，然后计算子矩阵和。</p>
+<pre class="language-python" data-language="python"><code class="language-python">class NumMatrix:
+
+    def __init__(self, matrix: List[List[int]]):
+        m, n &#x3D; len(matrix), len(matrix[0])
+
+        for j in range(1, n):
+            matrix[0][j] +&#x3D; matrix[0][j - 1]
+
+        for i in range(1, m):
+            for j in range(n):
+                if j &gt; 0:
+                    matrix[i][j] +&#x3D; matrix[i][j - 1] - matrix[i - 1][j - 1]
+                matrix[i][j] +&#x3D; matrix[i - 1][j]
+
+        self._m &#x3D; matrix
+
+
+    def sumRegion(self, row1: int, col1: int, row2: int, col2: int) -&gt; int:
+        ans &#x3D; self._m[row2][col2]
+        if row1 &gt; 0:
+            ans -&#x3D; self._m[row1 - 1][col2]
+        if col1 &gt; 0:
+            ans -&#x3D; self._m[row2][col1 - 1]
+        if row1 &gt; 0 and col1 &gt; 0:
+            ans +&#x3D; self._m[row1 - 1][col1 - 1]
+        return ans
+
+# Your NumMatrix object will be instantiated and called as such:
+# obj &#x3D; NumMatrix(matrix)
+# param_1 &#x3D; obj.sumRegion(row1,col1,row2,col2)</code></pre>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>DP</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>307. Range Sum Query - Mutable (Medium)</title>
+    <url>/post/leetcode/307-Range-Sum-Query-Mutable-Medium/</url>
+    <content><![CDATA[<p>给定数组，可以更新元素，还要快速查询范围内的和、最大最小值，这是典型的 Segment Tree （线段树）的应用场景。</p>
+<p>线段树可以用数组和 TreeNode 的结构表达。这里需要构建一个和线段树，方便起见用数组来表达线段树。</p>
+<p><strong>Build Tree</strong></p>
+<p>线段树是一个二叉树结构，在给定数组上构建一个线段树，最终节点数约等于原数组长度的 2 倍，所以我们准备一个原数组长度 2 倍的数组，将原数组的元素放在从 <code>n</code> 开始的后半段。</p>
+<p>前半段从 <code>n - 1</code> 开始遍历到 <code>0</code>，每个位置的值等于 <code>2 * i</code> + <code>2 * i + 1</code>，即其左右节点的和。树的构建就完成了。</p>
+<p><strong>Update Values</strong></p>
+<p>更新线段树时，只需要更新从目标叶子节点开始到根节点的路径。</p>
+<p>我们从叶子节点出发，用下标除以 2，更新每一个途径的节点，直到根节点，我们一共更新 log n 个元素。</p>
+<p><strong>Range Sum Query</strong></p>
+<p>查询给定范围的和，分左右边界进行讨论：</p>
+<p>左边界：</p>
+<ul>
+<li>如果左边元素属于节点的 right child，这意味着它的父节点包含一个值在查询的范围之外，所以我们仅加上左边元素的值本身，然后将边界向右移动一位；</li>
+<li>如果左边元素属于节点的 left child，我们查询它的父元素即可。</li>
+</ul>
+<p>右边界：</p>
+<ul>
+<li>相反，如果右边元素属于节点的 left child，我们仅加上元素本身的值，将边界向左移动一位；</li>
+<li>如果右边元素属于节点的 right child，我们查询它的父元素。</li>
+</ul>
+<p>我们更新左右边界，重复这个过程直到左右边界接错开（left &gt; right），这时我们得到了答案。</p>
+<pre class="language-python" data-language="python"><code class="language-python">class NumArray:
+
+    def __init__(self, nums: List[int]):
+        n &#x3D; len(nums)
+        tree &#x3D; [0] * 2 * n
+        for i in range(n):
+            tree[i + n] &#x3D; nums[i]
+        for i in range(n - 1, -1, -1):
+            tree[i] &#x3D; tree[i * 2] + tree[i * 2 + 1]
+
+        self.n &#x3D; n
+        self.tree &#x3D; tree
+
+
+    def update(self, index: int, val: int) -&gt; None:
+        n, tree &#x3D; self.n, self.tree
+        index +&#x3D; n
+        tree[index] &#x3D; val
+        while index !&#x3D; 0:
+            index &#x2F;&#x2F;&#x3D; 2
+            tree[index] &#x3D; tree[2 * index] + tree[2 * index + 1]
+
+
+    def sumRange(self, left: int, right: int) -&gt; int:
+        n, tree &#x3D; self.n, self.tree
+        left +&#x3D; n
+        right +&#x3D; n
+        ans &#x3D; 0
+        while left &lt;&#x3D; right:
+            if left % 2 &#x3D;&#x3D; 1:
+                ans +&#x3D; tree[left]
+                left +&#x3D; 1
+            if right % 2 &#x3D;&#x3D; 0:
+                ans +&#x3D; tree[right]
+                right -&#x3D; 1
+            left &#x2F;&#x2F;&#x3D; 2
+            right &#x2F;&#x2F;&#x3D; 2
+        return ans</code></pre>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>Binary Indexed Tree</tag>
+        <tag>Segment Tree</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>318. Maximum Product of Word Lengths (Medium)</title>
+    <url>/post/leetcode/318-Maximum-Product-of-Word-Lengths-Medium/</url>
+    <content><![CDATA[<p>思路 1，找到所有组合求最大值，用一个帮助函数 <code>pair</code> 来帮助我们判断是否需要进行相乘。</p>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def maxProduct(self, words: List[str]) -&gt; int:
+        def pair(w1, w2):
+            for w in w1:
+                if w in w2:
+                    return False
+            return True
+
+        ans, n &#x3D; 0, len(words)
+        for i in range(n):
+            for j in range(i + 1, n):
+                if pair(words[i], words[j]):
+                    ans &#x3D; max(ans, len(words[i]) * len(words[j]))
+        return ans</code></pre>
+
+<p>思路 2，英文小写字母只有 26 位，设想我们有一个长度为 26 的二进制数字，按照顺序将每一位映射成一个字母，0 表示有这个字母，1 则表示没有，这就是位掩码。判断相同字符串经常用到位掩码操作，在计算机中位操作往往有更好的效率。要判断两个字符串是否有共同的字母，只需要将他们的位掩码进行 <code>&amp;</code> 操作，这样相同位存在 1 的情况就会让结果大于 0，相反如果没有任何一位存在两边都为 1 的情况，则结果一定是 0。所以我们仅在结果为 0 的时候去计算长度相乘。</p>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def maxProduct(self, words: List[str]) -&gt; int:
+        bitmasks, ans &#x3D; &#123;&#125;, 0
+        for w in words:
+            bitmask &#x3D; 0
+            for c in w:
+                bitmask |&#x3D; 1 &lt;&lt; (ord(c) - ord(&#39;a&#39;))
+            for k, v in bitmasks.items():
+                if not bitmask &amp; k:
+                    ans &#x3D; max(ans, len(w) * v)
+            bitmasks[bitmask] &#x3D; max(len(w), bitmasks.get(bitmask, 0))
+            # print(bitmask, ans)
+        return ans</code></pre>
+
+<p>另一种位掩码的实现，按照下标映射位掩码，省去了 HashMap。</p>
+<pre class="language-java" data-language="java"><code class="language-java">class Solution &#123;
+    public int maxProduct(String[] words) &#123;
+        int[] bitmasks &#x3D; new int[words.length];
+        for (int i &#x3D; 0; i &lt; words.length; i++) &#123;
+            for (char c : words[i].toCharArray()) &#123;
+                bitmasks[i] |&#x3D; 1 &lt;&lt; (c - &#39;a&#39;);
+            &#125;
+        &#125;
+        int ans &#x3D; 0;
+        for (int i &#x3D; 0; i &lt; words.length; i++) &#123;
+            for (int j &#x3D; i + 1; j &lt; words.length; j++) &#123;
+                if ((bitmasks[i] &amp; bitmasks[j]) &#x3D;&#x3D; 0) &#123;
+                    ans &#x3D; Math.max(ans, words[i].length() * words[j].length());
+                &#125;
+            &#125;
+        &#125;
+        return ans;
+    &#125;
+&#125;</code></pre>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>Bit Manipulation</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>341. Flatten Nested List Iterator (Medium)</title>
+    <url>/post/leetcode/341-Flatten-Nested-List-Iterator-Medium/</url>
+    <content><![CDATA[<p>With solutions both in Python and JavaScript.</p>
+<p>先读题：</p>
+<blockquote>
+<p>You are given a nested list of integers <code>nestedList</code>. Each element is either an integer or a list whose elements may also be integers or other lists. Implement an iterator to flatten it.</p>
+<p>Implement the <code>NestedIterator</code> class:</p>
+<ul>
+<li><code>NestedIterator(List&lt;NestedInteger&gt; nestedList)</code> Initializes the iterator with the nested list <code>nestedList</code>.</li>
+<li><code>int next()</code> Returns the next integer in the nested list.</li>
+<li><code>boolean hasNext()</code> Returns <code>true</code> if there are still some integers in the nested list and <code>false</code> otherwise.</li>
+</ul>
+</blockquote>
+<p>题目比较明确，需要我们用迭代器接口来扁平化嵌套数组，需要实现 <code>next</code> 和 <code>hasNext</code> 接口。测试 Case 会调用 <code>hasNext</code> 来检查是否还有值没输出，然后调用 <code>next</code> 获取具体的值。</p>
+<p>需求比较明确，例子看看就好。</p>
+<p>Example 1:</p>
+<pre class="language-console" data-language="console"><code class="language-console">Input: nestedList &#x3D; [[1,1],2,[1,1]]
+Output: [1,1,2,1,1]
+Explanation: By calling next repeatedly until hasNext returns false, the order of elements returned by next should be: [1,1,2,1,1].</code></pre>
+
+<p>Example 2:</p>
+<pre class="language-console" data-language="console"><code class="language-console">Input: nestedList &#x3D; [1,[4,[6]]]
+Output: [1,4,6]
+Explanation: By calling next repeatedly until hasNext returns false, the order of elements returned by next should be: [1,4,6].</code></pre>
+
+<h3 id="Submissions"><a href="#Submissions" class="headerlink" title="Submissions"></a>Submissions</h3><p>先贴一下我的结果，防止剧透，具体代码会贴在最后。</p>
+<p><strong>Python</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Result</th>
+<th>Beats</th>
+<th>Complexity</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Runtime</td>
+<td>60 ms</td>
+<td>92.67%</td>
+<td>O(n)</td>
+</tr>
+<tr>
+<td>Memory</td>
+<td>17.5 MB</td>
+<td>89.70%</td>
+<td>O(1)</td>
+</tr>
+</tbody></table>
+<p><strong>JavaScript</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Result</th>
+<th>Beats</th>
+<th>Complexity</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Runtime</td>
+<td>88 ms</td>
+<td>100.00%</td>
+<td>O(n) for initialization, O(1) for retrieve values</td>
+</tr>
+<tr>
+<td>Memory</td>
+<td>49.6 MB</td>
+<td>72.22%</td>
+<td>O(n)</td>
+</tr>
+</tbody></table>
+<h3 id="思路-amp-Solutions"><a href="#思路-amp-Solutions" class="headerlink" title="思路 &amp; Solutions"></a>思路 &amp; Solutions</h3><p><strong>Python</strong></p>
+<p>先来说说 Python 方案，说到最优的迭代方法，这就不得不说 Python 的生成器机制了。</p>
+<p>下面是我的代码，可以看到逻辑上只是一个简单的递归，但是使用了生成器，让时间复杂度可以控制在 O(n)，同时由于没有使用额外的变量，空间复杂度为 O(1)。</p>
+<pre class="language-python" data-language="python"><code class="language-python">class NestedIterator:
+    _gen &#x3D; None
+    _next &#x3D; None
+
+    def __init__(self, nestedList: [NestedInteger]):
+        def integer_retriever(l):
+            for i in l:
+                if i.isInteger():
+                    yield i.getInteger()
+                else:
+                    for _i in integer_retriever(i.getList()):
+                        yield _i
+
+        self._gen &#x3D; integer_retriever(nestedList)
+        self._retrieve()
+
+    def _retrieve(self):
+        try:
+            self._next &#x3D; next(self._gen)
+        except StopIteration:
+            self._next &#x3D; None
+
+    def next(self) -&gt; int:
+        res &#x3D; self._next
+        self._retrieve()
+        return res
+
+    def hasNext(self) -&gt; bool:
+        return self._next is not None
+</code></pre>
+
+<p>结果如下。</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Result</th>
+<th>Beats</th>
+<th>Complexity</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Runtime</td>
+<td>60 ms</td>
+<td>92.67%</td>
+<td>O(n)</td>
+</tr>
+<tr>
+<td>Memory</td>
+<td>17.5 MB</td>
+<td>89.70%</td>
+<td>O(1)</td>
+</tr>
+</tbody></table>
+<p><strong>JavaScript</strong></p>
+<p>再来看看一般思路。在初始化时将嵌套数组解构，然后每次从缓存中取值。</p>
+<pre class="language-javascript" data-language="javascript"><code class="language-javascript">&#x2F;**
+ * @constructor
+ * @param &#123;NestedInteger[]&#125; nestedList
+ *&#x2F;
+var NestedIterator &#x3D; function (nestedList) &#123;
+  this._list &#x3D; [];
+  const denest &#x3D; (nl) &#x3D;&gt; &#123;
+    for (nest of nl) &#123;
+      if (nest.isInteger()) &#123;
+        this._list.push(nest.getInteger());
+      &#125; else &#123;
+        denest(nest.getList());
+      &#125;
+    &#125;
+  &#125;;
+  denest(nestedList);
+&#125;;
+
+&#x2F;**
+ * @this NestedIterator
+ * @returns &#123;boolean&#125;
+ *&#x2F;
+NestedIterator.prototype.hasNext &#x3D; function () &#123;
+  return this._list.length &gt; 0;
+&#125;;
+
+&#x2F;**
+ * @this NestedIterator
+ * @returns &#123;integer&#125;
+ *&#x2F;
+NestedIterator.prototype.next &#x3D; function () &#123;
+  return this._list.shift();
+&#125;;</code></pre>
+
+<p>结果如下。</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Result</th>
+<th>Beats</th>
+<th>Complexity</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Runtime</td>
+<td>88 ms</td>
+<td>100.00%</td>
+<td>O(n) for initialization, O(1) for retrieve value</td>
+</tr>
+<tr>
+<td>Memory</td>
+<td>49.6 MB</td>
+<td>72.22%</td>
+<td>O(n)</td>
+</tr>
+</tbody></table>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>Tree</tag>
+        <tag>DFS</tag>
+        <tag>Stack</tag>
+        <tag>Design</tag>
+        <tag>Queue</tag>
+        <tag>Iterator</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>37. Sudoku Solver (Hard)</title>
+    <url>/post/leetcode/37-Sudoku-Solver-Hard/</url>
+    <content><![CDATA[<p>数独问题，适合回溯算法。</p>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def solveSudoku(self, board: List[List[str]]) -&gt; None:
+        &quot;&quot;&quot;
+        Do not return anything, modify board in-place instead.
+        &quot;&quot;&quot;
+
+        # Save board for further use.
+        self.board &#x3D; board
+        # print(self.solve())
+        self.solve()
+
+    def findEmptyCell(self):
+        &quot;&quot;&quot;
+        Find the next place need to be filled.
+        &quot;&quot;&quot;
+        for i in range(9):
+            for j in range(9):
+                if self.board[i][j] &#x3D;&#x3D; &quot;.&quot;:
+                    return i, j
+        return -1, -1
+
+    def checkRow(self, row, num) -&gt; bool:
+        &quot;&quot;&quot;
+        Check if the target number is safe in row.
+        &quot;&quot;&quot;
+        return num not in self.board[row]
+
+    def checkCol(self, col, num) -&gt; bool:
+        &quot;&quot;&quot;
+        Check if the target number is safe in column.
+        &quot;&quot;&quot;
+        for row in range(9):
+            if self.board[row][col] &#x3D;&#x3D; num:
+                return False
+        return True
+
+    def checkSquare(self, row, col, num) -&gt; bool:
+        &quot;&quot;&quot;
+        Check if the target number is safe in the nearest square.
+        We should find the first cell of the nearest square,
+        just subtract the result of modulo 3 from col and row to get it.
+        &quot;&quot;&quot;
+        sr, sc &#x3D; row - row % 3, col - col % 3
+        for i in range(sr, sr + 3):
+            for j in range(sc, sc + 3):
+                if self.board[i][j] &#x3D;&#x3D; num:
+                    return False
+        return True
+
+    def solve(self) -&gt; bool:
+        &quot;&quot;&quot;
+        The main body of our backtracking algorithm.
+        &quot;&quot;&quot;
+        row, col &#x3D; self.findEmptyCell()
+        if row &#x3D;&#x3D; -1 and col &#x3D;&#x3D; -1:
+            return True
+
+        for num in [str(x) for x in range(1, 10)]:
+            if (self.checkRow(row, num)
+                and self.checkCol(col, num)
+                and self.checkSquare(row, col, num)):
+                self.board[row][col] &#x3D; num
+                if self.solve():
+                    return True
+                self.board[row][col] &#x3D; &quot;.&quot;
+        return False</code></pre>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>Hash Table</tag>
+        <tag>Backtracking</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>39. Combination Sum (Medium)</title>
+    <url>/post/leetcode/39-Combination-Sum-Medium/</url>
+    <content><![CDATA[<p>先读题，这种题真是脑细胞的初见杀。</p>
+<blockquote>
+<p>Given an array of distinct integers candidates and a target integer target, return a list of all unique combinations of candidates where the chosen numbers sum to target. You may return the combinations in any order.</p>
+<p>The same number may be chosen from candidates an unlimited number of times. Two combinations are unique if the frequency of at least one of the chosen numbers is different.</p>
+<p>It is guaranteed that the number of unique combinations that sum up to target is less than 150 combinations for the given input.</p>
+</blockquote>
+<h3 id="思路-amp-Solutions"><a href="#思路-amp-Solutions" class="headerlink" title="思路 &amp; Solutions"></a>思路 &amp; Solutions</h3><p>Backtrack</p>
+<pre class="language-javascript" data-language="javascript"><code class="language-javascript">&#x2F;**
+ * @param &#123;number[]&#125; candidates
+ * @param &#123;number&#125; target
+ * @return &#123;number[][]&#125;
+ *&#x2F;
+var combinationSum &#x3D; function (candidates, target) &#123;
+  const ans &#x3D; [];
+  const sz &#x3D; candidates.length;
+  candidates.sort((a, b) &#x3D;&gt; a - b);
+
+  const dfs &#x3D; (c, tar, comb, begin) &#x3D;&gt; &#123;
+    if (tar &#x3D;&#x3D;&#x3D; 0) ans.push(comb);
+
+    for (let i &#x3D; begin; i &lt; sz; i++) &#123;
+      if (tar &lt; c[i]) break;
+      dfs(c, tar - c[i], [...comb, c[i]], i);
+    &#125;
+  &#125;;
+
+  dfs(candidates, target, [], 0);
+
+  return ans;
+&#125;;</code></pre>
+
+<pre class="language-java" data-language="java"><code class="language-java">class Solution &#123;
+    private List&lt;List&lt;Integer&gt;&gt; ans &#x3D; new ArrayList&lt;&gt;();
+    private int sz;
+
+    public List&lt;List&lt;Integer&gt;&gt; combinationSum(int[] candidates, int target) &#123;
+        sz &#x3D; candidates.length;
+        Arrays.sort(candidates);
+        dfs(candidates, target, new ArrayList&lt;Integer&gt;(), 0);
+        return ans;
+    &#125;
+
+    private void dfs(int[] c, int tar, List&lt;Integer&gt; comb, int begin) &#123;
+        if (tar &#x3D;&#x3D; 0) ans.add(new ArrayList&lt;&gt;(comb));
+
+        for (int i &#x3D; begin; i &lt; sz; i++) &#123;
+            if (tar &lt; c[i]) break;
+            comb.add(c[i]);
+            dfs(c, tar - c[i], comb, i);
+            comb.remove(comb.size() - 1);
+        &#125;
+    &#125;
+&#125;</code></pre>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>Array</tag>
+        <tag>Backtracking</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>45. Jump Game II (Medium)</title>
+    <url>/post/leetcode/45-Jump-Game-II-Medium/</url>
+    <content><![CDATA[<p>Topics:</p>
+<p>Array, greedy.</p>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def jump(self, nums: List[int]) -&gt; int:
+        n, ans, curr, nxt &#x3D; len(nums), 0, 0, 0
+        # No need of the last iteration so skip it here by &#96;n - 1&#96;.
+        for i in range(n - 1):
+            nxt &#x3D; max(nxt, i + nums[i])
+            if i &#x3D;&#x3D; curr:
+                curr &#x3D; nxt
+                ans +&#x3D; 1
+            i +&#x3D; 1
+        return ans</code></pre>
+
+<pre class="language-java" data-language="java"><code class="language-java">class Solution &#123;
+    public int jump(int[] nums) &#123;
+        int n &#x3D; nums.length, ans &#x3D; 0, curr &#x3D; 0, next &#x3D; 0;
+        for (int i &#x3D; 0; i &lt; n - 1; i++) &#123;
+            next &#x3D; Math.max(next, i + nums[i]);
+            if (i &#x3D;&#x3D; curr) &#123;
+                curr &#x3D; next;
+                ans++;
+            &#125;
+        &#125;
+        return ans;
+    &#125;
+&#125;</code></pre>
+
+<pre class="language-js" data-language="js"><code class="language-js">&#x2F;**
+ * @param &#123;number[]&#125; nums
+ * @return &#123;number&#125;
+ *&#x2F;
+var jump &#x3D; function (nums) &#123;
+  let n &#x3D; nums.length,
+    curr &#x3D; 0,
+    next &#x3D; 0,
+    ans &#x3D; 0;
+  for (let i &#x3D; 0; i &lt; n - 1; i++) &#123;
+    next &#x3D; next &lt; i + nums[i] ? i + nums[i] : next;
+    if (curr &#x3D;&#x3D;&#x3D; i) &#123;
+      curr &#x3D; next;
+      ans++;
+    &#125;
+  &#125;
+  return ans;
+&#125;;</code></pre>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>Array</tag>
+        <tag>Greedy</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>453. Minimum Moves to Equal Array Elements (Easy)</title>
+    <url>/post/leetcode/453-Minimum-Moves-to-Equal-Array-Elements-Easy/</url>
+    <content><![CDATA[<p>题目要求每次给 <code>n - 1</code> 个元素加 1，重复这个步骤直到数组所有元素相等。我们不应该给 <code>max</code> 加 1，所以这一步实际上是给最大值以外的所有元素加 1，其等价于最大值减去 1。</p>
+<p>一旦在脑子中把这个思路捋顺了，方案就简单了。实际上我们要找到的是每一个元素减到最小值需要减去的次数。</p>
+<p>算法已经浮出水面，我们先找到最小值，然后计算每个元素和最小值的差的和，这个和就是答案。</p>
+<blockquote>
+<p>这是数学法，也称“感觉智商丢掉”法。</p>
+</blockquote>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def minMoves(self, nums: List[int]) -&gt; int:
+        m, ans &#x3D; min(nums), 0
+        for n in nums:
+            ans +&#x3D; n - m
+        return ans</code></pre>
+
+<p>基于这个思路，实际上我们把最小值减去了 <code>n</code> 次，那么找到最小值之后，我们对数组求和之后再减去数组长度乘以最小值，得到的结果就是答案。</p>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def minMoves(self, nums: List[int]) -&gt; int:
+        return sum(nums) - min(nums) * len(nums)</code></pre>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>Math</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>462. Minimum Moves to Equal Array Elements II (Medium)</title>
+    <url>/post/leetcode/462-Minimum-Moves-to-Equal-Array-Elements-II-Medium/</url>
+    <content><![CDATA[<p>数学法，题目要求我们用最少的步数将数组元素修正到全部相等，换句话来说就是需要找到一个合适的目标，将其他数补上差值修正到与这个数相等，答案就是这些差值的和。</p>
+<p>题目的难点在于如何意识到我们要寻找的目标是数组的中位数。</p>
+<p>我们可以准备一个数组，首先将其排序，思考一下第一个数和最后一个数修正到目标数需要的步数。</p>
+<p>我们会发现，第一个数和最后一个数中间的任何数都符合要求，因为最少步数实际上就是第一个数和最后一个数的差值。</p>
+<p>我们进一步发现需要确认合适的目标，我们还需要继续确认第二个数和倒数第二个数修正到目标需要的步数。</p>
+<p>我们重复这个过程，最终会有两种情况。</p>
+<ul>
+<li>如果数组的长度为奇数：最后找到的唯一一个数就是目标值；</li>
+<li>如果数组的长度为偶数：最后找到的一对数之间的任何值都是目标值，也包括这对数本身。</li>
+</ul>
+<p>再仔细想想，我们在寻找的其实就是数组的中位数。现在算法浮出水面了。</p>
+<ul>
+<li>方便起见我们将数组进行排序；</li>
+<li>根据长度找到数组中位数的值，不用考虑太多，直接取长度除以 2 的整数值；</li>
+<li>计算所有元素与目标的差的绝对值，进行求和。</li>
+</ul>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def minMoves2(self, nums: List[int]) -&gt; int:
+        nums.sort()
+        m &#x3D; nums[len(nums) &gt;&gt; 1]
+        ans &#x3D; 0
+        for i in nums:
+            ans +&#x3D; abs(i - m)
+        return ans</code></pre>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>Math</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>48. Rotate Image (Medium)</title>
+    <url>/post/leetcode/48-Rotate-Image-Medium/</url>
+    <content><![CDATA[<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def rotate(self, m: List[List[int]]) -&gt; None:
+        &quot;&quot;&quot;
+        Do not return anything, modify matrix in-place instead.
+        &quot;&quot;&quot;
+        sz &#x3D; len(m)
+
+        for i in range(sz &#x2F;&#x2F; 2 + sz % 2):
+            for j in range(sz &#x2F;&#x2F; 2):
+                m[i][j], m[j][~i], m[~i][~j], m[~j][i] &#x3D; m[~j][i], m[i][j], m[j][~i], m[~i][~j]</code></pre>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>Array</tag>
+        <tag>Matrix</tag>
+        <tag>Math</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>509. Fibonacci Number (Easy)</title>
+    <url>/post/leetcode/509-Fibonacci-Number-Easy/</url>
+    <content><![CDATA[<p>先读题。</p>
+<blockquote>
+<p>The Fibonacci numbers, commonly denoted <code>F(n)</code> form a sequence, called the Fibonacci sequence, such that each number is the sum of the two preceding ones, starting from 0 and 1. That is,</p>
+<ul>
+<li>F(0) = 0, F(1) = 1</li>
+<li>F(n) = F(n - 1) + F(n - 2), for n &gt; 1.</li>
+<li>Given n, calculate F(n).</li>
+</ul>
+</blockquote>
+<p>斐波那契数列的问题，Hello World 级别的问题，难点是对时间和空间复杂度的控制。</p>
+<blockquote>
+<p>官解也比较变态。</p>
+</blockquote>
+<p>不多说，上正文。</p>
+<h3 id="思路-amp-Solutions"><a href="#思路-amp-Solutions" class="headerlink" title="思路 &amp; Solutions"></a>思路 &amp; Solutions</h3><p><strong>方法一，递归（不推荐）</strong></p>
+<p>实现一个 <code>F(n) = F(n - 1) + F(n - 2)</code>，缺点就是时间复杂度是 O(2^n)。</p>
+<p><strong>方法二，递归+DP</strong></p>
+<p>实现一个 <code>F(n) = F(n - 1) + F(n - 2)</code>，但是每次计算结果缓存起来，不再重复相同的计算。</p>
+<p>跳过。</p>
+<p><strong>方法三，Bottom-Up</strong></p>
+<p>抛开递归，记录前一个值，按照斐波那契数列的规律计算到 n 为止。</p>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def fib(self, n: int) -&gt; int:
+        if n &lt; 2:
+          return n
+        else:
+            pre &#x3D; 0
+            ans &#x3D; 1
+            for _ in range(2, n+1):
+                ans, pre &#x3D; ans + pre, ans
+            return ans</code></pre>
+
+<blockquote>
+<p>官解给出了矩阵幂和黄金比例的方法，跳过…</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>DP</tag>
+        <tag>Math</tag>
+        <tag>Recursion</tag>
+        <tag>Memoization</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>51. N-Queens (Hard)</title>
+    <url>/post/leetcode/51-N-Queens-Hard/</url>
+    <content><![CDATA[<blockquote>
+<p>Tips</p>
+<p>Queen 可以在行、列、对角线和反对角线这四条线上随意行动，我们在放 Queen 时要保证这四个方向上没有 Queen 存在。</p>
+</blockquote>
+<p>这是一个典型回溯法的应用场景，即我们需要尝试把 Queen 放在这一行的每个位置之后，才能知道所有可能的摆法。</p>
+<p>比较容易忽视的点是，虽然我们可以轻松观察得知一行只有一个 Queen，所以行是不需要判断的，只需要判断列、对角线和反对角线上是否存在 Queen，但是这三条线是需要分开判断的。</p>
+<p>我们需要准备 3 个 set 来保存已经使用过的列、对角线和反对角线。逻辑比较简单，我们通过代码和注释来理解。</p>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def solveNQueens(self, n: int) -&gt; List[List[str]]:
+        # Prepare the answer list and an empty board in the required format.
+        ans, board &#x3D; [], [[&#39;.&#39;] * n for _ in range(n)]
+
+        def format(res):
+            &quot;&quot;&quot;Produce the output to meet to required format.&quot;&quot;&quot;
+            out &#x3D; []
+            for row in res:
+                out.append(&#39;&#39;.join(row))
+            return out
+
+        def solve(row, cols, diag, anti, res):
+            &quot;&quot;&quot;Solve recursively.&quot;&quot;&quot;
+            # The base case that we know we&#39;ve got a right answer.
+            if row &#x3D;&#x3D; n:
+                ans.append(format(res))
+
+            # Try each position at this row.
+            for q in range(n):
+                # Calculate the top point of diagonal and anti-diagonal.
+                d, a &#x3D; q - row, q + row
+
+                # Check if the current place can place a Queen.
+                if q not in cols and d not in diag and a not in anti:
+                    cols.add(q)
+                    diag.add(d)
+                    anti.add(a)
+                    res[row][q] &#x3D; &#39;Q&#39;
+
+                    solve(row + 1, cols, diag, anti, res)
+
+                    # Backtracking.
+                    cols.remove(q)
+                    diag.remove(d)
+                    anti.remove(a)
+                    res[row][q] &#x3D; &#39;.&#39;
+
+        solve(0, set(), set(), set(), board)
+        return ans</code></pre>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>Backtracking</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>52. N-Queens II (Hard)</title>
+    <url>/post/leetcode/52-N-Queens-II-Hard/</url>
+    <content><![CDATA[<p>感觉在刷分 hhh。和 51 完全一样，不同之处在于这题只要计数。</p>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def totalNQueens(self, n: int) -&gt; int:
+        self.ans &#x3D; 0
+        def place(pos, cols, diag, anti):
+            if pos &#x3D;&#x3D; n:
+                self.ans +&#x3D; 1
+            for i in range(n):
+                d, a &#x3D; i - pos, i + pos
+                if i not in cols and d not in diag and a not in anti:
+                    cols.add(i)
+                    diag.add(d)
+                    anti.add(a)
+                    place(pos + 1, cols, diag, anti)
+                    cols.remove(i)
+                    diag.remove(d)
+                    anti.remove(a)
+
+        place(0, set(), set(), set())
+        return self.ans</code></pre>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>Backtracking</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>583. Delete Operation for Two Strings (Medium)</title>
+    <url>/post/leetcode/583-Delete-Operation-for-Two-Strings-Medium/</url>
+    <content><![CDATA[<p>Topics:</p>
+<p>String.</p>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def minDistance(self, word1: str, word2: str) -&gt; int:
+        m, n &#x3D; len(word1), len(word2)
+        dp &#x3D; &#123;&#125;
+
+        for i in range(m + 1):
+            for j in range(n + 1):
+                if i &#x3D;&#x3D; 0 or j &#x3D;&#x3D; 0:
+                    dp[i, j] &#x3D; i + j
+                elif word1[i - 1] &#x3D;&#x3D; word2[j - 1]:
+                    dp[i, j] &#x3D; dp[i - 1, j - 1]
+                else:
+                    dp[i, j] &#x3D; 1 + min(dp[i - 1, j], dp[i, j - 1])
+
+        return dp[m, n]</code></pre>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>String</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>589. N-ary Tree Preorder Traversal (Easy)</title>
+    <url>/post/leetcode/589-N-ary-Tree-Preorder-Traversal-Easy/</url>
+    <content><![CDATA[<blockquote>
+<p>Given the root of an n-ary tree, return the preorder traversal of its nodes’ values.</p>
+<p>Nary-Tree input serialization is represented in their level order traversal. Each group of children is separated by the null value (See examples)</p>
+</blockquote>
+<pre class="language-python" data-language="python"><code class="language-python">&quot;&quot;&quot;
+# Definition for a Node.
+class Node:
+    def __init__(self, val&#x3D;None, children&#x3D;None):
+        self.val &#x3D; val
+        self.children &#x3D; children
+&quot;&quot;&quot;
+
+class Solution:
+    def preorder(self, root: &#39;Node&#39;) -&gt; List[int]:
+        if root is None:
+            return []
+
+        ans, stack &#x3D; [], [root,]
+
+        while stack:
+            top &#x3D; stack.pop()
+            ans.append(top.val)
+            stack.extend(top.children[::-1])
+
+        return ans
+
+</code></pre>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>Tree</tag>
+        <tag>DFS</tag>
+        <tag>Stack</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>609. Find Duplicate File in System (Medium)</title>
+    <url>/post/leetcode/609-Find-Duplicate-File-in-System-Medium/</url>
+    <content><![CDATA[<p>思路 1 是使用哈希表，以文件内容为 key，拼出文件名存到字典中，最后遍历字典所有值，存在长度大于 1 的列表则表示存在内容重复。这道题还是比较亲切，实际工作中确实会遇到这类问题。</p>
+<p>下面是代码例子。</p>
+<blockquote>
+<p>其实做的粗糙一点，去掉 <code>c = c[:-1]</code> 这句也能实现，而且少一个字符串处理性能会更好。毕竟我们不在意文件内容实际是什么，只在意有没有重复。</p>
+</blockquote>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def findDuplicate(self, paths: List[str]) -&gt; List[List[str]]:
+        table &#x3D; defaultdict(list)
+        for f in paths:
+            f &#x3D; f.split(&quot; &quot;)
+            p &#x3D; f[0]
+            for i in f[1:]:
+                fn, c &#x3D; i.split(&quot;(&quot;)
+                c &#x3D; c[:-1]
+                table[c].append(f&quot;&#123;p&#125;&#x2F;&#123;fn&#125;&quot;)
+        ans &#x3D; []
+        for v in table.values():
+            if len(v) &gt; 1:
+                ans.append(v)
+        return ans</code></pre>
+
+<p>Java 例子。</p>
+<pre class="language-java" data-language="java"><code class="language-java">class Solution &#123;
+    public List&lt;List&lt;String&gt;&gt; findDuplicate(String[] paths) &#123;
+        Map&lt;String, List&lt;String&gt;&gt; table &#x3D; new HashMap&lt;&gt;();
+        for (String p : paths) &#123;
+            String[] f &#x3D; p.split(&quot; &quot;);
+            String pr &#x3D; f[0];
+            for (int i &#x3D; 1; i &lt; f.length; i++) &#123;
+                String[] file &#x3D; f[i].split(&quot;\\(&quot;);
+                if (!table.containsKey(file[1])) &#123;
+                    table.put(file[1], new ArrayList&lt;String&gt;());
+                &#125;
+                table.get(file[1]).add(pr + &quot;&#x2F;&quot; + file[0]);
+            &#125;
+        &#125;
+        List&lt;List&lt;String&gt;&gt; ans &#x3D; new ArrayList&lt;&gt;();
+        for (List&lt;String&gt; val : table.values()) &#123;
+            if (val.size() &gt; 1) &#123;
+                ans.add(val);
+            &#125;
+        &#125;
+        return ans;
+    &#125;
+&#125;</code></pre>
+
+<p>JS 例子。</p>
+<pre class="language-js" data-language="js"><code class="language-js">&#x2F;**
+ * @param &#123;string[]&#125; paths
+ * @return &#123;string[][]&#125;
+ *&#x2F;
+var findDuplicate &#x3D; function (paths) &#123;
+  table &#x3D; &#123;&#125;;
+  for (let p of paths) &#123;
+    p &#x3D; p.split(&quot; &quot;);
+    const pr &#x3D; p[0];
+    for (let i &#x3D; 1; i &lt; p.length; i++) &#123;
+      const file &#x3D; p[i].split(&quot;(&quot;);
+      if (!table[file[1]]) table[file[1]] &#x3D; [];
+      table[file[1]].push(pr + &quot;&#x2F;&quot; + file[0]);
+    &#125;
+  &#125;
+  const ans &#x3D; [];
+  for (let k in table) &#123;
+    if (table[k].length &gt; 1) &#123;
+      ans.push(table[k]);
+    &#125;
+  &#125;
+  return ans;
+&#125;;</code></pre>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>String</tag>
+        <tag>Hash Table</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>62. Unique Paths (Medium)</title>
+    <url>/post/leetcode/62-Unique-Paths-Medium/</url>
+    <content><![CDATA[<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def uniquePaths(self, m: int, n: int) -&gt; int:
+        dp &#x3D; [[1]*n] * m
+        for x in range(1, m):
+            for y in range(1, n):
+                dp[x][y] &#x3D; dp[x-1][y] + dp[x][y-1]
+        return dp[m-1][n-1]</code></pre>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>DP</tag>
+        <tag>Math</tag>
+        <tag>Combinatorics</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>63. Unique Paths II (Medium)</title>
+    <url>/post/leetcode/63-Unique-Paths-II-Medium/</url>
+    <content><![CDATA[<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def uniquePathsWithObstacles(self, og: List[List[int]]) -&gt; int:
+        for x in range(len(og)):
+            for y in range(len(og[0])):
+                if x &#x3D;&#x3D; 0 and y &#x3D;&#x3D; 0:
+                    up, left &#x3D; 0, 1
+                else:
+                    up &#x3D; og[x-1][y] if x &gt; 0 else 0
+                    left &#x3D; og[x][y-1] if y &gt; 0 else 0
+                if og[x][y] &#x3D;&#x3D; 0:
+                    og[x][y] &#x3D; up + left
+                else:
+                    og[x][y] &#x3D; 0
+        return og[-1][-1]</code></pre>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>Array</tag>
+        <tag>DP</tag>
+        <tag>Matrix</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>630. Course Schedule III (Hard)</title>
+    <url>/post/leetcode/630-Course-Schedule-III-Hard/</url>
+    <content><![CDATA[<p>Topics:</p>
+<p>Greed, graph, dfs, bfs.</p>
+<p>虽然做出来了，但是成绩比较差，这一块需要研究一下。</p>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def scheduleCourse(self, courses: List[List[int]]) -&gt; int:
+        c &#x3D; [x for x in sorted(courses, key&#x3D;lambda x: x[1])]
+        heap &#x3D; []
+        time &#x3D; 0
+        for i, x in enumerate(c):
+            if time + x[0] &lt;&#x3D; x[1]:
+                time +&#x3D; x[0]
+            elif len(heap) &gt; 0 and heap[-1] &gt; x[0] and time - heap[-1] + x[0] &lt;&#x3D; x[1]:
+                time +&#x3D;  - heap.pop() + x[0]
+            else:
+                continue
+
+            heap.append(x[0])
+            heap.sort()
+
+        return len(heap)</code></pre>
+
+<p>Ver 2.0, using max heap.</p>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def scheduleCourse(self, courses: List[List[int]]) -&gt; int:
+        c &#x3D; [x for x in sorted(courses, key&#x3D;lambda x: x[1])]
+        time, heap &#x3D; 0, []
+
+        for i, x in enumerate(c):
+            if time + x[0] &lt;&#x3D; x[1]:
+                time +&#x3D; x[0]
+                heappush(heap, -x[0])
+            elif heap:
+                if -heap[0] &gt; x[0]:
+                    time +&#x3D; heappop(heap) + x[0]
+                    heappush(heap, -x[0])
+
+        return len(heap)</code></pre>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>Array</tag>
+        <tag>BFS</tag>
+        <tag>DFS</tag>
+        <tag>Graph</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>65. Valid Number (Hard)</title>
+    <url>/post/leetcode/65-Valid-Number-Hard/</url>
+    <content><![CDATA[<p>取巧使用正则，一行方案。</p>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def isNumber(self, s: str) -&gt; bool:
+        ptn &#x3D; r&#39;^[+-]?(\d+\.|\d*\.\d+|\d+)([eE][+-]?\d+)?$&#39;
+        return re.match(ptn, s) is not None</code></pre>
+
+<p>使用数学归纳法的思路。先整理无效数字的模式。</p>
+<ul>
+<li><code>+/-</code> 出现在数字之后</li>
+<li><code>.</code> 重复或出现在 exp 之后</li>
+<li><code>e/E</code> 重复或前面没数字</li>
+</ul>
+<p>总结得知，我们需要对应是否为数字、小数、符号、指数设置 4 个 flag，然后依次迭代字符串的每一个字符，根据当前 flag 的值进行判断。</p>
+<pre class="language-js" data-language="js"><code class="language-js">&#x2F;**
+ * @param &#123;string&#125; s
+ * @return &#123;boolean&#125;
+ *&#x2F;
+var isNumber &#x3D; function (s) &#123;
+  let num, dec, sign, exp;
+  for (let c of s.split(&quot;&quot;)) &#123;
+    &#x2F;&#x2F; Check number.
+    if (c &gt;&#x3D; &quot;0&quot; &amp;&amp; c &lt;&#x3D; &quot;9&quot;) num &#x3D; true;
+    &#x2F;&#x2F; Check sign.
+    else if (c &#x3D;&#x3D;&#x3D; &quot;+&quot; || c &#x3D;&#x3D;&#x3D; &quot;-&quot;) &#123;
+      &#x2F;&#x2F; If sign duplicated or appears after number or decimal.
+      if (sign || num || dec) return false;
+      sign &#x3D; true;
+    &#x2F;&#x2F; Check decimal.
+    &#125; else if (c &#x3D;&#x3D;&#x3D; &quot;.&quot;) &#123;
+      &#x2F;&#x2F; If duplicated or appears after exponent.
+      if (dec || exp) return false;
+      dec &#x3D; true;
+    &#x2F;&#x2F; Check exponent.
+    &#125; else if (c &#x3D;&#x3D;&#x3D; &quot;e&quot; || c &#x3D;&#x3D;&#x3D; &quot;E&quot;) &#123;
+      &#x2F;&#x2F; If duplicated or no number before it.
+      if (exp || !num)) return false;
+      (exp &#x3D; true), (num &#x3D; false), (sign &#x3D; false), (dec &#x3D; false);
+    &#x2F;&#x2F; Failed.
+    &#125; else &#123;
+      return false;
+    &#125;
+  &#125;
+  return !!num;
+&#125;;</code></pre>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>String</tag>
+        <tag>Math</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>665. Non-decreasing Array (Medium)</title>
+    <url>/post/leetcode/665-Non-decreasing-Array-Medium/</url>
+    <content><![CDATA[<p>Topics:</p>
+<p>Array.</p>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def checkPossibility(self, nums: List[int]) -&gt; bool:
+        modified &#x3D; False
+        for i in reversed(range(1, len(nums))):
+            # print(nums[i] , nums[i - 1])
+            if nums[i] &lt; nums[i - 1]:
+                if not modified:
+                    if i !&#x3D; len(nums) - 1 and nums[i + 1] &lt; nums[i - 1]:
+                        nums[i - 1] &#x3D; nums[i]
+                    modified &#x3D; True
+                else:
+                    return False
+        return True</code></pre>
+
+<p>把题目转化为递增数组的思路，避免了颠倒数组。</p>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def checkPossibility(self, nums: List[int]) -&gt; bool:
+        modified &#x3D; False
+        for i in range(1, len(nums)):
+            if nums[i] &lt; nums[i - 1]:
+                if not modified:
+                    if i &gt; 1 and nums[i] &lt; nums[i - 2]:
+                        nums[i] &#x3D; nums[i - 1]
+                    modified &#x3D; True
+                else:
+                    return False
+        return True</code></pre>
+
+<p>Ver 2.0，评论区大神给的思路，只允许修改一次值的情况下，只有 YABY 这种情况是直接丢出 <code>false</code>，其余情况可以通过修改一次值通过。这个算法可以在不进行任何值的修改的前提下，进行正确的判断。</p>
+<p><img src="resources/665.idea.png" alt="665.idea.png"></p>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def checkPossibility(self, nums: List[int]) -&gt; bool:
+        modified &#x3D; False
+        for i in range(1, len(nums)):
+            if nums[i] &lt; nums[i - 1]:
+                # Return False if modified before, or if these conditions are satisfied.
+                if modified or (
+                    # Ensure &#96;i - 2&#96; and  &#96;i + 1&#96; exist,
+                    i &gt; 1
+                    and i &lt; len(nums) - 1
+                    # if &#96;i - 2&#96; &gt; &#96;i&#96;, it&#39;s a YAB of YABY,
+                    and nums[i - 2] &gt; nums[i]
+                    # if &#96;i - 1&#96; &gt; &#96;i + 1&#96;, it&#39;s a ABY of YABY.
+                    and nums[i - 1] &gt; nums[i + 1]
+                ):
+                    return False
+                # If it&#39;s not the cases above, set modified to True,
+                # no more chance for the next violation.
+                modified &#x3D; True
+        return True</code></pre>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>Array</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>667. Beautiful Arrangement II （Medium）</title>
+    <url>/post/leetcode/667-Beautiful-Arrangement-II-Medium/</url>
+    <content><![CDATA[<p>With solutions both in Python and Java.</p>
+<p>先读题：</p>
+<blockquote>
+<p>Given two integers <code>n</code> and <code>k</code>, you need to construct a list which contains <code>n</code> different positive integers ranging from 1 to <code>n</code> and obeys the following requirement:</p>
+<p>Suppose this list is <code>[a1, a2, a3, ... , an]</code>, then the list <code>[|a1 - a2|, |a2 - a3|, |a3 - a4|, ... , |an-1 - an|]</code> has exactly <code>k</code> distinct integers.</p>
+<p>If there are multiple answers, print any of them.</p>
+</blockquote>
+<p>简而言之，我们要根据两个整数参数 <code>n</code> 和 <code>k</code>，来输出一个从 1 开始到 <code>n</code> 的整数数组，并且这个数组中，所有相邻的两个整数之间的差，其绝对值要凑齐 <code>k</code> 个不同的整数。</p>
+<p>来看看例子。</p>
+<p>Example 1:</p>
+<pre class="language-none"><code class="language-none">Input: n &#x3D; 3, k &#x3D; 1
+Output: [1, 2, 3]
+Explanation: The [1, 2, 3] has three different positive integers ranging from 1 to 3, and the [1, 1] has exactly 1 distinct integer: 1.</code></pre>
+
+<p>输出结果为整数 1 ～ 3，相邻整数的差为 [1, 1]，去重后长度为 1，满足 <code>k = 1</code> 的需求。</p>
+<p>Example 2:</p>
+<pre class="language-none"><code class="language-none">Input: n &#x3D; 3, k &#x3D; 2
+Output: [1, 3, 2]
+Explanation: The [1, 3, 2] has three different positive integers ranging from 1 to 3, and the [2, 1] has exactly 2 distinct integers: 1 and 2.</code></pre>
+
+<p>输出结果为整数 1 ～ 3，相邻整数的差为 [2, 1]，满足 <code>k = 2</code> 的需求。</p>
+<h3 id="Submission"><a href="#Submission" class="headerlink" title="Submission"></a>Submission</h3><p>先贴一下我自己独立完成的结果，防止剧透，具体代码会贴在最后。</p>
+<p>我的代码中，空间复杂度还需要研究一下，目前还没找到提升的思路。</p>
+<p><strong>Python</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Result</th>
+<th>Beats</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Runtime</td>
+<td>40 ms</td>
+<td>96.55%</td>
+</tr>
+<tr>
+<td>Memory</td>
+<td>15.1 MB</td>
+<td>50.34%</td>
+</tr>
+</tbody></table>
+<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p>这道题偏重考验观察。我们要做的是观察并找到数组排列的规律，用算法实现出来。</p>
+<p>已知条件：</p>
+<ul>
+<li>输出数组包含 1 ～ n 的整数</li>
+<li>需要做的是调整数组中数字出现的顺序，致使相邻的两个数之间的差不同</li>
+<li>相邻两个数的差只考虑绝对值</li>
+<li>相邻两个数的差的绝对值构成的数组长度为 k</li>
+<li>由于不关注具体的差的值，所以有不同解法，只需要找出一种</li>
+</ul>
+<p>先硬算几个例子来找找规律。</p>
+<p>(因为懒，这里我直接贴讨论帖中的例子，UAADs 指的是唯一绝对相邻数差，贴主原文全称是 Unique Absolute Adjacent Difference，为了方便理解，后面我们就称之为“相邻数差”。)</p>
+<pre class="language-console" data-language="console"><code class="language-console">For eg.
+1. let n &#x3D; 10, k &#x3D; 4
+permutation &#x3D;&gt; [1, 5, 2, 4, 3, 6, 7, 8, 9, 10]
+UAADs       &#x3D;&gt; [X, 4, 3, 2, 1, 3, 1, 1, 1, 1]
+
+
+2. n &#x3D; 10, k &#x3D; 5
+permutation &#x3D;&gt; [1, 6, 2, 5, 3, 4, 7, 8, 9, 10]
+UAADs       &#x3D;&gt; [X, 5, 4, 3, 2, 1, 3, 1, 1, 1]
+
+
+3. n &#x3D; 9, k &#x3D; 8
+permutation &#x3D;&gt; [1, 9, 2, 8, 3, 7, 4, 6, 5]
+UAADs       &#x3D;&gt; [X, 8, 7, 6, 5, 4, 3, 2, 1]</code></pre>
+
+<p>题目不关注相邻数差的具体数值，所以正确的排列方式不止一种，这里我们只讨论可以相对直观理解的一种。</p>
+<p>观察上面例子可以了解到：</p>
+<ul>
+<li>输出的数组从 1 开始</li>
+<li>第二个数是 k + 1</li>
+<li>要求 k 个不同相邻数差会影响 k 个元素</li>
+<li>不受 k 影响的数按自然顺序排序</li>
+</ul>
+<blockquote>
+<p>可能 <code>要求 k 个不同相邻数差会影响 k 个元素</code> 不是很直观，我们通过分解上面的例子来理解。</p>
+<p>下面结论中，1 一直处于固定位置，高亮出来的部分是排序受到 k 影响的数，而剩余的数（如果有的话）将按照递增排序。</p>
+<p>n = 10, k = 4 =&gt; [1, <code>5, 2, 4, 3,</code> 6, 7, 8, 9, 10]</p>
+<p>n = 10, k = 5 =&gt; [1, <code>6, 2, 5, 3, 4,</code> 7, 8, 9, 10]</p>
+<p>n = 9, k = 8 =&gt; [1, <code>9, 2, 8, 3, 7, 4, 6, 5</code>]</p>
+</blockquote>
+<p>设定好了前提，接下来我们需要关注的问题变成了观察并理解“受到 k 影响的元素应该如何排序”。</p>
+<p>多看几眼上面的例子，我们可以直观的意识到规律：为了满足 k 个不同的相邻数差，我们将排序靠后的数依次插入到 <code>1, 2, 3, ..., n</code> 之间，来制造不同的绝对差。</p>
+<p>了解规律之后，可以开始实现算法了，这是一些对于时间复杂度和空间复杂度的考虑。</p>
+<ul>
+<li>避免使用尾递归</li>
+<li>控制循环次数</li>
+<li>不使用非必要的变量</li>
+</ul>
+<h3 id="Solutions"><a href="#Solutions" class="headerlink" title="Solutions"></a>Solutions</h3><p><strong>Python</strong></p>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def constructArray(self, n: int, k: int) -&gt; List[int]:
+        # 初始化一个数组，由于前两个值是已知的，所以直接写入字面量
+        ans &#x3D; [1, k + 1]
+        # 以 k 为基准进行循环
+        for x in range(1, k):
+            # 取倒数第二个值为计算基数，根据当前 index 决定做递增或递减
+            ans.append(ans[-2] + (1 if x % 2 &#x3D;&#x3D; 1 else -1))
+        # 按自然顺序填充剩下的元素
+        ans +&#x3D; range(k + 2, n + 1)
+        return ans</code></pre>
+
+<p>结果如下。</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Result</th>
+<th>Beats</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Runtime</td>
+<td>40 ms</td>
+<td>96.55%</td>
+</tr>
+<tr>
+<td>Memory</td>
+<td>15.1 MB</td>
+<td>50.34%</td>
+</tr>
+</tbody></table>
+<p><strong>Java</strong></p>
+<p>由于先做出了 Python 版本，相同思路转换成 Java 代码结果很糟糕。</p>
+<p>这里根据讨论帖的提示完成了一个较优的方案。</p>
+<pre class="language-java" data-language="java"><code class="language-java">class Solution &#123;
+    public int[] constructArray(int n, int k) &#123;
+        int[] ans &#x3D; new int[n];
+        &#x2F;&#x2F; l 为递增初始值，r 为递减初始值，用 i 来保存 index
+        int l &#x3D; 1, r &#x3D; k + 1, i &#x3D; 0;
+        &#x2F;&#x2F; 执行一个步长为 2 的循环来填充数组直到满足 k 个相邻数差
+        while (i &lt; k) &#123;
+            ans[i++] &#x3D; l++;
+            ans[i++] &#x3D; r--;
+        &#125;
+        &#x2F;&#x2F; 由于数组以1起始，故当 k 为偶数时做 2 步长的循环将漏掉一个数
+        if (l &#x3D;&#x3D; r) ans[i++] &#x3D; r;
+        &#x2F;&#x2F; 依序填充自然递增的数直到填至 n 为止
+        while (i &lt; n) ans[i++] &#x3D; i;
+        return ans;
+    &#125;
+&#125;</code></pre>
+
+<p>结果如下。</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Result</th>
+<th>Beats</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Runtime</td>
+<td>0 ms</td>
+<td>100.00%</td>
+</tr>
+<tr>
+<td>Memory</td>
+<td>39.1 MB</td>
+<td>73.71%</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>受 Java 版本思路启发，我修改了一下 Python 的算法，在空间复杂度上得到一些提升。</p>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+   def constructArray(self, n: int, k: int) -&gt; List[int]:
+       ans &#x3D; [1, k + 1]
+       # 执行一个步长为 2 的循环来制造不同的相邻数差
+       for x in range(2, k, 2):
+           ans.append(ans[x-2] + 1)
+           ans.append(ans[x-1] - 1)
+       # 补充 k 为偶数时漏掉的数
+       if ans[-1] -2 &#x3D;&#x3D; ans[-2]: ans.append(ans[-1] - 1)
+       ans +&#x3D; range(len(ans) + 1, n + 1)
+       return ans</code></pre>
+
+<p>结果如下。</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Result</th>
+<th>Beats</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Runtime</td>
+<td>40 ms</td>
+<td>96.55%</td>
+</tr>
+<tr>
+<td>Memory</td>
+<td>15.1 MB</td>
+<td>82.76%</td>
+</tr>
+</tbody></table>
+</blockquote>
+<h3 id="官方-Solution"><a href="#官方-Solution" class="headerlink" title="官方 Solution"></a>官方 Solution</h3><p>来学习一下官方答案的思路。这个问题官方给出了 2 个方案。</p>
+<p><strong>Approach #1: Brute Force [Time Limit Exceeded]</strong></p>
+<p>顾名思义，这个方法是暴力枚举所有排列，直到找到合适的排列。具体做法是准备一个检查唯一相邻数差数量的函数，然后对 1 ～ n 的数组排列进行枚举，直到找到该函数返回的唯一相邻数差的数量匹配 k 的值…</p>
+<p>这个方法就不细说了，下面的代码看看就好。</p>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution(object):
+    def constructArray(self, n, k):
+        seen &#x3D; [False] * n
+        def num_uniq_diffs(arr):
+            ans &#x3D; 0
+            for i in range(n):
+                seen[i] &#x3D; False
+            for i in range(len(arr) - 1):
+                delta &#x3D; abs(arr[i] - arr[i+1])
+                if not seen[delta]:
+                    ans +&#x3D; 1
+                    seen[delta] &#x3D; True
+            return ans
+
+        for cand in itertools.permutations(range(1, n+1)):
+            if num_uniq_diffs(cand) &#x3D;&#x3D; k:
+                return cand</code></pre>
+
+<p><strong>Approach #2: Construction [Accepted]</strong></p>
+<p>先看看官方原文，不过有些 LaTex 表达式不一定能正常显示，可以去 <a href="https://leetcode.com/problems/beautiful-arrangement-ii/solution/">原地址</a> 查看。看完原文我们来分析和理解一下官方的思路。</p>
+<blockquote>
+<p><strong>Intuition</strong></p>
+<p>When \text{k = n-1}k = n-1, a valid construction is \text{[1, n, 2, n-1, 3, n-2, ….]}[1, n, 2, n-1, 3, &gt; n-2, ….]. One way to see this is, we need to have a difference of \text{n-1}n-1, which means we need &gt; \text{1}1 and \text{n}n adjacent; then, we need a difference of \text{n-2}n-2, etc.</p>
+<p>Also, when \text{k = 1}k = 1, a valid construction is \text{[1, 2, 3, …, n]}[1, 2, 3, …, n]. So we &gt; have a construction when \text{n-k}n-k is tiny, and when it is large. This leads to the idea that we can &gt; stitch together these two constructions: we can put \text{[1, 2, …, n-k-1]}[1, 2, …, n-k-1] first so &gt; that \text{n}n is effectively \text{k+1}k+1, and then finish the construction with the first \text{“k = &gt; n-1”}”k = n-1” method.</p>
+<p>For example, when \text{n = 6}n = 6 and \text{k = 3}k = 3, we will construct the array as \text{[1, 2, 3, &gt; 6, 4, 5]}[1, 2, 3, 6, 4, 5]. This consists of two parts: a construction of \text{[1, 2]}[1, 2] and a &gt; construction of \text{[1, 4, 2, 3]}[1, 4, 2, 3] where every element had \text{2}2 added to it (i.e. \text{&gt; [3, 6, 4, 5]}[3, 6, 4, 5]).</p>
+<p><strong>Algorithm</strong></p>
+<p>As before, write \text{[1, 2, …, n-k-1]}[1, 2, …, n-k-1] first. The remaining \text{k+1}k+1 elements &gt; to be written are \text{[n-k, n-k+1, …, n]}[n-k, n-k+1, …, n], and we’ll write them in alternating &gt; head and tail order.</p>
+<p>When we are writing the i^{th}i<br>th<br>element from the remaining \text{k+1}k+1, every even ii is going to be chosen from the head, and will &gt; have value \text{n-k + i//2}n-k + i//2. Every odd ii is going to be chosen from the tail, and will have &gt; value \text{n - i//2}n - i//2.</p>
+</blockquote>
+<p>按照这个方案的思路，首先我们观察俩个极端：k 为最大值 n-1 时的结果；以及 k 为最小值 1 时的结果。</p>
+<p>当 k = n - 1 时，这个时候数组根据数组序列（index）的奇偶性，出现奇数取头部（[1, 2, 3, …]），偶数取尾部（[n, n-1, n-2, …]）的规律。其最终结果如下。</p>
+<p><code>[1, n, 2, n-1, 3, n-2, ...]</code></p>
+<p>而当 k = 1 时，数组按照自然顺序递增排列。</p>
+<p><code>[1, 2, 3, ..., n]</code></p>
+<p>了解到这两个规律之后，我们可以将其结合：</p>
+<ul>
+<li>将 n-k-1 的部分的数按照 k = 1 时的规律处理；</li>
+<li>而剩下的 k + 1 个元素单独视作一个数组，采取 k = n - 1 时的处理。</li>
+</ul>
+<p>这样就可以将处理划分为两类，用最简单的方法来构建这个数组。</p>
+<ul>
+<li>首先构建 <code>[1, 2, ..., n-k-1]</code> 数组</li>
+<li>从 n-k 开始的数根据 index 的奇偶性来取值<ul>
+<li>当 index 为偶数时从头部取值，这时值为 n-k + i//2</li>
+<li>当 index 为奇数时从尾部取值，这时值为 n - i//2</li>
+</ul>
+</li>
+</ul>
+<p>参考代码。</p>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution(object):
+    def constructArray(self, n, k):
+        ans &#x3D; list(range(1, n - k))
+        for i in range(k+1):
+            if i % 2 &#x3D;&#x3D; 0:
+                ans.append(n-k + i&#x2F;&#x2F;2)
+            else:
+                ans.append(n - i&#x2F;&#x2F;2)
+
+        return ans</code></pre>
+
+<p>总结：</p>
+<ul>
+<li>从代码上来看，先取 k = 1 的排序，再取 k = n - 1 的排序确实让代码逻辑更加简洁和易懂；</li>
+<li>从结果上来看，这段代码在空间复杂度上有改善（beats 82.76%），但是时间复杂度上有上升（beats 86.21%）。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>Array</tag>
+        <tag>Math</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>695. Max Area of Island (Medium)</title>
+    <url>/post/leetcode/695-Max-Area-of-Island-Medium/</url>
+    <content><![CDATA[<p>思路 1，递归。使用 DFS 搜索所有陆地（1），将搜索过的元素标注为 1 以外的数，避免重复计算，每次搜索到一个目标，保持一个最大结果作为答案。</p>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def maxAreaOfIsland(self, grid: List[List[int]]) -&gt; int:
+        m, n, ans &#x3D; len(grid), len(grid[0]), 0
+
+        def search(x, y):
+            if x &lt; 0 or x &#x3D;&#x3D; m or y &lt; 0 or y &#x3D;&#x3D; n or grid[x][y] !&#x3D; 1:
+                return 0
+            grid[x][y]  &#x3D; -1
+            return 1 + search(x, y - 1) + search(x, y + 1) + search(x + 1, y) + search(x - 1, y)
+
+        for i in range(m):
+            for j in range(n):
+                if grid[i][j] &#x3D;&#x3D; 1:
+                    ans &#x3D; max(ans, search(i, j))
+
+        return ans</code></pre>
+
+<p>思路 2，栈。用一个 set <code>seen</code> 储存遇到过的格子，避免重复计算。每当遇到陆地，新建一个栈，遍历这个栈，取出栈顶的格子，将其上下左右四个方向存在陆地的格子放到栈顶，重复这个过程直到栈清空，维持一个计数最大值作为答案。</p>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def maxAreaOfIsland(self, grid: List[List[int]]) -&gt; int:
+        m, n, ans, seen &#x3D; len(grid), len(grid[0]), 0, set()
+        for i in range(m):
+            for j in range(n):
+                if grid[i][j] !&#x3D; 1:
+                    continue
+                count, stack &#x3D; 0, [(i, j)]
+                while len(stack) &gt; 0:
+                    # print(stack)
+                    x, y &#x3D; stack.pop()
+                    seen.add((x, y))
+                    count +&#x3D; 1
+                    for _x, _y in ((x-1, y), (x+1, y), (x, y-1), (x, y+1)):
+                        if _x &gt;&#x3D; 0 and _x &lt; m and _y &gt;&#x3D; 0 and _y &lt; n and (_x, _y) not in seen:
+                            if grid[_x][_y] &#x3D;&#x3D; 1:
+                                stack.append((_x, _y))
+                                seen.add((_x, _y))
+                ans &#x3D; max(ans, count)
+        return ans</code></pre>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>Array</tag>
+        <tag>DFS</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>709. To Lower Case (Easy)</title>
+    <url>/post/leetcode/709-To-Lower-Case-Easy/</url>
+    <content><![CDATA[<p>只要记得大写字母 <code>A-Z</code> 的 ASCII 码区间是 <code>65-90</code>，大写字母和小写字母的差值是 32，这道题就很好解决。</p>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def toLowerCase(self, s: str) -&gt; str:
+        ans &#x3D; &#39;&#39;
+        for c in s:
+            _c &#x3D; ord(c)
+            if _c &gt;&#x3D; 65 and _c &lt;&#x3D; 90:
+                ans +&#x3D; chr(_c + 32)
+            else:
+                ans +&#x3D; c
+        return ans</code></pre>
+
+<pre class="language-java" data-language="java"><code class="language-java">class Solution &#123;
+    public String toLowerCase(String s) &#123;
+        char[] ans &#x3D; s.toCharArray();
+        for (int i &#x3D; 0; i &lt; ans.length; i++) &#123;
+            if (ans[i] &gt;&#x3D; 65 &amp;&amp; ans[i] &lt;&#x3D; 90) &#123;
+                ans[i] +&#x3D; 32;
+            &#125;
+        &#125;
+        return new String(ans);
+    &#125;
+&#125;</code></pre>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>String</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>745. Prefix and Suffix Search (Hard)</title>
+    <url>/post/leetcode/745-Prefix-and-Suffix-Search-Hard/</url>
+    <content><![CDATA[<p>Trie</p>
+<pre class="language-java" data-language="java"><code class="language-java">class WordFilter &#123;
+
+    private Map&lt;Integer, String[]&gt; index &#x3D; new HashMap&lt;&gt;();
+    private int len;
+    private String[] reversed;
+    private Map&lt;String, Integer&gt; dp &#x3D; new HashMap&lt;&gt;();
+
+    public WordFilter(String[] words) &#123;
+        this.len &#x3D; words.length;
+        Collections.reverse(Arrays.asList(words));
+        this.reversed &#x3D; words;
+    &#125;
+
+    public int f(String prefix, String suffix) &#123;
+        String query &#x3D; suffix + &quot;#&quot; + prefix;
+        Integer ans &#x3D; dp.get(query);
+        if (ans !&#x3D; null) &#123;
+            return ans;
+        &#125;
+
+        dp.put(query, -1);
+        int l &#x3D; suffix.length();
+
+        String[] arr &#x3D; index.get(l);
+
+        if (arr &#x3D;&#x3D; null) &#123;
+            arr &#x3D; new String[len];
+            for (int i &#x3D; 0; i &lt; arr.length; i++) &#123;
+                String w &#x3D; reversed[i];
+                arr[i] &#x3D; w.substring(w.length() - l) + &quot;#&quot; + w;
+                &#x2F;&#x2F; System.out.println(arr[i]);
+            &#125;
+            index.put(l, arr);
+        &#125;
+
+
+        for (int i &#x3D; 0; i &lt; arr.length; i++) &#123;
+            if (arr[i].startsWith(query)) &#123;
+                ans &#x3D; len - 1 - i;
+                dp.put(query, ans);
+                return ans;
+            &#125;
+        &#125;
+
+        return -1;
+    &#125;
+&#125;
+
+&#x2F;**
+ * Your WordFilter object will be instantiated and called as such:
+ * WordFilter obj &#x3D; new WordFilter(words);
+ * int param_1 &#x3D; obj.f(prefix,suffix);
+ *&#x2F;</code></pre>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>Trie</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>746. Min Cost Climbing Stairs (Easy)</title>
+    <url>/post/leetcode/746-Min-Cost-Climbing-Stairs-Easy/</url>
+    <content><![CDATA[<p>思路 1，DP。仔细观察能发现每一步的 cost 都取前两步 cost 的最小值，那么我们可以准备一个数组来存计算过的最小 cost。</p>
+<p>话虽如此，这道题叙述有些模糊，经过尝试可以明确以下信息：</p>
+<ul>
+<li>下标 0 和 1 的 cost 都为 0，因为第一步最大可以走到下标 1 的位置，而第一步是没有 cost 的；</li>
+<li>最后一步要超过最后一个元素，下标要达到数组长度。</li>
+</ul>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def minCostClimbingStairs(self, cost: List[int]) -&gt; int:
+        n &#x3D; len(cost)
+        mincost &#x3D; [0] * (n + 1)
+        # 0，1 的 cost 都为 0，我们直接从 2 开始遍历，到 n （包含）结束。
+        for i in range(2, n + 1):
+            # 每一步 i 的 cost 都为前一步的值加上到达前一步的最小值。
+            # 其中前一步可以选择 i - 1 和 i - 2。
+            mincost[i] &#x3D; min(
+                mincost[i - 1] + cost[i - 1],
+                mincost[i - 2] + cost[i - 2]
+            )
+        return mincost[-1]</code></pre>
+
+<p>思路 2，优化 DP。仔细一看发现我们每次只看 2 个值，那么可以优化 O(n)空间复杂度到 O(1)。</p>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def minCostClimbingStairs(self, cost: List[int]) -&gt; int:
+        st1 &#x3D; st2 &#x3D; 0
+        for i in range(2, len(cost) + 1):
+            # 按照从左到右的顺序依次是 st2、st1、st0，每一个迭代我们丢弃 st2 的值，
+            # 将 st1、st0 作为下一次迭代的 st2、st1。
+            st0 &#x3D; min(st1 + cost[i - 1], st2 + cost[i - 2])
+            st1, st2 &#x3D; st0, st1
+        return st1</code></pre>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>Array</tag>
+        <tag>DP</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>752. Open the Lock (Medium)</title>
+    <url>/post/leetcode/752-Open-the-Lock-Medium/</url>
+    <content><![CDATA[<p>圆盘锁有 4 个，每个锁上有 0 ～ 9 共十个数字，换个角度我们需要求出一个 10000 个节点的图中从 <code>0000</code> 出发到目标节点的最短路径，并且要避开给定的死路。总结一下已知的情报。</p>
+<ul>
+<li>每个锁每次操作可以 +1 or -1；</li>
+<li>当前状态的下一步操作有 4 * 2 = 8 中选择；</li>
+<li>要求最少步数，需要穷尽每一步的所有选择 -&gt; 确定 BFS 应用场景；</li>
+<li>为避免重复搜索，准备一个 <code>seen</code> 数组进行剪枝；<ul>
+<li>已知圆盘锁的值都为数字且不重复，<code>seen</code> 数组可以初始化为长度为 10000 的布尔值 or 0/1 数组；</li>
+<li><code>deadends</code> 可以视作已经处理过的组合，可以将其对应的 <code>seen</code> 数组的元素设为 true；</li>
+</ul>
+</li>
+<li>为了方面计算，先将不好处理的特殊场景排除在外，这题有 2 个特殊场景：<ul>
+<li>当目标等于初始值时，直接返回 0；</li>
+<li>当初始值被标记为死路时，直接返回 -1；</li>
+</ul>
+</li>
+<li>开始实现算法。</li>
+</ul>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def openLock(self, deadends: List[str], target: str) -&gt; int:
+        if target &#x3D;&#x3D; &#39;0000&#39;:
+            return 0
+
+        depth, queue, seen, target &#x3D; 0, [0], [0] * 10000, int(target)
+
+        for d in deadends:
+            seen[int(d)] &#x3D; 1
+
+        if seen[0]:
+            return -1
+
+        while len(queue) &gt; 0:
+            n, depth &#x3D; len(queue), depth + 1
+            for i in range(n):
+                first &#x3D; queue.pop(0)
+                for k in range(4):
+                    base &#x3D; first &#x2F;&#x2F; 10 ** k % 10
+                    for d in (-1, 1):
+                        # first - base * 10 ** k -&gt; get the base number with target digit reset to 0.
+                        # ~ + (base + d) % 10 * 10 ** k -&gt; add back the caculated target digit.
+                        nxt &#x3D; first - base * 10 ** k + (base + d) % 10 * 10 ** k
+                        if nxt &#x3D;&#x3D; target:
+                            return depth
+                        if seen[int(nxt)]:
+                            continue
+                        seen[int(nxt)] &#x3D; 1
+                        queue.append(nxt)
+        return -1</code></pre>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>BFS</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>77. Combinations (Medium)</title>
+    <url>/post/leetcode/77-Combinations-Medium/</url>
+    <content><![CDATA[<p>需要编辑的数组长度 <code>k</code> 是一个变量，看来这道题是一道典型的回溯算法题。</p>
+<p>我们从 <code>1</code> 开始尝试往目标数组中放入包含 <code>1</code> 到包含 <code>n</code> 之间的值。</p>
+<p>下一轮中我们尝试放入包含 <code>2</code> 到包含 <code>n</code> 之间的值。重复这个过程。</p>
+<p>组合不在乎元素的排序，所以也许你会觉得算法会重复取值，这里的处理重点在于下一个值永远是大于上一个值的，所以我们没有必要考虑组合重复。</p>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def combine(self, n: int, k: int) -&gt; List[List[int]]:
+        ans &#x3D; []
+        def search(pos, res):
+            if len(res) &#x3D;&#x3D; k:
+                ans.append(res)
+                return
+            for i in range(pos, n + 1):
+                search(i + 1, res + [i])
+        search(1, [])
+        return ans</code></pre>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>Backtracking</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>778. Swim in Rising Water (Hard)</title>
+    <url>/post/leetcode/778-Swim-in-Rising-Water-Hard/</url>
+    <content><![CDATA[<p>这是一道求最合适路径的题目，可以应用图论中的 Dijkstra 算法。</p>
+<blockquote>
+<p>Dijkstra‘s Algorithm 适用于求<strong>权重不为负数的加权图</strong>起点到终点的最优路径。</p>
+</blockquote>
+<p>这道题的 input 是一个 <code>n * n</code> 的矩阵，可以将其视作所有元素都与其上下左右相互连接的一张无向图，每个顶点的数值表示到达这个顶点的边的权重，我们需要求的是从起点 <code>(0, 0)</code> 到终点 <code>(n, n)</code> 的最优路径。这道题要求我们计算的是这条路径上权重最大值，所以我们用一个变量来保持每一次选择后的权重最大值。</p>
+<p>下面是算法：</p>
+<ul>
+<li>从 <code>(0, 0)</code> 开始，将四个方向能访问的顶点加权后放入小根堆：<ul>
+<li>根据题目的限制，<code>n &lt;= 50</code>，所以我们留出 2 进制 6 位（<code>2^6=64</code>）便足够放下下标的长度来；</li>
+<li>加权后的值 = <code>(grid[x][y] &lt;&lt; 12) + (x &lt;&lt; 6) + y</code>;</li>
+</ul>
+</li>
+<li>选择小根堆中的最小值继续往下走：<ul>
+<li>现在我们选了一个新的值，用其和全局最大值再取一次最大值，更新全局变量；</li>
+<li>从加权后的值中恢复这个值的 <code>x, y</code> 下标；</li>
+</ul>
+</li>
+<li>重复这个过程直到终点 <code>(n, n)</code>。</li>
+</ul>
+<pre class="language-python" data-language="python"><code class="language-python">moves &#x3D; ((-1, 0), (0, -1), (1, 0), (0, 1))
+mask &#x3D; (1 &lt;&lt; 6) - 1
+
+class Solution:
+    def swimInWater(self, grid: List[List[int]]) -&gt; int:
+        n, ans, i, j, q &#x3D; len(grid) - 1, grid[0][0], 0, 0, []
+        while i &lt; n or j &lt; n:
+            for a, b in moves:
+                _i, _j &#x3D; i + a, j + b
+                if _i &lt; 0 or _i &gt; n or _j &lt; 0 or _j &gt; n or grid[_i][_j] &#x3D;&#x3D; math.inf:
+                    continue
+                heapq.heappush(q, (grid[_i][_j] &lt;&lt; 12) + (_i &lt;&lt; 6) + _j)
+                grid[_i][_j] &#x3D; math.inf
+            nxt &#x3D; heapq.heappop(q)
+            ans &#x3D; max(ans, nxt &gt;&gt; 12)
+            i, j &#x3D; (nxt &gt;&gt; 6) &amp; mask, nxt &amp; mask
+        return ans</code></pre>
+
+<p>Java 版用 PriorityQueue 实现小根堆。</p>
+<pre class="language-java" data-language="java"><code class="language-java">class Solution &#123;
+    private int[][] moves &#x3D; new int[][] &#123;
+        &#123;0, 1&#125;, &#123;1, 0&#125;, &#123;0, -1&#125;, &#123;-1, 0&#125;
+    &#125;;
+    private int mask &#x3D; (1 &lt;&lt; 6) - 1;
+
+    public int swimInWater(int[][] grid) &#123;
+        int ans &#x3D; grid[0][0];
+        int n &#x3D; grid.length - 1;
+        Queue&lt;Integer&gt; pq &#x3D; new PriorityQueue&lt;&gt;();
+        int i &#x3D; 0, j &#x3D; 0;
+        while (i !&#x3D; n || j !&#x3D; n) &#123;
+            for (int[] m : moves) &#123;
+                int mi &#x3D; i + m[0], mj &#x3D; j + m[1];
+                if (mi &lt; 0 || mi &gt; n || mj &lt; 0 || mj &gt; n
+                    || grid[mi][mj] &#x3D;&#x3D; Integer.MAX_VALUE) &#123;
+                    continue;
+                &#125;
+                pq.add((grid[mi][mj] &lt;&lt; 12) + (mi &lt;&lt; 6) + mj);
+                grid[mi][mj] &#x3D; Integer.MAX_VALUE;
+            &#125;
+            int next &#x3D; pq.poll();
+            ans &#x3D; Math.max(ans, next &gt;&gt; 12);
+            i &#x3D; (next &gt;&gt; 6) &amp; mask;
+            j &#x3D; next &amp; mask;
+        &#125;
+        return ans;
+    &#125;
+&#125;</code></pre>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>Binary Search</tag>
+        <tag>DFS</tag>
+        <tag>Heap</tag>
+        <tag>Union Fold</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>792. Number of Matching Subsequences (Medium)</title>
+    <url>/post/leetcode/792-Number-of-Matching-Subsequences-Medium/</url>
+    <content><![CDATA[<p>无脑思路…这道题定义的子序列不需要是连续的字符串，只需要字符按照原本的先后顺序排列即可，所以遗憾 <code>for in</code> 不能派上用场（废话）。</p>
+<p>但这也难不倒无脑的我，定义在于先后顺序，那么我们每一次仅搜索从上一次找到的下标往后是不是存在下一个字符，如果找到下一个字符，这个下标保存继续循环，最后判断找到的字符数量是不是和愿字符串长度一致。</p>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def numMatchingSubseq(self, s: str, words: List[str]) -&gt; int:
+        ans &#x3D; 0
+        for w in words:
+            curr, cnt &#x3D; 0, 0
+            for c in w:
+                try:
+                    curr &#x3D; curr + s[curr:].index(c) + 1
+                    cnt +&#x3D; 1
+                except:
+                    break
+            if cnt &#x3D;&#x3D; len(w):
+                ans +&#x3D;1
+        return ans</code></pre>
+
+<p>正常思路，桶。评论区的一个思路，作者命名为 “Next Letter Pointer” 方法。</p>
+<p>我们将每个检查对象按照首字母放到对应的桶中，通过下面的方法实现仅遍历一次目标字符串就检查完所有目标的算法。</p>
+<p>作者还做了一张图来可视化这个过程。算法思路如下。</p>
+<ul>
+<li>准备好桶后，开始遍历目标字符串：<ul>
+<li>用当前位置的字符取出对应的桶保留，就桶原本的位置重置为空桶；</li>
+<li>遍历取出的桶：<ul>
+<li>如果字符长度为 1：说明找到了一个答案，计数器+1；</li>
+<li>否则：将字符串去头（第一个字符）后，按照首字母继续放入对应的桶中，等待后面有机会取出来；</li>
+</ul>
+</li>
+<li>重复这个过程直到目标字符串遍历结束。</li>
+</ul>
+</li>
+</ul>
+<p><img src="./resources/792.bucket.png" alt="bucket"></p>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def numMatchingSubseq(self, s: str, words: List[str]) -&gt; int:
+        ans, bucket &#x3D; 0, defaultdict(list)
+        for w in words:
+            bucket[w[0]].append(w)
+        for c in s:
+            target, bucket[c] &#x3D; bucket[c], []
+            for w in target:
+                if len(w) &#x3D;&#x3D; 1:
+                    ans +&#x3D; 1
+                    continue
+                bucket[w[1]].append(w[1:])
+        return ans</code></pre>
+
+<p>Java 版本，好长长长…</p>
+<pre class="language-java" data-language="java"><code class="language-java">class Solution &#123;
+    private class Node &#123;
+        public String w;
+        public int p;
+        public Node(String w, int p) &#123;
+            this.w &#x3D; w;
+            this.p &#x3D; p;
+        &#125;
+    &#125;
+    public int numMatchingSubseq(String s, String[] words) &#123;
+        List&lt;Node&gt;[] bucket &#x3D; new ArrayList[26];
+        int ans &#x3D; 0;
+        for (int i &#x3D; 0; i &lt; 26; i++) &#123;
+            bucket[i] &#x3D; new ArrayList&lt;Node&gt;();
+        &#125;
+        for (String word : words) &#123;
+            bucket[word.charAt(0) - 97].add(new Node(word, 0));
+        &#125;
+        for (char c : s.toCharArray()) &#123;
+            List&lt;Node&gt; target &#x3D; bucket[c - 97];
+            bucket[c - 97] &#x3D; new ArrayList&lt;Node&gt;();
+            for (Node n : target) &#123;
+                if (n.p + 1 &#x3D;&#x3D; n.w.length()) &#123;
+                    ans++;
+                &#125; else &#123;
+                    n.p ++;
+                    bucket[n.w.charAt(n.p) - 97].add(n);
+                &#125;
+            &#125;
+        &#125;
+        return ans;
+    &#125;
+&#125;</code></pre>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>Array</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>816. Ambiguous Coordinates (Medium)</title>
+    <url>/post/leetcode/816-Ambiguous-Coordinates-Medium/</url>
+    <content><![CDATA[<p>Topics:</p>
+<p>String.</p>
+<p>思路 1 偷懒用正则检查字符串。</p>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def ambiguousCoordinates(self, s: str) -&gt; List[str]:
+
+        def isvalid(s):
+            ptn &#x3D; r&quot;^(([1-9]+\d*|0)\.\d*[1-9]|([1-9]+\d*|0))$&quot;
+            return re.match(ptn, s) is not None
+
+        def makenumberstr(s):
+            ret &#x3D; []
+            for i in range(len(s)):
+                _s &#x3D; s
+                if i + 1 &lt; len(s):
+                    _s &#x3D; s[:i + 1] + &#39;.&#39; + s[i + 1:]
+                if isvalid(_s):
+                    ret.append(_s)
+            return ret
+
+        s &#x3D; s[1:-1]
+
+        ans &#x3D; []
+
+        for i in range(1, len(s)):
+
+            n &#x3D; makenumberstr(s[:i])
+            m &#x3D; makenumberstr(s[i:])
+
+            for _n in n:
+                for _m in m:
+                    ans.append(f&quot;(&#123;_n&#125;, &#123;_m&#125;)&quot;)
+
+        return ans</code></pre>
+
+<p>思路 2 老老实实拼正确的字符串，跳过检查。其实正确字符串规则只有 2 个，无论对整数还是浮点数来说，整数部分只能是 0 或 0 以上，所以判断这部分只要判断是否有前缀 0，以及是否为 0。</p>
+<ul>
+<li>浮点数：<ul>
+<li>左边只能是 0 或大于 0 的数；</li>
+<li>右边末位不能是 0。</li>
+</ul>
+</li>
+<li>整数：<ul>
+<li>只能是 0 或大于 0 的数。</li>
+</ul>
+</li>
+</ul>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def ambiguousCoordinates(self, s: str) -&gt; List[str]:
+
+        def makenumberstr(s):
+            ret &#x3D; []
+            for i in range(1, len(s) + 1):
+                left, right &#x3D; s[:i], s[i:]
+                if (not left.startswith(&#39;0&#39;) or left &#x3D;&#x3D; &#39;0&#39;) and not right.endswith(&#39;0&#39;):
+                    ret.append(left + (&#39;.&#39; if right !&#x3D; &#39;&#39; else &#39;&#39;) + right)
+            return ret
+
+        s, ans &#x3D; s[1:-1], []
+
+        for i in range(1, len(s)):
+
+            n &#x3D; makenumberstr(s[:i])
+            m &#x3D; makenumberstr(s[i:])
+
+            for _n in n:
+                for _m in m:
+                    ans.append(f&quot;(&#123;_n&#125;, &#123;_m&#125;)&quot;)
+
+        return ans</code></pre>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>String</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>86. Partition List (Medium)</title>
+    <url>/post/leetcode/86-Partition-List-Medium/</url>
+    <content><![CDATA[<p>With solutions both in Python and Java.</p>
+<p>读题先。</p>
+<blockquote>
+<p>Given the <code>head</code> of a linked list and a value <code>x</code>, partition it such that all nodes less than <code>x</code> come before nodes greater than or equal to <code>x</code>.</p>
+<p>You should <strong>preserve</strong> the original relative order of the nodes in each of the two partitions.</p>
+</blockquote>
+<p>已知参数为一个 linked list 和 x，需要将数组根据 x 的值分区，小于它的放在前面，大于等于它的放在后面，并且分区后要保证原有顺序不变。</p>
+<p>从下面例子可以看出来，我们可以把数组拆成一个前一个后，保持元素相对顺序，然后拼接起来。</p>
+<p>Example 1:</p>
+<pre class="language-console" data-language="console"><code class="language-console">Input: head &#x3D; [1,4,3,2,5,2], x &#x3D; 3
+Output: [1,2,2,4,3,5]</code></pre>
+
+<p>Example 2:</p>
+<pre class="language-console" data-language="console"><code class="language-console">Input: head &#x3D; [2,1], x &#x3D; 2
+Output: [1,2]</code></pre>
+
+<h3 id="Submissions"><a href="#Submissions" class="headerlink" title="Submissions"></a>Submissions</h3><p>我的代码时间复杂度还能看，空间复杂度已经脱离排名，没法看了。</p>
+<p>虽然解题思路和官方一样，但是处理上有些愚蠢，这题就不贴我的结果了。</p>
+<h3 id="思路-amp-Solutions"><a href="#思路-amp-Solutions" class="headerlink" title="思路 &amp; Solutions"></a>思路 &amp; Solutions</h3><p>思路很简单，这道题主要考察的是对空间复杂度对处理。逻辑的流程如下。</p>
+<ul>
+<li>准备一个 before 列表存储值小于 x 的元素</li>
+<li>准备一个 after 列表存储值不小于 x 的元素</li>
+<li>将两个列表连接起来作为结果</li>
+</ul>
+<p>逻辑很简单，但是 linked list 的接口如下。</p>
+<pre class="language-python" data-language="python"><code class="language-python"># Definition for singly-linked list.
+ class ListNode:
+     def __init__(self, val&#x3D;0, next&#x3D;None):
+         self.val &#x3D; val
+         self.next &#x3D; next</code></pre>
+
+<p>程序拿到的参数是这个 linked list 的第一个元素，这是一个逻辑上的列表，我们只能向下遍历，无法从下节点反推出上一个节点的值。</p>
+<p>要准备 before 和 after 列表我们首先要知道从哪里开始，以及如何开始。</p>
+<ul>
+<li>我们可以不初始化 before 和 after，等到遇到合适的值的时候再去给其赋值；</li>
+<li>也可以初始化为当前的节点，再根据与 x 比较的结果来调整赋值；这两个思路我都尝试了。</li>
+<li>官解的处理是，将 before 和 after 初始化为两个伪节点，规避了初始化问题（是我没想到的思路）。</li>
+</ul>
+<p>看一下 Python 代码理解一下这个处理。</p>
+<pre class="language-python" data-language="python"><code class="language-python"># Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val&#x3D;0, next&#x3D;None):
+#         self.val &#x3D; val
+#         self.next &#x3D; next
+class Solution:
+    def partition(self, head: ListNode, x: int) -&gt; ListNode:
+        bef &#x3D; bf_head &#x3D; ListNode(0)
+        aft &#x3D; af_head &#x3D; ListNode(0)
+
+        while head is not None:
+            if head.val &lt; x:
+                bef.next &#x3D; head
+                bef &#x3D; head
+            else:
+                aft.next &#x3D; head
+                aft &#x3D; head
+            head &#x3D; head.next
+
+        aft.next &#x3D; None
+        bef.next &#x3D; af_head.next
+
+        return bf_head.next
+</code></pre>
+
+<p>Java 代码逻辑一样。</p>
+<pre class="language-java" data-language="java"><code class="language-java">&#x2F;**
+ * Definition for singly-linked list.
+ * public class ListNode &#123;
+ *     int val;
+ *     ListNode next;
+ *     ListNode() &#123;&#125;
+ *     ListNode(int val) &#123; this.val &#x3D; val; &#125;
+ *     ListNode(int val, ListNode next) &#123; this.val &#x3D; val; this.next &#x3D; next; &#125;
+ * &#125;
+ *&#x2F;
+class Solution &#123;
+    public ListNode partition(ListNode head, int x) &#123;
+        ListNode before &#x3D; new ListNode();
+        ListNode after &#x3D; new ListNode();
+        ListNode bfHead &#x3D; before;
+        ListNode afHead &#x3D; after;
+
+        while (head !&#x3D; null) &#123;
+            if (head.val &lt; x) &#123;
+                before.next &#x3D; head;
+                before &#x3D; head;
+            &#125; else &#123;
+                after.next &#x3D; head;
+                after &#x3D; head;
+            &#125;
+            head &#x3D; head.next;
+        &#125;
+
+        after.next &#x3D; null;
+        before.next &#x3D; afHead.next;
+
+        return bfHead.next;
+    &#125;
+&#125;</code></pre>
+
+<h3 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h3><p>进行伪初始化的处理很好的规避了初始化判断，对遍历的处理也只是改变了列表的排序，两者使得程序在时间和空间复杂度上有很好的表现。</p>
+<ul>
+<li>时间复杂度：O(n)，做了一次遍历；</li>
+<li>空间复杂度：O(1)，只做了列表重组，没使用额外空间。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>Linked List</tag>
+        <tag>Two Pointers</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>890. Find and Replace Pattern (Medium)</title>
+    <url>/post/leetcode/890-Find-and-Replace-Pattern-Medium/</url>
+    <content><![CDATA[<p>思路 1，先计算 <code>pattern</code> 的排列码表，使用这个码表来过滤输入数据。简单来说，我们这样做。</p>
+<ul>
+<li>计算 <code>pattern</code> 的排列码表<ul>
+<li>用一个计数器将 <code>pattern</code> 中的字符按出现顺序编码；</li>
+<li>相同字符的编码保持不变，比如 <code>abba</code> 转化为排列码表为 <code>[0, 1, 1, 0]</code>。</li>
+</ul>
+</li>
+<li>对输入数据中每一个字符串进行检查<ul>
+<li>用一个计数器将目标中的字符按出现顺序编码；</li>
+<li>相同字符的编码保持不变；</li>
+<li>计算完每一个字符的编码后，与排列码表相同下标的元素进行比对，结果不一致时直接返回 <code>false</code>；</li>
+<li>顺利匹配完成时，返回 <code>true</code>。</li>
+</ul>
+</li>
+</ul>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def findAndReplacePattern(self, words: List[str], pattern: str) -&gt; List[str]:
+        ptn, tbl, c &#x3D; [], &#123;&#125;, 0
+
+        for i in pattern:
+            if i not in tbl:
+                tbl[i] &#x3D; c
+                c +&#x3D; 1
+            ptn.append(tbl[i])
+
+        def match(w):
+            tbl.clear()
+            c &#x3D; 0
+            for i in range(len(w)):
+                if w[i] not in tbl:
+                    tbl[w[i]] &#x3D; c
+                    c +&#x3D; 1
+                if tbl[w[i]] !&#x3D; ptn[i]:
+                    return False
+            return True
+
+        # print(ptn)
+        return filter(match, words)</code></pre>
+
+<p>思路 2，双射（bijection）。用两个哈希表分别映射 <code>pattern</code> 字符和目标字符，检查映射结果是否一致。</p>
+<ul>
+<li>用 <code>m1</code> 储存目标字符到 <code>pattern</code> 字符的映射，比如字符 <code>x</code> -&gt; <code>a</code>;</li>
+<li>用 <code>m2</code> 储存 <code>pattern</code> 字符到目标字符的映射，比如字符 <code>a</code> -&gt; <code>x</code>；</li>
+<li>作为判断条件，当下面条件任意一个满足，则表示目标字符与 <code>pattern</code> 不匹配：<ul>
+<li><code>m1</code> 中字符 <code>x</code> 对应的字符与当前 <code>pattern</code> 相对下标的字符不匹配；或，</li>
+<li><code>m2</code> 中字符 <code>a</code> 对应的字符与当前目标字符串相对下标的字符不匹配。</li>
+</ul>
+</li>
+<li>如果到最后一个字符依然匹配，则目标字符匹配 <code>pattern</code>。</li>
+</ul>
+<pre class="language-java" data-language="java"><code class="language-java">class Solution &#123;
+    private Map&lt;Character, Character&gt; m1 &#x3D; new HashMap&lt;&gt;();
+    private Map&lt;Character, Character&gt; m2 &#x3D; new HashMap&lt;&gt;();
+    public List&lt;String&gt; findAndReplacePattern(String[] words, String pattern) &#123;
+        List&lt;String&gt; ans &#x3D; new ArrayList&lt;&gt;();
+        for (String w : words) &#123;
+            if (match(w, pattern)) ans.add(w);
+        &#125;
+        return ans;
+    &#125;
+    private boolean match(String w, String ptn) &#123;
+        m1.clear(); m2.clear();
+        for (int i &#x3D; 0; i &lt; w.length(); i++) &#123;
+            char c &#x3D; w.charAt(i);
+            char p &#x3D; ptn.charAt(i);
+            if (!m1.containsKey(c)) m1.put(c, p);
+            if (!m2.containsKey(p)) m2.put(p, c);
+            if (m1.get(c) !&#x3D; p || m2.get(p) !&#x3D; c) return false;
+        &#125;
+        return true;
+    &#125;
+&#125;</code></pre>
+
+<p>思路 3，单哈希表。在双射的思路里我们用到了 2 个哈希表，这里还有优化的空间，我们考虑一下只使用一个哈希表时需要处理的问题。</p>
+<ul>
+<li>首先按照思路 2 准备好哈希表，这次我们仅作目标字符到 <code>pattern</code> 字符的映射；</li>
+<li>第一个错误条件是目标字符在哈希表中对应的 <code>pattern</code> 字符和当前不匹配：<ul>
+<li>如果目标字符重复之前出现过的字符，而 <code>pattern</code> 字符是未出现过的，则哈希表中对应字符和当前 <code>pattern</code> 字符必定不匹配。</li>
+</ul>
+</li>
+<li>第二个错误条件是目标字符都不重复时，会将多个不同字符映射到 <code>pattern</code> 的同一个字符：<ul>
+<li>这时哈希表会顺利完成，我们需要对哈希表的值集合进行进一步的检查，如果出现重复字符则返回 <code>false</code>。</li>
+</ul>
+</li>
+<li>最终顺利完成检查的返回 <code>true</code>。</li>
+</ul>
+<pre class="language-java" data-language="java"><code class="language-java">class Solution &#123;
+    private Map&lt;Character, Character&gt; m1 &#x3D; new HashMap&lt;&gt;();
+    public List&lt;String&gt; findAndReplacePattern(String[] words, String pattern) &#123;
+        List&lt;String&gt; ans &#x3D; new ArrayList&lt;&gt;();
+        for (String w : words) &#123;
+            if (match(w, pattern)) ans.add(w);
+        &#125;
+        return ans;
+    &#125;
+    private boolean match(String w, String ptn) &#123;
+        m1.clear();
+        for (int i &#x3D; 0; i &lt; w.length(); i++) &#123;
+            char c &#x3D; w.charAt(i);
+            char p &#x3D; ptn.charAt(i);
+            if (!m1.containsKey(c)) m1.put(c, p);
+            if (m1.get(c) !&#x3D; p) return false;
+        &#125;
+
+        boolean[] test &#x3D; new boolean[26];
+        for (char v : m1.values()) &#123;
+            if (test[v - &#39;a&#39;]) &#123;
+                return false;
+            &#125; else &#123;
+                test[v - &#39;a&#39;] &#x3D; true;
+            &#125;
+        &#125;
+        return true;
+    &#125;
+&#125;</code></pre>
+
+<pre class="language-js" data-language="js"><code class="language-js">&#x2F;**
+ * @param &#123;string[]&#125; words
+ * @param &#123;string&#125; pattern
+ * @return &#123;string[]&#125;
+ *&#x2F;
+var findAndReplacePattern &#x3D; function (words, pattern) &#123;
+  return words.filter((w) &#x3D;&gt; &#123;
+    const map &#x3D; &#123;&#125;;
+    for (let i &#x3D; 0; i &lt; w.length; i++) &#123;
+      const c &#x3D; w.charAt(i),
+        p &#x3D; pattern.charAt(i);
+      if (!map[c]) map[c] &#x3D; p;
+      if (p !&#x3D;&#x3D; map[c]) return false;
+    &#125;
+    const test &#x3D; [];
+    for (let v of Object.values(map)) &#123;
+      if (test.indexOf(v) &gt; -1) &#123;
+        return false;
+      &#125; else &#123;
+        test.push(v);
+      &#125;
+    &#125;
+    return true;
+  &#125;);
+&#125;;</code></pre>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>String</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>906. Super Palindromes (Hard)</title>
+    <url>/post/leetcode/906-Super-Palindromes-Hard/</url>
+    <content><![CDATA[<p>Topics:</p>
+<p>Math.</p>
+<p>Don’t know the reason but not interested in this problem, so let’s calculate a table to break it.</p>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def superpalindromesInRange(self, left: str, right: str) -&gt; int:
+        L, R &#x3D; int(left), int(right)
+        ans &#x3D; 0
+
+        for i in self.table:
+            if i &lt; L:
+                continue
+            elif i &lt;&#x3D; R:
+                ans +&#x3D; 1
+            else:
+                break
+
+        return ans
+
+    table &#x3D; [
+        1,
+        4,
+        9,
+        121,
+        484,
+        10201,
+        12321,
+        14641,
+        40804,
+        44944,
+        1002001,
+        1234321,
+        4008004,
+        100020001,
+        102030201,
+        104060401,
+        121242121,
+        123454321,
+        125686521,
+        400080004,
+        404090404,
+        10000200001,
+        10221412201,
+        12102420121,
+        12345654321,
+        40000800004,
+        1000002000001,
+        1002003002001,
+        1004006004001,
+        1020304030201,
+        1022325232201,
+        1024348434201,
+        1210024200121,
+        1212225222121,
+        1214428244121,
+        1232346432321,
+        1234567654321,
+        4000008000004,
+        4004009004004,
+        100000020000001,
+        100220141022001,
+        102012040210201,
+        102234363432201,
+        121000242000121,
+        121242363242121,
+        123212464212321,
+        123456787654321,
+        400000080000004,
+        10000000200000001,
+        10002000300020001,
+        10004000600040001,
+        10020210401202001,
+        10022212521222001,
+        10024214841242001,
+        10201020402010201,
+        10203040504030201,
+        10205060806050201,
+        10221432623412201,
+        10223454745432201,
+        12100002420000121,
+        12102202520220121,
+        12104402820440121,
+        12122232623222121,
+        12124434743442121,
+        12321024642012321,
+        12323244744232321,
+        12343456865434321,
+        12345678987654321,
+        40000000800000004,
+        40004000900040004
+    ]</code></pre>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>Math</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>92. Reverse Linked List II (Medium)</title>
+    <url>/post/leetcode/92-Reverse-Linked-List-II-Medium/</url>
+    <content><![CDATA[<p>暴力解法。啥也不多说，看看算法。</p>
+<ul>
+<li>把 <code>LinkedList</code> 转换成 <code>List；</code></li>
+<li>交换 <code>left</code> 和 <code>right</code> 的值；</li>
+<li>更新 <code>left</code> 和 <code>right</code> 指针；</li>
+<li>重复过程直到 <code>left</code> 不再小于 <code>right</code>。</li>
+</ul>
+<pre class="language-python" data-language="python"><code class="language-python"># Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val&#x3D;0, next&#x3D;None):
+#         self.val &#x3D; val
+#         self.next &#x3D; next
+class Solution:
+    def reverseBetween(self, head: ListNode, left: int, right: int) -&gt; ListNode:
+        nodes &#x3D; [head]
+        while head.next:
+            head &#x3D; head.next
+            nodes.append(head)
+        while left &lt; right:
+            nodes[left - 1].val, nodes[right - 1].val &#x3D; nodes[right - 1].val, nodes[left - 1].val
+            left +&#x3D; 1
+            right -&#x3D; 1
+        return nodes[0]</code></pre>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>Linked List</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>94. Binary Tree Inorder Traversal (Easy)</title>
+    <url>/post/leetcode/94-Binary-Tree-Inorder-Traversal-Easy/</url>
+    <content><![CDATA[<p>遍历树的方法通常有三种，分别是前序遍历 pre-order traversal、中序遍历 in-order traversal 和后序遍历 post-order traversal。这道题是中序遍历。</p>
+<p>难度上来说，前序最简单，中序和后序遍历会复杂一点。</p>
+<p>思路 1，递归</p>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def inorderTraversal(self, root: TreeNode) -&gt; List[int]:
+        ans &#x3D; []
+
+        def traverse(node):
+            if node is None:
+                return
+            traverse(node.left)
+            ans.append(node.val)
+            traverse(node.right)
+
+        traverse(root)
+        return ans</code></pre>
+
+<p>思路 2，遍历</p>
+<p>基于前序遍历的方案做的修改，可以解决问题，但是在空间复杂度上有优化余地，为了储存 stack 使用了额外的 2n 的空间。</p>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def inorderTraversal(self, root: TreeNode) -&gt; List[int]:
+        ans, stack &#x3D; [], [root]
+
+        while len(stack) &gt; 0:
+            node &#x3D; stack.pop()
+            if node is None:
+                continue
+            if type(node) &#x3D;&#x3D; int:
+                ans.append(node)
+            else:
+                stack.append(node.right)
+                stack.append(node.val)
+                stack.append(node.left)
+
+        return ans</code></pre>
+
+<p>思路 3，遍历，优化版本</p>
+<p>中序遍历要先遍历左节点，所以先抵达最左路径的最后一个节点，从这个节点开始回溯，重复检查左节点，本体和右节点的顺序。</p>
+<p>这其实是思路 1 递归的扁平化处理，使用 stack 来替代递归过程。时间复杂度和空间复杂度均为 O(n)。</p>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def inorderTraversal(self, root: TreeNode) -&gt; List[int]:
+        ans, stack, curr &#x3D; [], [], root
+
+        while curr or len(stack) &gt; 0:
+            # find the leftmost node
+            while curr:
+                stack.append(curr)
+                curr &#x3D; curr.left
+            curr &#x3D; stack.pop()
+            # record its value
+            ans.append(curr.val)
+            # start the next turn with its right node
+            curr &#x3D; curr.right
+
+        return ans</code></pre>
+
+<p>思路 4，莫里斯遍历 Morris Traversal</p>
+<p>也叫线索二叉树（Threaded Binary Tree），修改树的结构，让其“穿起来”成为一条线，整个遍历过程重复修改结构 -&gt; 遍历数据的过程。</p>
+<p>具体做法如下：</p>
+<ul>
+<li>当前节点不存在左节点时<ul>
+<li>记录当前节点值</li>
+<li>将右节点标记为当前节点</li>
+</ul>
+</li>
+<li>当前节点存在左节点时<ul>
+<li>将当前节点挂在左节点的最后一个右节点上</li>
+<li>将左节点标记为当前节点</li>
+</ul>
+</li>
+<li>重复这个过程直到不存在当前节点</li>
+</ul>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def inorderTraversal(self, root: TreeNode) -&gt; List[int]:
+        ans, curr &#x3D; [], root
+
+        while curr:
+            if curr.left is None:
+                ans.append(curr.val)
+                curr &#x3D; curr.right
+            else:
+                pre &#x3D; curr.left
+                while pre.right:
+                    pre &#x3D; pre.right
+                pre.right &#x3D; curr
+                curr.left, curr &#x3D; None, curr.left
+
+        return ans</code></pre>
+
+<p>抄一个 Threaded Binary Tree 的解释方便理解。</p>
+<blockquote>
+<p>For example:</p>
+<pre class="language-none"><code class="language-none">     1
+   &#x2F;   \
+  2     3
+ &#x2F; \   &#x2F;
+4   5 6</code></pre>
+
+<p>First, 1 is the root, so initialize 1 as current, 1 has left child which is 2, the current’s left subtree is</p>
+<pre class="language-none"><code class="language-none">  2
+ &#x2F; \
+4   5</code></pre>
+
+<p>So in this subtree, the rightmost node is 5, then make the current(1) as the right child of 5. Set current = cuurent.left (current = 2). The tree now looks like:</p>
+<pre class="language-none"><code class="language-none">  2
+ &#x2F; \
+4   5
+     \
+      1
+       \
+        3
+       &#x2F;
+      6</code></pre>
+
+<p>For current 2, which has left child 4, we can continue with thesame process as we did above</p>
+<pre class="language-none"><code class="language-none">4
+ \
+  2
+   \
+    5
+     \
+      1
+       \
+        3
+       &#x2F;
+      6</code></pre>
+
+<p>then add 4 because it has no left child, then add 2, 5, 1, 3 one by one, for node 3 which has left child 6, do the same as above. Finally, the inorder traversal is [4,2,5,1,6,3].</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>Tree</tag>
+        <tag>Binary Tree</tag>
+        <tag>DFS</tag>
+        <tag>Stack</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>943. Find the Shortest Superstring (Hard)</title>
+    <url>/post/leetcode/943-Find-the-Shortest-Superstring-Hard/</url>
+    <content><![CDATA[<p><strong>NOT SOLVED YET!!</strong></p>
+<p>计算完每个字符串的 overlap 之后，这个问题变成了有向加权图的最短路径问题，这是一个典型的 TSP 问题，NP-Hard 难度。</p>
+<p>由于暂时还是我的只是盲区，先做记录，等学到图论和 TSP 解法的时候再来看看这道题。</p>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>DP</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>968. Binary Tree Cameras (Hard)</title>
+    <url>/post/leetcode/968-Binary-Tree-Cameras-Hard/</url>
+    <content><![CDATA[<p><strong>思路 1，贪心从下而上</strong></p>
+<p>这里能使用贪心算法是因为我们可以从叶子节点开始，给叶子节点的父节点安装摄像头，并一步步往上推出需要安装摄像头的最小数量。</p>
+<p>解题思路的第一步是要推算一个节点能有多少种状态，这道题每个节点存在 3 种状态：</p>
+<ul>
+<li><code>0</code>: 无摄像头覆盖</li>
+<li><code>1</code>: 有摄像头覆盖</li>
+<li><code>2</code>: 节点安装了摄像头</li>
+</ul>
+<p>第二步是要处理父节点遇到子节点处于上面各种状态时应该如何应对，根据状态有三种应对，我们需要按照顺序处理，即在下面的判断已经排除了上面的判断条件：</p>
+<ul>
+<li>左右子节点有一个无摄像头覆盖（<code>0</code>）：此时父节点必须安装摄像头，即返回 <code>2</code></li>
+<li>左右子节点有一个安装了摄像头（<code>2</code>）：由于已经判断子节点没有无覆盖的情况，此时父节点可以算有摄像头覆盖，返回 <code>1</code></li>
+<li>除了上述情况以外（左右子节点均为 <code>1</code>）：由于没有子节点安装摄像头，此时父节点只能是无摄像头覆盖，返回 <code>0</code></li>
+</ul>
+<p>第二步程序的思路已经明确了，但是有些特殊情况需要处理，所以第三步我们要找出特殊 case。这里有 2 个特殊情况需要考虑：</p>
+<ul>
+<li>叶子节点的处理<ul>
+<li>由于我们希望叶子节点的父节点安装摄像头，所以我们希望叶子节点返回无摄像头覆盖（<code>0</code>）</li>
+<li>已知叶子节点的左右子节点均为空<ul>
+<li>根据第二步总结的思路，当左右节点均为有摄像头覆盖（<code>1</code>）时，父节点才能返回无摄像头覆盖（<code>0</code>）</li>
+<li>结论：对于空节点需要返回有摄像头覆盖（<code>1</code>）</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>对于 <code>root</code> 节点的处理<ul>
+<li><code>root</code> 节点也存在左右子节点存在无摄像头覆盖（<code>0</code>）的情况，有可能需要安装摄像头，这里有 2 种处理方法：<ol>
+<li>父节点需要安装摄像头时必须返回 <code>2</code>，所以判断递归最后一次返回值为 2 时主动增加一次计数</li>
+<li>或者，用一个 <code>dummy</code> 节点包装 <code>root</code> 节点，将对其的处理包括在递归过程中，我们不关注 <code>dummy</code> 节点的返回值，这样可以省去手动判断</li>
+</ol>
+</li>
+<li>这里我们选择第二种做法</li>
+</ul>
+</li>
+</ul>
+<p>思路整理到这里，可以开始实现算法了，下面是 Python 代码例子。</p>
+<pre class="language-python" data-language="python"><code class="language-python"># Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val&#x3D;0, left&#x3D;None, right&#x3D;None):
+#         self.val &#x3D; val
+#         self.left &#x3D; left
+#         self.right &#x3D; right
+class Solution:
+    def minCameraCover(self, root: TreeNode) -&gt; int:
+        # 0: not covered
+        # 1: covered
+        # 2: has camera
+
+        def dfs(node):
+            if node is None:
+                # Mark none as covered
+                return 1
+            left &#x3D; dfs(node.left)
+            right &#x3D; dfs(node.right)
+
+            if min(left, right) &#x3D;&#x3D; 0:
+                self.ans +&#x3D; 1
+                return 2
+            elif max(left, right) &#x3D;&#x3D; 2:
+                return 1
+            else:
+                return 0
+
+        self.ans &#x3D; 0
+        # Wrap root with a dummy node to avoid special case of 0 at root.
+        dfs(TreeNode(left&#x3D;root))
+
+        return self.ans</code></pre>
+
+<p><strong>思路 2，DP</strong></p>
+<p>忘掉思路 1，来看看 DP 的解决方案。</p>
+<p>思路 1 总结的状态对 DP 方案不适用，忘掉它，我们重新总结一个节点<strong>允许的状态</strong>，这里不再包括无摄像头覆盖的场景。</p>
+<p>第一步，总结节点可能的状态有三种：</p>
+<ul>
+<li><code>BY_CH</code>：by children，节点被子节点的摄像头覆盖</li>
+<li><code>BY_PR</code>：by parent，节点被父节点的摄像头覆盖</li>
+<li><code>HAS_C</code>：has camera，节点被自己的摄像头覆盖</li>
+</ul>
+<p>第二步，应用 DP。程序整体的做法是针对一个节点所有状态分别计算需要的摄像头数量，递交给上一层递归进行下一步判断，直到达到 <code>root</code> 节点时，由于不再存在父节点，取 <code>BY_CH</code> 和 <code>HAS_C</code> 的最小值作为答案。</p>
+<p>对于每一次递归的逻辑，我们需要分别计算这三种状态下的摄像头安装数量，如果通过 flag 控制递归过程计算三次不同的值将造成大量重复计算（因为每个节点将执行 3 次递归逻辑），所以在每次递归逻辑中计算并返回这三个状态的值才是最优解。</p>
+<p>在递归逻辑中我们执行下面的计算（已知当前节点（<code>node</code>）和左右子节点（<code>left</code>，<code>right</code>）及其三个状态值）：</p>
+<ul>
+<li><code>BY_CH</code>：当前节点不安装摄像头，需要考虑子节点 <code>BY_CH</code> 和 <code>HAS_C</code> 的情况，我们取下面情况的最小值：<ul>
+<li><code>left.HAS_C</code> + <code>right.HAS_C</code> ：左右子节点都存在摄像头，不需要当前节点安装摄像头</li>
+<li><code>left.HAS_C</code> + <code>right.BY_CH</code> ：左节点存在摄像头，右节点被其子节点覆盖，不需要当前节点安装摄像头</li>
+<li><code>left.BY_CH</code> + <code>right.HAS_C</code> ：左节点被其子节点覆盖，右节点存在摄像头，不需要当前节点安装摄像头</li>
+</ul>
+</li>
+<li><code>BY_PR</code>：当前节点不安装摄像头，也不依赖子节点安装摄像头，这个状态仅比上面多一种情况：<ul>
+<li><code>node.BY_CH</code> ：当前节点依赖子节点安装摄像头的状态值，使用这个值避免重复计算</li>
+<li><code>left.BY_CH</code> + <code>right.BY_CH</code> ：左右子节点被各自的子节点的摄像头覆盖，不需要当前节点安装摄像头</li>
+</ul>
+</li>
+<li><code>HAS_C</code>：当前节点<strong>安装摄像头</strong>，需要考虑子节点 <code>BY_PR</code> 和 <code>HAS_C</code> 的情况，取下面状态的最小值，<strong>在此基础上+1</strong>：<ul>
+<li><code>left.BY_PR</code> + <code>right.BY_PR</code> ：左右子节点都依赖当前节点安装摄像头</li>
+<li><code>left.BY_PR</code> + <code>right.HAS_C</code> ：左节点依赖当前节点安装摄像头，右节点存在摄像头</li>
+<li><code>left.HAS_C</code> + <code>right.BY_PR</code> ：左节点存在摄像头，右节点依赖当前节点安装摄像头</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>在计算 <code>HAS_C</code> 时不应该考虑子节点被其子节点覆盖（<code>BY_CH</code>）的情况，从逻辑上来说，如果子节点被其子节点覆盖，也就不再依赖父节点安装摄像头；其次，考虑下面的 case，如果节点 A 考虑子节点 B 依赖其子节点覆盖的情况，那么为了覆盖节点 B 的两个子节点，B 的 <code>BY_CH</code> 状态值将等于 2，那么如果节点 A 安装摄像头，A 的 <code>HAS_C</code> 最终为 2 + 1 = 3，已经偏离最优解。</p>
+<pre class="language-none"><code class="language-none">   O
+   │
+┌──┴──┐
+│     │
+O     O(A)
+      │
+   ┌──┴──┐
+   │     │
+   O     O(B)
+         │
+      ┌──┴──┐
+      │     │
+      O     O</code></pre>
+</blockquote>
+<p>这个思路需要考虑的特殊情况同样是叶子节点和递归返回值。</p>
+<ul>
+<li>叶子节点<ul>
+<li>叶子节点不存在被子节点覆盖（<code>BY_CH</code>）的情况<ul>
+<li>所以将其子节点的 <code>HAS_C</code> 设为无限大，这个值将在下一次计算中被舍弃</li>
+<li>其子节点的另外两个状态初始化为 0 即可</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>root</code> 节点的递归返回值<ul>
+<li>之前已经解释过了，对于 <code>root</code> 来说已经不存在父节点了，所以我们在其返回值中取 <code>BY_CH</code> 和 <code>HAS_C</code> 的最小值作为答案</li>
+</ul>
+</li>
+</ul>
+<p>思路整理结束，信息量足够开始实现算法了。下面是 Python 代码例子。</p>
+<pre class="language-python" data-language="python"><code class="language-python">BY_PR &#x3D; 0 # covered by parent
+BY_CH &#x3D; 1 # covered by children
+HAS_C &#x3D; 2 # has camera
+
+class Solution:
+    def minCameraCover(self, root: TreeNode) -&gt; int:
+
+        def df(node):
+            if node is None:
+                return 0, 0, float(&#39;inf&#39;)
+
+            l &#x3D; df(node.left)
+            r &#x3D; df(node.right)
+            bych &#x3D; min(l[HAS_C] + r[HAS_C], l[HAS_C] + r[BY_CH], l[BY_CH] + r[HAS_C])
+            bypr &#x3D; min(l[BY_CH] + r[BY_CH], bych)
+            hasc &#x3D; min(l[BY_PR] + r[BY_PR], l[BY_PR] + r[HAS_C], l[HAS_C] + r[BY_PR]) + 1
+            return bypr, bych, hasc
+
+        return min(df(root)[1:])</code></pre>
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>贪心和 DP 思路差异比较明显。</p>
+<ul>
+<li>贪心思路默认处于最优情况，只讨论最坏 case</li>
+<li>DP 思路计算所有情况，仅舍弃不合理的 case</li>
+</ul>
+<p>但是两者都需要清晰的有目的性的思考才能理清思路，相对来说，DP 方案比贪心方案要容易一些，因为贪心方案需要更加细致的观察。</p>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>DP</tag>
+        <tag>Greedy</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>97. Interleaving String (Medium)</title>
+    <url>/post/leetcode/97-Interleaving-String-Medium/</url>
+    <content><![CDATA[<p>思路 1，2D 数组动态规划。这题乍一看用快慢指针可以解出来，但是这是个陷阱，设想如果下一个字符可以同时从 <code>s1</code> 和 <code>s2</code> 中取得，如果使用快慢指针这里如何处理？可以考虑回溯算法，但是这变成了暴力破解，无法在时限内通过测试 case。</p>
+<p>DP 相关的题目对思路和直觉有要求，为了方便后面的计算，我们先把一个特殊 case 排除在外：</p>
+<ul>
+<li>如果 <code>s1.length</code> + <code>s2.length</code> != <code>s3.length</code>，那就没有必要计算了，直接返回 <code>false</code>。</li>
+</ul>
+<p>接下来分析 DP 的思路。</p>
+<ul>
+<li>准备一个 <code>(m + 1)</code> * <code>(n + 1)</code> 的 2D 数组；<ul>
+<li><code>m</code>：<code>s1.length</code>；<code>n</code>：<code>s2.length</code>；</li>
+<li>+ 1 的原因是要留出第一个字符不选 <code>s1</code> 或 <code>s2</code> 的空间；</li>
+</ul>
+</li>
+<li>初始化 <code>dp[0][0]</code> 为 <code>true</code> or 1，这个坐标意味长度为 0 的场景；</li>
+<li>接下来要做的事情就是遍历 <code>dp</code> 的所有元素，计算对应下标的元素的值；</li>
+<li>如果最后一个元素 <code>dp[-1][-1]</code> 的值为 <code>true</code> or 1，则 <code>s1</code> 和 <code>s2</code> 可以交替构成 <code>s3</code>。</li>
+</ul>
+<p>我们可以用示例画出对应的表格来帮助理解。</p>
+<p>s1 = “aabcc”, s2 = “dbbca”, s3 = “aadbbcbcac”</p>
+<table>
+<thead>
+<tr>
+<th align="center">n \ m</th>
+<th align="center">0</th>
+<th align="center">1(a)</th>
+<th align="center">2(a)</th>
+<th align="center">3(b)</th>
+<th align="center">4(c)</th>
+<th align="center">5(c)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">0</td>
+<td align="center">1</td>
+<td align="center">1</td>
+<td align="center">1</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">0</td>
+</tr>
+<tr>
+<td align="center">1(d)</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">1</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">0</td>
+</tr>
+<tr>
+<td align="center">2(b)</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">1</td>
+<td align="center">1</td>
+<td align="center">0</td>
+<td align="center">0</td>
+</tr>
+<tr>
+<td align="center">3(b)</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">1</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">0</td>
+</tr>
+<tr>
+<td align="center">4(c)</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">1</td>
+<td align="center">1</td>
+<td align="center">1</td>
+<td align="center">0</td>
+</tr>
+<tr>
+<td align="center">5(a)</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">1</td>
+<td align="center">1</td>
+</tr>
+</tbody></table>
+<p>可以观察到，从 （0， 0） 开始，我们行走的方向只有向右和向下。</p>
+<ul>
+<li>向右：选择使用 <code>s1</code> 的字符，如果下一个字符匹配 <code>s3[row + col - 1]</code> 则设其值为 1；</li>
+<li>向下：选择使用 <code>s2</code> 的字符，如果下一个字符匹配 <code>s3[row + col - 1]</code> 则设其值为 1。</li>
+</ul>
+<p>换言之，要计算当前位置的值时，需要先检查上面一个和左边一个值是否被选用。</p>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def isInterleave(self, s1: str, s2: str, s3: str) -&gt; bool:
+        if len(s1) + len(s2) !&#x3D; len(s3):
+            return False
+
+        m, n &#x3D; len(s1), len(s2)
+
+        dp &#x3D; [[False] * (n + 1) for _ in range(m + 1)]
+        dp[0][0] &#x3D; True
+
+        for i, j in itertools.product(range(m + 1), range(n + 1)):
+            k, top, left &#x3D; i + j - 1, False, False
+            if i !&#x3D; 0:
+                top &#x3D; s3[k] &#x3D;&#x3D; s1[i - 1] and dp[i - 1][j]
+            if j !&#x3D; 0:
+                left &#x3D; s3[k] &#x3D;&#x3D; s2[j - 1] and dp[i][j - 1]
+            if i + j &gt; 0:
+                dp[i][j] &#x3D; top or left
+
+        return dp[-1][-1]</code></pre>
+
+<p>思路 2，1D 数组动态规划。</p>
+<p>通过观察可以知道上面方法每次最多只看到上一行，那么实际上我们没必要准备一个全量的 2D 数组，一个 1D 数组足够处理这些数据了。</p>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def isInterleave(self, s1: str, s2: str, s3: str) -&gt; bool:
+        if len(s1) + len(s2) !&#x3D; len(s3):
+            return False
+
+        m, n &#x3D; len(s1), len(s2)
+
+        dp &#x3D; [False] * (n + 1)
+        dp[0] &#x3D; True
+
+        for i, j in itertools.product(range(m + 1), range(n + 1)):
+            k, top, left &#x3D; i + j - 1, False, False
+            if i !&#x3D; 0:
+                top &#x3D; s3[k] &#x3D;&#x3D; s1[i - 1] and dp[j]
+            if j !&#x3D; 0:
+                left &#x3D; s3[k] &#x3D;&#x3D; s2[j - 1] and dp[j - 1]
+            if i + j &gt; 0:
+                dp[j] &#x3D; top or left
+
+        return dp[-1]</code></pre>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>String</tag>
+        <tag>DP</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>970. Powerful Integers (Medium)</title>
+    <url>/post/leetcode/970-Powerful-Integers-Medium/</url>
+    <content><![CDATA[<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def powerfulIntegers(self, x: int, y: int, bound: int) -&gt; List[int]:
+        a &#x3D; 0 if x &#x3D;&#x3D; 1 else int(log(bound, x))
+        b &#x3D; 0 if y &#x3D;&#x3D; 1 else int(log(bound, y))
+
+        ans &#x3D; set()
+
+        for i in range(a + 1):
+            left &#x3D; x ** i
+            for j in range(b + 1):
+                r &#x3D; left + y ** j
+                if r &lt;&#x3D; bound:
+                    ans.add(r)
+
+        return list(ans)</code></pre>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>Hash Table</tag>
+        <tag>Math</tag>
+      </tags>
+  </entry>
+</search>
