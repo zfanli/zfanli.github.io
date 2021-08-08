@@ -3089,7 +3089,7 @@ hr {
   transition: all 0.2s ease-in-out;
 }
 .links-of-author a::before {
-  background: #ffff0e;
+  background: #17ffff;
   display: inline-block;
   margin-right: 3px;
   transform: translateY(-2px);
@@ -3114,6 +3114,101 @@ hr {
 }
 .sub-menu .menu-item {
   display: inline-block;
+}
+.light-scheme .tag-cloud {
+  text-align: center;
+}
+.light-scheme .tag-cloud a {
+  display: inline-block;
+  margin: 10px;
+}
+.light-scheme .tag-cloud-0 {
+  border-bottom-color: #aaa;
+  color: #aaa;
+}
+.light-scheme .tag-cloud-1 {
+  border-bottom-color: #9a9a9a;
+  color: #9a9a9a;
+}
+.light-scheme .tag-cloud-2 {
+  border-bottom-color: #8b8b8b;
+  color: #8b8b8b;
+}
+.light-scheme .tag-cloud-3 {
+  border-bottom-color: #7c7c7c;
+  color: #7c7c7c;
+}
+.light-scheme .tag-cloud-4 {
+  border-bottom-color: #6c6c6c;
+  color: #6c6c6c;
+}
+.light-scheme .tag-cloud-5 {
+  border-bottom-color: #5d5d5d;
+  color: #5d5d5d;
+}
+.light-scheme .tag-cloud-6 {
+  border-bottom-color: #4e4e4e;
+  color: #4e4e4e;
+}
+.light-scheme .tag-cloud-7 {
+  border-bottom-color: #3e3e3e;
+  color: #3e3e3e;
+}
+.light-scheme .tag-cloud-8 {
+  border-bottom-color: #2f2f2f;
+  color: #2f2f2f;
+}
+.light-scheme .tag-cloud-9 {
+  border-bottom-color: #202020;
+  color: #202020;
+}
+.light-scheme .tag-cloud-10 {
+  border-bottom-color: #111;
+  color: #111;
+}
+.dark-scheme .tag-cloud-0 {
+  border-bottom-color: #555;
+  color: #555;
+}
+.dark-scheme .tag-cloud-1 {
+  border-bottom-color: #646464;
+  color: #646464;
+}
+.dark-scheme .tag-cloud-2 {
+  border-bottom-color: #737373;
+  color: #737373;
+}
+.dark-scheme .tag-cloud-3 {
+  border-bottom-color: #828282;
+  color: #828282;
+}
+.dark-scheme .tag-cloud-4 {
+  border-bottom-color: #929292;
+  color: #929292;
+}
+.dark-scheme .tag-cloud-5 {
+  border-bottom-color: #a1a1a1;
+  color: #a1a1a1;
+}
+.dark-scheme .tag-cloud-6 {
+  border-bottom-color: #b0b0b0;
+  color: #b0b0b0;
+}
+.dark-scheme .tag-cloud-7 {
+  border-bottom-color: #c0c0c0;
+  color: #c0c0c0;
+}
+.dark-scheme .tag-cloud-8 {
+  border-bottom-color: #cfcfcf;
+  color: #cfcfcf;
+}
+.dark-scheme .tag-cloud-9 {
+  border-bottom-color: #dedede;
+  color: #dedede;
+}
+.dark-scheme .tag-cloud-10 {
+  border-bottom-color: #eee;
+  color: #eee;
 }
 .dark-scheme img {
   opacity: 0.75;
