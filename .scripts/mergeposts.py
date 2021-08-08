@@ -3,8 +3,6 @@ import argparse
 import shutil
 import re
 
-SOURCE = Path(".").parent.joinpath("source")
-POSTS_DIR = SOURCE.joinpath("_posts")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Process some integers.")
@@ -16,7 +14,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
     # print(args.in_path, args.out_path)
 
-    output = POSTS_DIR.joinpath(args.out_path)
+    output = Path(args.out_path)
     # remove output folder if exists
     if output.exists():
         shutil.rmtree(output)
