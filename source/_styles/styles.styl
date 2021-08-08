@@ -17,6 +17,19 @@
   display: none;
 }
 
+.search-active {
+  overflow: auto;
+
+  .search-popup {
+    opacity: 1;
+  }
+}
+
+.search-popup {
+  transition: all 0.25s ease-out;
+  opacity: 0;
+}
+
 .sidebar {
   box-shadow: none;
   left: 0;
