@@ -10,7 +10,8 @@ on:
 
 jobs:
   pages:
-    if: ${{ contains(github.event.head_commit.message, 'DEPLOY') }}
+    # perform action if run manually
+    if: ${{ github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, 'DEPLOY') }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -28,7 +29,11 @@ jobs:
       - name: Install Dependencies
         run: npm install
       - name: Build
-        run: npm run build
+        run: | 
+        echo "posts will be modified while the first time building"
+        npm run build
+        echo "make sure run the second time build for the final result"
+        npm run build
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
