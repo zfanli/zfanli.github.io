@@ -232,109 +232,6 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/post/leetcode/128-Longest-Consecutive-Sequence-Medium/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/icon-64.png">
-      <meta itemprop="name" content="Richard Zen">
-      <meta itemprop="description" content="<small><b>TOPICS</b></small><br>
-前端 ｜ Python ｜ Java<br>
-数据结构 ｜ 算法<br><br>
-用代码替代言语<br>记录创作与学习的脚步<br><br>
-">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HOME">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/post/leetcode/128-Longest-Consecutive-Sequence-Medium/" class="post-title-link" itemprop="url">128. Longest Consecutive Sequence (Medium)</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-05-02 15:36:05" itemprop="dateModified" datetime="2021-05-02T15:36:05+08:00">2021-05-02</time>
-      </span>
-
-  
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>473</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><code>nums</code> 数组的元素可以构成诺干个连续的子数组，我们需要找到最大的子数组，返回其长度。</p>
-<p>要找到最大的子数组，首先我们要找到子数组的第一个元素，可以将 <code>nums</code> 转成一个 HashSet，然后遍历它：</p>
-<ul>
-<li>查询每个元素的前一个值（<code>n - 1</code>）是否存在；<ul>
-<li>存在则表示这个元素不是子数组的最小值，直接跳过；</li>
-<li>不存在时，循环查询这个值的下一个值是否存在（<code>n + 1</code>），直到下一个值不存在为止；</li>
-<li>在查询下一个值的过程中保持一个计数器，一直计数到不存在下一个值；</li>
-<li>将其和全局变量取一个最大值；</li>
-</ul>
-</li>
-<li>返回全局最大值。</li>
-</ul>
-<p>因为我们只在子数组的最小值开始遍历，所以能避免不需要的运算，让时间复杂度在 O(n)。</p>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def longestConsecutive(self, nums: List[int]) -&gt; int:
-        ans, nums &#x3D; 0, set(nums)
-        for n in nums:
-            if n - 1 not in nums:
-                count &#x3D; 1
-                while n + 1 in nums:
-                    n, count &#x3D; n + 1, count + 1
-                ans &#x3D; max(ans, count)
-        return ans</code></pre>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="http://example.com/post/leetcode/120-Triangle-Medium/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1675,6 +1572,191 @@ class Solution:
             left +&#x3D; 1
             right -&#x3D; 1
         return nodes[0]</code></pre>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/post/leetcode/86-Partition-List-Medium/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon-64.png">
+      <meta itemprop="name" content="Richard Zen">
+      <meta itemprop="description" content="<small><b>TOPICS</b></small><br>
+前端 ｜ Python ｜ Java<br>
+数据结构 ｜ 算法<br><br>
+用代码替代言语<br>记录创作与学习的脚步<br><br>
+">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HOME">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/post/leetcode/86-Partition-List-Medium/" class="post-title-link" itemprop="url">86. Partition List (Medium)</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-04-12 15:36:05" itemprop="dateModified" datetime="2021-04-12T15:36:05+08:00">2021-04-12</time>
+      </span>
+
+  
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.3k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>2 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>With solutions both in Python and Java.</p>
+<p>读题先。</p>
+<blockquote>
+<p>Given the <code>head</code> of a linked list and a value <code>x</code>, partition it such that all nodes less than <code>x</code> come before nodes greater than or equal to <code>x</code>.</p>
+<p>You should <strong>preserve</strong> the original relative order of the nodes in each of the two partitions.</p>
+</blockquote>
+<p>已知参数为一个 linked list 和 x，需要将数组根据 x 的值分区，小于它的放在前面，大于等于它的放在后面，并且分区后要保证原有顺序不变。</p>
+<p>从下面例子可以看出来，我们可以把数组拆成一个前一个后，保持元素相对顺序，然后拼接起来。</p>
+<p>Example 1:</p>
+<pre class="language-console" data-language="console"><code class="language-console">Input: head &#x3D; [1,4,3,2,5,2], x &#x3D; 3
+Output: [1,2,2,4,3,5]</code></pre>
+
+<p>Example 2:</p>
+<pre class="language-console" data-language="console"><code class="language-console">Input: head &#x3D; [2,1], x &#x3D; 2
+Output: [1,2]</code></pre>
+
+<h3 id="Submissions"><a href="#Submissions" class="headerlink" title="Submissions"></a>Submissions</h3><p>我的代码时间复杂度还能看，空间复杂度已经脱离排名，没法看了。</p>
+<p>虽然解题思路和官方一样，但是处理上有些愚蠢，这题就不贴我的结果了。</p>
+<h3 id="思路-amp-Solutions"><a href="#思路-amp-Solutions" class="headerlink" title="思路 &amp; Solutions"></a>思路 &amp; Solutions</h3><p>思路很简单，这道题主要考察的是对空间复杂度对处理。逻辑的流程如下。</p>
+<ul>
+<li>准备一个 before 列表存储值小于 x 的元素</li>
+<li>准备一个 after 列表存储值不小于 x 的元素</li>
+<li>将两个列表连接起来作为结果</li>
+</ul>
+<p>逻辑很简单，但是 linked list 的接口如下。</p>
+<pre class="language-python" data-language="python"><code class="language-python"># Definition for singly-linked list.
+ class ListNode:
+     def __init__(self, val&#x3D;0, next&#x3D;None):
+         self.val &#x3D; val
+         self.next &#x3D; next</code></pre>
+
+<p>程序拿到的参数是这个 linked list 的第一个元素，这是一个逻辑上的列表，我们只能向下遍历，无法从下节点反推出上一个节点的值。</p>
+<p>要准备 before 和 after 列表我们首先要知道从哪里开始，以及如何开始。</p>
+<ul>
+<li>我们可以不初始化 before 和 after，等到遇到合适的值的时候再去给其赋值；</li>
+<li>也可以初始化为当前的节点，再根据与 x 比较的结果来调整赋值；这两个思路我都尝试了。</li>
+<li>官解的处理是，将 before 和 after 初始化为两个伪节点，规避了初始化问题（是我没想到的思路）。</li>
+</ul>
+<p>看一下 Python 代码理解一下这个处理。</p>
+<pre class="language-python" data-language="python"><code class="language-python"># Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val&#x3D;0, next&#x3D;None):
+#         self.val &#x3D; val
+#         self.next &#x3D; next
+class Solution:
+    def partition(self, head: ListNode, x: int) -&gt; ListNode:
+        bef &#x3D; bf_head &#x3D; ListNode(0)
+        aft &#x3D; af_head &#x3D; ListNode(0)
+
+        while head is not None:
+            if head.val &lt; x:
+                bef.next &#x3D; head
+                bef &#x3D; head
+            else:
+                aft.next &#x3D; head
+                aft &#x3D; head
+            head &#x3D; head.next
+
+        aft.next &#x3D; None
+        bef.next &#x3D; af_head.next
+
+        return bf_head.next
+</code></pre>
+
+<p>Java 代码逻辑一样。</p>
+<pre class="language-java" data-language="java"><code class="language-java">&#x2F;**
+ * Definition for singly-linked list.
+ * public class ListNode &#123;
+ *     int val;
+ *     ListNode next;
+ *     ListNode() &#123;&#125;
+ *     ListNode(int val) &#123; this.val &#x3D; val; &#125;
+ *     ListNode(int val, ListNode next) &#123; this.val &#x3D; val; this.next &#x3D; next; &#125;
+ * &#125;
+ *&#x2F;
+class Solution &#123;
+    public ListNode partition(ListNode head, int x) &#123;
+        ListNode before &#x3D; new ListNode();
+        ListNode after &#x3D; new ListNode();
+        ListNode bfHead &#x3D; before;
+        ListNode afHead &#x3D; after;
+
+        while (head !&#x3D; null) &#123;
+            if (head.val &lt; x) &#123;
+                before.next &#x3D; head;
+                before &#x3D; head;
+            &#125; else &#123;
+                after.next &#x3D; head;
+                after &#x3D; head;
+            &#125;
+            head &#x3D; head.next;
+        &#125;
+
+        after.next &#x3D; null;
+        before.next &#x3D; afHead.next;
+
+        return bfHead.next;
+    &#125;
+&#125;</code></pre>
+
+<h3 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h3><p>进行伪初始化的处理很好的规避了初始化判断，对遍历的处理也只是改变了列表的排序，两者使得程序在时间和空间复杂度上有很好的表现。</p>
+<ul>
+<li>时间复杂度：O(n)，做了一次遍历；</li>
+<li>空间复杂度：O(1)，只做了列表重组，没使用额外空间。</li>
+</ul>
 
       
     </div>

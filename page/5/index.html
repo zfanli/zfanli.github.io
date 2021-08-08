@@ -232,137 +232,6 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/post/leetcode/318-Maximum-Product-of-Word-Lengths-Medium/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/icon-64.png">
-      <meta itemprop="name" content="Richard Zen">
-      <meta itemprop="description" content="<small><b>TOPICS</b></small><br>
-前端 ｜ Python ｜ Java<br>
-数据结构 ｜ 算法<br><br>
-用代码替代言语<br>记录创作与学习的脚步<br><br>
-">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HOME">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/post/leetcode/318-Maximum-Product-of-Word-Lengths-Medium/" class="post-title-link" itemprop="url">318. Maximum Product of Word Lengths (Medium)</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-05-22 15:36:05" itemprop="dateModified" datetime="2021-05-22T15:36:05+08:00">2021-05-22</time>
-      </span>
-
-  
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>1.4k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>思路 1，找到所有组合求最大值，用一个帮助函数 <code>pair</code> 来帮助我们判断是否需要进行相乘。</p>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def maxProduct(self, words: List[str]) -&gt; int:
-        def pair(w1, w2):
-            for w in w1:
-                if w in w2:
-                    return False
-            return True
-
-        ans, n &#x3D; 0, len(words)
-        for i in range(n):
-            for j in range(i + 1, n):
-                if pair(words[i], words[j]):
-                    ans &#x3D; max(ans, len(words[i]) * len(words[j]))
-        return ans</code></pre>
-
-<p>思路 2，英文小写字母只有 26 位，设想我们有一个长度为 26 的二进制数字，按照顺序将每一位映射成一个字母，0 表示有这个字母，1 则表示没有，这就是位掩码。判断相同字符串经常用到位掩码操作，在计算机中位操作往往有更好的效率。要判断两个字符串是否有共同的字母，只需要将他们的位掩码进行 <code>&amp;</code> 操作，这样相同位存在 1 的情况就会让结果大于 0，相反如果没有任何一位存在两边都为 1 的情况，则结果一定是 0。所以我们仅在结果为 0 的时候去计算长度相乘。</p>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def maxProduct(self, words: List[str]) -&gt; int:
-        bitmasks, ans &#x3D; &#123;&#125;, 0
-        for w in words:
-            bitmask &#x3D; 0
-            for c in w:
-                bitmask |&#x3D; 1 &lt;&lt; (ord(c) - ord(&#39;a&#39;))
-            for k, v in bitmasks.items():
-                if not bitmask &amp; k:
-                    ans &#x3D; max(ans, len(w) * v)
-            bitmasks[bitmask] &#x3D; max(len(w), bitmasks.get(bitmask, 0))
-            # print(bitmask, ans)
-        return ans</code></pre>
-
-<p>另一种位掩码的实现，按照下标映射位掩码，省去了 HashMap。</p>
-<pre class="language-java" data-language="java"><code class="language-java">class Solution &#123;
-    public int maxProduct(String[] words) &#123;
-        int[] bitmasks &#x3D; new int[words.length];
-        for (int i &#x3D; 0; i &lt; words.length; i++) &#123;
-            for (char c : words[i].toCharArray()) &#123;
-                bitmasks[i] |&#x3D; 1 &lt;&lt; (c - &#39;a&#39;);
-            &#125;
-        &#125;
-        int ans &#x3D; 0;
-        for (int i &#x3D; 0; i &lt; words.length; i++) &#123;
-            for (int j &#x3D; i + 1; j &lt; words.length; j++) &#123;
-                if ((bitmasks[i] &amp; bitmasks[j]) &#x3D;&#x3D; 0) &#123;
-                    ans &#x3D; Math.max(ans, words[i].length() * words[j].length());
-                &#125;
-            &#125;
-        &#125;
-        return ans;
-    &#125;
-&#125;</code></pre>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="http://example.com/post/leetcode/307-Range-Sum-Query-Mutable-Medium/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1411,6 +1280,109 @@
                 c[i] &#x3D; max(c[i], c[i + 1] + 1)
 
         return sum(c)</code></pre>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/post/leetcode/128-Longest-Consecutive-Sequence-Medium/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon-64.png">
+      <meta itemprop="name" content="Richard Zen">
+      <meta itemprop="description" content="<small><b>TOPICS</b></small><br>
+前端 ｜ Python ｜ Java<br>
+数据结构 ｜ 算法<br><br>
+用代码替代言语<br>记录创作与学习的脚步<br><br>
+">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HOME">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/post/leetcode/128-Longest-Consecutive-Sequence-Medium/" class="post-title-link" itemprop="url">128. Longest Consecutive Sequence (Medium)</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-05-02 15:36:05" itemprop="dateModified" datetime="2021-05-02T15:36:05+08:00">2021-05-02</time>
+      </span>
+
+  
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>473</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><code>nums</code> 数组的元素可以构成诺干个连续的子数组，我们需要找到最大的子数组，返回其长度。</p>
+<p>要找到最大的子数组，首先我们要找到子数组的第一个元素，可以将 <code>nums</code> 转成一个 HashSet，然后遍历它：</p>
+<ul>
+<li>查询每个元素的前一个值（<code>n - 1</code>）是否存在；<ul>
+<li>存在则表示这个元素不是子数组的最小值，直接跳过；</li>
+<li>不存在时，循环查询这个值的下一个值是否存在（<code>n + 1</code>），直到下一个值不存在为止；</li>
+<li>在查询下一个值的过程中保持一个计数器，一直计数到不存在下一个值；</li>
+<li>将其和全局变量取一个最大值；</li>
+</ul>
+</li>
+<li>返回全局最大值。</li>
+</ul>
+<p>因为我们只在子数组的最小值开始遍历，所以能避免不需要的运算，让时间复杂度在 O(n)。</p>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def longestConsecutive(self, nums: List[int]) -&gt; int:
+        ans, nums &#x3D; 0, set(nums)
+        for n in nums:
+            if n - 1 not in nums:
+                count &#x3D; 1
+                while n + 1 in nums:
+                    n, count &#x3D; n + 1, count + 1
+                ans &#x3D; max(ans, count)
+        return ans</code></pre>
 
       
     </div>

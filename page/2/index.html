@@ -232,126 +232,6 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/post/leetcode/1354-Construct-Target-Array-With-Multiple-Sums-Hard/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/icon-64.png">
-      <meta itemprop="name" content="Richard Zen">
-      <meta itemprop="description" content="<small><b>TOPICS</b></small><br>
-前端 ｜ Python ｜ Java<br>
-数据结构 ｜ 算法<br><br>
-用代码替代言语<br>记录创作与学习的脚步<br><br>
-">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HOME">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/post/leetcode/1354-Construct-Target-Array-With-Multiple-Sums-Hard/" class="post-title-link" itemprop="url">1354. Construct Target Array With Multiple Sums (Hard)</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-07-21 15:36:05" itemprop="dateModified" datetime="2021-07-21T15:36:05+08:00">2021-07-21</time>
-      </span>
-
-  
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>882</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>Topics:</p>
-<p>Greedy.</p>
-<p>Highlight:</p>
-<ul>
-<li>Backward from the max value</li>
-<li>Mod operation on max value with rest sum to get replacement value</li>
-<li>Push replacement value back to heap</li>
-<li>Repeat the procedure until the max value becomes to 1, which means succeed</li>
-<li>Or until the exception occurs and return <code>False</code><ul>
-<li>when the rest sum is greater than the max value</li>
-<li>when the rest sum less than 1</li>
-</ul>
-</li>
-</ul>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def isPossible(self, target: List[int]) -&gt; bool:
-
-        total &#x3D; sum(target)
-        # Transform min heap to max heap.
-        heap &#x3D; [-x for x in target]
-        heapify(heap)
-
-        # If the max value of heap is
-        while -heap[0] !&#x3D; 1:
-            # Get max value of current heap.
-            num &#x3D; -heap[0]
-            # Get the rest sum except the max value.
-            total +&#x3D; heappop(heap)
-            # print(num, total, heap)
-            if total &gt;&#x3D; num or total &#x3D;&#x3D; 0:
-                return False
-            # Get last replacement value.
-            # It&#39;s the point to reduce time complicity.
-            # With using the mod operator, we avoid to iterate through every step.
-            num %&#x3D; total
-            # Add up the replacement and add to heap.
-            total +&#x3D; num
-            heappush(heap, -num or -total)
-
-        return True</code></pre>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="http://example.com/post/leetcode/1302-Deepest-Leaves-Sum-Medium/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1533,6 +1413,176 @@ class Solution:
           <p><strong>NOT SOLVED YET!!</strong></p>
 <p>计算完每个字符串的 overlap 之后，这个问题变成了有向加权图的最短路径问题，这是一个典型的 TSP 问题，NP-Hard 难度。</p>
 <p>由于暂时还是我的只是盲区，先做记录，等学到图论和 TSP 解法的时候再来看看这道题。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/post/leetcode/906-Super-Palindromes-Hard/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon-64.png">
+      <meta itemprop="name" content="Richard Zen">
+      <meta itemprop="description" content="<small><b>TOPICS</b></small><br>
+前端 ｜ Python ｜ Java<br>
+数据结构 ｜ 算法<br><br>
+用代码替代言语<br>记录创作与学习的脚步<br><br>
+">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HOME">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/post/leetcode/906-Super-Palindromes-Hard/" class="post-title-link" itemprop="url">906. Super Palindromes (Hard)</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-07-01 15:36:05" itemprop="dateModified" datetime="2021-07-01T15:36:05+08:00">2021-07-01</time>
+      </span>
+
+  
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.2k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>Topics:</p>
+<p>Math.</p>
+<p>Don’t know the reason but not interested in this problem, so let’s calculate a table to break it.</p>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def superpalindromesInRange(self, left: str, right: str) -&gt; int:
+        L, R &#x3D; int(left), int(right)
+        ans &#x3D; 0
+
+        for i in self.table:
+            if i &lt; L:
+                continue
+            elif i &lt;&#x3D; R:
+                ans +&#x3D; 1
+            else:
+                break
+
+        return ans
+
+    table &#x3D; [
+        1,
+        4,
+        9,
+        121,
+        484,
+        10201,
+        12321,
+        14641,
+        40804,
+        44944,
+        1002001,
+        1234321,
+        4008004,
+        100020001,
+        102030201,
+        104060401,
+        121242121,
+        123454321,
+        125686521,
+        400080004,
+        404090404,
+        10000200001,
+        10221412201,
+        12102420121,
+        12345654321,
+        40000800004,
+        1000002000001,
+        1002003002001,
+        1004006004001,
+        1020304030201,
+        1022325232201,
+        1024348434201,
+        1210024200121,
+        1212225222121,
+        1214428244121,
+        1232346432321,
+        1234567654321,
+        4000008000004,
+        4004009004004,
+        100000020000001,
+        100220141022001,
+        102012040210201,
+        102234363432201,
+        121000242000121,
+        121242363242121,
+        123212464212321,
+        123456787654321,
+        400000080000004,
+        10000000200000001,
+        10002000300020001,
+        10004000600040001,
+        10020210401202001,
+        10022212521222001,
+        10024214841242001,
+        10201020402010201,
+        10203040504030201,
+        10205060806050201,
+        10221432623412201,
+        10223454745432201,
+        12100002420000121,
+        12102202520220121,
+        12104402820440121,
+        12122232623222121,
+        12124434743442121,
+        12321024642012321,
+        12323244744232321,
+        12343456865434321,
+        12345678987654321,
+        40000000800000004,
+        40004000900040004
+    ]</code></pre>
 
       
     </div>

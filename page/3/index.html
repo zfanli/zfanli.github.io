@@ -232,176 +232,6 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/post/leetcode/906-Super-Palindromes-Hard/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/icon-64.png">
-      <meta itemprop="name" content="Richard Zen">
-      <meta itemprop="description" content="<small><b>TOPICS</b></small><br>
-前端 ｜ Python ｜ Java<br>
-数据结构 ｜ 算法<br><br>
-用代码替代言语<br>记录创作与学习的脚步<br><br>
-">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HOME">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/post/leetcode/906-Super-Palindromes-Hard/" class="post-title-link" itemprop="url">906. Super Palindromes (Hard)</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-07-01 15:36:05" itemprop="dateModified" datetime="2021-07-01T15:36:05+08:00">2021-07-01</time>
-      </span>
-
-  
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>1.2k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>Topics:</p>
-<p>Math.</p>
-<p>Don’t know the reason but not interested in this problem, so let’s calculate a table to break it.</p>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def superpalindromesInRange(self, left: str, right: str) -&gt; int:
-        L, R &#x3D; int(left), int(right)
-        ans &#x3D; 0
-
-        for i in self.table:
-            if i &lt; L:
-                continue
-            elif i &lt;&#x3D; R:
-                ans +&#x3D; 1
-            else:
-                break
-
-        return ans
-
-    table &#x3D; [
-        1,
-        4,
-        9,
-        121,
-        484,
-        10201,
-        12321,
-        14641,
-        40804,
-        44944,
-        1002001,
-        1234321,
-        4008004,
-        100020001,
-        102030201,
-        104060401,
-        121242121,
-        123454321,
-        125686521,
-        400080004,
-        404090404,
-        10000200001,
-        10221412201,
-        12102420121,
-        12345654321,
-        40000800004,
-        1000002000001,
-        1002003002001,
-        1004006004001,
-        1020304030201,
-        1022325232201,
-        1024348434201,
-        1210024200121,
-        1212225222121,
-        1214428244121,
-        1232346432321,
-        1234567654321,
-        4000008000004,
-        4004009004004,
-        100000020000001,
-        100220141022001,
-        102012040210201,
-        102234363432201,
-        121000242000121,
-        121242363242121,
-        123212464212321,
-        123456787654321,
-        400000080000004,
-        10000000200000001,
-        10002000300020001,
-        10004000600040001,
-        10020210401202001,
-        10022212521222001,
-        10024214841242001,
-        10201020402010201,
-        10203040504030201,
-        10205060806050201,
-        10221432623412201,
-        10223454745432201,
-        12100002420000121,
-        12102202520220121,
-        12104402820440121,
-        12122232623222121,
-        12124434743442121,
-        12321024642012321,
-        12323244744232321,
-        12343456865434321,
-        12345678987654321,
-        40000000800000004,
-        40004000900040004
-    ]</code></pre>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="http://example.com/post/leetcode/890-Find-and-Replace-Pattern-Medium/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1648,6 +1478,356 @@ class Solution:
                                 seen.add((_x, _y))
                 ans &#x3D; max(ans, count)
         return ans</code></pre>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/post/leetcode/667-Beautiful-Arrangement-II-Medium/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon-64.png">
+      <meta itemprop="name" content="Richard Zen">
+      <meta itemprop="description" content="<small><b>TOPICS</b></small><br>
+前端 ｜ Python ｜ Java<br>
+数据结构 ｜ 算法<br><br>
+用代码替代言语<br>记录创作与学习的脚步<br><br>
+">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HOME">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/post/leetcode/667-Beautiful-Arrangement-II-Medium/" class="post-title-link" itemprop="url">667. Beautiful Arrangement II （Medium）</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-06-11 15:36:05" itemprop="dateModified" datetime="2021-06-11T15:36:05+08:00">2021-06-11</time>
+      </span>
+
+  
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>5.8k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>5 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>With solutions both in Python and Java.</p>
+<p>先读题：</p>
+<blockquote>
+<p>Given two integers <code>n</code> and <code>k</code>, you need to construct a list which contains <code>n</code> different positive integers ranging from 1 to <code>n</code> and obeys the following requirement:</p>
+<p>Suppose this list is <code>[a1, a2, a3, ... , an]</code>, then the list <code>[|a1 - a2|, |a2 - a3|, |a3 - a4|, ... , |an-1 - an|]</code> has exactly <code>k</code> distinct integers.</p>
+<p>If there are multiple answers, print any of them.</p>
+</blockquote>
+<p>简而言之，我们要根据两个整数参数 <code>n</code> 和 <code>k</code>，来输出一个从 1 开始到 <code>n</code> 的整数数组，并且这个数组中，所有相邻的两个整数之间的差，其绝对值要凑齐 <code>k</code> 个不同的整数。</p>
+<p>来看看例子。</p>
+<p>Example 1:</p>
+<pre class="language-none"><code class="language-none">Input: n &#x3D; 3, k &#x3D; 1
+Output: [1, 2, 3]
+Explanation: The [1, 2, 3] has three different positive integers ranging from 1 to 3, and the [1, 1] has exactly 1 distinct integer: 1.</code></pre>
+
+<p>输出结果为整数 1 ～ 3，相邻整数的差为 [1, 1]，去重后长度为 1，满足 <code>k = 1</code> 的需求。</p>
+<p>Example 2:</p>
+<pre class="language-none"><code class="language-none">Input: n &#x3D; 3, k &#x3D; 2
+Output: [1, 3, 2]
+Explanation: The [1, 3, 2] has three different positive integers ranging from 1 to 3, and the [2, 1] has exactly 2 distinct integers: 1 and 2.</code></pre>
+
+<p>输出结果为整数 1 ～ 3，相邻整数的差为 [2, 1]，满足 <code>k = 2</code> 的需求。</p>
+<h3 id="Submission"><a href="#Submission" class="headerlink" title="Submission"></a>Submission</h3><p>先贴一下我自己独立完成的结果，防止剧透，具体代码会贴在最后。</p>
+<p>我的代码中，空间复杂度还需要研究一下，目前还没找到提升的思路。</p>
+<p><strong>Python</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Result</th>
+<th>Beats</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Runtime</td>
+<td>40 ms</td>
+<td>96.55%</td>
+</tr>
+<tr>
+<td>Memory</td>
+<td>15.1 MB</td>
+<td>50.34%</td>
+</tr>
+</tbody></table>
+<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p>这道题偏重考验观察。我们要做的是观察并找到数组排列的规律，用算法实现出来。</p>
+<p>已知条件：</p>
+<ul>
+<li>输出数组包含 1 ～ n 的整数</li>
+<li>需要做的是调整数组中数字出现的顺序，致使相邻的两个数之间的差不同</li>
+<li>相邻两个数的差只考虑绝对值</li>
+<li>相邻两个数的差的绝对值构成的数组长度为 k</li>
+<li>由于不关注具体的差的值，所以有不同解法，只需要找出一种</li>
+</ul>
+<p>先硬算几个例子来找找规律。</p>
+<p>(因为懒，这里我直接贴讨论帖中的例子，UAADs 指的是唯一绝对相邻数差，贴主原文全称是 Unique Absolute Adjacent Difference，为了方便理解，后面我们就称之为“相邻数差”。)</p>
+<pre class="language-console" data-language="console"><code class="language-console">For eg.
+1. let n &#x3D; 10, k &#x3D; 4
+permutation &#x3D;&gt; [1, 5, 2, 4, 3, 6, 7, 8, 9, 10]
+UAADs       &#x3D;&gt; [X, 4, 3, 2, 1, 3, 1, 1, 1, 1]
+
+
+2. n &#x3D; 10, k &#x3D; 5
+permutation &#x3D;&gt; [1, 6, 2, 5, 3, 4, 7, 8, 9, 10]
+UAADs       &#x3D;&gt; [X, 5, 4, 3, 2, 1, 3, 1, 1, 1]
+
+
+3. n &#x3D; 9, k &#x3D; 8
+permutation &#x3D;&gt; [1, 9, 2, 8, 3, 7, 4, 6, 5]
+UAADs       &#x3D;&gt; [X, 8, 7, 6, 5, 4, 3, 2, 1]</code></pre>
+
+<p>题目不关注相邻数差的具体数值，所以正确的排列方式不止一种，这里我们只讨论可以相对直观理解的一种。</p>
+<p>观察上面例子可以了解到：</p>
+<ul>
+<li>输出的数组从 1 开始</li>
+<li>第二个数是 k + 1</li>
+<li>要求 k 个不同相邻数差会影响 k 个元素</li>
+<li>不受 k 影响的数按自然顺序排序</li>
+</ul>
+<blockquote>
+<p>可能 <code>要求 k 个不同相邻数差会影响 k 个元素</code> 不是很直观，我们通过分解上面的例子来理解。</p>
+<p>下面结论中，1 一直处于固定位置，高亮出来的部分是排序受到 k 影响的数，而剩余的数（如果有的话）将按照递增排序。</p>
+<p>n = 10, k = 4 =&gt; [1, <code>5, 2, 4, 3,</code> 6, 7, 8, 9, 10]</p>
+<p>n = 10, k = 5 =&gt; [1, <code>6, 2, 5, 3, 4,</code> 7, 8, 9, 10]</p>
+<p>n = 9, k = 8 =&gt; [1, <code>9, 2, 8, 3, 7, 4, 6, 5</code>]</p>
+</blockquote>
+<p>设定好了前提，接下来我们需要关注的问题变成了观察并理解“受到 k 影响的元素应该如何排序”。</p>
+<p>多看几眼上面的例子，我们可以直观的意识到规律：为了满足 k 个不同的相邻数差，我们将排序靠后的数依次插入到 <code>1, 2, 3, ..., n</code> 之间，来制造不同的绝对差。</p>
+<p>了解规律之后，可以开始实现算法了，这是一些对于时间复杂度和空间复杂度的考虑。</p>
+<ul>
+<li>避免使用尾递归</li>
+<li>控制循环次数</li>
+<li>不使用非必要的变量</li>
+</ul>
+<h3 id="Solutions"><a href="#Solutions" class="headerlink" title="Solutions"></a>Solutions</h3><p><strong>Python</strong></p>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def constructArray(self, n: int, k: int) -&gt; List[int]:
+        # 初始化一个数组，由于前两个值是已知的，所以直接写入字面量
+        ans &#x3D; [1, k + 1]
+        # 以 k 为基准进行循环
+        for x in range(1, k):
+            # 取倒数第二个值为计算基数，根据当前 index 决定做递增或递减
+            ans.append(ans[-2] + (1 if x % 2 &#x3D;&#x3D; 1 else -1))
+        # 按自然顺序填充剩下的元素
+        ans +&#x3D; range(k + 2, n + 1)
+        return ans</code></pre>
+
+<p>结果如下。</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Result</th>
+<th>Beats</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Runtime</td>
+<td>40 ms</td>
+<td>96.55%</td>
+</tr>
+<tr>
+<td>Memory</td>
+<td>15.1 MB</td>
+<td>50.34%</td>
+</tr>
+</tbody></table>
+<p><strong>Java</strong></p>
+<p>由于先做出了 Python 版本，相同思路转换成 Java 代码结果很糟糕。</p>
+<p>这里根据讨论帖的提示完成了一个较优的方案。</p>
+<pre class="language-java" data-language="java"><code class="language-java">class Solution &#123;
+    public int[] constructArray(int n, int k) &#123;
+        int[] ans &#x3D; new int[n];
+        &#x2F;&#x2F; l 为递增初始值，r 为递减初始值，用 i 来保存 index
+        int l &#x3D; 1, r &#x3D; k + 1, i &#x3D; 0;
+        &#x2F;&#x2F; 执行一个步长为 2 的循环来填充数组直到满足 k 个相邻数差
+        while (i &lt; k) &#123;
+            ans[i++] &#x3D; l++;
+            ans[i++] &#x3D; r--;
+        &#125;
+        &#x2F;&#x2F; 由于数组以1起始，故当 k 为偶数时做 2 步长的循环将漏掉一个数
+        if (l &#x3D;&#x3D; r) ans[i++] &#x3D; r;
+        &#x2F;&#x2F; 依序填充自然递增的数直到填至 n 为止
+        while (i &lt; n) ans[i++] &#x3D; i;
+        return ans;
+    &#125;
+&#125;</code></pre>
+
+<p>结果如下。</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Result</th>
+<th>Beats</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Runtime</td>
+<td>0 ms</td>
+<td>100.00%</td>
+</tr>
+<tr>
+<td>Memory</td>
+<td>39.1 MB</td>
+<td>73.71%</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>受 Java 版本思路启发，我修改了一下 Python 的算法，在空间复杂度上得到一些提升。</p>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+   def constructArray(self, n: int, k: int) -&gt; List[int]:
+       ans &#x3D; [1, k + 1]
+       # 执行一个步长为 2 的循环来制造不同的相邻数差
+       for x in range(2, k, 2):
+           ans.append(ans[x-2] + 1)
+           ans.append(ans[x-1] - 1)
+       # 补充 k 为偶数时漏掉的数
+       if ans[-1] -2 &#x3D;&#x3D; ans[-2]: ans.append(ans[-1] - 1)
+       ans +&#x3D; range(len(ans) + 1, n + 1)
+       return ans</code></pre>
+
+<p>结果如下。</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Result</th>
+<th>Beats</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Runtime</td>
+<td>40 ms</td>
+<td>96.55%</td>
+</tr>
+<tr>
+<td>Memory</td>
+<td>15.1 MB</td>
+<td>82.76%</td>
+</tr>
+</tbody></table>
+</blockquote>
+<h3 id="官方-Solution"><a href="#官方-Solution" class="headerlink" title="官方 Solution"></a>官方 Solution</h3><p>来学习一下官方答案的思路。这个问题官方给出了 2 个方案。</p>
+<p><strong>Approach #1: Brute Force [Time Limit Exceeded]</strong></p>
+<p>顾名思义，这个方法是暴力枚举所有排列，直到找到合适的排列。具体做法是准备一个检查唯一相邻数差数量的函数，然后对 1 ～ n 的数组排列进行枚举，直到找到该函数返回的唯一相邻数差的数量匹配 k 的值…</p>
+<p>这个方法就不细说了，下面的代码看看就好。</p>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution(object):
+    def constructArray(self, n, k):
+        seen &#x3D; [False] * n
+        def num_uniq_diffs(arr):
+            ans &#x3D; 0
+            for i in range(n):
+                seen[i] &#x3D; False
+            for i in range(len(arr) - 1):
+                delta &#x3D; abs(arr[i] - arr[i+1])
+                if not seen[delta]:
+                    ans +&#x3D; 1
+                    seen[delta] &#x3D; True
+            return ans
+
+        for cand in itertools.permutations(range(1, n+1)):
+            if num_uniq_diffs(cand) &#x3D;&#x3D; k:
+                return cand</code></pre>
+
+<p><strong>Approach #2: Construction [Accepted]</strong></p>
+<p>先看看官方原文，不过有些 LaTex 表达式不一定能正常显示，可以去 <a target="_blank" rel="noopener" href="https://leetcode.com/problems/beautiful-arrangement-ii/solution/">原地址</a> 查看。看完原文我们来分析和理解一下官方的思路。</p>
+<blockquote>
+<p><strong>Intuition</strong></p>
+<p>When \text{k = n-1}k = n-1, a valid construction is \text{[1, n, 2, n-1, 3, n-2, ….]}[1, n, 2, n-1, 3, &gt; n-2, ….]. One way to see this is, we need to have a difference of \text{n-1}n-1, which means we need &gt; \text{1}1 and \text{n}n adjacent; then, we need a difference of \text{n-2}n-2, etc.</p>
+<p>Also, when \text{k = 1}k = 1, a valid construction is \text{[1, 2, 3, …, n]}[1, 2, 3, …, n]. So we &gt; have a construction when \text{n-k}n-k is tiny, and when it is large. This leads to the idea that we can &gt; stitch together these two constructions: we can put \text{[1, 2, …, n-k-1]}[1, 2, …, n-k-1] first so &gt; that \text{n}n is effectively \text{k+1}k+1, and then finish the construction with the first \text{“k = &gt; n-1”}”k = n-1” method.</p>
+<p>For example, when \text{n = 6}n = 6 and \text{k = 3}k = 3, we will construct the array as \text{[1, 2, 3, &gt; 6, 4, 5]}[1, 2, 3, 6, 4, 5]. This consists of two parts: a construction of \text{[1, 2]}[1, 2] and a &gt; construction of \text{[1, 4, 2, 3]}[1, 4, 2, 3] where every element had \text{2}2 added to it (i.e. \text{&gt; [3, 6, 4, 5]}[3, 6, 4, 5]).</p>
+<p><strong>Algorithm</strong></p>
+<p>As before, write \text{[1, 2, …, n-k-1]}[1, 2, …, n-k-1] first. The remaining \text{k+1}k+1 elements &gt; to be written are \text{[n-k, n-k+1, …, n]}[n-k, n-k+1, …, n], and we’ll write them in alternating &gt; head and tail order.</p>
+<p>When we are writing the i^{th}i<br>th<br>element from the remaining \text{k+1}k+1, every even ii is going to be chosen from the head, and will &gt; have value \text{n-k + i//2}n-k + i//2. Every odd ii is going to be chosen from the tail, and will have &gt; value \text{n - i//2}n - i//2.</p>
+</blockquote>
+<p>按照这个方案的思路，首先我们观察俩个极端：k 为最大值 n-1 时的结果；以及 k 为最小值 1 时的结果。</p>
+<p>当 k = n - 1 时，这个时候数组根据数组序列（index）的奇偶性，出现奇数取头部（[1, 2, 3, …]），偶数取尾部（[n, n-1, n-2, …]）的规律。其最终结果如下。</p>
+<p><code>[1, n, 2, n-1, 3, n-2, ...]</code></p>
+<p>而当 k = 1 时，数组按照自然顺序递增排列。</p>
+<p><code>[1, 2, 3, ..., n]</code></p>
+<p>了解到这两个规律之后，我们可以将其结合：</p>
+<ul>
+<li>将 n-k-1 的部分的数按照 k = 1 时的规律处理；</li>
+<li>而剩下的 k + 1 个元素单独视作一个数组，采取 k = n - 1 时的处理。</li>
+</ul>
+<p>这样就可以将处理划分为两类，用最简单的方法来构建这个数组。</p>
+<ul>
+<li>首先构建 <code>[1, 2, ..., n-k-1]</code> 数组</li>
+<li>从 n-k 开始的数根据 index 的奇偶性来取值<ul>
+<li>当 index 为偶数时从头部取值，这时值为 n-k + i//2</li>
+<li>当 index 为奇数时从尾部取值，这时值为 n - i//2</li>
+</ul>
+</li>
+</ul>
+<p>参考代码。</p>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution(object):
+    def constructArray(self, n, k):
+        ans &#x3D; list(range(1, n - k))
+        for i in range(k+1):
+            if i % 2 &#x3D;&#x3D; 0:
+                ans.append(n-k + i&#x2F;&#x2F;2)
+            else:
+                ans.append(n - i&#x2F;&#x2F;2)
+
+        return ans</code></pre>
+
+<p>总结：</p>
+<ul>
+<li>从代码上来看，先取 k = 1 的排序，再取 k = n - 1 的排序确实让代码逻辑更加简洁和易懂；</li>
+<li>从结果上来看，这段代码在空间复杂度上有改善（beats 82.76%），但是时间复杂度上有上升（beats 86.21%）。</li>
+</ul>
 
       
     </div>

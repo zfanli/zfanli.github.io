@@ -232,88 +232,6 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/post/test/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/icon-64.png">
-      <meta itemprop="name" content="Richard Zen">
-      <meta itemprop="description" content="<small><b>TOPICS</b></small><br>
-前端 ｜ Python ｜ Java<br>
-数据结构 ｜ 算法<br><br>
-用代码替代言语<br>记录创作与学习的脚步<br><br>
-">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HOME">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/post/test/" class="post-title-link" itemprop="url">test</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-08-08 21:00:04" itemprop="dateModified" datetime="2021-08-08T21:00:04+08:00">2021-08-08</time>
-      </span>
-
-  
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>49</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>Test post, test action.</p>
-<p>This change should be PUBLISHED!!</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="http://example.com/post/leetcode/1710-Maximum-Units-on-a-Truck-Easy/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1097,6 +1015,126 @@
             if len(q) &#x3D;&#x3D; k:
                 total -&#x3D; heapq.heappop(q)
         return ans % (10 ** 9 + 7)</code></pre>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/post/leetcode/1354-Construct-Target-Array-With-Multiple-Sums-Hard/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon-64.png">
+      <meta itemprop="name" content="Richard Zen">
+      <meta itemprop="description" content="<small><b>TOPICS</b></small><br>
+前端 ｜ Python ｜ Java<br>
+数据结构 ｜ 算法<br><br>
+用代码替代言语<br>记录创作与学习的脚步<br><br>
+">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HOME">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/post/leetcode/1354-Construct-Target-Array-With-Multiple-Sums-Hard/" class="post-title-link" itemprop="url">1354. Construct Target Array With Multiple Sums (Hard)</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-07-21 15:36:05" itemprop="dateModified" datetime="2021-07-21T15:36:05+08:00">2021-07-21</time>
+      </span>
+
+  
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>882</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>Topics:</p>
+<p>Greedy.</p>
+<p>Highlight:</p>
+<ul>
+<li>Backward from the max value</li>
+<li>Mod operation on max value with rest sum to get replacement value</li>
+<li>Push replacement value back to heap</li>
+<li>Repeat the procedure until the max value becomes to 1, which means succeed</li>
+<li>Or until the exception occurs and return <code>False</code><ul>
+<li>when the rest sum is greater than the max value</li>
+<li>when the rest sum less than 1</li>
+</ul>
+</li>
+</ul>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def isPossible(self, target: List[int]) -&gt; bool:
+
+        total &#x3D; sum(target)
+        # Transform min heap to max heap.
+        heap &#x3D; [-x for x in target]
+        heapify(heap)
+
+        # If the max value of heap is
+        while -heap[0] !&#x3D; 1:
+            # Get max value of current heap.
+            num &#x3D; -heap[0]
+            # Get the rest sum except the max value.
+            total +&#x3D; heappop(heap)
+            # print(num, total, heap)
+            if total &gt;&#x3D; num or total &#x3D;&#x3D; 0:
+                return False
+            # Get last replacement value.
+            # It&#39;s the point to reduce time complicity.
+            # With using the mod operator, we avoid to iterate through every step.
+            num %&#x3D; total
+            # Add up the replacement and add to heap.
+            total +&#x3D; num
+            heappush(heap, -num or -total)
+
+        return True</code></pre>
 
       
     </div>
