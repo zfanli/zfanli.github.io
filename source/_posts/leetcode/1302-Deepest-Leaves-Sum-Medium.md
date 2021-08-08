@@ -1,6 +1,6 @@
 ---
-date: "2021-07-19T15:36:05.580Z"
-excerpt: ""
+date: '2021-07-19T15:36:05.580Z'
+excerpt: ''
 tags:
   - Not Solved
   - Tree
@@ -8,4 +8,6 @@ tags:
   - BFS
   - Binary Tree
 title: 1302. Deepest Leaves Sum (Medium)
+categories:
+  - leetcode
 ---

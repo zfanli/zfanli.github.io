@@ -1,11 +1,13 @@
 ---
-date: "2021-07-17T15:36:05.576Z"
-excerpt: ""
+date: '2021-07-17T15:36:05.576Z'
+excerpt: ''
 tags:
   - DFS
   - Graph
   - Biconnected Component
 title: 1192. Critical Connections in a Network (Hard)
+categories:
+  - leetcode
 ---
 
 ```python

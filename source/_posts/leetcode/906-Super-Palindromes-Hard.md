@@ -1,9 +1,11 @@
 ---
-date: "2021-07-01T15:36:05.560Z"
-excerpt: ""
+date: '2021-07-01T15:36:05.560Z'
+excerpt: ''
 tags:
   - Math
 title: 906. Super Palindromes (Hard)
+categories:
+  - leetcode
 ---
 
 Topics:

@@ -1,6 +1,6 @@
 ---
-date: "2021-05-24T15:36:05.516Z"
-excerpt: ""
+date: '2021-05-24T15:36:05.516Z'
+excerpt: ''
 tags:
   - Stack
   - Tree
@@ -9,6 +9,8 @@ tags:
   - Queue
   - Iterator
 title: 341. Flatten Nested List Iterator (Medium)
+categories:
+  - leetcode
 ---
 
 With solutions both in Python and JavaScript.

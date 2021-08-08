@@ -1,10 +1,12 @@
 ---
-date: "2021-07-13T15:36:05.571Z"
-excerpt: ""
+date: '2021-07-13T15:36:05.571Z'
+excerpt: ''
 tags:
   - Hash Table
   - DP
 title: 1048. Longest String Chain (Medium)
+categories:
+  - leetcode
 ---
 
 思路 1，hash table + memoization。明确一下要找出最长的链，我们需要完成下面的步骤才能最终确认：

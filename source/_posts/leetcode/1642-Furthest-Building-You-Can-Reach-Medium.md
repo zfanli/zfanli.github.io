@@ -1,10 +1,12 @@
 ---
-date: "2021-07-31T15:36:05.597Z"
-excerpt: Binary search (what?), heap.
+date: '2021-07-31T15:36:05.597Z'
+excerpt: 'Binary search (what?), heap.'
 tags:
   - Binary Search
   - Heap
 title: 1642. Furthest Building You Can Reach (Medium)
+categories:
+  - leetcode
 ---
 
 Topics:

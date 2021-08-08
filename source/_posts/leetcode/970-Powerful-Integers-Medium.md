@@ -1,10 +1,12 @@
 ---
-date: "2021-07-07T15:36:05.565Z"
-excerpt: ""
+date: '2021-07-07T15:36:05.565Z'
+excerpt: ''
 tags:
   - Hash Table
   - Math
 title: 970. Powerful Integers (Medium)
+categories:
+  - leetcode
 ---
 
 ```python

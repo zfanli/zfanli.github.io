@@ -1,9 +1,11 @@
 ---
-date: "2021-04-10T15:36:05.464Z"
-excerpt: ""
+date: '2021-04-10T15:36:05.464Z'
+excerpt: ''
 tags:
   - Backtracking
 title: 77. Combinations (Medium)
+categories:
+  - leetcode
 ---
 
 需要编辑的数组长度 `k` 是一个变量，看来这道题是一道典型的回溯算法题。

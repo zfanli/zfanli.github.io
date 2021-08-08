@@ -1,9 +1,11 @@
 ---
-date: "2021-06-01T15:36:05.524Z"
-excerpt: ""
+date: '2021-06-01T15:36:05.524Z'
+excerpt: ''
 tags:
   - String
 title: 583. Delete Operation for Two Strings (Medium)
+categories:
+  - leetcode
 ---
 
 Topics:

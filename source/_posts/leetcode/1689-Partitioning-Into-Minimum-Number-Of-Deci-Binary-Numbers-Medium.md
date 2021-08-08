@@ -1,9 +1,11 @@
 ---
-date: "2021-08-02T15:36:05.600Z"
-excerpt: ???Medium??? Seriously?!
+date: '2021-08-02T15:36:05.600Z'
+excerpt: '???Medium??? Seriously?!'
 tags:
   - Greedy
 title: 1689. Partitioning Into Minimum Number Of Deci-Binary Numbers (Medium)
+categories:
+  - leetcode
 ---
 
 ???Medium??? Seriously?!

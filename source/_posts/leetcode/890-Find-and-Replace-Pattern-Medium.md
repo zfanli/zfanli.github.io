@@ -1,9 +1,11 @@
 ---
-date: "2021-06-29T15:36:05.558Z"
-excerpt: ""
+date: '2021-06-29T15:36:05.558Z'
+excerpt: ''
 tags:
   - String
 title: 890. Find and Replace Pattern (Medium)
+categories:
+  - leetcode
 ---
 
 思路 1，先计算 `pattern` 的排列码表，使用这个码表来过滤输入数据。简单来说，我们这样做。

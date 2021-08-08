@@ -1,9 +1,11 @@
 ---
-date: "2021-06-25T15:36:05.554Z"
-excerpt: ""
+date: '2021-06-25T15:36:05.554Z'
+excerpt: ''
 tags:
   - Array
 title: 792. Number of Matching Subsequences (Medium)
+categories:
+  - leetcode
 ---
 
 无脑思路...这道题定义的子序列不需要是连续的字符串，只需要字符按照原本的先后顺序排列即可，所以遗憾 `for in` 不能派上用场（废话）。

@@ -1,9 +1,11 @@
 ---
-date: "2021-07-03T15:36:05.562Z"
-excerpt: ""
+date: '2021-07-03T15:36:05.562Z'
+excerpt: ''
 tags:
   - DP
 title: 943. Find the Shortest Superstring (Hard)
+categories:
+  - leetcode
 ---
 
 **NOT SOLVED YET!!**

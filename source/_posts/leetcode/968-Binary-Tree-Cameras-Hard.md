@@ -1,10 +1,12 @@
 ---
-date: "2021-07-05T15:36:05.564Z"
-excerpt: ""
+date: '2021-07-05T15:36:05.564Z'
+excerpt: ''
 tags:
   - DP
   - Greedy
 title: 968. Binary Tree Cameras (Hard)
+categories:
+  - leetcode
 ---
 
 **思路 1，贪心从下而上**

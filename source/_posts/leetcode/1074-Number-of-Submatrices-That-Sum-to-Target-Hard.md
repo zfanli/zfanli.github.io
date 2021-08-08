@@ -1,12 +1,14 @@
 ---
-date: "2021-07-15T15:36:05.574Z"
-excerpt: ""
+date: '2021-07-15T15:36:05.574Z'
+excerpt: ''
 tags:
   - Array
   - Hash Table
   - Matrix
   - Prefix Sum
 title: 1074. Number of Submatrices That Sum to Target (Hard)
+categories:
+  - leetcode
 ---
 
 With solutions both in Python and Java.

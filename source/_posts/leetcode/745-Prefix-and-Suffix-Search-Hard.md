@@ -1,9 +1,11 @@
 ---
-date: "2021-06-17T15:36:05.546Z"
-excerpt: ""
+date: '2021-06-17T15:36:05.546Z'
+excerpt: ''
 tags:
   - Trie
 title: 745. Prefix and Suffix Search (Hard)
+categories:
+  - leetcode
 ---
 
 Trie

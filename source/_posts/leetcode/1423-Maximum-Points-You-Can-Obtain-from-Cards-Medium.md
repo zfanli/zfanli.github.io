@@ -1,6 +1,6 @@
 ---
-date: "2021-07-25T15:36:05.589Z"
-excerpt:
+date: '2021-07-25T15:36:05.589Z'
+excerpt: >-
   思路 1，用滑动窗口检查 k 以外的连续元素的最小值，然后用数组和减去这个最小值。计算过程用 DP 简化，仅需计算数组前缀和。优势是思路简单，前缀和使用
   in-place 不会占用额外空间。虽然思路简单，但是代码不算简洁。
 tags:
@@ -8,6 +8,8 @@ tags:
   - DP
   - Sliding Window
 title: 1423. Maximum Points You Can Obtain from Cards (Medium)
+categories:
+  - leetcode
 ---
 
 # 1423. Maximum Points You Can Obtain from Cards (Medium)

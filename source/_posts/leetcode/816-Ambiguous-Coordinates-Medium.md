@@ -1,9 +1,11 @@
 ---
-date: "2021-06-27T15:36:05.556Z"
-excerpt: ""
+date: '2021-06-27T15:36:05.556Z'
+excerpt: ''
 tags:
   - String
 title: 816. Ambiguous Coordinates (Medium)
+categories:
+  - leetcode
 ---
 
 Topics:

@@ -1,10 +1,12 @@
 ---
-date: "2021-04-24T15:36:05.479Z"
-excerpt: ""
+date: '2021-04-24T15:36:05.479Z'
+excerpt: ''
 tags:
   - Linked List
   - DFS
 title: 109. Convert Sorted List to Binary Search Tree (Medium)
+categories:
+  - leetcode
 ---
 
 Topics:

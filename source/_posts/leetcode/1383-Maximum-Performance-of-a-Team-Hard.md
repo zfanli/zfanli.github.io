@@ -1,10 +1,12 @@
 ---
-date: "2021-07-23T15:36:05.585Z"
-excerpt: ""
+date: '2021-07-23T15:36:05.585Z'
+excerpt: ''
 tags:
   - Greedy
   - Sort
 title: 1383. Maximum Performance of a Team (Hard)
+categories:
+  - leetcode
 ---
 
 解题思路是先计算局部最优解，再计算全局的最优解，是典型的贪心算法的应用场景。但这道题困难之处在于需要保持两个排序，而意识到这个解决方案需要一定的直觉。

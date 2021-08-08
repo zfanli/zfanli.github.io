@@ -1,9 +1,11 @@
 ---
-date: "2021-07-21T15:36:05.582Z"
-excerpt: ""
+date: '2021-07-21T15:36:05.582Z'
+excerpt: ''
 tags:
   - Greedy
 title: 1354. Construct Target Array With Multiple Sums (Hard)
+categories:
+  - leetcode
 ---
 
 Topics:
