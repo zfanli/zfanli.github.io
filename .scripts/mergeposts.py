@@ -20,7 +20,7 @@ if __name__ == "__main__":
     # remove output folder if exists
     if output.exists():
         shutil.rmtree(output)
-    output.mkdir()
+    output.mkdir(parents=True)
 
     for child in Path(args.in_path).iterdir():
         if child.is_dir():
