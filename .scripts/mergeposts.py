@@ -26,7 +26,7 @@ if __name__ == "__main__":
         else:
             # make the output name
             name = ""
-            for n in child.name:
+            for n in child.stem:
                 # keep letters and numbers only, replace others as hyphens
                 if re.match(r"[a-zA-Z0-9]", n):
                     name += n
@@ -35,6 +35,6 @@ if __name__ == "__main__":
             # remove contiguous hyphens
             name = re.sub(r"--+", "-", name)
             # remove trailing hyphen
-            name = re.sub(r"-$", "", name)
+            name = re.sub(r"-$", "", name) + child.suffix
 
             shutil.copy2(child, output.joinpath(name))
