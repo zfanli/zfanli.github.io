@@ -1,0 +1,1756 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icon-64.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/icon-16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Mist","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":null,"sidebar":"fadeInUp"}},"prism":true,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/config.min.js"></script>
+<meta name="description" content="TOPICS 前端 ｜ Python ｜ Java 数据结构 ｜ 算法 用代码替代言语记录创作与学习的脚步">
+<meta property="og:type" content="website">
+<meta property="og:title" content="HOME">
+<meta property="og:url" content="http://example.com/page/3/">
+<meta property="og:site_name" content="HOME">
+<meta property="og:description" content="TOPICS 前端 ｜ Python ｜ Java 数据结构 ｜ 算法 用代码替代言语记录创作与学习的脚步">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:author" content="Richard Zen">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/page/3/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":true,"isPost":false,"lang":"zh-CN","comments":"","permalink":"","path":"page/3/index.html","title":""}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>HOME</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">HOME</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+  </ul>
+</nav>
+
+
+
+<div id="colorSwitcher" class="animated fadeIn">🌓</div>
+<script>
+  (function () {
+    // define constants
+    const DARK = "dark-scheme",
+      LIGHT = "light-scheme",
+      COLOR_SCHEME = "color-scheme",
+      ROTATE = "switcher-rotate";
+
+    // define targets
+    const switcher = document.querySelector("#colorSwitcher"),
+      body = document.body,
+      isDark = window.matchMedia("(prefers-color-scheme: dark)").matches,
+      stored = window.localStorage.getItem(COLOR_SCHEME);
+
+    body.classList.add(stored ? stored : isDark ? DARK : LIGHT);
+
+    // setup actions
+    switcher.addEventListener("click", function () {
+      let add = LIGHT;
+      if (body.classList.contains(LIGHT)) {
+        add = DARK;
+      }
+      // apply the new color scheme
+      body.classList.remove(LIGHT, DARK);
+      body.classList.add(add);
+      window.localStorage.setItem(COLOR_SCHEME, add);
+      if (switcher.classList.contains(ROTATE))
+        switcher.classList.remove(ROTATE);
+      else switcher.classList.add(ROTATE);
+    });
+  })();
+</script>
+<style>
+  #colorSwitcher {
+    cursor: pointer;
+    border-radius: 2px;
+    height: 37px;
+    line-height: 37px;
+    width: 42px;
+    text-align: center;
+    outline: none;
+    font-size: 1.5rem;
+    margin-left: auto;
+    transition: all 0.25s ease-in-out;
+    transform: rotate(0);
+    user-select: none;
+  }
+
+  #colorSwitcher.switcher-rotate {
+    transform: rotate(180deg);
+  }
+
+  @media (max-width: 767px) {
+    #colorSwitcher {
+      height: 37px;
+      line-height: 37px;
+      width: 42px;
+      text-align: center;
+      position: absolute;
+      top: 10px;
+      right: 20px;
+    }
+  }
+</style>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Richard Zen"
+      src="/images/icon-64.png">
+  <p class="site-author-name" itemprop="name">Richard Zen</p>
+  <div class="site-description" itemprop="description"><small><b>TOPICS</b></small><br>
+前端 ｜ Python ｜ Java<br>
+数据结构 ｜ 算法<br><br>
+用代码替代言语<br>记录创作与学习的脚步<br><br>
+</div>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/zfanli" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;zfanli" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/post/leetcode/906-Super-Palindromes-Hard/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon-64.png">
+      <meta itemprop="name" content="Richard Zen">
+      <meta itemprop="description" content="<small><b>TOPICS</b></small><br>
+前端 ｜ Python ｜ Java<br>
+数据结构 ｜ 算法<br><br>
+用代码替代言语<br>记录创作与学习的脚步<br><br>
+">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HOME">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/post/leetcode/906-Super-Palindromes-Hard/" class="post-title-link" itemprop="url">906. Super Palindromes (Hard)</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-07-01 15:36:05" itemprop="dateModified" datetime="2021-07-01T15:36:05+08:00">2021-07-01</time>
+      </span>
+
+  
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.2k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>Topics:</p>
+<p>Math.</p>
+<p>Don’t know the reason but not interested in this problem, so let’s calculate a table to break it.</p>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def superpalindromesInRange(self, left: str, right: str) -&gt; int:
+        L, R &#x3D; int(left), int(right)
+        ans &#x3D; 0
+
+        for i in self.table:
+            if i &lt; L:
+                continue
+            elif i &lt;&#x3D; R:
+                ans +&#x3D; 1
+            else:
+                break
+
+        return ans
+
+    table &#x3D; [
+        1,
+        4,
+        9,
+        121,
+        484,
+        10201,
+        12321,
+        14641,
+        40804,
+        44944,
+        1002001,
+        1234321,
+        4008004,
+        100020001,
+        102030201,
+        104060401,
+        121242121,
+        123454321,
+        125686521,
+        400080004,
+        404090404,
+        10000200001,
+        10221412201,
+        12102420121,
+        12345654321,
+        40000800004,
+        1000002000001,
+        1002003002001,
+        1004006004001,
+        1020304030201,
+        1022325232201,
+        1024348434201,
+        1210024200121,
+        1212225222121,
+        1214428244121,
+        1232346432321,
+        1234567654321,
+        4000008000004,
+        4004009004004,
+        100000020000001,
+        100220141022001,
+        102012040210201,
+        102234363432201,
+        121000242000121,
+        121242363242121,
+        123212464212321,
+        123456787654321,
+        400000080000004,
+        10000000200000001,
+        10002000300020001,
+        10004000600040001,
+        10020210401202001,
+        10022212521222001,
+        10024214841242001,
+        10201020402010201,
+        10203040504030201,
+        10205060806050201,
+        10221432623412201,
+        10223454745432201,
+        12100002420000121,
+        12102202520220121,
+        12104402820440121,
+        12122232623222121,
+        12124434743442121,
+        12321024642012321,
+        12323244744232321,
+        12343456865434321,
+        12345678987654321,
+        40000000800000004,
+        40004000900040004
+    ]</code></pre>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/post/leetcode/890-Find-and-Replace-Pattern-Medium/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon-64.png">
+      <meta itemprop="name" content="Richard Zen">
+      <meta itemprop="description" content="<small><b>TOPICS</b></small><br>
+前端 ｜ Python ｜ Java<br>
+数据结构 ｜ 算法<br><br>
+用代码替代言语<br>记录创作与学习的脚步<br><br>
+">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HOME">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/post/leetcode/890-Find-and-Replace-Pattern-Medium/" class="post-title-link" itemprop="url">890. Find and Replace Pattern (Medium)</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-06-29 15:36:05" itemprop="dateModified" datetime="2021-06-29T15:36:05+08:00">2021-06-29</time>
+      </span>
+
+  
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>3.1k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>思路 1，先计算 <code>pattern</code> 的排列码表，使用这个码表来过滤输入数据。简单来说，我们这样做。</p>
+<ul>
+<li>计算 <code>pattern</code> 的排列码表<ul>
+<li>用一个计数器将 <code>pattern</code> 中的字符按出现顺序编码；</li>
+<li>相同字符的编码保持不变，比如 <code>abba</code> 转化为排列码表为 <code>[0, 1, 1, 0]</code>。</li>
+</ul>
+</li>
+<li>对输入数据中每一个字符串进行检查<ul>
+<li>用一个计数器将目标中的字符按出现顺序编码；</li>
+<li>相同字符的编码保持不变；</li>
+<li>计算完每一个字符的编码后，与排列码表相同下标的元素进行比对，结果不一致时直接返回 <code>false</code>；</li>
+<li>顺利匹配完成时，返回 <code>true</code>。</li>
+</ul>
+</li>
+</ul>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def findAndReplacePattern(self, words: List[str], pattern: str) -&gt; List[str]:
+        ptn, tbl, c &#x3D; [], &#123;&#125;, 0
+
+        for i in pattern:
+            if i not in tbl:
+                tbl[i] &#x3D; c
+                c +&#x3D; 1
+            ptn.append(tbl[i])
+
+        def match(w):
+            tbl.clear()
+            c &#x3D; 0
+            for i in range(len(w)):
+                if w[i] not in tbl:
+                    tbl[w[i]] &#x3D; c
+                    c +&#x3D; 1
+                if tbl[w[i]] !&#x3D; ptn[i]:
+                    return False
+            return True
+
+        # print(ptn)
+        return filter(match, words)</code></pre>
+
+<p>思路 2，双射（bijection）。用两个哈希表分别映射 <code>pattern</code> 字符和目标字符，检查映射结果是否一致。</p>
+<ul>
+<li>用 <code>m1</code> 储存目标字符到 <code>pattern</code> 字符的映射，比如字符 <code>x</code> -&gt; <code>a</code>;</li>
+<li>用 <code>m2</code> 储存 <code>pattern</code> 字符到目标字符的映射，比如字符 <code>a</code> -&gt; <code>x</code>；</li>
+<li>作为判断条件，当下面条件任意一个满足，则表示目标字符与 <code>pattern</code> 不匹配：<ul>
+<li><code>m1</code> 中字符 <code>x</code> 对应的字符与当前 <code>pattern</code> 相对下标的字符不匹配；或，</li>
+<li><code>m2</code> 中字符 <code>a</code> 对应的字符与当前目标字符串相对下标的字符不匹配。</li>
+</ul>
+</li>
+<li>如果到最后一个字符依然匹配，则目标字符匹配 <code>pattern</code>。</li>
+</ul>
+<pre class="language-java" data-language="java"><code class="language-java">class Solution &#123;
+    private Map&lt;Character, Character&gt; m1 &#x3D; new HashMap&lt;&gt;();
+    private Map&lt;Character, Character&gt; m2 &#x3D; new HashMap&lt;&gt;();
+    public List&lt;String&gt; findAndReplacePattern(String[] words, String pattern) &#123;
+        List&lt;String&gt; ans &#x3D; new ArrayList&lt;&gt;();
+        for (String w : words) &#123;
+            if (match(w, pattern)) ans.add(w);
+        &#125;
+        return ans;
+    &#125;
+    private boolean match(String w, String ptn) &#123;
+        m1.clear(); m2.clear();
+        for (int i &#x3D; 0; i &lt; w.length(); i++) &#123;
+            char c &#x3D; w.charAt(i);
+            char p &#x3D; ptn.charAt(i);
+            if (!m1.containsKey(c)) m1.put(c, p);
+            if (!m2.containsKey(p)) m2.put(p, c);
+            if (m1.get(c) !&#x3D; p || m2.get(p) !&#x3D; c) return false;
+        &#125;
+        return true;
+    &#125;
+&#125;</code></pre>
+
+<p>思路 3，单哈希表。在双射的思路里我们用到了 2 个哈希表，这里还有优化的空间，我们考虑一下只使用一个哈希表时需要处理的问题。</p>
+<ul>
+<li>首先按照思路 2 准备好哈希表，这次我们仅作目标字符到 <code>pattern</code> 字符的映射；</li>
+<li>第一个错误条件是目标字符在哈希表中对应的 <code>pattern</code> 字符和当前不匹配：<ul>
+<li>如果目标字符重复之前出现过的字符，而 <code>pattern</code> 字符是未出现过的，则哈希表中对应字符和当前 <code>pattern</code> 字符必定不匹配。</li>
+</ul>
+</li>
+<li>第二个错误条件是目标字符都不重复时，会将多个不同字符映射到 <code>pattern</code> 的同一个字符：<ul>
+<li>这时哈希表会顺利完成，我们需要对哈希表的值集合进行进一步的检查，如果出现重复字符则返回 <code>false</code>。</li>
+</ul>
+</li>
+<li>最终顺利完成检查的返回 <code>true</code>。</li>
+</ul>
+<pre class="language-java" data-language="java"><code class="language-java">class Solution &#123;
+    private Map&lt;Character, Character&gt; m1 &#x3D; new HashMap&lt;&gt;();
+    public List&lt;String&gt; findAndReplacePattern(String[] words, String pattern) &#123;
+        List&lt;String&gt; ans &#x3D; new ArrayList&lt;&gt;();
+        for (String w : words) &#123;
+            if (match(w, pattern)) ans.add(w);
+        &#125;
+        return ans;
+    &#125;
+    private boolean match(String w, String ptn) &#123;
+        m1.clear();
+        for (int i &#x3D; 0; i &lt; w.length(); i++) &#123;
+            char c &#x3D; w.charAt(i);
+            char p &#x3D; ptn.charAt(i);
+            if (!m1.containsKey(c)) m1.put(c, p);
+            if (m1.get(c) !&#x3D; p) return false;
+        &#125;
+
+        boolean[] test &#x3D; new boolean[26];
+        for (char v : m1.values()) &#123;
+            if (test[v - &#39;a&#39;]) &#123;
+                return false;
+            &#125; else &#123;
+                test[v - &#39;a&#39;] &#x3D; true;
+            &#125;
+        &#125;
+        return true;
+    &#125;
+&#125;</code></pre>
+
+<pre class="language-js" data-language="js"><code class="language-js">&#x2F;**
+ * @param &#123;string[]&#125; words
+ * @param &#123;string&#125; pattern
+ * @return &#123;string[]&#125;
+ *&#x2F;
+var findAndReplacePattern &#x3D; function (words, pattern) &#123;
+  return words.filter((w) &#x3D;&gt; &#123;
+    const map &#x3D; &#123;&#125;;
+    for (let i &#x3D; 0; i &lt; w.length; i++) &#123;
+      const c &#x3D; w.charAt(i),
+        p &#x3D; pattern.charAt(i);
+      if (!map[c]) map[c] &#x3D; p;
+      if (p !&#x3D;&#x3D; map[c]) return false;
+    &#125;
+    const test &#x3D; [];
+    for (let v of Object.values(map)) &#123;
+      if (test.indexOf(v) &gt; -1) &#123;
+        return false;
+      &#125; else &#123;
+        test.push(v);
+      &#125;
+    &#125;
+    return true;
+  &#125;);
+&#125;;</code></pre>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/post/leetcode/816-Ambiguous-Coordinates-Medium/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon-64.png">
+      <meta itemprop="name" content="Richard Zen">
+      <meta itemprop="description" content="<small><b>TOPICS</b></small><br>
+前端 ｜ Python ｜ Java<br>
+数据结构 ｜ 算法<br><br>
+用代码替代言语<br>记录创作与学习的脚步<br><br>
+">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HOME">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/post/leetcode/816-Ambiguous-Coordinates-Medium/" class="post-title-link" itemprop="url">816. Ambiguous Coordinates (Medium)</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-06-27 15:36:05" itemprop="dateModified" datetime="2021-06-27T15:36:05+08:00">2021-06-27</time>
+      </span>
+
+  
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.2k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>Topics:</p>
+<p>String.</p>
+<p>思路 1 偷懒用正则检查字符串。</p>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def ambiguousCoordinates(self, s: str) -&gt; List[str]:
+
+        def isvalid(s):
+            ptn &#x3D; r&quot;^(([1-9]+\d*|0)\.\d*[1-9]|([1-9]+\d*|0))$&quot;
+            return re.match(ptn, s) is not None
+
+        def makenumberstr(s):
+            ret &#x3D; []
+            for i in range(len(s)):
+                _s &#x3D; s
+                if i + 1 &lt; len(s):
+                    _s &#x3D; s[:i + 1] + &#39;.&#39; + s[i + 1:]
+                if isvalid(_s):
+                    ret.append(_s)
+            return ret
+
+        s &#x3D; s[1:-1]
+
+        ans &#x3D; []
+
+        for i in range(1, len(s)):
+
+            n &#x3D; makenumberstr(s[:i])
+            m &#x3D; makenumberstr(s[i:])
+
+            for _n in n:
+                for _m in m:
+                    ans.append(f&quot;(&#123;_n&#125;, &#123;_m&#125;)&quot;)
+
+        return ans</code></pre>
+
+<p>思路 2 老老实实拼正确的字符串，跳过检查。其实正确字符串规则只有 2 个，无论对整数还是浮点数来说，整数部分只能是 0 或 0 以上，所以判断这部分只要判断是否有前缀 0，以及是否为 0。</p>
+<ul>
+<li>浮点数：<ul>
+<li>左边只能是 0 或大于 0 的数；</li>
+<li>右边末位不能是 0。</li>
+</ul>
+</li>
+<li>整数：<ul>
+<li>只能是 0 或大于 0 的数。</li>
+</ul>
+</li>
+</ul>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def ambiguousCoordinates(self, s: str) -&gt; List[str]:
+
+        def makenumberstr(s):
+            ret &#x3D; []
+            for i in range(1, len(s) + 1):
+                left, right &#x3D; s[:i], s[i:]
+                if (not left.startswith(&#39;0&#39;) or left &#x3D;&#x3D; &#39;0&#39;) and not right.endswith(&#39;0&#39;):
+                    ret.append(left + (&#39;.&#39; if right !&#x3D; &#39;&#39; else &#39;&#39;) + right)
+            return ret
+
+        s, ans &#x3D; s[1:-1], []
+
+        for i in range(1, len(s)):
+
+            n &#x3D; makenumberstr(s[:i])
+            m &#x3D; makenumberstr(s[i:])
+
+            for _n in n:
+                for _m in m:
+                    ans.append(f&quot;(&#123;_n&#125;, &#123;_m&#125;)&quot;)
+
+        return ans</code></pre>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/post/leetcode/792-Number-of-Matching-Subsequences-Medium/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon-64.png">
+      <meta itemprop="name" content="Richard Zen">
+      <meta itemprop="description" content="<small><b>TOPICS</b></small><br>
+前端 ｜ Python ｜ Java<br>
+数据结构 ｜ 算法<br><br>
+用代码替代言语<br>记录创作与学习的脚步<br><br>
+">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HOME">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/post/leetcode/792-Number-of-Matching-Subsequences-Medium/" class="post-title-link" itemprop="url">792. Number of Matching Subsequences (Medium)</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-06-25 15:36:05" itemprop="dateModified" datetime="2021-06-25T15:36:05+08:00">2021-06-25</time>
+      </span>
+
+  
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.6k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>无脑思路…这道题定义的子序列不需要是连续的字符串，只需要字符按照原本的先后顺序排列即可，所以遗憾 <code>for in</code> 不能派上用场（废话）。</p>
+<p>但这也难不倒无脑的我，定义在于先后顺序，那么我们每一次仅搜索从上一次找到的下标往后是不是存在下一个字符，如果找到下一个字符，这个下标保存继续循环，最后判断找到的字符数量是不是和愿字符串长度一致。</p>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def numMatchingSubseq(self, s: str, words: List[str]) -&gt; int:
+        ans &#x3D; 0
+        for w in words:
+            curr, cnt &#x3D; 0, 0
+            for c in w:
+                try:
+                    curr &#x3D; curr + s[curr:].index(c) + 1
+                    cnt +&#x3D; 1
+                except:
+                    break
+            if cnt &#x3D;&#x3D; len(w):
+                ans +&#x3D;1
+        return ans</code></pre>
+
+<p>正常思路，桶。评论区的一个思路，作者命名为 “Next Letter Pointer” 方法。</p>
+<p>我们将每个检查对象按照首字母放到对应的桶中，通过下面的方法实现仅遍历一次目标字符串就检查完所有目标的算法。</p>
+<p>作者还做了一张图来可视化这个过程。算法思路如下。</p>
+<ul>
+<li>准备好桶后，开始遍历目标字符串：<ul>
+<li>用当前位置的字符取出对应的桶保留，就桶原本的位置重置为空桶；</li>
+<li>遍历取出的桶：<ul>
+<li>如果字符长度为 1：说明找到了一个答案，计数器+1；</li>
+<li>否则：将字符串去头（第一个字符）后，按照首字母继续放入对应的桶中，等待后面有机会取出来；</li>
+</ul>
+</li>
+<li>重复这个过程直到目标字符串遍历结束。</li>
+</ul>
+</li>
+</ul>
+<p><img src="./resources/792.bucket.png" alt="bucket"></p>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def numMatchingSubseq(self, s: str, words: List[str]) -&gt; int:
+        ans, bucket &#x3D; 0, defaultdict(list)
+        for w in words:
+            bucket[w[0]].append(w)
+        for c in s:
+            target, bucket[c] &#x3D; bucket[c], []
+            for w in target:
+                if len(w) &#x3D;&#x3D; 1:
+                    ans +&#x3D; 1
+                    continue
+                bucket[w[1]].append(w[1:])
+        return ans</code></pre>
+
+<p>Java 版本，好长长长…</p>
+<pre class="language-java" data-language="java"><code class="language-java">class Solution &#123;
+    private class Node &#123;
+        public String w;
+        public int p;
+        public Node(String w, int p) &#123;
+            this.w &#x3D; w;
+            this.p &#x3D; p;
+        &#125;
+    &#125;
+    public int numMatchingSubseq(String s, String[] words) &#123;
+        List&lt;Node&gt;[] bucket &#x3D; new ArrayList[26];
+        int ans &#x3D; 0;
+        for (int i &#x3D; 0; i &lt; 26; i++) &#123;
+            bucket[i] &#x3D; new ArrayList&lt;Node&gt;();
+        &#125;
+        for (String word : words) &#123;
+            bucket[word.charAt(0) - 97].add(new Node(word, 0));
+        &#125;
+        for (char c : s.toCharArray()) &#123;
+            List&lt;Node&gt; target &#x3D; bucket[c - 97];
+            bucket[c - 97] &#x3D; new ArrayList&lt;Node&gt;();
+            for (Node n : target) &#123;
+                if (n.p + 1 &#x3D;&#x3D; n.w.length()) &#123;
+                    ans++;
+                &#125; else &#123;
+                    n.p ++;
+                    bucket[n.w.charAt(n.p) - 97].add(n);
+                &#125;
+            &#125;
+        &#125;
+        return ans;
+    &#125;
+&#125;</code></pre>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/post/leetcode/778-Swim-in-Rising-Water-Hard/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon-64.png">
+      <meta itemprop="name" content="Richard Zen">
+      <meta itemprop="description" content="<small><b>TOPICS</b></small><br>
+前端 ｜ Python ｜ Java<br>
+数据结构 ｜ 算法<br><br>
+用代码替代言语<br>记录创作与学习的脚步<br><br>
+">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HOME">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/post/leetcode/778-Swim-in-Rising-Water-Hard/" class="post-title-link" itemprop="url">778. Swim in Rising Water (Hard)</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-06-23 15:36:05" itemprop="dateModified" datetime="2021-06-23T15:36:05+08:00">2021-06-23</time>
+      </span>
+
+  
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.7k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>2 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>这是一道求最合适路径的题目，可以应用图论中的 Dijkstra 算法。</p>
+<blockquote>
+<p>Dijkstra‘s Algorithm 适用于求<strong>权重不为负数的加权图</strong>起点到终点的最优路径。</p>
+</blockquote>
+<p>这道题的 input 是一个 <code>n * n</code> 的矩阵，可以将其视作所有元素都与其上下左右相互连接的一张无向图，每个顶点的数值表示到达这个顶点的边的权重，我们需要求的是从起点 <code>(0, 0)</code> 到终点 <code>(n, n)</code> 的最优路径。这道题要求我们计算的是这条路径上权重最大值，所以我们用一个变量来保持每一次选择后的权重最大值。</p>
+<p>下面是算法：</p>
+<ul>
+<li>从 <code>(0, 0)</code> 开始，将四个方向能访问的顶点加权后放入小根堆：<ul>
+<li>根据题目的限制，<code>n &lt;= 50</code>，所以我们留出 2 进制 6 位（<code>2^6=64</code>）便足够放下下标的长度来；</li>
+<li>加权后的值 = <code>(grid[x][y] &lt;&lt; 12) + (x &lt;&lt; 6) + y</code>;</li>
+</ul>
+</li>
+<li>选择小根堆中的最小值继续往下走：<ul>
+<li>现在我们选了一个新的值，用其和全局最大值再取一次最大值，更新全局变量；</li>
+<li>从加权后的值中恢复这个值的 <code>x, y</code> 下标；</li>
+</ul>
+</li>
+<li>重复这个过程直到终点 <code>(n, n)</code>。</li>
+</ul>
+<pre class="language-python" data-language="python"><code class="language-python">moves &#x3D; ((-1, 0), (0, -1), (1, 0), (0, 1))
+mask &#x3D; (1 &lt;&lt; 6) - 1
+
+class Solution:
+    def swimInWater(self, grid: List[List[int]]) -&gt; int:
+        n, ans, i, j, q &#x3D; len(grid) - 1, grid[0][0], 0, 0, []
+        while i &lt; n or j &lt; n:
+            for a, b in moves:
+                _i, _j &#x3D; i + a, j + b
+                if _i &lt; 0 or _i &gt; n or _j &lt; 0 or _j &gt; n or grid[_i][_j] &#x3D;&#x3D; math.inf:
+                    continue
+                heapq.heappush(q, (grid[_i][_j] &lt;&lt; 12) + (_i &lt;&lt; 6) + _j)
+                grid[_i][_j] &#x3D; math.inf
+            nxt &#x3D; heapq.heappop(q)
+            ans &#x3D; max(ans, nxt &gt;&gt; 12)
+            i, j &#x3D; (nxt &gt;&gt; 6) &amp; mask, nxt &amp; mask
+        return ans</code></pre>
+
+<p>Java 版用 PriorityQueue 实现小根堆。</p>
+<pre class="language-java" data-language="java"><code class="language-java">class Solution &#123;
+    private int[][] moves &#x3D; new int[][] &#123;
+        &#123;0, 1&#125;, &#123;1, 0&#125;, &#123;0, -1&#125;, &#123;-1, 0&#125;
+    &#125;;
+    private int mask &#x3D; (1 &lt;&lt; 6) - 1;
+
+    public int swimInWater(int[][] grid) &#123;
+        int ans &#x3D; grid[0][0];
+        int n &#x3D; grid.length - 1;
+        Queue&lt;Integer&gt; pq &#x3D; new PriorityQueue&lt;&gt;();
+        int i &#x3D; 0, j &#x3D; 0;
+        while (i !&#x3D; n || j !&#x3D; n) &#123;
+            for (int[] m : moves) &#123;
+                int mi &#x3D; i + m[0], mj &#x3D; j + m[1];
+                if (mi &lt; 0 || mi &gt; n || mj &lt; 0 || mj &gt; n
+                    || grid[mi][mj] &#x3D;&#x3D; Integer.MAX_VALUE) &#123;
+                    continue;
+                &#125;
+                pq.add((grid[mi][mj] &lt;&lt; 12) + (mi &lt;&lt; 6) + mj);
+                grid[mi][mj] &#x3D; Integer.MAX_VALUE;
+            &#125;
+            int next &#x3D; pq.poll();
+            ans &#x3D; Math.max(ans, next &gt;&gt; 12);
+            i &#x3D; (next &gt;&gt; 6) &amp; mask;
+            j &#x3D; next &amp; mask;
+        &#125;
+        return ans;
+    &#125;
+&#125;</code></pre>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/post/leetcode/752-Open-the-Lock-Medium/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon-64.png">
+      <meta itemprop="name" content="Richard Zen">
+      <meta itemprop="description" content="<small><b>TOPICS</b></small><br>
+前端 ｜ Python ｜ Java<br>
+数据结构 ｜ 算法<br><br>
+用代码替代言语<br>记录创作与学习的脚步<br><br>
+">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HOME">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/post/leetcode/752-Open-the-Lock-Medium/" class="post-title-link" itemprop="url">752. Open the Lock (Medium)</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-06-21 15:36:05" itemprop="dateModified" datetime="2021-06-21T15:36:05+08:00">2021-06-21</time>
+      </span>
+
+  
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>983</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>圆盘锁有 4 个，每个锁上有 0 ～ 9 共十个数字，换个角度我们需要求出一个 10000 个节点的图中从 <code>0000</code> 出发到目标节点的最短路径，并且要避开给定的死路。总结一下已知的情报。</p>
+<ul>
+<li>每个锁每次操作可以 +1 or -1；</li>
+<li>当前状态的下一步操作有 4 * 2 = 8 中选择；</li>
+<li>要求最少步数，需要穷尽每一步的所有选择 -&gt; 确定 BFS 应用场景；</li>
+<li>为避免重复搜索，准备一个 <code>seen</code> 数组进行剪枝；<ul>
+<li>已知圆盘锁的值都为数字且不重复，<code>seen</code> 数组可以初始化为长度为 10000 的布尔值 or 0/1 数组；</li>
+<li><code>deadends</code> 可以视作已经处理过的组合，可以将其对应的 <code>seen</code> 数组的元素设为 true；</li>
+</ul>
+</li>
+<li>为了方面计算，先将不好处理的特殊场景排除在外，这题有 2 个特殊场景：<ul>
+<li>当目标等于初始值时，直接返回 0；</li>
+<li>当初始值被标记为死路时，直接返回 -1；</li>
+</ul>
+</li>
+<li>开始实现算法。</li>
+</ul>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def openLock(self, deadends: List[str], target: str) -&gt; int:
+        if target &#x3D;&#x3D; &#39;0000&#39;:
+            return 0
+
+        depth, queue, seen, target &#x3D; 0, [0], [0] * 10000, int(target)
+
+        for d in deadends:
+            seen[int(d)] &#x3D; 1
+
+        if seen[0]:
+            return -1
+
+        while len(queue) &gt; 0:
+            n, depth &#x3D; len(queue), depth + 1
+            for i in range(n):
+                first &#x3D; queue.pop(0)
+                for k in range(4):
+                    base &#x3D; first &#x2F;&#x2F; 10 ** k % 10
+                    for d in (-1, 1):
+                        # first - base * 10 ** k -&gt; get the base number with target digit reset to 0.
+                        # ~ + (base + d) % 10 * 10 ** k -&gt; add back the caculated target digit.
+                        nxt &#x3D; first - base * 10 ** k + (base + d) % 10 * 10 ** k
+                        if nxt &#x3D;&#x3D; target:
+                            return depth
+                        if seen[int(nxt)]:
+                            continue
+                        seen[int(nxt)] &#x3D; 1
+                        queue.append(nxt)
+        return -1</code></pre>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/post/leetcode/746-Min-Cost-Climbing-Stairs-Easy/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon-64.png">
+      <meta itemprop="name" content="Richard Zen">
+      <meta itemprop="description" content="<small><b>TOPICS</b></small><br>
+前端 ｜ Python ｜ Java<br>
+数据结构 ｜ 算法<br><br>
+用代码替代言语<br>记录创作与学习的脚步<br><br>
+">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HOME">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/post/leetcode/746-Min-Cost-Climbing-Stairs-Easy/" class="post-title-link" itemprop="url">746. Min Cost Climbing Stairs (Easy)</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-06-19 15:36:05" itemprop="dateModified" datetime="2021-06-19T15:36:05+08:00">2021-06-19</time>
+      </span>
+
+  
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>741</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>思路 1，DP。仔细观察能发现每一步的 cost 都取前两步 cost 的最小值，那么我们可以准备一个数组来存计算过的最小 cost。</p>
+<p>话虽如此，这道题叙述有些模糊，经过尝试可以明确以下信息：</p>
+<ul>
+<li>下标 0 和 1 的 cost 都为 0，因为第一步最大可以走到下标 1 的位置，而第一步是没有 cost 的；</li>
+<li>最后一步要超过最后一个元素，下标要达到数组长度。</li>
+</ul>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def minCostClimbingStairs(self, cost: List[int]) -&gt; int:
+        n &#x3D; len(cost)
+        mincost &#x3D; [0] * (n + 1)
+        # 0，1 的 cost 都为 0，我们直接从 2 开始遍历，到 n （包含）结束。
+        for i in range(2, n + 1):
+            # 每一步 i 的 cost 都为前一步的值加上到达前一步的最小值。
+            # 其中前一步可以选择 i - 1 和 i - 2。
+            mincost[i] &#x3D; min(
+                mincost[i - 1] + cost[i - 1],
+                mincost[i - 2] + cost[i - 2]
+            )
+        return mincost[-1]</code></pre>
+
+<p>思路 2，优化 DP。仔细一看发现我们每次只看 2 个值，那么可以优化 O(n)空间复杂度到 O(1)。</p>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def minCostClimbingStairs(self, cost: List[int]) -&gt; int:
+        st1 &#x3D; st2 &#x3D; 0
+        for i in range(2, len(cost) + 1):
+            # 按照从左到右的顺序依次是 st2、st1、st0，每一个迭代我们丢弃 st2 的值，
+            # 将 st1、st0 作为下一次迭代的 st2、st1。
+            st0 &#x3D; min(st1 + cost[i - 1], st2 + cost[i - 2])
+            st1, st2 &#x3D; st0, st1
+        return st1</code></pre>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/post/leetcode/745-Prefix-and-Suffix-Search-Hard/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon-64.png">
+      <meta itemprop="name" content="Richard Zen">
+      <meta itemprop="description" content="<small><b>TOPICS</b></small><br>
+前端 ｜ Python ｜ Java<br>
+数据结构 ｜ 算法<br><br>
+用代码替代言语<br>记录创作与学习的脚步<br><br>
+">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HOME">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/post/leetcode/745-Prefix-and-Suffix-Search-Hard/" class="post-title-link" itemprop="url">745. Prefix and Suffix Search (Hard)</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-06-17 15:36:05" itemprop="dateModified" datetime="2021-06-17T15:36:05+08:00">2021-06-17</time>
+      </span>
+
+  
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.1k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>Trie</p>
+<pre class="language-java" data-language="java"><code class="language-java">class WordFilter &#123;
+
+    private Map&lt;Integer, String[]&gt; index &#x3D; new HashMap&lt;&gt;();
+    private int len;
+    private String[] reversed;
+    private Map&lt;String, Integer&gt; dp &#x3D; new HashMap&lt;&gt;();
+
+    public WordFilter(String[] words) &#123;
+        this.len &#x3D; words.length;
+        Collections.reverse(Arrays.asList(words));
+        this.reversed &#x3D; words;
+    &#125;
+
+    public int f(String prefix, String suffix) &#123;
+        String query &#x3D; suffix + &quot;#&quot; + prefix;
+        Integer ans &#x3D; dp.get(query);
+        if (ans !&#x3D; null) &#123;
+            return ans;
+        &#125;
+
+        dp.put(query, -1);
+        int l &#x3D; suffix.length();
+
+        String[] arr &#x3D; index.get(l);
+
+        if (arr &#x3D;&#x3D; null) &#123;
+            arr &#x3D; new String[len];
+            for (int i &#x3D; 0; i &lt; arr.length; i++) &#123;
+                String w &#x3D; reversed[i];
+                arr[i] &#x3D; w.substring(w.length() - l) + &quot;#&quot; + w;
+                &#x2F;&#x2F; System.out.println(arr[i]);
+            &#125;
+            index.put(l, arr);
+        &#125;
+
+
+        for (int i &#x3D; 0; i &lt; arr.length; i++) &#123;
+            if (arr[i].startsWith(query)) &#123;
+                ans &#x3D; len - 1 - i;
+                dp.put(query, ans);
+                return ans;
+            &#125;
+        &#125;
+
+        return -1;
+    &#125;
+&#125;
+
+&#x2F;**
+ * Your WordFilter object will be instantiated and called as such:
+ * WordFilter obj &#x3D; new WordFilter(words);
+ * int param_1 &#x3D; obj.f(prefix,suffix);
+ *&#x2F;</code></pre>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/post/leetcode/709-To-Lower-Case-Easy/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon-64.png">
+      <meta itemprop="name" content="Richard Zen">
+      <meta itemprop="description" content="<small><b>TOPICS</b></small><br>
+前端 ｜ Python ｜ Java<br>
+数据结构 ｜ 算法<br><br>
+用代码替代言语<br>记录创作与学习的脚步<br><br>
+">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HOME">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/post/leetcode/709-To-Lower-Case-Easy/" class="post-title-link" itemprop="url">709. To Lower Case (Easy)</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-06-15 15:36:05" itemprop="dateModified" datetime="2021-06-15T15:36:05+08:00">2021-06-15</time>
+      </span>
+
+  
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>468</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>只要记得大写字母 <code>A-Z</code> 的 ASCII 码区间是 <code>65-90</code>，大写字母和小写字母的差值是 32，这道题就很好解决。</p>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def toLowerCase(self, s: str) -&gt; str:
+        ans &#x3D; &#39;&#39;
+        for c in s:
+            _c &#x3D; ord(c)
+            if _c &gt;&#x3D; 65 and _c &lt;&#x3D; 90:
+                ans +&#x3D; chr(_c + 32)
+            else:
+                ans +&#x3D; c
+        return ans</code></pre>
+
+<pre class="language-java" data-language="java"><code class="language-java">class Solution &#123;
+    public String toLowerCase(String s) &#123;
+        char[] ans &#x3D; s.toCharArray();
+        for (int i &#x3D; 0; i &lt; ans.length; i++) &#123;
+            if (ans[i] &gt;&#x3D; 65 &amp;&amp; ans[i] &lt;&#x3D; 90) &#123;
+                ans[i] +&#x3D; 32;
+            &#125;
+        &#125;
+        return new String(ans);
+    &#125;
+&#125;</code></pre>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/post/leetcode/695-Max-Area-of-Island-Medium/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon-64.png">
+      <meta itemprop="name" content="Richard Zen">
+      <meta itemprop="description" content="<small><b>TOPICS</b></small><br>
+前端 ｜ Python ｜ Java<br>
+数据结构 ｜ 算法<br><br>
+用代码替代言语<br>记录创作与学习的脚步<br><br>
+">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HOME">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/post/leetcode/695-Max-Area-of-Island-Medium/" class="post-title-link" itemprop="url">695. Max Area of Island (Medium)</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-06-13 15:36:05" itemprop="dateModified" datetime="2021-06-13T15:36:05+08:00">2021-06-13</time>
+      </span>
+
+  
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>思路 1，递归。使用 DFS 搜索所有陆地（1），将搜索过的元素标注为 1 以外的数，避免重复计算，每次搜索到一个目标，保持一个最大结果作为答案。</p>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def maxAreaOfIsland(self, grid: List[List[int]]) -&gt; int:
+        m, n, ans &#x3D; len(grid), len(grid[0]), 0
+
+        def search(x, y):
+            if x &lt; 0 or x &#x3D;&#x3D; m or y &lt; 0 or y &#x3D;&#x3D; n or grid[x][y] !&#x3D; 1:
+                return 0
+            grid[x][y]  &#x3D; -1
+            return 1 + search(x, y - 1) + search(x, y + 1) + search(x + 1, y) + search(x - 1, y)
+
+        for i in range(m):
+            for j in range(n):
+                if grid[i][j] &#x3D;&#x3D; 1:
+                    ans &#x3D; max(ans, search(i, j))
+
+        return ans</code></pre>
+
+<p>思路 2，栈。用一个 set <code>seen</code> 储存遇到过的格子，避免重复计算。每当遇到陆地，新建一个栈，遍历这个栈，取出栈顶的格子，将其上下左右四个方向存在陆地的格子放到栈顶，重复这个过程直到栈清空，维持一个计数最大值作为答案。</p>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def maxAreaOfIsland(self, grid: List[List[int]]) -&gt; int:
+        m, n, ans, seen &#x3D; len(grid), len(grid[0]), 0, set()
+        for i in range(m):
+            for j in range(n):
+                if grid[i][j] !&#x3D; 1:
+                    continue
+                count, stack &#x3D; 0, [(i, j)]
+                while len(stack) &gt; 0:
+                    # print(stack)
+                    x, y &#x3D; stack.pop()
+                    seen.add((x, y))
+                    count +&#x3D; 1
+                    for _x, _y in ((x-1, y), (x+1, y), (x, y-1), (x, y+1)):
+                        if _x &gt;&#x3D; 0 and _x &lt; m and _y &gt;&#x3D; 0 and _y &lt; n and (_x, _y) not in seen:
+                            if grid[_x][_y] &#x3D;&#x3D; 1:
+                                stack.append((_x, _y))
+                                seen.add((_x, _y))
+                ans &#x3D; max(ans, count)
+        return ans</code></pre>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+  </nav>
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Richard Zen</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">80k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">1:13</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div><div class="powered-by">
+  Powered by
+  <a
+    href="https://hexo.io"
+    rel="noopener external nofollow noreferrer"
+    target="_blank"
+    class="exturl"
+    title=""
+  >
+    Hexo
+  </a>
+  &amp; <a target="_blank" rel="noopener" href="https://theme-next.js.org/">NexT</a>
+</div>
+
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.24.1/components/prism-core.min.js" integrity="sha256-dz05jjFU9qYuMvQQlE6iWDtNAnEsmu6uMb1vWhKdkEM=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.24.1/plugins/autoloader/prism-autoloader.min.js" integrity="sha256-sttoa+EIAvFFfeeIkmPn8ypyOOb6no2sZ2NbxtBXgqU=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/comments.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/utils.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/motion.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/schemes/muse.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/next-boot.min.js"></script>
+
+  
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

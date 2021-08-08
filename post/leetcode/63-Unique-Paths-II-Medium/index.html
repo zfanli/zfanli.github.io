@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icon-64.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/icon-16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Mist","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":null,"sidebar":"fadeInUp"}},"prism":true,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/config.min.js"></script>
+<meta name="description" content="class Solution:     def uniquePathsWithObstacles(self, og: List[List[int]]) -&gt; int:         for x in range(len(og)):             for y in range(len(og[0])):                 if x &#x3D;&#x3D; 0 and">
+<meta property="og:type" content="article">
+<meta property="og:title" content="63. Unique Paths II (Medium)">
+<meta property="og:url" content="http://example.com/post/leetcode/63-Unique-Paths-II-Medium/">
+<meta property="og:site_name" content="HOME">
+<meta property="og:description" content="class Solution:     def uniquePathsWithObstacles(self, og: List[List[int]]) -&gt; int:         for x in range(len(og)):             for y in range(len(og[0])):                 if x &#x3D;&#x3D; 0 and">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-04-06T07:36:05.461Z">
+<meta property="article:modified_time" content="2021-04-06T07:36:05.461Z">
+<meta property="article:author" content="Richard Zen">
+<meta property="article:tag" content="Array">
+<meta property="article:tag" content="DP">
+<meta property="article:tag" content="Matrix">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/post/leetcode/63-Unique-Paths-II-Medium/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/post/leetcode/63-Unique-Paths-II-Medium/","path":"post/leetcode/63-Unique-Paths-II-Medium/","title":"63. Unique Paths II (Medium)"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>63. Unique Paths II (Medium) | HOME</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">HOME</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+  </ul>
+</nav>
+
+
+
+<div id="colorSwitcher" class="animated fadeIn">🌓</div>
+<script>
+  (function () {
+    // define constants
+    const DARK = "dark-scheme",
+      LIGHT = "light-scheme",
+      COLOR_SCHEME = "color-scheme",
+      ROTATE = "switcher-rotate";
+
+    // define targets
+    const switcher = document.querySelector("#colorSwitcher"),
+      body = document.body,
+      isDark = window.matchMedia("(prefers-color-scheme: dark)").matches,
+      stored = window.localStorage.getItem(COLOR_SCHEME);
+
+    body.classList.add(stored ? stored : isDark ? DARK : LIGHT);
+
+    // setup actions
+    switcher.addEventListener("click", function () {
+      let add = LIGHT;
+      if (body.classList.contains(LIGHT)) {
+        add = DARK;
+      }
+      // apply the new color scheme
+      body.classList.remove(LIGHT, DARK);
+      body.classList.add(add);
+      window.localStorage.setItem(COLOR_SCHEME, add);
+      if (switcher.classList.contains(ROTATE))
+        switcher.classList.remove(ROTATE);
+      else switcher.classList.add(ROTATE);
+    });
+  })();
+</script>
+<style>
+  #colorSwitcher {
+    cursor: pointer;
+    border-radius: 2px;
+    height: 37px;
+    line-height: 37px;
+    width: 42px;
+    text-align: center;
+    outline: none;
+    font-size: 1.5rem;
+    margin-left: auto;
+    transition: all 0.25s ease-in-out;
+    transform: rotate(0);
+    user-select: none;
+  }
+
+  #colorSwitcher.switcher-rotate {
+    transform: rotate(180deg);
+  }
+
+  @media (max-width: 767px) {
+    #colorSwitcher {
+      height: 37px;
+      line-height: 37px;
+      width: 42px;
+      text-align: center;
+      position: absolute;
+      top: 10px;
+      right: 20px;
+    }
+  }
+</style>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Richard Zen"
+      src="/images/icon-64.png">
+  <p class="site-author-name" itemprop="name">Richard Zen</p>
+  <div class="site-description" itemprop="description"><small><b>TOPICS</b></small><br>
+前端 ｜ Python ｜ Java<br>
+数据结构 ｜ 算法<br><br>
+用代码替代言语<br>记录创作与学习的脚步<br><br>
+</div>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/zfanli" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;zfanli" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/post/leetcode/63-Unique-Paths-II-Medium/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon-64.png">
+      <meta itemprop="name" content="Richard Zen">
+      <meta itemprop="description" content="<small><b>TOPICS</b></small><br>
+前端 ｜ Python ｜ Java<br>
+数据结构 ｜ 算法<br><br>
+用代码替代言语<br>记录创作与学习的脚步<br><br>
+">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HOME">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          63. Unique Paths II (Medium)
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-04-06 15:36:05" itemprop="dateModified" datetime="2021-04-06T15:36:05+08:00">2021-04-06</time>
+      </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>320</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def uniquePathsWithObstacles(self, og: List[List[int]]) -&gt; int:
+        for x in range(len(og)):
+            for y in range(len(og[0])):
+                if x &#x3D;&#x3D; 0 and y &#x3D;&#x3D; 0:
+                    up, left &#x3D; 0, 1
+                else:
+                    up &#x3D; og[x-1][y] if x &gt; 0 else 0
+                    left &#x3D; og[x][y-1] if y &gt; 0 else 0
+                if og[x][y] &#x3D;&#x3D; 0:
+                    og[x][y] &#x3D; up + left
+                else:
+                    og[x][y] &#x3D; 0
+        return og[-1][-1]</code></pre>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Array/" rel="tag"># Array</a>
+              <a href="/tags/DP/" rel="tag"># DP</a>
+              <a href="/tags/Matrix/" rel="tag"># Matrix</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/post/leetcode/62-Unique-Paths-Medium/" rel="prev" title="62. Unique Paths (Medium)">
+                  <i class="fa fa-chevron-left"></i> 62. Unique Paths (Medium)
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/post/leetcode/65-Valid-Number-Hard/" rel="next" title="65. Valid Number (Hard)">
+                  65. Valid Number (Hard) <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Richard Zen</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">80k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">1:13</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div><div class="powered-by">
+  Powered by
+  <a
+    href="https://hexo.io"
+    rel="noopener external nofollow noreferrer"
+    target="_blank"
+    class="exturl"
+    title=""
+  >
+    Hexo
+  </a>
+  &amp; <a target="_blank" rel="noopener" href="https://theme-next.js.org/">NexT</a>
+</div>
+
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.24.1/components/prism-core.min.js" integrity="sha256-dz05jjFU9qYuMvQQlE6iWDtNAnEsmu6uMb1vWhKdkEM=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.24.1/plugins/autoloader/prism-autoloader.min.js" integrity="sha256-sttoa+EIAvFFfeeIkmPn8ypyOOb6no2sZ2NbxtBXgqU=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/comments.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/utils.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/motion.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/schemes/muse.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/next-boot.min.js"></script>
+
+  
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

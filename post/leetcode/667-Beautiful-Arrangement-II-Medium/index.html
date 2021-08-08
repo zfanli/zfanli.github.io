@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icon-64.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/icon-16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Mist","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":null,"sidebar":"fadeInUp"}},"prism":true,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/config.min.js"></script>
+<meta name="description" content="With solutions both in Python and Java. 先读题：  Given two integers n and k, you need to construct a list which contains n different positive integers ranging from 1 to n and obeys the following requirem">
+<meta property="og:type" content="article">
+<meta property="og:title" content="667. Beautiful Arrangement II （Medium）">
+<meta property="og:url" content="http://example.com/post/leetcode/667-Beautiful-Arrangement-II-Medium/">
+<meta property="og:site_name" content="HOME">
+<meta property="og:description" content="With solutions both in Python and Java. 先读题：  Given two integers n and k, you need to construct a list which contains n different positive integers ranging from 1 to n and obeys the following requirem">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-06-11T07:36:05.539Z">
+<meta property="article:modified_time" content="2021-06-11T07:36:05.539Z">
+<meta property="article:author" content="Richard Zen">
+<meta property="article:tag" content="Array">
+<meta property="article:tag" content="Math">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/post/leetcode/667-Beautiful-Arrangement-II-Medium/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/post/leetcode/667-Beautiful-Arrangement-II-Medium/","path":"post/leetcode/667-Beautiful-Arrangement-II-Medium/","title":"667. Beautiful Arrangement II （Medium）"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>667. Beautiful Arrangement II （Medium） | HOME</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">HOME</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+  </ul>
+</nav>
+
+
+
+<div id="colorSwitcher" class="animated fadeIn">🌓</div>
+<script>
+  (function () {
+    // define constants
+    const DARK = "dark-scheme",
+      LIGHT = "light-scheme",
+      COLOR_SCHEME = "color-scheme",
+      ROTATE = "switcher-rotate";
+
+    // define targets
+    const switcher = document.querySelector("#colorSwitcher"),
+      body = document.body,
+      isDark = window.matchMedia("(prefers-color-scheme: dark)").matches,
+      stored = window.localStorage.getItem(COLOR_SCHEME);
+
+    body.classList.add(stored ? stored : isDark ? DARK : LIGHT);
+
+    // setup actions
+    switcher.addEventListener("click", function () {
+      let add = LIGHT;
+      if (body.classList.contains(LIGHT)) {
+        add = DARK;
+      }
+      // apply the new color scheme
+      body.classList.remove(LIGHT, DARK);
+      body.classList.add(add);
+      window.localStorage.setItem(COLOR_SCHEME, add);
+      if (switcher.classList.contains(ROTATE))
+        switcher.classList.remove(ROTATE);
+      else switcher.classList.add(ROTATE);
+    });
+  })();
+</script>
+<style>
+  #colorSwitcher {
+    cursor: pointer;
+    border-radius: 2px;
+    height: 37px;
+    line-height: 37px;
+    width: 42px;
+    text-align: center;
+    outline: none;
+    font-size: 1.5rem;
+    margin-left: auto;
+    transition: all 0.25s ease-in-out;
+    transform: rotate(0);
+    user-select: none;
+  }
+
+  #colorSwitcher.switcher-rotate {
+    transform: rotate(180deg);
+  }
+
+  @media (max-width: 767px) {
+    #colorSwitcher {
+      height: 37px;
+      line-height: 37px;
+      width: 42px;
+      text-align: center;
+      position: absolute;
+      top: 10px;
+      right: 20px;
+    }
+  }
+</style>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Submission"><span class="nav-text">Submission</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF"><span class="nav-text">思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Solutions"><span class="nav-text">Solutions</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%98%E6%96%B9-Solution"><span class="nav-text">官方 Solution</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Richard Zen"
+      src="/images/icon-64.png">
+  <p class="site-author-name" itemprop="name">Richard Zen</p>
+  <div class="site-description" itemprop="description"><small><b>TOPICS</b></small><br>
+前端 ｜ Python ｜ Java<br>
+数据结构 ｜ 算法<br><br>
+用代码替代言语<br>记录创作与学习的脚步<br><br>
+</div>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/zfanli" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;zfanli" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/post/leetcode/667-Beautiful-Arrangement-II-Medium/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon-64.png">
+      <meta itemprop="name" content="Richard Zen">
+      <meta itemprop="description" content="<small><b>TOPICS</b></small><br>
+前端 ｜ Python ｜ Java<br>
+数据结构 ｜ 算法<br><br>
+用代码替代言语<br>记录创作与学习的脚步<br><br>
+">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HOME">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          667. Beautiful Arrangement II （Medium）
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-06-11 15:36:05" itemprop="dateModified" datetime="2021-06-11T15:36:05+08:00">2021-06-11</time>
+      </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>5.8k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>5 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>With solutions both in Python and Java.</p>
+<p>先读题：</p>
+<blockquote>
+<p>Given two integers <code>n</code> and <code>k</code>, you need to construct a list which contains <code>n</code> different positive integers ranging from 1 to <code>n</code> and obeys the following requirement:</p>
+<p>Suppose this list is <code>[a1, a2, a3, ... , an]</code>, then the list <code>[|a1 - a2|, |a2 - a3|, |a3 - a4|, ... , |an-1 - an|]</code> has exactly <code>k</code> distinct integers.</p>
+<p>If there are multiple answers, print any of them.</p>
+</blockquote>
+<p>简而言之，我们要根据两个整数参数 <code>n</code> 和 <code>k</code>，来输出一个从 1 开始到 <code>n</code> 的整数数组，并且这个数组中，所有相邻的两个整数之间的差，其绝对值要凑齐 <code>k</code> 个不同的整数。</p>
+<p>来看看例子。</p>
+<p>Example 1:</p>
+<pre class="language-none"><code class="language-none">Input: n &#x3D; 3, k &#x3D; 1
+Output: [1, 2, 3]
+Explanation: The [1, 2, 3] has three different positive integers ranging from 1 to 3, and the [1, 1] has exactly 1 distinct integer: 1.</code></pre>
+
+<p>输出结果为整数 1 ～ 3，相邻整数的差为 [1, 1]，去重后长度为 1，满足 <code>k = 1</code> 的需求。</p>
+<p>Example 2:</p>
+<pre class="language-none"><code class="language-none">Input: n &#x3D; 3, k &#x3D; 2
+Output: [1, 3, 2]
+Explanation: The [1, 3, 2] has three different positive integers ranging from 1 to 3, and the [2, 1] has exactly 2 distinct integers: 1 and 2.</code></pre>
+
+<p>输出结果为整数 1 ～ 3，相邻整数的差为 [2, 1]，满足 <code>k = 2</code> 的需求。</p>
+<h3 id="Submission"><a href="#Submission" class="headerlink" title="Submission"></a>Submission</h3><p>先贴一下我自己独立完成的结果，防止剧透，具体代码会贴在最后。</p>
+<p>我的代码中，空间复杂度还需要研究一下，目前还没找到提升的思路。</p>
+<p><strong>Python</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Result</th>
+<th>Beats</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Runtime</td>
+<td>40 ms</td>
+<td>96.55%</td>
+</tr>
+<tr>
+<td>Memory</td>
+<td>15.1 MB</td>
+<td>50.34%</td>
+</tr>
+</tbody></table>
+<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p>这道题偏重考验观察。我们要做的是观察并找到数组排列的规律，用算法实现出来。</p>
+<p>已知条件：</p>
+<ul>
+<li>输出数组包含 1 ～ n 的整数</li>
+<li>需要做的是调整数组中数字出现的顺序，致使相邻的两个数之间的差不同</li>
+<li>相邻两个数的差只考虑绝对值</li>
+<li>相邻两个数的差的绝对值构成的数组长度为 k</li>
+<li>由于不关注具体的差的值，所以有不同解法，只需要找出一种</li>
+</ul>
+<p>先硬算几个例子来找找规律。</p>
+<p>(因为懒，这里我直接贴讨论帖中的例子，UAADs 指的是唯一绝对相邻数差，贴主原文全称是 Unique Absolute Adjacent Difference，为了方便理解，后面我们就称之为“相邻数差”。)</p>
+<pre class="language-console" data-language="console"><code class="language-console">For eg.
+1. let n &#x3D; 10, k &#x3D; 4
+permutation &#x3D;&gt; [1, 5, 2, 4, 3, 6, 7, 8, 9, 10]
+UAADs       &#x3D;&gt; [X, 4, 3, 2, 1, 3, 1, 1, 1, 1]
+
+
+2. n &#x3D; 10, k &#x3D; 5
+permutation &#x3D;&gt; [1, 6, 2, 5, 3, 4, 7, 8, 9, 10]
+UAADs       &#x3D;&gt; [X, 5, 4, 3, 2, 1, 3, 1, 1, 1]
+
+
+3. n &#x3D; 9, k &#x3D; 8
+permutation &#x3D;&gt; [1, 9, 2, 8, 3, 7, 4, 6, 5]
+UAADs       &#x3D;&gt; [X, 8, 7, 6, 5, 4, 3, 2, 1]</code></pre>
+
+<p>题目不关注相邻数差的具体数值，所以正确的排列方式不止一种，这里我们只讨论可以相对直观理解的一种。</p>
+<p>观察上面例子可以了解到：</p>
+<ul>
+<li>输出的数组从 1 开始</li>
+<li>第二个数是 k + 1</li>
+<li>要求 k 个不同相邻数差会影响 k 个元素</li>
+<li>不受 k 影响的数按自然顺序排序</li>
+</ul>
+<blockquote>
+<p>可能 <code>要求 k 个不同相邻数差会影响 k 个元素</code> 不是很直观，我们通过分解上面的例子来理解。</p>
+<p>下面结论中，1 一直处于固定位置，高亮出来的部分是排序受到 k 影响的数，而剩余的数（如果有的话）将按照递增排序。</p>
+<p>n = 10, k = 4 =&gt; [1, <code>5, 2, 4, 3,</code> 6, 7, 8, 9, 10]</p>
+<p>n = 10, k = 5 =&gt; [1, <code>6, 2, 5, 3, 4,</code> 7, 8, 9, 10]</p>
+<p>n = 9, k = 8 =&gt; [1, <code>9, 2, 8, 3, 7, 4, 6, 5</code>]</p>
+</blockquote>
+<p>设定好了前提，接下来我们需要关注的问题变成了观察并理解“受到 k 影响的元素应该如何排序”。</p>
+<p>多看几眼上面的例子，我们可以直观的意识到规律：为了满足 k 个不同的相邻数差，我们将排序靠后的数依次插入到 <code>1, 2, 3, ..., n</code> 之间，来制造不同的绝对差。</p>
+<p>了解规律之后，可以开始实现算法了，这是一些对于时间复杂度和空间复杂度的考虑。</p>
+<ul>
+<li>避免使用尾递归</li>
+<li>控制循环次数</li>
+<li>不使用非必要的变量</li>
+</ul>
+<h3 id="Solutions"><a href="#Solutions" class="headerlink" title="Solutions"></a>Solutions</h3><p><strong>Python</strong></p>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def constructArray(self, n: int, k: int) -&gt; List[int]:
+        # 初始化一个数组，由于前两个值是已知的，所以直接写入字面量
+        ans &#x3D; [1, k + 1]
+        # 以 k 为基准进行循环
+        for x in range(1, k):
+            # 取倒数第二个值为计算基数，根据当前 index 决定做递增或递减
+            ans.append(ans[-2] + (1 if x % 2 &#x3D;&#x3D; 1 else -1))
+        # 按自然顺序填充剩下的元素
+        ans +&#x3D; range(k + 2, n + 1)
+        return ans</code></pre>
+
+<p>结果如下。</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Result</th>
+<th>Beats</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Runtime</td>
+<td>40 ms</td>
+<td>96.55%</td>
+</tr>
+<tr>
+<td>Memory</td>
+<td>15.1 MB</td>
+<td>50.34%</td>
+</tr>
+</tbody></table>
+<p><strong>Java</strong></p>
+<p>由于先做出了 Python 版本，相同思路转换成 Java 代码结果很糟糕。</p>
+<p>这里根据讨论帖的提示完成了一个较优的方案。</p>
+<pre class="language-java" data-language="java"><code class="language-java">class Solution &#123;
+    public int[] constructArray(int n, int k) &#123;
+        int[] ans &#x3D; new int[n];
+        &#x2F;&#x2F; l 为递增初始值，r 为递减初始值，用 i 来保存 index
+        int l &#x3D; 1, r &#x3D; k + 1, i &#x3D; 0;
+        &#x2F;&#x2F; 执行一个步长为 2 的循环来填充数组直到满足 k 个相邻数差
+        while (i &lt; k) &#123;
+            ans[i++] &#x3D; l++;
+            ans[i++] &#x3D; r--;
+        &#125;
+        &#x2F;&#x2F; 由于数组以1起始，故当 k 为偶数时做 2 步长的循环将漏掉一个数
+        if (l &#x3D;&#x3D; r) ans[i++] &#x3D; r;
+        &#x2F;&#x2F; 依序填充自然递增的数直到填至 n 为止
+        while (i &lt; n) ans[i++] &#x3D; i;
+        return ans;
+    &#125;
+&#125;</code></pre>
+
+<p>结果如下。</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Result</th>
+<th>Beats</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Runtime</td>
+<td>0 ms</td>
+<td>100.00%</td>
+</tr>
+<tr>
+<td>Memory</td>
+<td>39.1 MB</td>
+<td>73.71%</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>受 Java 版本思路启发，我修改了一下 Python 的算法，在空间复杂度上得到一些提升。</p>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+   def constructArray(self, n: int, k: int) -&gt; List[int]:
+       ans &#x3D; [1, k + 1]
+       # 执行一个步长为 2 的循环来制造不同的相邻数差
+       for x in range(2, k, 2):
+           ans.append(ans[x-2] + 1)
+           ans.append(ans[x-1] - 1)
+       # 补充 k 为偶数时漏掉的数
+       if ans[-1] -2 &#x3D;&#x3D; ans[-2]: ans.append(ans[-1] - 1)
+       ans +&#x3D; range(len(ans) + 1, n + 1)
+       return ans</code></pre>
+
+<p>结果如下。</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Result</th>
+<th>Beats</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Runtime</td>
+<td>40 ms</td>
+<td>96.55%</td>
+</tr>
+<tr>
+<td>Memory</td>
+<td>15.1 MB</td>
+<td>82.76%</td>
+</tr>
+</tbody></table>
+</blockquote>
+<h3 id="官方-Solution"><a href="#官方-Solution" class="headerlink" title="官方 Solution"></a>官方 Solution</h3><p>来学习一下官方答案的思路。这个问题官方给出了 2 个方案。</p>
+<p><strong>Approach #1: Brute Force [Time Limit Exceeded]</strong></p>
+<p>顾名思义，这个方法是暴力枚举所有排列，直到找到合适的排列。具体做法是准备一个检查唯一相邻数差数量的函数，然后对 1 ～ n 的数组排列进行枚举，直到找到该函数返回的唯一相邻数差的数量匹配 k 的值…</p>
+<p>这个方法就不细说了，下面的代码看看就好。</p>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution(object):
+    def constructArray(self, n, k):
+        seen &#x3D; [False] * n
+        def num_uniq_diffs(arr):
+            ans &#x3D; 0
+            for i in range(n):
+                seen[i] &#x3D; False
+            for i in range(len(arr) - 1):
+                delta &#x3D; abs(arr[i] - arr[i+1])
+                if not seen[delta]:
+                    ans +&#x3D; 1
+                    seen[delta] &#x3D; True
+            return ans
+
+        for cand in itertools.permutations(range(1, n+1)):
+            if num_uniq_diffs(cand) &#x3D;&#x3D; k:
+                return cand</code></pre>
+
+<p><strong>Approach #2: Construction [Accepted]</strong></p>
+<p>先看看官方原文，不过有些 LaTex 表达式不一定能正常显示，可以去 <a target="_blank" rel="noopener" href="https://leetcode.com/problems/beautiful-arrangement-ii/solution/">原地址</a> 查看。看完原文我们来分析和理解一下官方的思路。</p>
+<blockquote>
+<p><strong>Intuition</strong></p>
+<p>When \text{k = n-1}k = n-1, a valid construction is \text{[1, n, 2, n-1, 3, n-2, ….]}[1, n, 2, n-1, 3, &gt; n-2, ….]. One way to see this is, we need to have a difference of \text{n-1}n-1, which means we need &gt; \text{1}1 and \text{n}n adjacent; then, we need a difference of \text{n-2}n-2, etc.</p>
+<p>Also, when \text{k = 1}k = 1, a valid construction is \text{[1, 2, 3, …, n]}[1, 2, 3, …, n]. So we &gt; have a construction when \text{n-k}n-k is tiny, and when it is large. This leads to the idea that we can &gt; stitch together these two constructions: we can put \text{[1, 2, …, n-k-1]}[1, 2, …, n-k-1] first so &gt; that \text{n}n is effectively \text{k+1}k+1, and then finish the construction with the first \text{“k = &gt; n-1”}”k = n-1” method.</p>
+<p>For example, when \text{n = 6}n = 6 and \text{k = 3}k = 3, we will construct the array as \text{[1, 2, 3, &gt; 6, 4, 5]}[1, 2, 3, 6, 4, 5]. This consists of two parts: a construction of \text{[1, 2]}[1, 2] and a &gt; construction of \text{[1, 4, 2, 3]}[1, 4, 2, 3] where every element had \text{2}2 added to it (i.e. \text{&gt; [3, 6, 4, 5]}[3, 6, 4, 5]).</p>
+<p><strong>Algorithm</strong></p>
+<p>As before, write \text{[1, 2, …, n-k-1]}[1, 2, …, n-k-1] first. The remaining \text{k+1}k+1 elements &gt; to be written are \text{[n-k, n-k+1, …, n]}[n-k, n-k+1, …, n], and we’ll write them in alternating &gt; head and tail order.</p>
+<p>When we are writing the i^{th}i<br>th<br>element from the remaining \text{k+1}k+1, every even ii is going to be chosen from the head, and will &gt; have value \text{n-k + i//2}n-k + i//2. Every odd ii is going to be chosen from the tail, and will have &gt; value \text{n - i//2}n - i//2.</p>
+</blockquote>
+<p>按照这个方案的思路，首先我们观察俩个极端：k 为最大值 n-1 时的结果；以及 k 为最小值 1 时的结果。</p>
+<p>当 k = n - 1 时，这个时候数组根据数组序列（index）的奇偶性，出现奇数取头部（[1, 2, 3, …]），偶数取尾部（[n, n-1, n-2, …]）的规律。其最终结果如下。</p>
+<p><code>[1, n, 2, n-1, 3, n-2, ...]</code></p>
+<p>而当 k = 1 时，数组按照自然顺序递增排列。</p>
+<p><code>[1, 2, 3, ..., n]</code></p>
+<p>了解到这两个规律之后，我们可以将其结合：</p>
+<ul>
+<li>将 n-k-1 的部分的数按照 k = 1 时的规律处理；</li>
+<li>而剩下的 k + 1 个元素单独视作一个数组，采取 k = n - 1 时的处理。</li>
+</ul>
+<p>这样就可以将处理划分为两类，用最简单的方法来构建这个数组。</p>
+<ul>
+<li>首先构建 <code>[1, 2, ..., n-k-1]</code> 数组</li>
+<li>从 n-k 开始的数根据 index 的奇偶性来取值<ul>
+<li>当 index 为偶数时从头部取值，这时值为 n-k + i//2</li>
+<li>当 index 为奇数时从尾部取值，这时值为 n - i//2</li>
+</ul>
+</li>
+</ul>
+<p>参考代码。</p>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution(object):
+    def constructArray(self, n, k):
+        ans &#x3D; list(range(1, n - k))
+        for i in range(k+1):
+            if i % 2 &#x3D;&#x3D; 0:
+                ans.append(n-k + i&#x2F;&#x2F;2)
+            else:
+                ans.append(n - i&#x2F;&#x2F;2)
+
+        return ans</code></pre>
+
+<p>总结：</p>
+<ul>
+<li>从代码上来看，先取 k = 1 的排序，再取 k = n - 1 的排序确实让代码逻辑更加简洁和易懂；</li>
+<li>从结果上来看，这段代码在空间复杂度上有改善（beats 82.76%），但是时间复杂度上有上升（beats 86.21%）。</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Array/" rel="tag"># Array</a>
+              <a href="/tags/Math/" rel="tag"># Math</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/post/leetcode/665-Non-decreasing-Array-Medium/" rel="prev" title="665. Non-decreasing Array (Medium)">
+                  <i class="fa fa-chevron-left"></i> 665. Non-decreasing Array (Medium)
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/post/leetcode/695-Max-Area-of-Island-Medium/" rel="next" title="695. Max Area of Island (Medium)">
+                  695. Max Area of Island (Medium) <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Richard Zen</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">80k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">1:13</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div><div class="powered-by">
+  Powered by
+  <a
+    href="https://hexo.io"
+    rel="noopener external nofollow noreferrer"
+    target="_blank"
+    class="exturl"
+    title=""
+  >
+    Hexo
+  </a>
+  &amp; <a target="_blank" rel="noopener" href="https://theme-next.js.org/">NexT</a>
+</div>
+
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.24.1/components/prism-core.min.js" integrity="sha256-dz05jjFU9qYuMvQQlE6iWDtNAnEsmu6uMb1vWhKdkEM=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.24.1/plugins/autoloader/prism-autoloader.min.js" integrity="sha256-sttoa+EIAvFFfeeIkmPn8ypyOOb6no2sZ2NbxtBXgqU=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/comments.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/utils.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/motion.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/schemes/muse.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/next-boot.min.js"></script>
+
+  
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

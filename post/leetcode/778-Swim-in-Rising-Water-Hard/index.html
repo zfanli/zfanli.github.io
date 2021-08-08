@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icon-64.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/icon-16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Mist","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":null,"sidebar":"fadeInUp"}},"prism":true,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/config.min.js"></script>
+<meta name="description" content="这是一道求最合适路径的题目，可以应用图论中的 Dijkstra 算法。  Dijkstra‘s Algorithm 适用于求权重不为负数的加权图起点到终点的最优路径。  这道题的 input 是一个 n * n 的矩阵，可以将其视作所有元素都与其上下左右相互连接的一张无向图，每个顶点的数值表示到达这个顶点的边的权重，我们需要求的是从起点 (0, 0) 到终点 (n, n) 的最优路径。这道题要求我">
+<meta property="og:type" content="article">
+<meta property="og:title" content="778. Swim in Rising Water (Hard)">
+<meta property="og:url" content="http://example.com/post/leetcode/778-Swim-in-Rising-Water-Hard/">
+<meta property="og:site_name" content="HOME">
+<meta property="og:description" content="这是一道求最合适路径的题目，可以应用图论中的 Dijkstra 算法。  Dijkstra‘s Algorithm 适用于求权重不为负数的加权图起点到终点的最优路径。  这道题的 input 是一个 n * n 的矩阵，可以将其视作所有元素都与其上下左右相互连接的一张无向图，每个顶点的数值表示到达这个顶点的边的权重，我们需要求的是从起点 (0, 0) 到终点 (n, n) 的最优路径。这道题要求我">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-06-23T07:36:05.552Z">
+<meta property="article:modified_time" content="2021-06-23T07:36:05.552Z">
+<meta property="article:author" content="Richard Zen">
+<meta property="article:tag" content="Binary Search">
+<meta property="article:tag" content="DFS">
+<meta property="article:tag" content="Heap">
+<meta property="article:tag" content="Union Fold">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/post/leetcode/778-Swim-in-Rising-Water-Hard/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/post/leetcode/778-Swim-in-Rising-Water-Hard/","path":"post/leetcode/778-Swim-in-Rising-Water-Hard/","title":"778. Swim in Rising Water (Hard)"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>778. Swim in Rising Water (Hard) | HOME</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">HOME</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+  </ul>
+</nav>
+
+
+
+<div id="colorSwitcher" class="animated fadeIn">🌓</div>
+<script>
+  (function () {
+    // define constants
+    const DARK = "dark-scheme",
+      LIGHT = "light-scheme",
+      COLOR_SCHEME = "color-scheme",
+      ROTATE = "switcher-rotate";
+
+    // define targets
+    const switcher = document.querySelector("#colorSwitcher"),
+      body = document.body,
+      isDark = window.matchMedia("(prefers-color-scheme: dark)").matches,
+      stored = window.localStorage.getItem(COLOR_SCHEME);
+
+    body.classList.add(stored ? stored : isDark ? DARK : LIGHT);
+
+    // setup actions
+    switcher.addEventListener("click", function () {
+      let add = LIGHT;
+      if (body.classList.contains(LIGHT)) {
+        add = DARK;
+      }
+      // apply the new color scheme
+      body.classList.remove(LIGHT, DARK);
+      body.classList.add(add);
+      window.localStorage.setItem(COLOR_SCHEME, add);
+      if (switcher.classList.contains(ROTATE))
+        switcher.classList.remove(ROTATE);
+      else switcher.classList.add(ROTATE);
+    });
+  })();
+</script>
+<style>
+  #colorSwitcher {
+    cursor: pointer;
+    border-radius: 2px;
+    height: 37px;
+    line-height: 37px;
+    width: 42px;
+    text-align: center;
+    outline: none;
+    font-size: 1.5rem;
+    margin-left: auto;
+    transition: all 0.25s ease-in-out;
+    transform: rotate(0);
+    user-select: none;
+  }
+
+  #colorSwitcher.switcher-rotate {
+    transform: rotate(180deg);
+  }
+
+  @media (max-width: 767px) {
+    #colorSwitcher {
+      height: 37px;
+      line-height: 37px;
+      width: 42px;
+      text-align: center;
+      position: absolute;
+      top: 10px;
+      right: 20px;
+    }
+  }
+</style>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Richard Zen"
+      src="/images/icon-64.png">
+  <p class="site-author-name" itemprop="name">Richard Zen</p>
+  <div class="site-description" itemprop="description"><small><b>TOPICS</b></small><br>
+前端 ｜ Python ｜ Java<br>
+数据结构 ｜ 算法<br><br>
+用代码替代言语<br>记录创作与学习的脚步<br><br>
+</div>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/zfanli" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;zfanli" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/post/leetcode/778-Swim-in-Rising-Water-Hard/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon-64.png">
+      <meta itemprop="name" content="Richard Zen">
+      <meta itemprop="description" content="<small><b>TOPICS</b></small><br>
+前端 ｜ Python ｜ Java<br>
+数据结构 ｜ 算法<br><br>
+用代码替代言语<br>记录创作与学习的脚步<br><br>
+">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HOME">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          778. Swim in Rising Water (Hard)
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-06-23 15:36:05" itemprop="dateModified" datetime="2021-06-23T15:36:05+08:00">2021-06-23</time>
+      </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.7k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>2 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>这是一道求最合适路径的题目，可以应用图论中的 Dijkstra 算法。</p>
+<blockquote>
+<p>Dijkstra‘s Algorithm 适用于求<strong>权重不为负数的加权图</strong>起点到终点的最优路径。</p>
+</blockquote>
+<p>这道题的 input 是一个 <code>n * n</code> 的矩阵，可以将其视作所有元素都与其上下左右相互连接的一张无向图，每个顶点的数值表示到达这个顶点的边的权重，我们需要求的是从起点 <code>(0, 0)</code> 到终点 <code>(n, n)</code> 的最优路径。这道题要求我们计算的是这条路径上权重最大值，所以我们用一个变量来保持每一次选择后的权重最大值。</p>
+<p>下面是算法：</p>
+<ul>
+<li>从 <code>(0, 0)</code> 开始，将四个方向能访问的顶点加权后放入小根堆：<ul>
+<li>根据题目的限制，<code>n &lt;= 50</code>，所以我们留出 2 进制 6 位（<code>2^6=64</code>）便足够放下下标的长度来；</li>
+<li>加权后的值 = <code>(grid[x][y] &lt;&lt; 12) + (x &lt;&lt; 6) + y</code>;</li>
+</ul>
+</li>
+<li>选择小根堆中的最小值继续往下走：<ul>
+<li>现在我们选了一个新的值，用其和全局最大值再取一次最大值，更新全局变量；</li>
+<li>从加权后的值中恢复这个值的 <code>x, y</code> 下标；</li>
+</ul>
+</li>
+<li>重复这个过程直到终点 <code>(n, n)</code>。</li>
+</ul>
+<pre class="language-python" data-language="python"><code class="language-python">moves &#x3D; ((-1, 0), (0, -1), (1, 0), (0, 1))
+mask &#x3D; (1 &lt;&lt; 6) - 1
+
+class Solution:
+    def swimInWater(self, grid: List[List[int]]) -&gt; int:
+        n, ans, i, j, q &#x3D; len(grid) - 1, grid[0][0], 0, 0, []
+        while i &lt; n or j &lt; n:
+            for a, b in moves:
+                _i, _j &#x3D; i + a, j + b
+                if _i &lt; 0 or _i &gt; n or _j &lt; 0 or _j &gt; n or grid[_i][_j] &#x3D;&#x3D; math.inf:
+                    continue
+                heapq.heappush(q, (grid[_i][_j] &lt;&lt; 12) + (_i &lt;&lt; 6) + _j)
+                grid[_i][_j] &#x3D; math.inf
+            nxt &#x3D; heapq.heappop(q)
+            ans &#x3D; max(ans, nxt &gt;&gt; 12)
+            i, j &#x3D; (nxt &gt;&gt; 6) &amp; mask, nxt &amp; mask
+        return ans</code></pre>
+
+<p>Java 版用 PriorityQueue 实现小根堆。</p>
+<pre class="language-java" data-language="java"><code class="language-java">class Solution &#123;
+    private int[][] moves &#x3D; new int[][] &#123;
+        &#123;0, 1&#125;, &#123;1, 0&#125;, &#123;0, -1&#125;, &#123;-1, 0&#125;
+    &#125;;
+    private int mask &#x3D; (1 &lt;&lt; 6) - 1;
+
+    public int swimInWater(int[][] grid) &#123;
+        int ans &#x3D; grid[0][0];
+        int n &#x3D; grid.length - 1;
+        Queue&lt;Integer&gt; pq &#x3D; new PriorityQueue&lt;&gt;();
+        int i &#x3D; 0, j &#x3D; 0;
+        while (i !&#x3D; n || j !&#x3D; n) &#123;
+            for (int[] m : moves) &#123;
+                int mi &#x3D; i + m[0], mj &#x3D; j + m[1];
+                if (mi &lt; 0 || mi &gt; n || mj &lt; 0 || mj &gt; n
+                    || grid[mi][mj] &#x3D;&#x3D; Integer.MAX_VALUE) &#123;
+                    continue;
+                &#125;
+                pq.add((grid[mi][mj] &lt;&lt; 12) + (mi &lt;&lt; 6) + mj);
+                grid[mi][mj] &#x3D; Integer.MAX_VALUE;
+            &#125;
+            int next &#x3D; pq.poll();
+            ans &#x3D; Math.max(ans, next &gt;&gt; 12);
+            i &#x3D; (next &gt;&gt; 6) &amp; mask;
+            j &#x3D; next &amp; mask;
+        &#125;
+        return ans;
+    &#125;
+&#125;</code></pre>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Binary-Search/" rel="tag"># Binary Search</a>
+              <a href="/tags/DFS/" rel="tag"># DFS</a>
+              <a href="/tags/Heap/" rel="tag"># Heap</a>
+              <a href="/tags/Union-Fold/" rel="tag"># Union Fold</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/post/leetcode/752-Open-the-Lock-Medium/" rel="prev" title="752. Open the Lock (Medium)">
+                  <i class="fa fa-chevron-left"></i> 752. Open the Lock (Medium)
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/post/leetcode/792-Number-of-Matching-Subsequences-Medium/" rel="next" title="792. Number of Matching Subsequences (Medium)">
+                  792. Number of Matching Subsequences (Medium) <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Richard Zen</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">80k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">1:13</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div><div class="powered-by">
+  Powered by
+  <a
+    href="https://hexo.io"
+    rel="noopener external nofollow noreferrer"
+    target="_blank"
+    class="exturl"
+    title=""
+  >
+    Hexo
+  </a>
+  &amp; <a target="_blank" rel="noopener" href="https://theme-next.js.org/">NexT</a>
+</div>
+
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.24.1/components/prism-core.min.js" integrity="sha256-dz05jjFU9qYuMvQQlE6iWDtNAnEsmu6uMb1vWhKdkEM=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.24.1/plugins/autoloader/prism-autoloader.min.js" integrity="sha256-sttoa+EIAvFFfeeIkmPn8ypyOOb6no2sZ2NbxtBXgqU=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/comments.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/utils.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/motion.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/schemes/muse.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/next-boot.min.js"></script>
+
+  
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

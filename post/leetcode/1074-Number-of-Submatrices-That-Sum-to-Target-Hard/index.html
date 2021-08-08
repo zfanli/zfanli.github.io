@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icon-64.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/icon-16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Mist","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":null,"sidebar":"fadeInUp"}},"prism":true,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/config.min.js"></script>
+<meta name="description" content="With solutions both in Python and Java. 这是一道困难题，先读题。  Given a matrix and a target, return the number of non-empty submatrices that sum to target. A submatrix x1, y1, x2, y2 is the set of all cells mat">
+<meta property="og:type" content="article">
+<meta property="og:title" content="1074. Number of Submatrices That Sum to Target (Hard)">
+<meta property="og:url" content="http://example.com/post/leetcode/1074-Number-of-Submatrices-That-Sum-to-Target-Hard/">
+<meta property="og:site_name" content="HOME">
+<meta property="og:description" content="With solutions both in Python and Java. 这是一道困难题，先读题。  Given a matrix and a target, return the number of non-empty submatrices that sum to target. A submatrix x1, y1, x2, y2 is the set of all cells mat">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/post/leetcode/1074-Number-of-Submatrices-That-Sum-to-Target-Hard/resources/1074.eg.jpg">
+<meta property="article:published_time" content="2021-07-15T07:36:05.574Z">
+<meta property="article:modified_time" content="2021-07-15T07:36:05.574Z">
+<meta property="article:author" content="Richard Zen">
+<meta property="article:tag" content="Array">
+<meta property="article:tag" content="Prefix Sum">
+<meta property="article:tag" content="Hash Table">
+<meta property="article:tag" content="Matrix">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/post/leetcode/1074-Number-of-Submatrices-That-Sum-to-Target-Hard/resources/1074.eg.jpg">
+
+
+<link rel="canonical" href="http://example.com/post/leetcode/1074-Number-of-Submatrices-That-Sum-to-Target-Hard/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/post/leetcode/1074-Number-of-Submatrices-That-Sum-to-Target-Hard/","path":"post/leetcode/1074-Number-of-Submatrices-That-Sum-to-Target-Hard/","title":"1074. Number of Submatrices That Sum to Target (Hard)"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>1074. Number of Submatrices That Sum to Target (Hard) | HOME</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">HOME</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+  </ul>
+</nav>
+
+
+
+<div id="colorSwitcher" class="animated fadeIn">🌓</div>
+<script>
+  (function () {
+    // define constants
+    const DARK = "dark-scheme",
+      LIGHT = "light-scheme",
+      COLOR_SCHEME = "color-scheme",
+      ROTATE = "switcher-rotate";
+
+    // define targets
+    const switcher = document.querySelector("#colorSwitcher"),
+      body = document.body,
+      isDark = window.matchMedia("(prefers-color-scheme: dark)").matches,
+      stored = window.localStorage.getItem(COLOR_SCHEME);
+
+    body.classList.add(stored ? stored : isDark ? DARK : LIGHT);
+
+    // setup actions
+    switcher.addEventListener("click", function () {
+      let add = LIGHT;
+      if (body.classList.contains(LIGHT)) {
+        add = DARK;
+      }
+      // apply the new color scheme
+      body.classList.remove(LIGHT, DARK);
+      body.classList.add(add);
+      window.localStorage.setItem(COLOR_SCHEME, add);
+      if (switcher.classList.contains(ROTATE))
+        switcher.classList.remove(ROTATE);
+      else switcher.classList.add(ROTATE);
+    });
+  })();
+</script>
+<style>
+  #colorSwitcher {
+    cursor: pointer;
+    border-radius: 2px;
+    height: 37px;
+    line-height: 37px;
+    width: 42px;
+    text-align: center;
+    outline: none;
+    font-size: 1.5rem;
+    margin-left: auto;
+    transition: all 0.25s ease-in-out;
+    transform: rotate(0);
+    user-select: none;
+  }
+
+  #colorSwitcher.switcher-rotate {
+    transform: rotate(180deg);
+  }
+
+  @media (max-width: 767px) {
+    #colorSwitcher {
+      height: 37px;
+      line-height: 37px;
+      width: 42px;
+      text-align: center;
+      position: absolute;
+      top: 10px;
+      right: 20px;
+    }
+  }
+</style>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF-amp-Solutions"><span class="nav-text">思路 &amp; Solutions</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-text">总结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Richard Zen"
+      src="/images/icon-64.png">
+  <p class="site-author-name" itemprop="name">Richard Zen</p>
+  <div class="site-description" itemprop="description"><small><b>TOPICS</b></small><br>
+前端 ｜ Python ｜ Java<br>
+数据结构 ｜ 算法<br><br>
+用代码替代言语<br>记录创作与学习的脚步<br><br>
+</div>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/zfanli" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;zfanli" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/post/leetcode/1074-Number-of-Submatrices-That-Sum-to-Target-Hard/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon-64.png">
+      <meta itemprop="name" content="Richard Zen">
+      <meta itemprop="description" content="<small><b>TOPICS</b></small><br>
+前端 ｜ Python ｜ Java<br>
+数据结构 ｜ 算法<br><br>
+用代码替代言语<br>记录创作与学习的脚步<br><br>
+">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HOME">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          1074. Number of Submatrices That Sum to Target (Hard)
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-07-15 15:36:05" itemprop="dateModified" datetime="2021-07-15T15:36:05+08:00">2021-07-15</time>
+      </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>4.3k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>4 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>With solutions both in Python and Java.</p>
+<p>这是一道困难题，先读题。</p>
+<blockquote>
+<p>Given a <code>matrix</code> and a <code>target</code>, return the number of non-empty submatrices that sum to target.</p>
+<p>A submatrix <code>x1, y1, x2, y2</code> is the set of all cells <code>matrix[x][y]</code> with <code>x1 &lt;= x &lt;= x2</code> and <code>y1 &lt;= y &lt;= y2</code>.</p>
+<p>Two submatrices (<code>x1, y1, x2, y2</code>) and (<code>x1&#39;, y1&#39;, x2&#39;, y2&#39;</code>) are different if they have some coordinate that is different: for example, if <code>x1</code> != <code>x1&#39;</code>.</p>
+</blockquote>
+<p>理解一下。</p>
+<ul>
+<li>参数是 1 个矩阵，一个目标值；</li>
+<li>需要返回的是子矩阵的数量，这些子矩阵需要满足：<ul>
+<li>非空；</li>
+<li>和等于目标值。</li>
+</ul>
+</li>
+</ul>
+<p>看看例子。</p>
+<p>Example 1:</p>
+<p><img src="./resources/1074.eg.jpg" alt="1074.eg.jpg"></p>
+<pre class="language-console" data-language="console"><code class="language-console">Input: matrix &#x3D; [[0,1,0],[1,1,1],[0,1,0]], target &#x3D; 0
+Output: 4
+Explanation: The four 1x1 submatrices that only contain 0.</code></pre>
+
+<p>这个例子中矩阵如图，需要找出所有和为 0 的子矩阵。可见只有四个角的元素满足，这四个子矩阵只能有一个元素。</p>
+<p>Example 2:</p>
+<pre class="language-console" data-language="console"><code class="language-console">Input: matrix &#x3D; [[1,-1],[-1,1]], target &#x3D; 0
+Output: 5
+Explanation: The two 1x2 submatrices, plus the two 2x1 submatrices, plus the 2x2 submatrix.</code></pre>
+
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center">y1</th>
+<th align="center">y2</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><strong>x1</strong></td>
+<td align="center">1</td>
+<td align="center">-1</td>
+</tr>
+<tr>
+<td align="center"><strong>x2</strong></td>
+<td align="center">-1</td>
+<td align="center">1</td>
+</tr>
+</tbody></table>
+<p>这个例子中，所有元素字面量都不为 0，所以排除 1x1 子矩阵之后，只有尺寸为 2x1 / 1x2 和 2x2 的子矩阵的和可能为 0。</p>
+<p>我们来输出一下 2 个元素的组合（2x1/1x2），去除对角线的两种不满足条件的组合，可以发现剩余的四种组合的和都为 0。而唯一一种 2x2 的组合我们也能一眼看出来其和为 0，所以这个例子的答案是 5。</p>
+<pre class="language-python" data-language="python"><code class="language-python">&gt;&gt;&gt; [(x, sum(x)) for x in combinations([1,-1,1,-1], 2)]
+[((1, -1), 0), ((1, 1), 2), ((1, -1), 0), ((-1, 1), 0), ((-1, -1), -2), ((1, -1), 0)]</code></pre>
+
+<p>Example 3:</p>
+<pre class="language-console" data-language="console"><code class="language-console">Input: matrix &#x3D; [[904]], target &#x3D; 0
+Output: 0</code></pre>
+
+<p>当不存在满足条件的子矩阵时返回 0。</p>
+<p>这道题的限制条件比较重要。</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= matrix.length &lt;= 100</code></li>
+<li><code>1 &lt;= matrix[0].length &lt;= 100</code></li>
+<li><code>-1000 &lt;= matrix[i] &lt;= 1000</code></li>
+<li><code>-10^8 &lt;= target &lt;= 10^8</code></li>
+</ul>
+<p>矩阵的尺寸从最小一个元素到最大 100*100 个元素，并且元素的值可能为负数，这意味着没有取巧的办法，对于每一种子矩阵的组合我们都必须算出和才能断定是否符合条件。</p>
+<h3 id="思路-amp-Solutions"><a href="#思路-amp-Solutions" class="headerlink" title="思路 &amp; Solutions"></a>思路 &amp; Solutions</h3><p><strong>递归方法（X 超时）</strong></p>
+<p>乍一看题可能你会感觉没有思路，难道只能：</p>
+<ul>
+<li>遍历长宽得出所有子矩阵尺寸；</li>
+<li>遍历每种尺寸去匹配可能出现的子矩阵，硬算矩阵和。</li>
+</ul>
+<p>（没错，我一开始这样做的…）</p>
+<p>这样确实可以计算出答案，问题是计算量指数爆炸，100*100 的 input 必然超过时间限制。</p>
+<p><strong>动态规划（DP）</strong></p>
+<p>仔细一看这道题有给一个提示，也别客气直接来看看提示。</p>
+<blockquote>
+<p>Using a 2D prefix sum, we can query the sum of any submatrix in O(1) time. Now for each (r1, r2), we can find the largest sum of a submatrix that uses every row in [r1, r2] in linear time using a sliding window.</p>
+</blockquote>
+<p>提示给出的思路分为两步：</p>
+<ul>
+<li>求出矩阵每个元素的前缀和（prefix sum），这一步时间复杂度是 O(n)，但是后续查询某个子矩阵的和只需要 O(1)；</li>
+<li>用滑动窗口（Sliding Window）遍历每一个子矩阵，检查和是否等于目标值。</li>
+</ul>
+<p>要应用这个思路，我们可以得到两种方法。</p>
+<p><strong>方法一，计算矩阵所有元素的前缀和</strong></p>
+<ul>
+<li>首先计算矩阵所有元素的前缀和；<ul>
+<li>prefixSum[x][y] = matrix[x][y] + prefixSum[x-1][y] + prefixSum[x][y-1] - prefixSum[x-1][y-1]<ul>
+<li><code>prefixSum[x][y]</code> -&gt; 以<code>(0, 0)</code>为左上角，矩阵中对应位置为右下角的子矩阵的和；</li>
+<li><code>matrix[x][y]</code> -&gt; 矩阵对应位置的元素的值；</li>
+<li><code>prefixSum[x-1][y]</code> -&gt; 矩阵上一行同列的值，这个值已经计算过了；</li>
+<li><code>prefixSum[x][y-1]</code> -&gt; 矩阵上一列同行的值，这个值也已经计算过了；</li>
+<li><code>prefixSum[x-1][y-1]</code> -&gt; 需要注意的是，这个值在上面两个子矩阵中被计算了两次，所以这里减去一次。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>使用滑动窗口来遍历行或列；<ul>
+<li>比如当遍历行时，对于 <code>(r1, r2)</code> （即第一行和第二行中的子矩阵）的情况，我们逐列遍历：<ul>
+<li>初始化一个哈希表，初始化 <code>key</code> 为 0 时的值为 1，这一步是为了处理子矩阵的和刚好为目标值的情况；</li>
+<li>我们查询 <code>((0,0), (1, 1))</code> 的和，并检查这个和减去目标值后的值在哈希表中对应的值；<ul>
+<li>子矩阵的和减去目标值后的数，其实就是之前记录过的和为该值的子矩阵；</li>
+<li>如果存在的话，那么意味着现在检查的这个子矩阵减去这个子矩阵，就能得到一个满足条件的子矩阵；</li>
+<li>由于在下一步我们按列将每次检查的结果存入列哈希表中，哈希表的 <code>key</code> 对应的值是指 <code>key</code> 出现的次数；</li>
+<li>这也就意味着如果同一个值出现了多次，那么就存在这么多子矩阵可以满足条件，所以我们将答案加上哈希表中对应的次数。</li>
+</ul>
+</li>
+<li>将其作为 <code>key</code> 存入一个哈希表中，将值+<code>1（key</code> 不存在的情况设为 1）；</li>
+<li>对行的组合重复这一步。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>下面是 Java 代码可以配合理解。</p>
+<pre class="language-java" data-language="java"><code class="language-java">class Solution &#123;
+    public int numSubmatrixSumTarget(int[][] matrix, int target) &#123;
+        int rows &#x3D; matrix.length,
+            cols &#x3D; matrix[0].length,
+            ans &#x3D; 0;
+
+        &#x2F;&#x2F; 初始化一个前缀和2D数组
+        int[][] prefixSum &#x3D; new int[rows][cols];
+
+        &#x2F;&#x2F; 为避免处理数组越界，我们对第一行数据单独进行遍历
+        prefixSum[0][0] &#x3D; matrix[0][0];
+        for (int c &#x3D; 1; c &lt; cols; c++) &#123;
+            &#x2F;&#x2F; 对于第一行数据，当前值加等于前一个值
+            prefixSum[0][c] &#x3D; prefixSum[0][c-1] + matrix[0][c];
+        &#125;
+
+        &#x2F;&#x2F; 剩下的数据逐行逐列遍历
+        for (int r &#x3D; 1; r &lt; rows; r++) &#123;
+            for (int c &#x3D; 0; c &lt; cols; c++) &#123;
+                &#x2F;&#x2F; 对应位置的前缀和等于上一行对应位置的值和上一列对应位置的值之和，减去重复计算的区域的值
+                prefixSum[r][c] &#x3D; matrix[r][c] + prefixSum[r-1][c]
+                    + (c &#x3D;&#x3D; 0 ? 0 : prefixSum[r][c-1] - prefixSum[r-1][c-1]);
+            &#125;
+        &#125;
+
+        &#x2F;&#x2F; 计算完前缀和，我们对行进行组合遍历
+        for (int sr &#x3D; 0; sr &lt; rows; sr++) &#123;
+            for (int er &#x3D; sr; er &lt; rows; er++) &#123;
+                &#x2F;&#x2F; 初始化一个哈希表来存储次数
+                Map&lt;Integer, Integer&gt; map &#x3D; new HashMap&lt;&gt;();
+                map.put(0, 1);
+                for (int c &#x3D; 0; c &lt; cols; c++) &#123;
+                    &#x2F;&#x2F; 计算第一列到当前列组成的矩阵的和
+                    int cur &#x3D; prefixSum[er][c] - (sr &#x3D;&#x3D; 0 ? 0 : prefixSum[sr-1][c]);
+                    &#x2F;&#x2F; 查询当前窗口中，需要减去的矩阵是否存在&#x2F;存在几个
+                    if (map.get(cur - target) !&#x3D; null) &#123;
+                        ans +&#x3D; map.get(cur - target);
+                    &#125;
+                    &#x2F;&#x2F; 将当前矩阵的值存入哈希表，将次数+1
+                    map.put(cur, map.get(cur) &#x3D;&#x3D; null ? 1 : map.get(cur) + 1);
+                &#125;
+            &#125;
+        &#125;
+
+        return ans;
+    &#125;
+&#125;</code></pre>
+
+<p><strong>方法二，仅按行或列计算前缀和</strong></p>
+<ul>
+<li>与方法一最大的区别在于，方法二不去计算一个 2D 矩阵的前缀和，而是逐行计算这一行的前缀和；</li>
+<li>这个前缀和数组由循环外部的变量，变成列循环内部的变量，随着基础行的变化而重置；</li>
+<li>除去计算前缀和的变化，在滑动窗口内的操作与方法一一致，因此降低了空间复杂度。</li>
+</ul>
+<p>下面是 Python 帮助理解。</p>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def numSubmatrixSumTarget(self, matrix: List[List[int]], target: int) -&gt; int:
+        rows, cols, ans &#x3D; len(matrix), len(matrix[0]), 0
+
+        for sr in range(rows):
+            colsum &#x3D; [0] * cols
+            for er in range(sr, rows):
+                d, cur &#x3D; &#123;0:1&#125;, 0
+                for c in range(cols):
+                    colsum[c] +&#x3D; matrix[er][c]
+                    cur +&#x3D; colsum[c]
+                    ans +&#x3D; d.get(cur-target, 0)
+                    d[cur] &#x3D; d.get(cur, 0) + 1
+
+        return ans</code></pre>
+
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>这是一道困难的题，难点在于把计算计划到规定的复杂度中。</p>
+<p>要得到答案，需要一些前置的知识：</p>
+<ul>
+<li>前缀和的应用；</li>
+<li>动态规划的应用；</li>
+<li>滑动窗口的应用。</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Array/" rel="tag"># Array</a>
+              <a href="/tags/Prefix-Sum/" rel="tag"># Prefix Sum</a>
+              <a href="/tags/Hash-Table/" rel="tag"># Hash Table</a>
+              <a href="/tags/Matrix/" rel="tag"># Matrix</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/post/leetcode/1048-Longest-String-Chain-Medium/" rel="prev" title="1048. Longest String Chain (Medium)">
+                  <i class="fa fa-chevron-left"></i> 1048. Longest String Chain (Medium)
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/post/leetcode/1192-Critical-Connections-in-a-Network-Hard/" rel="next" title="1192. Critical Connections in a Network (Hard)">
+                  1192. Critical Connections in a Network (Hard) <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Richard Zen</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">80k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">1:13</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div><div class="powered-by">
+  Powered by
+  <a
+    href="https://hexo.io"
+    rel="noopener external nofollow noreferrer"
+    target="_blank"
+    class="exturl"
+    title=""
+  >
+    Hexo
+  </a>
+  &amp; <a target="_blank" rel="noopener" href="https://theme-next.js.org/">NexT</a>
+</div>
+
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.24.1/components/prism-core.min.js" integrity="sha256-dz05jjFU9qYuMvQQlE6iWDtNAnEsmu6uMb1vWhKdkEM=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.24.1/plugins/autoloader/prism-autoloader.min.js" integrity="sha256-sttoa+EIAvFFfeeIkmPn8ypyOOb6no2sZ2NbxtBXgqU=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/comments.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/utils.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/motion.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/schemes/muse.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/next-boot.min.js"></script>
+
+  
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>
