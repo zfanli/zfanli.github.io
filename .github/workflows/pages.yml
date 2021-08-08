@@ -34,6 +34,11 @@ jobs:
           npm run build
           echo "make sure run the second time build for the final result"
           npm run build
+          git config --global user.email "zfanli@outlook.com"
+          git config --global user.name "Richard"
+          git add .
+          git commit -m "Apply plugins"
+          git push origin hexo-source
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
