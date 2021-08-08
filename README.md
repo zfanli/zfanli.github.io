@@ -1,3 +1,3 @@
-# [Richard's Blog](https://richard.bizcat.xyz/)
+# hexo-blog
 
-[Development Repository](https://github.com/zfanli/hexo-blog)
+A static blog generator using hexo as the engine and styling with the NexT theme.
