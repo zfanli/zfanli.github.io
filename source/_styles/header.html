@@ -1,19 +1,21 @@
-<div id="colorSwitcher" class="fa animated fadeIn"></div>
+<div id="colorSwitcher" class="animated fadeIn">🌓</div>
 <script>
   (function () {
     // define constants
     const DARK = "dark-scheme",
       LIGHT = "light-scheme",
-      SUN = "fa-sun",
-      MOON = "fa-moon";
+      COLOR_SCHEME = "color-scheme",
+      ROTATE = "switcher-rotate";
 
     // define targets
     const switcher = document.querySelector("#colorSwitcher"),
       body = document.body,
-      isDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      isDark = window.matchMedia("(prefers-color-scheme: dark)").matches,
+      stored = window.localStorage.getItem(COLOR_SCHEME);
+
+    body.classList.add(stored ? stored : isDark ? DARK : LIGHT);
 
     // setup actions
-    switcher.classList.add(isDark ? SUN : MOON);
     switcher.addEventListener("click", function () {
       let add = LIGHT;
       if (body.classList.contains(LIGHT)) {
@@ -22,9 +24,10 @@
       // apply the new color scheme
       body.classList.remove(LIGHT, DARK);
       body.classList.add(add);
-      // update icon
-      switcher.classList.remove(SUN, MOON);
-      switcher.classList.add(add === DARK ? SUN : MOON);
+      window.localStorage.setItem(COLOR_SCHEME, add);
+      if (switcher.classList.contains(ROTATE))
+        switcher.classList.remove(ROTATE);
+      else switcher.classList.add(ROTATE);
     });
   })();
 </script>
@@ -38,6 +41,14 @@
     text-align: center;
     outline: none;
     font-size: 1.5rem;
+    margin-left: auto;
+    transition: all 0.25s ease-in-out;
+    transform: rotate(0);
+    user-select: none;
+  }
+
+  #colorSwitcher.switcher-rotate {
+    transform: rotate(180deg);
   }
 
   @media (max-width: 767px) {

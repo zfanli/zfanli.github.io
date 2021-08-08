@@ -1,65 +1,56 @@
-.light-scheme {
-  --body-bg-color: #fff;
-  --content-bg-color: #f5f5f5;
-  --card-bg-color: #f5f5f5;
-  --text-color: #555;
-  --blockquote-color: #666;
-  --link-color: #555;
-  --link-hover-color: #222;
-  --brand-color: #222;
-  --brand-hover-color: #222;
-  --table-row-odd-bg-color: #f9f9f9;
-  --table-row-hover-bg-color: #f5f5f5;
-  --menu-item-bg-color: #ddd;
-  --btn-default-bg: transparent;
-  --btn-default-color: var(--link-color);
-  --btn-default-border-color: var(--link-color);
-  --btn-default-hover-bg: transparent;
-  --btn-default-hover-color: var(--link-hover-color);
-  --btn-default-hover-border-color: var(--link-hover-color);
-  --highlight-background: #f0f0f0;
-  --highlight-foreground: #444;
-  --highlight-gutter-background: #dedede;
-  --highlight-gutter-foreground: #555;
-}
 
 .dark-scheme {
-  --body-bg-color: #282828;
-  --content-bg-color: #333;
-  --card-bg-color: #555;
-  --text-color: #ccc;
-  --blockquote-color: #bbb;
-  --link-color: #ccc;
-  --link-hover-color: #eee;
-  --brand-color: #ddd;
-  --brand-hover-color: #ddd;
-  --table-row-odd-bg-color: #282828;
-  --table-row-hover-bg-color: #363636;
-  --menu-item-bg-color: #555;
-  --btn-default-bg: #222;
-  --btn-default-color: #ccc;
-  --btn-default-border-color: #555;
-  --btn-default-hover-bg: #666;
-  --btn-default-hover-color: #ccc;
-  --btn-default-hover-border-color: #666;
-  --highlight-background: #1d1f21;
-  --highlight-foreground: #c5c8c6;
-  --highlight-gutter-background: #2d2f31;
-  --highlight-gutter-foreground: #b4b7b5;
+  img {
+    opacity: 0.75;
+
+    &:hover {
+      opacity: 0.9;
+    }
+  }
+
+  ::selection {
+    background: teal;
+  }
 }
 
-.dark-scheme img {
-  opacity: 0.75;
-}
-
-.dark-scheme img:hover {
-  opacity: 0.9;
+.logo-line {
+  display: none;
 }
 
 .sidebar {
   box-shadow: none;
+  left: 0;
+}
+
+.sidebar-toggle {
+  display: none;
 }
 
 .header-inner {
   position: relative;
+}
+
+body {
+  padding-left: 320px;
+}
+
+@media (max-width: 767px) {
+  body {
+    padding-left: 0;
+  }
+
+  .sidebar {
+    left: -320px;
+  }
+
+  .sidebar-toggle {
+    display: block;
+  }
+}
+
+@media (min-width: 1200px) {
+  .post-body {
+    // set max font-size
+    font-size: 1em;
+  }
 }
