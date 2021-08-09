@@ -332,7 +332,7 @@
 <p>你有两个数组 <code>speed</code> 和 <code>efficiency</code> 分别表示每个工程师的速度和效率。</p>
 <p>小组的绩效表现计算方法：小组所有成员的速度之和乘以小组成员效率的最小值。由于结果数组可能会非常大，将结果和 <code>10^9 + 7</code> 取模作为答案返回。</p>
 <p>工程师的速度和效率是捆绑的，所以要知道答案，我们只能尝试将每一位工程师编入小组，可以使用贪心算法解决问题。</p>
-<!-- more -->
+<span id="more"></span>
 
 <h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>解题思路是先计算局部最优解，再计算全局的最优解，是典型的贪心算法的应用场景。但这道题困难之处在于需要保持两个排序，而意识到这个解决方案需要一定的直觉。</p>
 <p>读完题我们可以了解到团队的表现计算公式为：<code>sum(speeds) * min(efficiencies)</code>，这里的细节是选择的团队成员最多可以达到<code>k</code>位，意味着当团队人数少于<code>k</code>能取得更好的表现时的结果可以作为局部最优解。</p>
@@ -380,6 +380,9 @@
                 </a>
             </div>
             <div class="post-nav-item">
+                <a href="/post/leetcode/1423-Maximum-Points-You-Can-Obtain-from-Cards-Medium/" rel="next" title="1423. Maximum Points You Can Obtain from Cards (Medium)">
+                  1423. Maximum Points You Can Obtain from Cards (Medium) <i class="fa fa-chevron-right"></i>
+                </a>
             </div>
           </div>
     </footer>
@@ -411,13 +414,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">78k</span>
+    <span title="站点总字数">83k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:11</span>
+    <span title="站点阅读时长">1:16</span>
   </span>
 </div>
 <div class="busuanzi-count">
