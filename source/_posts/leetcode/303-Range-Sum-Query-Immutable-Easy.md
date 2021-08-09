@@ -1,11 +1,12 @@
 ---
-date: "2021-05-16T15:36:05.507Z"
-
+date: '2021-05-16T15:36:05.507Z'
 tags:
   - Array
   - Design
   - Prefix Sum
 title: 303. Range Sum Query - Immutable (Easy)
+categories:
+  - leetcode
 ---
 
 前缀和，然后查询区间，最右减去最左，注意一个 index 的 offset。

@@ -1,10 +1,11 @@
 ---
-date: "2021-03-25T15:36:05.449Z"
-
+date: '2021-03-25T15:36:05.449Z'
 tags:
   - Array
   - Backtracking
 title: 39. Combination Sum (Medium)
+categories:
+  - leetcode
 ---
 
 先读题，这种题真是脑细胞的初见杀。

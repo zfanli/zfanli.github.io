@@ -1,12 +1,13 @@
 ---
-date: "2021-05-30T15:36:05.523Z"
-
+date: '2021-05-30T15:36:05.523Z'
 tags:
   - Math
   - DP
   - Recursion
   - Memoization
 title: 509. Fibonacci Number (Easy)
+categories:
+  - leetcode
 ---
 
 先读题。

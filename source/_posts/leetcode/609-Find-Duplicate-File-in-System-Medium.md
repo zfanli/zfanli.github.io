@@ -1,10 +1,11 @@
 ---
-date: "2021-06-05T15:36:05.530Z"
-
+date: '2021-06-05T15:36:05.530Z'
 tags:
   - Hash Table
   - String
 title: 609. Find Duplicate File in System (Medium)
+categories:
+  - leetcode
 ---
 
 思路 1 是使用哈希表，以文件内容为 key，拼出文件名存到字典中，最后遍历字典所有值，存在长度大于 1 的列表则表示存在内容重复。这道题还是比较亲切，实际工作中确实会遇到这类问题。

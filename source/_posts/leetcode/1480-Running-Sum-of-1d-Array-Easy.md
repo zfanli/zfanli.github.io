@@ -1,10 +1,11 @@
 ---
-date: "2021-07-29T15:36:05.595Z"
-
+date: '2021-07-29T15:36:05.595Z'
 tags:
   - Array
   - Prefix Sum
 title: 1480. Running Sum of 1d Array (Easy)
+categories:
+  - leetcode
 ---
 
 ## Before diving into the Solution

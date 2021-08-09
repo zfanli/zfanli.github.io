@@ -1,9 +1,10 @@
 ---
-date: "2021-04-28T15:36:05.484Z"
-
+date: '2021-04-28T15:36:05.484Z'
 tags:
   - Array
 title: 118. Pascal's Triangle (Easy)
+categories:
+  - leetcode
 ---
 
 杨辉三角，做完这题发现，这就是 DP 呀，简明扼要。思路就是用当前行计算下一行，每一个值都等于上一行相同位置加上前一位，注意首位两个特殊 case 即可。

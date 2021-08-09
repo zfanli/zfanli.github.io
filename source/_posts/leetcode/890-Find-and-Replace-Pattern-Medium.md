@@ -1,11 +1,12 @@
 ---
-date: "2021-06-29T15:36:05.558Z"
-
+date: '2021-06-29T15:36:05.558Z'
 tags:
   - String
   - Array
   - Hash Table
 title: 890. Find and Replace Pattern (Medium)
+categories:
+  - leetcode
 ---
 
 ## Before diving into the Solution

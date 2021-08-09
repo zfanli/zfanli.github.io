@@ -1,6 +1,5 @@
 ---
-date: "2021-08-06T15:36:05.607Z"
-
+date: '2021-08-06T15:36:05.607Z'
 tags:
   - Array
   - DP
@@ -9,6 +8,8 @@ tags:
   - Heap (Priority Queue)
   - Monotonic Queue
 title: 1696. Jump Game VI (Medium)
+categories:
+  - leetcode
 ---
 
 ## Before diving into the Solution

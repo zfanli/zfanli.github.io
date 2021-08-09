@@ -1,10 +1,11 @@
 ---
-date: "2021-06-13T15:36:05.541Z"
-
+date: '2021-06-13T15:36:05.541Z'
 tags:
   - Array
   - DFS
 title: 695. Max Area of Island (Medium)
+categories:
+  - leetcode
 ---
 
 思路 1，递归。使用 DFS 搜索所有陆地（1），将搜索过的元素标注为 1 以外的数，避免重复计算，每次搜索到一个目标，保持一个最大结果作为答案。

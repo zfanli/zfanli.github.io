@@ -1,10 +1,11 @@
 ---
-date: "2021-04-12T15:36:05.466Z"
-
+date: '2021-04-12T15:36:05.466Z'
 tags:
   - Linked List
   - Two Pointers
 title: 86. Partition List (Medium)
+categories:
+  - leetcode
 ---
 
 With solutions both in Python and Java.

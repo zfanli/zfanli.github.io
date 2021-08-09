@@ -1,10 +1,11 @@
 ---
-date: "2021-04-26T15:36:05.482Z"
-
+date: '2021-04-26T15:36:05.482Z'
 tags:
   - DFS
   - Tree
 title: 114. Flatten Binary Tree to Linked List (Medium)
+categories:
+  - leetcode
 ---
 
 思路 1，有序递归。重复先左后右的递归，用递归方法实现 O(1)的难点在于将右节点挂在左节点的末尾，这里我们将递归函数的返回值设为递归最后一个元素，来解决这个难题。

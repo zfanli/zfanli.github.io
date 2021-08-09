@@ -1,11 +1,12 @@
 ---
-date: "2021-07-25T15:36:05.589Z"
-
+date: '2021-07-25T15:36:05.589Z'
 tags:
   - Array
   - Sliding Window
   - Prefix Sum
 title: 1423. Maximum Points You Can Obtain from Cards (Medium)
+categories:
+  - leetcode
 ---
 
 ## Before diving into the Solution

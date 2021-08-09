@@ -1,10 +1,11 @@
 ---
-date: "2021-06-27T15:36:05.556Z"
-
+date: '2021-06-27T15:36:05.556Z'
 tags:
   - String
   - Backtracking
 title: 816. Ambiguous Coordinates (Medium)
+categories:
+  - leetcode
 ---
 
 ## Before diving into the Solution

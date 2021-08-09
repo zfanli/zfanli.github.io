@@ -1,12 +1,13 @@
 ---
-date: "2021-07-19T15:36:05.580Z"
-
+date: '2021-07-19T15:36:05.580Z'
 tags:
   - Tree
   - DFS
   - BFS
   - Binary Tree
 title: 1302. Deepest Leaves Sum (Medium)
+categories:
+  - leetcode
 ---
 
 ## Before diving into the Solution

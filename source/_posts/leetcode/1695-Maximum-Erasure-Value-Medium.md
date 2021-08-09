@@ -1,11 +1,12 @@
 ---
-date: "2021-08-04T15:36:05.604Z"
-
+date: '2021-08-04T15:36:05.604Z'
 tags:
   - Array
   - Hash Table
   - Sliding Window
 title: 1695. Maximum Erasure Value (Medium)
+categories:
+  - leetcode
 ---
 
 ## Before diving into the Solution

@@ -1,10 +1,11 @@
 ---
-date: "2021-07-21T15:36:05.582Z"
-
+date: '2021-07-21T15:36:05.582Z'
 tags:
   - Array
   - Heap (Priority Queue)
 title: 1354. Construct Target Array With Multiple Sums (Hard)
+categories:
+  - leetcode
 ---
 
 ## Before diving into the Solution

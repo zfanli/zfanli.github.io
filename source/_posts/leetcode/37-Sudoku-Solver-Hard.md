@@ -1,10 +1,11 @@
 ---
-date: "2021-03-23T15:36:05.448Z"
-
+date: '2021-03-23T15:36:05.448Z'
 tags:
   - Hash Table
   - Backtracking
 title: 37. Sudoku Solver (Hard)
+categories:
+  - leetcode
 ---
 
 数独问题，适合回溯算法。

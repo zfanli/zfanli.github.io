@@ -1,11 +1,12 @@
 ---
-date: "2021-07-31T15:36:05.597Z"
-
+date: '2021-07-31T15:36:05.597Z'
 tags:
   - Array
   - Greedy
   - Heap (Priority Queue)
 title: 1642. Furthest Building You Can Reach (Medium)
+categories:
+  - leetcode
 ---
 
 ## Before diving into the Solution

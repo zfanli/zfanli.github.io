@@ -1,10 +1,11 @@
 ---
-date: "2021-08-02T15:36:05.600Z"
-
+date: '2021-08-02T15:36:05.600Z'
 tags:
   - Greedy
   - String
 title: 1689. Partitioning Into Minimum Number Of Deci-Binary Numbers (Medium)
+categories:
+  - leetcode
 ---
 
 ## Before diving into the Solution

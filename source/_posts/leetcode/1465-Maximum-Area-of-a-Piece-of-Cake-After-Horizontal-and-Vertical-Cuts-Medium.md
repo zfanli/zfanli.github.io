@@ -1,11 +1,14 @@
 ---
-date: "2021-07-27T15:36:05.592Z"
-
+date: '2021-07-27T15:36:05.592Z'
 tags:
   - Array
   - Greedy
   - Sorting
-title: 1465. Maximum Area of a Piece of Cake After Horizontal and Vertical Cuts (Medium)
+title: >-
+  1465. Maximum Area of a Piece of Cake After Horizontal and Vertical Cuts
+  (Medium)
+categories:
+  - leetcode
 ---
 
 ## Before diving into the Solution

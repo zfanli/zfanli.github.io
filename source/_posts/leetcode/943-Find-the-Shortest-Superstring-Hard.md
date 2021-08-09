@@ -1,6 +1,5 @@
 ---
-date: "2021-07-03T15:36:05.562Z"
-
+date: '2021-07-03T15:36:05.562Z'
 tags:
   - Array
   - String
@@ -9,6 +8,8 @@ tags:
   - Bitmask
   - Not Solved
 title: 943. Find the Shortest Superstring (Hard)
+categories:
+  - leetcode
 ---
 
 ## NOT SOLVED YET!!

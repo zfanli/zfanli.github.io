@@ -1,12 +1,13 @@
 ---
-date: "2021-06-07T15:36:05.534Z"
-
+date: '2021-06-07T15:36:05.534Z'
 tags:
   - Array
   - DFS
   - Graph
   - BFS
 title: 630. Course Schedule III (Hard)
+categories:
+  - leetcode
 ---
 
 Topics:

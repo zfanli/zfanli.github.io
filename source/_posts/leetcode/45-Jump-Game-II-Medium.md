@@ -1,10 +1,11 @@
 ---
-date: "2021-03-27T15:36:05.451Z"
-
+date: '2021-03-27T15:36:05.451Z'
 tags:
   - Array
   - Greedy
 title: 45. Jump Game II (Medium)
+categories:
+  - leetcode
 ---
 
 Topics:

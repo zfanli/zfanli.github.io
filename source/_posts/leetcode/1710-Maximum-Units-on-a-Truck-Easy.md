@@ -1,10 +1,11 @@
 ---
-date: "2021-08-08T15:36:05.609Z"
-
+date: '2021-08-08T15:36:05.609Z'
 tags:
   - Greedy
   - Sort
 title: 1710. Maximum Units on a Truck (Easy)
+categories:
+  - leetcode
 ---
 
 ## Before diving into the Solution

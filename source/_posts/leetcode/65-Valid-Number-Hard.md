@@ -1,10 +1,11 @@
 ---
-date: "2021-04-08T15:36:05.463Z"
-
+date: '2021-04-08T15:36:05.463Z'
 tags:
   - Math
   - String
 title: 65. Valid Number (Hard)
+categories:
+  - leetcode
 ---
 
 取巧使用正则，一行方案。

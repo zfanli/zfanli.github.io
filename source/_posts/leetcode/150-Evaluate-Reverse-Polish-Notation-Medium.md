@@ -1,9 +1,10 @@
 ---
-date: "2021-05-10T15:36:05.499Z"
-
+date: '2021-05-10T15:36:05.499Z'
 tags:
   - Stack
 title: 150. Evaluate Reverse Polish Notation (Medium)
+categories:
+  - leetcode
 ---
 
 反向波兰表示法是一种使用 Stack 达到方便计算目的的一种数学方法。

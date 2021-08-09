@@ -1,10 +1,11 @@
 ---
-date: "2021-07-01T15:36:05.560Z"
-
+date: '2021-07-01T15:36:05.560Z'
 tags:
   - Math
   - Enumeration
 title: 906. Super Palindromes (Hard)
+categories:
+  - leetcode
 ---
 
 ## Before diving into the Solution

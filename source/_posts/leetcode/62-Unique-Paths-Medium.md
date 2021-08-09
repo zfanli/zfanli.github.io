@@ -1,11 +1,12 @@
 ---
-date: "2021-04-04T15:36:05.459Z"
-
+date: '2021-04-04T15:36:05.459Z'
 tags:
   - Math
   - DP
   - Combinatorics
 title: 62. Unique Paths (Medium)
+categories:
+  - leetcode
 ---
 
 ```python

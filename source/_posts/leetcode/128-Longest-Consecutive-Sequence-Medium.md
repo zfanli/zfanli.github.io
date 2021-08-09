@@ -1,10 +1,11 @@
 ---
-date: "2021-05-02T15:36:05.487Z"
-
+date: '2021-05-02T15:36:05.487Z'
 tags:
   - Array
   - Union Find
 title: 128. Longest Consecutive Sequence (Medium)
+categories:
+  - leetcode
 ---
 
 `nums` 数组的元素可以构成诺干个连续的子数组，我们需要找到最大的子数组，返回其长度。

@@ -1,9 +1,10 @@
 ---
-date: "2021-06-09T15:36:05.537Z"
-
+date: '2021-06-09T15:36:05.537Z'
 tags:
   - Array
 title: 665. Non-decreasing Array (Medium)
+categories:
+  - leetcode
 ---
 
 Topics:

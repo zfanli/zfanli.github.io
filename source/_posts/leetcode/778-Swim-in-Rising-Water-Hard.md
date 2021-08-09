@@ -1,12 +1,13 @@
 ---
-date: "2021-06-23T15:36:05.552Z"
-
+date: '2021-06-23T15:36:05.552Z'
 tags:
   - Binary Search
   - Heap
   - DFS
   - Union Fold
 title: 778. Swim in Rising Water (Hard)
+categories:
+  - leetcode
 ---
 
 这是一道求最合适路径的题目，可以应用图论中的 Dijkstra 算法。
