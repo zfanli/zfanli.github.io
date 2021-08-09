@@ -20,17 +20,18 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Mist","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":null,"sidebar":"fadeInUp"}},"prism":true,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/config.min.js"></script>
-<meta name="description" content="Topics: Greedy. Highlight:  Backward from the max value Mod operation on max value with rest sum to get replacement value Push replacement value back to heap Repeat the procedure until the max value b">
+<meta name="description" content="Before diving into the Solution构建目标数组问题。给你一个长度为 n 的目标数组 target，你需要从一个包含 n 个 1 的数组 arr 开始执行下面的过程：  设当前的 arr 数组的和为 x； 选择 0 到 n 之间的一个下标 i，让 arr[i] 等于 x； 重复这个过程。  判断最终能否构建出目标数组。   Highlight: Backward from">
 <meta property="og:type" content="article">
 <meta property="og:title" content="1354. Construct Target Array With Multiple Sums (Hard)">
 <meta property="og:url" content="http://example.com/post/leetcode/1354-Construct-Target-Array-With-Multiple-Sums-Hard/">
 <meta property="og:site_name" content="HOME">
-<meta property="og:description" content="Topics: Greedy. Highlight:  Backward from the max value Mod operation on max value with rest sum to get replacement value Push replacement value back to heap Repeat the procedure until the max value b">
+<meta property="og:description" content="Before diving into the Solution构建目标数组问题。给你一个长度为 n 的目标数组 target，你需要从一个包含 n 个 1 的数组 arr 开始执行下面的过程：  设当前的 arr 数组的和为 x； 选择 0 到 n 之间的一个下标 i，让 arr[i] 等于 x； 重复这个过程。  判断最终能否构建出目标数组。   Highlight: Backward from">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-07-21T07:36:05.582Z">
 <meta property="article:modified_time" content="2021-07-21T07:36:05.582Z">
 <meta property="article:author" content="Richard Zen">
-<meta property="article:tag" content="Greedy">
+<meta property="article:tag" content="Array">
+<meta property="article:tag" content="Heap (Priority Queue)">
 <meta name="twitter:card" content="summary">
 
 
@@ -196,7 +197,7 @@
 
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -209,6 +210,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Before-diving-into-the-Solution"><span class="nav-text">Before diving into the Solution</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Highlight"><span class="nav-text">Highlight:</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -306,7 +308,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>882</span>
+      <span>1k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -324,10 +326,16 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p>Topics:</p>
-<p>Greedy.</p>
-<p>Highlight:</p>
+        <h2 id="Before-diving-into-the-Solution"><a href="#Before-diving-into-the-Solution" class="headerlink" title="Before diving into the Solution"></a>Before diving into the Solution</h2><p>构建目标数组问题。给你一个长度为 <code>n</code> 的目标数组 <code>target</code>，你需要从一个包含 <code>n</code> 个 <code>1</code> 的数组 <code>arr</code> 开始执行下面的过程：</p>
 <ul>
+<li>设当前的 <code>arr</code> 数组的和为 <code>x</code>；</li>
+<li>选择 <code>0</code> 到 <code>n</code> 之间的一个下标 <code>i</code>，让 <code>arr[i]</code> 等于 <code>x</code>；</li>
+<li>重复这个过程。</li>
+</ul>
+<p>判断最终能否构建出目标数组。</p>
+<!-- more -->
+
+<h2 id="Highlight"><a href="#Highlight" class="headerlink" title="Highlight:"></a>Highlight:</h2><ul>
 <li>Backward from the max value</li>
 <li>Mod operation on max value with rest sum to get replacement value</li>
 <li>Push replacement value back to heap</li>
@@ -346,7 +354,7 @@
         heap &#x3D; [-x for x in target]
         heapify(heap)
 
-        # If the max value of heap is
+        # If the max value of heap is 1
         while -heap[0] !&#x3D; 1:
             # Get max value of current heap.
             num &#x3D; -heap[0]
@@ -373,7 +381,8 @@
 
     <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/Greedy/" rel="tag"># Greedy</a>
+              <a href="/tags/Array/" rel="tag"># Array</a>
+              <a href="/tags/Heap-Priority-Queue/" rel="tag"># Heap (Priority Queue)</a>
           </div>
 
         
@@ -419,13 +428,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">80k</span>
+    <span title="站点总字数">78k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:13</span>
+    <span title="站点阅读时长">1:11</span>
   </span>
 </div>
 <div class="busuanzi-count">

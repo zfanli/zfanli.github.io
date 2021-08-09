@@ -20,12 +20,12 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Mist","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":null,"sidebar":"fadeInUp"}},"prism":true,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/config.min.js"></script>
-<meta name="description" content="思路 1，滑动窗口。 提示说的很清楚，题目要求找出最长的连续出现的 1，那么用 2 个指针实现一个滑动窗口是一个合适的选择。 用一个数组储存所有遇到 0 的位置，当数组长度超过 k，将左边指针设为第一个 0 位置的下一位，并将第一个 0 从数组删除。 每一步都保存一下当前连续的最大值。 class Solution:     def longestOnes(self, nums: List[int">
+<meta name="description" content="Before diving into the Solution给定一个二进制数组 nums（元素的值为 0 或 1），求最长的连续的 1 的长度。 有趣的地方在于你有 k 次机会将 0 翻转为 1，你需要找出最合适的时机使用这些机会。 “连续”是这道题的关键字，看上去我们可以使用滑动窗口来解决这道题。   思路 1，滑动窗口提示说的很清楚，题目要求找出最长的连续出现的 1，那么用 2 个指针实现一">
 <meta property="og:type" content="article">
 <meta property="og:title" content="1004. Max Consecutive Ones III (Medium)">
 <meta property="og:url" content="http://example.com/post/leetcode/1004-Max-Consecutive-Ones-III-Medium/">
 <meta property="og:site_name" content="HOME">
-<meta property="og:description" content="思路 1，滑动窗口。 提示说的很清楚，题目要求找出最长的连续出现的 1，那么用 2 个指针实现一个滑动窗口是一个合适的选择。 用一个数组储存所有遇到 0 的位置，当数组长度超过 k，将左边指针设为第一个 0 位置的下一位，并将第一个 0 从数组删除。 每一步都保存一下当前连续的最大值。 class Solution:     def longestOnes(self, nums: List[int">
+<meta property="og:description" content="Before diving into the Solution给定一个二进制数组 nums（元素的值为 0 或 1），求最长的连续的 1 的长度。 有趣的地方在于你有 k 次机会将 0 翻转为 1，你需要找出最合适的时机使用这些机会。 “连续”是这道题的关键字，看上去我们可以使用滑动窗口来解决这道题。   思路 1，滑动窗口提示说的很清楚，题目要求找出最长的连续出现的 1，那么用 2 个指针实现一">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-07-09T07:36:05.567Z">
 <meta property="article:modified_time" content="2021-07-09T07:36:05.567Z">
@@ -199,7 +199,7 @@
 
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -212,6 +212,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Before-diving-into-the-Solution"><span class="nav-text">Before diving into the Solution</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF-1%EF%BC%8C%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3"><span class="nav-text">思路 1，滑动窗口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF-2%EF%BC%8C%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3-%E5%86%85%E5%AD%98%E4%BC%98%E5%8C%96"><span class="nav-text">思路 2，滑动窗口+内存优化</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -309,7 +310,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>635</span>
+      <span>767</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -327,8 +328,12 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p>思路 1，滑动窗口。</p>
-<p>提示说的很清楚，题目要求找出最长的连续出现的 <code>1</code>，那么用 2 个指针实现一个滑动窗口是一个合适的选择。</p>
+        <h2 id="Before-diving-into-the-Solution"><a href="#Before-diving-into-the-Solution" class="headerlink" title="Before diving into the Solution"></a>Before diving into the Solution</h2><p>给定一个二进制数组 <code>nums</code>（元素的值为 <code>0</code> 或 <code>1</code>），求最长的连续的 <code>1</code> 的长度。</p>
+<p>有趣的地方在于你有 <code>k</code> 次机会将 <code>0</code> 翻转为 <code>1</code>，你需要找出最合适的时机使用这些机会。</p>
+<p>“连续”是这道题的关键字，看上去我们可以使用滑动窗口来解决这道题。</p>
+<!-- more -->
+
+<h2 id="思路-1，滑动窗口"><a href="#思路-1，滑动窗口" class="headerlink" title="思路 1，滑动窗口"></a>思路 1，滑动窗口</h2><p>提示说的很清楚，题目要求找出最长的连续出现的 <code>1</code>，那么用 2 个指针实现一个滑动窗口是一个合适的选择。</p>
 <p>用一个数组储存所有遇到 <code>0</code> 的位置，当数组长度超过 <code>k</code>，将左边指针设为第一个 <code>0</code> 位置的下一位，并将第一个 <code>0</code> 从数组删除。</p>
 <p>每一步都保存一下当前连续的最大值。</p>
 <pre class="language-python" data-language="python"><code class="language-python">class Solution:
@@ -342,8 +347,7 @@
             ans &#x3D; max(ans, j - i + 1)
         return ans</code></pre>
 
-<p>思路 2，滑动窗口+内存优化。</p>
-<p>我们可以优化思路 1 的数组方法，仅使用一个计数器来提醒我们是否需要将左边的指针移动到下一个位置。</p>
+<h2 id="思路-2，滑动窗口-内存优化"><a href="#思路-2，滑动窗口-内存优化" class="headerlink" title="思路 2，滑动窗口+内存优化"></a>思路 2，滑动窗口+内存优化</h2><p>我们可以优化思路 1 的数组方法，仅使用一个计数器来提醒我们是否需要将左边的指针移动到下一个位置。</p>
 <pre class="language-python" data-language="python"><code class="language-python">class Solution:
     def longestOnes(self, nums: List[int], k: int) -&gt; int:
         ans, i &#x3D; 0, 0
@@ -415,13 +419,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">80k</span>
+    <span title="站点总字数">78k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:13</span>
+    <span title="站点阅读时长">1:11</span>
   </span>
 </div>
 <div class="busuanzi-count">

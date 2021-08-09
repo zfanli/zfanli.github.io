@@ -259,925 +259,6 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/post/leetcode/665-Non-decreasing-Array-Medium/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/icon-64.png">
-      <meta itemprop="name" content="Richard Zen">
-      <meta itemprop="description" content="<small><b>TOPICS</b></small><br>
-前端 ｜ Python ｜ Java<br>
-数据结构 ｜ 算法<br><br>
-用代码替代言语<br>记录创作与学习的脚步<br><br>
-">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HOME">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/post/leetcode/665-Non-decreasing-Array-Medium/" class="post-title-link" itemprop="url">665. Non-decreasing Array (Medium)</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-06-09 15:36:05" itemprop="dateModified" datetime="2021-06-09T15:36:05+08:00">2021-06-09</time>
-      </span>
-
-  
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>1.2k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>Topics:</p>
-<p>Array.</p>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def checkPossibility(self, nums: List[int]) -&gt; bool:
-        modified &#x3D; False
-        for i in reversed(range(1, len(nums))):
-            # print(nums[i] , nums[i - 1])
-            if nums[i] &lt; nums[i - 1]:
-                if not modified:
-                    if i !&#x3D; len(nums) - 1 and nums[i + 1] &lt; nums[i - 1]:
-                        nums[i - 1] &#x3D; nums[i]
-                    modified &#x3D; True
-                else:
-                    return False
-        return True</code></pre>
-
-<p>把题目转化为递增数组的思路，避免了颠倒数组。</p>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def checkPossibility(self, nums: List[int]) -&gt; bool:
-        modified &#x3D; False
-        for i in range(1, len(nums)):
-            if nums[i] &lt; nums[i - 1]:
-                if not modified:
-                    if i &gt; 1 and nums[i] &lt; nums[i - 2]:
-                        nums[i] &#x3D; nums[i - 1]
-                    modified &#x3D; True
-                else:
-                    return False
-        return True</code></pre>
-
-<p>Ver 2.0，评论区大神给的思路，只允许修改一次值的情况下，只有 YABY 这种情况是直接丢出 <code>false</code>，其余情况可以通过修改一次值通过。这个算法可以在不进行任何值的修改的前提下，进行正确的判断。</p>
-<p><img src="resources/665.idea.png" alt="665.idea.png"></p>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def checkPossibility(self, nums: List[int]) -&gt; bool:
-        modified &#x3D; False
-        for i in range(1, len(nums)):
-            if nums[i] &lt; nums[i - 1]:
-                # Return False if modified before, or if these conditions are satisfied.
-                if modified or (
-                    # Ensure &#96;i - 2&#96; and  &#96;i + 1&#96; exist,
-                    i &gt; 1
-                    and i &lt; len(nums) - 1
-                    # if &#96;i - 2&#96; &gt; &#96;i&#96;, it&#39;s a YAB of YABY,
-                    and nums[i - 2] &gt; nums[i]
-                    # if &#96;i - 1&#96; &gt; &#96;i + 1&#96;, it&#39;s a ABY of YABY.
-                    and nums[i - 1] &gt; nums[i + 1]
-                ):
-                    return False
-                # If it&#39;s not the cases above, set modified to True,
-                # no more chance for the next violation.
-                modified &#x3D; True
-        return True</code></pre>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/post/leetcode/630-Course-Schedule-III-Hard/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/icon-64.png">
-      <meta itemprop="name" content="Richard Zen">
-      <meta itemprop="description" content="<small><b>TOPICS</b></small><br>
-前端 ｜ Python ｜ Java<br>
-数据结构 ｜ 算法<br><br>
-用代码替代言语<br>记录创作与学习的脚步<br><br>
-">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HOME">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/post/leetcode/630-Course-Schedule-III-Hard/" class="post-title-link" itemprop="url">630. Course Schedule III (Hard)</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-06-07 15:36:05" itemprop="dateModified" datetime="2021-06-07T15:36:05+08:00">2021-06-07</time>
-      </span>
-
-  
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>752</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>Topics:</p>
-<p>Greed, graph, dfs, bfs.</p>
-<p>虽然做出来了，但是成绩比较差，这一块需要研究一下。</p>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def scheduleCourse(self, courses: List[List[int]]) -&gt; int:
-        c &#x3D; [x for x in sorted(courses, key&#x3D;lambda x: x[1])]
-        heap &#x3D; []
-        time &#x3D; 0
-        for i, x in enumerate(c):
-            if time + x[0] &lt;&#x3D; x[1]:
-                time +&#x3D; x[0]
-            elif len(heap) &gt; 0 and heap[-1] &gt; x[0] and time - heap[-1] + x[0] &lt;&#x3D; x[1]:
-                time +&#x3D;  - heap.pop() + x[0]
-            else:
-                continue
-
-            heap.append(x[0])
-            heap.sort()
-
-        return len(heap)</code></pre>
-
-<p>Ver 2.0, using max heap.</p>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def scheduleCourse(self, courses: List[List[int]]) -&gt; int:
-        c &#x3D; [x for x in sorted(courses, key&#x3D;lambda x: x[1])]
-        time, heap &#x3D; 0, []
-
-        for i, x in enumerate(c):
-            if time + x[0] &lt;&#x3D; x[1]:
-                time +&#x3D; x[0]
-                heappush(heap, -x[0])
-            elif heap:
-                if -heap[0] &gt; x[0]:
-                    time +&#x3D; heappop(heap) + x[0]
-                    heappush(heap, -x[0])
-
-        return len(heap)</code></pre>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/post/leetcode/609-Find-Duplicate-File-in-System-Medium/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/icon-64.png">
-      <meta itemprop="name" content="Richard Zen">
-      <meta itemprop="description" content="<small><b>TOPICS</b></small><br>
-前端 ｜ Python ｜ Java<br>
-数据结构 ｜ 算法<br><br>
-用代码替代言语<br>记录创作与学习的脚步<br><br>
-">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HOME">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/post/leetcode/609-Find-Duplicate-File-in-System-Medium/" class="post-title-link" itemprop="url">609. Find Duplicate File in System (Medium)</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-06-05 15:36:05" itemprop="dateModified" datetime="2021-06-05T15:36:05+08:00">2021-06-05</time>
-      </span>
-
-  
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>1.7k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>2 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>思路 1 是使用哈希表，以文件内容为 key，拼出文件名存到字典中，最后遍历字典所有值，存在长度大于 1 的列表则表示存在内容重复。这道题还是比较亲切，实际工作中确实会遇到这类问题。</p>
-<p>下面是代码例子。</p>
-<blockquote>
-<p>其实做的粗糙一点，去掉 <code>c = c[:-1]</code> 这句也能实现，而且少一个字符串处理性能会更好。毕竟我们不在意文件内容实际是什么，只在意有没有重复。</p>
-</blockquote>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def findDuplicate(self, paths: List[str]) -&gt; List[List[str]]:
-        table &#x3D; defaultdict(list)
-        for f in paths:
-            f &#x3D; f.split(&quot; &quot;)
-            p &#x3D; f[0]
-            for i in f[1:]:
-                fn, c &#x3D; i.split(&quot;(&quot;)
-                c &#x3D; c[:-1]
-                table[c].append(f&quot;&#123;p&#125;&#x2F;&#123;fn&#125;&quot;)
-        ans &#x3D; []
-        for v in table.values():
-            if len(v) &gt; 1:
-                ans.append(v)
-        return ans</code></pre>
-
-<p>Java 例子。</p>
-<pre class="language-java" data-language="java"><code class="language-java">class Solution &#123;
-    public List&lt;List&lt;String&gt;&gt; findDuplicate(String[] paths) &#123;
-        Map&lt;String, List&lt;String&gt;&gt; table &#x3D; new HashMap&lt;&gt;();
-        for (String p : paths) &#123;
-            String[] f &#x3D; p.split(&quot; &quot;);
-            String pr &#x3D; f[0];
-            for (int i &#x3D; 1; i &lt; f.length; i++) &#123;
-                String[] file &#x3D; f[i].split(&quot;\\(&quot;);
-                if (!table.containsKey(file[1])) &#123;
-                    table.put(file[1], new ArrayList&lt;String&gt;());
-                &#125;
-                table.get(file[1]).add(pr + &quot;&#x2F;&quot; + file[0]);
-            &#125;
-        &#125;
-        List&lt;List&lt;String&gt;&gt; ans &#x3D; new ArrayList&lt;&gt;();
-        for (List&lt;String&gt; val : table.values()) &#123;
-            if (val.size() &gt; 1) &#123;
-                ans.add(val);
-            &#125;
-        &#125;
-        return ans;
-    &#125;
-&#125;</code></pre>
-
-<p>JS 例子。</p>
-<pre class="language-js" data-language="js"><code class="language-js">&#x2F;**
- * @param &#123;string[]&#125; paths
- * @return &#123;string[][]&#125;
- *&#x2F;
-var findDuplicate &#x3D; function (paths) &#123;
-  table &#x3D; &#123;&#125;;
-  for (let p of paths) &#123;
-    p &#x3D; p.split(&quot; &quot;);
-    const pr &#x3D; p[0];
-    for (let i &#x3D; 1; i &lt; p.length; i++) &#123;
-      const file &#x3D; p[i].split(&quot;(&quot;);
-      if (!table[file[1]]) table[file[1]] &#x3D; [];
-      table[file[1]].push(pr + &quot;&#x2F;&quot; + file[0]);
-    &#125;
-  &#125;
-  const ans &#x3D; [];
-  for (let k in table) &#123;
-    if (table[k].length &gt; 1) &#123;
-      ans.push(table[k]);
-    &#125;
-  &#125;
-  return ans;
-&#125;;</code></pre>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/post/leetcode/589-N-ary-Tree-Preorder-Traversal-Easy/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/icon-64.png">
-      <meta itemprop="name" content="Richard Zen">
-      <meta itemprop="description" content="<small><b>TOPICS</b></small><br>
-前端 ｜ Python ｜ Java<br>
-数据结构 ｜ 算法<br><br>
-用代码替代言语<br>记录创作与学习的脚步<br><br>
-">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HOME">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/post/leetcode/589-N-ary-Tree-Preorder-Traversal-Easy/" class="post-title-link" itemprop="url">589. N-ary Tree Preorder Traversal (Easy)</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-06-03 15:36:05" itemprop="dateModified" datetime="2021-06-03T15:36:05+08:00">2021-06-03</time>
-      </span>
-
-  
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>558</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <blockquote>
-<p>Given the root of an n-ary tree, return the preorder traversal of its nodes’ values.</p>
-<p>Nary-Tree input serialization is represented in their level order traversal. Each group of children is separated by the null value (See examples)</p>
-</blockquote>
-<pre class="language-python" data-language="python"><code class="language-python">&quot;&quot;&quot;
-# Definition for a Node.
-class Node:
-    def __init__(self, val&#x3D;None, children&#x3D;None):
-        self.val &#x3D; val
-        self.children &#x3D; children
-&quot;&quot;&quot;
-
-class Solution:
-    def preorder(self, root: &#39;Node&#39;) -&gt; List[int]:
-        if root is None:
-            return []
-
-        ans, stack &#x3D; [], [root,]
-
-        while stack:
-            top &#x3D; stack.pop()
-            ans.append(top.val)
-            stack.extend(top.children[::-1])
-
-        return ans
-
-</code></pre>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/post/leetcode/583-Delete-Operation-for-Two-Strings-Medium/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/icon-64.png">
-      <meta itemprop="name" content="Richard Zen">
-      <meta itemprop="description" content="<small><b>TOPICS</b></small><br>
-前端 ｜ Python ｜ Java<br>
-数据结构 ｜ 算法<br><br>
-用代码替代言语<br>记录创作与学习的脚步<br><br>
-">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HOME">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/post/leetcode/583-Delete-Operation-for-Two-Strings-Medium/" class="post-title-link" itemprop="url">583. Delete Operation for Two Strings (Medium)</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-06-01 15:36:05" itemprop="dateModified" datetime="2021-06-01T15:36:05+08:00">2021-06-01</time>
-      </span>
-
-  
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>328</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>Topics:</p>
-<p>String.</p>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def minDistance(self, word1: str, word2: str) -&gt; int:
-        m, n &#x3D; len(word1), len(word2)
-        dp &#x3D; &#123;&#125;
-
-        for i in range(m + 1):
-            for j in range(n + 1):
-                if i &#x3D;&#x3D; 0 or j &#x3D;&#x3D; 0:
-                    dp[i, j] &#x3D; i + j
-                elif word1[i - 1] &#x3D;&#x3D; word2[j - 1]:
-                    dp[i, j] &#x3D; dp[i - 1, j - 1]
-                else:
-                    dp[i, j] &#x3D; 1 + min(dp[i - 1, j], dp[i, j - 1])
-
-        return dp[m, n]</code></pre>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/post/leetcode/509-Fibonacci-Number-Easy/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/icon-64.png">
-      <meta itemprop="name" content="Richard Zen">
-      <meta itemprop="description" content="<small><b>TOPICS</b></small><br>
-前端 ｜ Python ｜ Java<br>
-数据结构 ｜ 算法<br><br>
-用代码替代言语<br>记录创作与学习的脚步<br><br>
-">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HOME">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/post/leetcode/509-Fibonacci-Number-Easy/" class="post-title-link" itemprop="url">509. Fibonacci Number (Easy)</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-05-30 15:36:05" itemprop="dateModified" datetime="2021-05-30T15:36:05+08:00">2021-05-30</time>
-      </span>
-
-  
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>600</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>先读题。</p>
-<blockquote>
-<p>The Fibonacci numbers, commonly denoted <code>F(n)</code> form a sequence, called the Fibonacci sequence, such that each number is the sum of the two preceding ones, starting from 0 and 1. That is,</p>
-<ul>
-<li>F(0) = 0, F(1) = 1</li>
-<li>F(n) = F(n - 1) + F(n - 2), for n &gt; 1.</li>
-<li>Given n, calculate F(n).</li>
-</ul>
-</blockquote>
-<p>斐波那契数列的问题，Hello World 级别的问题，难点是对时间和空间复杂度的控制。</p>
-<blockquote>
-<p>官解也比较变态。</p>
-</blockquote>
-<p>不多说，上正文。</p>
-<h3 id="思路-amp-Solutions"><a href="#思路-amp-Solutions" class="headerlink" title="思路 &amp; Solutions"></a>思路 &amp; Solutions</h3><p><strong>方法一，递归（不推荐）</strong></p>
-<p>实现一个 <code>F(n) = F(n - 1) + F(n - 2)</code>，缺点就是时间复杂度是 O(2^n)。</p>
-<p><strong>方法二，递归+DP</strong></p>
-<p>实现一个 <code>F(n) = F(n - 1) + F(n - 2)</code>，但是每次计算结果缓存起来，不再重复相同的计算。</p>
-<p>跳过。</p>
-<p><strong>方法三，Bottom-Up</strong></p>
-<p>抛开递归，记录前一个值，按照斐波那契数列的规律计算到 n 为止。</p>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def fib(self, n: int) -&gt; int:
-        if n &lt; 2:
-          return n
-        else:
-            pre &#x3D; 0
-            ans &#x3D; 1
-            for _ in range(2, n+1):
-                ans, pre &#x3D; ans + pre, ans
-            return ans</code></pre>
-
-<blockquote>
-<p>官解给出了矩阵幂和黄金比例的方法，跳过…</p>
-</blockquote>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/post/leetcode/462-Minimum-Moves-to-Equal-Array-Elements-II-Medium/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/icon-64.png">
-      <meta itemprop="name" content="Richard Zen">
-      <meta itemprop="description" content="<small><b>TOPICS</b></small><br>
-前端 ｜ Python ｜ Java<br>
-数据结构 ｜ 算法<br><br>
-用代码替代言语<br>记录创作与学习的脚步<br><br>
-">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HOME">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/post/leetcode/462-Minimum-Moves-to-Equal-Array-Elements-II-Medium/" class="post-title-link" itemprop="url">462. Minimum Moves to Equal Array Elements II (Medium)</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-05-28 15:36:05" itemprop="dateModified" datetime="2021-05-28T15:36:05+08:00">2021-05-28</time>
-      </span>
-
-  
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>583</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>数学法，题目要求我们用最少的步数将数组元素修正到全部相等，换句话来说就是需要找到一个合适的目标，将其他数补上差值修正到与这个数相等，答案就是这些差值的和。</p>
-<p>题目的难点在于如何意识到我们要寻找的目标是数组的中位数。</p>
-<p>我们可以准备一个数组，首先将其排序，思考一下第一个数和最后一个数修正到目标数需要的步数。</p>
-<p>我们会发现，第一个数和最后一个数中间的任何数都符合要求，因为最少步数实际上就是第一个数和最后一个数的差值。</p>
-<p>我们进一步发现需要确认合适的目标，我们还需要继续确认第二个数和倒数第二个数修正到目标需要的步数。</p>
-<p>我们重复这个过程，最终会有两种情况。</p>
-<ul>
-<li>如果数组的长度为奇数：最后找到的唯一一个数就是目标值；</li>
-<li>如果数组的长度为偶数：最后找到的一对数之间的任何值都是目标值，也包括这对数本身。</li>
-</ul>
-<p>再仔细想想，我们在寻找的其实就是数组的中位数。现在算法浮出水面了。</p>
-<ul>
-<li>方便起见我们将数组进行排序；</li>
-<li>根据长度找到数组中位数的值，不用考虑太多，直接取长度除以 2 的整数值；</li>
-<li>计算所有元素与目标的差的绝对值，进行求和。</li>
-</ul>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def minMoves2(self, nums: List[int]) -&gt; int:
-        nums.sort()
-        m &#x3D; nums[len(nums) &gt;&gt; 1]
-        ans &#x3D; 0
-        for i in nums:
-            ans +&#x3D; abs(i - m)
-        return ans</code></pre>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/post/leetcode/453-Minimum-Moves-to-Equal-Array-Elements-Easy/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/icon-64.png">
-      <meta itemprop="name" content="Richard Zen">
-      <meta itemprop="description" content="<small><b>TOPICS</b></small><br>
-前端 ｜ Python ｜ Java<br>
-数据结构 ｜ 算法<br><br>
-用代码替代言语<br>记录创作与学习的脚步<br><br>
-">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HOME">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/post/leetcode/453-Minimum-Moves-to-Equal-Array-Elements-Easy/" class="post-title-link" itemprop="url">453. Minimum Moves to Equal Array Elements (Easy)</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-05-26 15:36:05" itemprop="dateModified" datetime="2021-05-26T15:36:05+08:00">2021-05-26</time>
-      </span>
-
-  
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>454</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>题目要求每次给 <code>n - 1</code> 个元素加 1，重复这个步骤直到数组所有元素相等。我们不应该给 <code>max</code> 加 1，所以这一步实际上是给最大值以外的所有元素加 1，其等价于最大值减去 1。</p>
-<p>一旦在脑子中把这个思路捋顺了，方案就简单了。实际上我们要找到的是每一个元素减到最小值需要减去的次数。</p>
-<p>算法已经浮出水面，我们先找到最小值，然后计算每个元素和最小值的差的和，这个和就是答案。</p>
-<blockquote>
-<p>这是数学法，也称“感觉智商丢掉”法。</p>
-</blockquote>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def minMoves(self, nums: List[int]) -&gt; int:
-        m, ans &#x3D; min(nums), 0
-        for n in nums:
-            ans +&#x3D; n - m
-        return ans</code></pre>
-
-<p>基于这个思路，实际上我们把最小值减去了 <code>n</code> 次，那么找到最小值之后，我们对数组求和之后再减去数组长度乘以最小值，得到的结果就是答案。</p>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def minMoves(self, nums: List[int]) -&gt; int:
-        return sum(nums) - min(nums) * len(nums)</code></pre>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="http://example.com/post/leetcode/341-Flatten-Nested-List-Iterator-Medium/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1567,8 +648,929 @@ NestedIterator.prototype.next &#x3D; function () &#123;
 
 
 
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/post/leetcode/307-Range-Sum-Query-Mutable-Medium/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon-64.png">
+      <meta itemprop="name" content="Richard Zen">
+      <meta itemprop="description" content="<small><b>TOPICS</b></small><br>
+前端 ｜ Python ｜ Java<br>
+数据结构 ｜ 算法<br><br>
+用代码替代言语<br>记录创作与学习的脚步<br><br>
+">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HOME">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/post/leetcode/307-Range-Sum-Query-Mutable-Medium/" class="post-title-link" itemprop="url">307. Range Sum Query - Mutable (Medium)</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-05-20 15:36:05" itemprop="dateModified" datetime="2021-05-20T15:36:05+08:00">2021-05-20</time>
+      </span>
+
+  
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.3k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>给定数组，可以更新元素，还要快速查询范围内的和、最大最小值，这是典型的 Segment Tree （线段树）的应用场景。</p>
+<p>线段树可以用数组和 TreeNode 的结构表达。这里需要构建一个和线段树，方便起见用数组来表达线段树。</p>
+<p><strong>Build Tree</strong></p>
+<p>线段树是一个二叉树结构，在给定数组上构建一个线段树，最终节点数约等于原数组长度的 2 倍，所以我们准备一个原数组长度 2 倍的数组，将原数组的元素放在从 <code>n</code> 开始的后半段。</p>
+<p>前半段从 <code>n - 1</code> 开始遍历到 <code>0</code>，每个位置的值等于 <code>2 * i</code> + <code>2 * i + 1</code>，即其左右节点的和。树的构建就完成了。</p>
+<p><strong>Update Values</strong></p>
+<p>更新线段树时，只需要更新从目标叶子节点开始到根节点的路径。</p>
+<p>我们从叶子节点出发，用下标除以 2，更新每一个途径的节点，直到根节点，我们一共更新 log n 个元素。</p>
+<p><strong>Range Sum Query</strong></p>
+<p>查询给定范围的和，分左右边界进行讨论：</p>
+<p>左边界：</p>
+<ul>
+<li>如果左边元素属于节点的 right child，这意味着它的父节点包含一个值在查询的范围之外，所以我们仅加上左边元素的值本身，然后将边界向右移动一位；</li>
+<li>如果左边元素属于节点的 left child，我们查询它的父元素即可。</li>
+</ul>
+<p>右边界：</p>
+<ul>
+<li>相反，如果右边元素属于节点的 left child，我们仅加上元素本身的值，将边界向左移动一位；</li>
+<li>如果右边元素属于节点的 right child，我们查询它的父元素。</li>
+</ul>
+<p>我们更新左右边界，重复这个过程直到左右边界接错开（left &gt; right），这时我们得到了答案。</p>
+<pre class="language-python" data-language="python"><code class="language-python">class NumArray:
+
+    def __init__(self, nums: List[int]):
+        n &#x3D; len(nums)
+        tree &#x3D; [0] * 2 * n
+        for i in range(n):
+            tree[i + n] &#x3D; nums[i]
+        for i in range(n - 1, -1, -1):
+            tree[i] &#x3D; tree[i * 2] + tree[i * 2 + 1]
+
+        self.n &#x3D; n
+        self.tree &#x3D; tree
+
+
+    def update(self, index: int, val: int) -&gt; None:
+        n, tree &#x3D; self.n, self.tree
+        index +&#x3D; n
+        tree[index] &#x3D; val
+        while index !&#x3D; 0:
+            index &#x2F;&#x2F;&#x3D; 2
+            tree[index] &#x3D; tree[2 * index] + tree[2 * index + 1]
+
+
+    def sumRange(self, left: int, right: int) -&gt; int:
+        n, tree &#x3D; self.n, self.tree
+        left +&#x3D; n
+        right +&#x3D; n
+        ans &#x3D; 0
+        while left &lt;&#x3D; right:
+            if left % 2 &#x3D;&#x3D; 1:
+                ans +&#x3D; tree[left]
+                left +&#x3D; 1
+            if right % 2 &#x3D;&#x3D; 0:
+                ans +&#x3D; tree[right]
+                right -&#x3D; 1
+            left &#x2F;&#x2F;&#x3D; 2
+            right &#x2F;&#x2F;&#x3D; 2
+        return ans</code></pre>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/post/leetcode/304-Range-Sum-Query-2D-Immutable-Medium/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon-64.png">
+      <meta itemprop="name" content="Richard Zen">
+      <meta itemprop="description" content="<small><b>TOPICS</b></small><br>
+前端 ｜ Python ｜ Java<br>
+数据结构 ｜ 算法<br><br>
+用代码替代言语<br>记录创作与学习的脚步<br><br>
+">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HOME">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/post/leetcode/304-Range-Sum-Query-2D-Immutable-Medium/" class="post-title-link" itemprop="url">304. Range Sum Query 2D - Immutable (Medium)</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-05-18 15:36:05" itemprop="dateModified" datetime="2021-05-18T15:36:05+08:00">2021-05-18</time>
+      </span>
+
+  
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>694</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>Topics:</p>
+<p>DP.</p>
+<p>类似 1074，先求 Prefix Sum，然后计算子矩阵和。</p>
+<pre class="language-python" data-language="python"><code class="language-python">class NumMatrix:
+
+    def __init__(self, matrix: List[List[int]]):
+        m, n &#x3D; len(matrix), len(matrix[0])
+
+        for j in range(1, n):
+            matrix[0][j] +&#x3D; matrix[0][j - 1]
+
+        for i in range(1, m):
+            for j in range(n):
+                if j &gt; 0:
+                    matrix[i][j] +&#x3D; matrix[i][j - 1] - matrix[i - 1][j - 1]
+                matrix[i][j] +&#x3D; matrix[i - 1][j]
+
+        self._m &#x3D; matrix
+
+
+    def sumRegion(self, row1: int, col1: int, row2: int, col2: int) -&gt; int:
+        ans &#x3D; self._m[row2][col2]
+        if row1 &gt; 0:
+            ans -&#x3D; self._m[row1 - 1][col2]
+        if col1 &gt; 0:
+            ans -&#x3D; self._m[row2][col1 - 1]
+        if row1 &gt; 0 and col1 &gt; 0:
+            ans +&#x3D; self._m[row1 - 1][col1 - 1]
+        return ans
+
+# Your NumMatrix object will be instantiated and called as such:
+# obj &#x3D; NumMatrix(matrix)
+# param_1 &#x3D; obj.sumRegion(row1,col1,row2,col2)</code></pre>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/post/leetcode/303-Range-Sum-Query-Immutable-Easy/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon-64.png">
+      <meta itemprop="name" content="Richard Zen">
+      <meta itemprop="description" content="<small><b>TOPICS</b></small><br>
+前端 ｜ Python ｜ Java<br>
+数据结构 ｜ 算法<br><br>
+用代码替代言语<br>记录创作与学习的脚步<br><br>
+">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HOME">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/post/leetcode/303-Range-Sum-Query-Immutable-Easy/" class="post-title-link" itemprop="url">303. Range Sum Query - Immutable (Easy)</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-05-16 15:36:05" itemprop="dateModified" datetime="2021-05-16T15:36:05+08:00">2021-05-16</time>
+      </span>
+
+  
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>295</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>前缀和，然后查询区间，最右减去最左，注意一个 index 的 offset。</p>
+<p>查询 0 开始的范围，需要减去 -1 下标的和，这不合理，所以遇到 -1 可以选择重置为 0，但这不优雅。</p>
+<p>通过向数组左端添加一个 0，可以避免处理 query 范围左端为 -1 的场景。</p>
+<pre class="language-python" data-language="python"><code class="language-python">class NumArray:
+
+    def __init__(self, nums: List[int]):
+        self.q &#x3D; [0]
+        for n in nums:
+            self.q.append(self.q[-1] + n)
+
+
+    def sumRange(self, left: int, right: int) -&gt; int:
+        return self.q[right + 1] - self.q[left]</code></pre>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/post/leetcode/204-Count-Primes-Easy/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon-64.png">
+      <meta itemprop="name" content="Richard Zen">
+      <meta itemprop="description" content="<small><b>TOPICS</b></small><br>
+前端 ｜ Python ｜ Java<br>
+数据结构 ｜ 算法<br><br>
+用代码替代言语<br>记录创作与学习的脚步<br><br>
+">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HOME">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/post/leetcode/204-Count-Primes-Easy/" class="post-title-link" itemprop="url">204. Count Primes (Easy)</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-05-14 15:36:05" itemprop="dateModified" datetime="2021-05-14T15:36:05+08:00">2021-05-14</time>
+      </span>
+
+  
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>249</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>Topics:</p>
+<p>Hash table, math.</p>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def countPrimes(self, n: int) -&gt; int:
+
+        isprime &#x3D; [1] * n
+
+        for i in range(2, int(math.sqrt(n)) + 1):
+            if isprime[i] !&#x3D; 0:
+                for j in range(i ** 2, n, i):
+                    isprime[j] &#x3D; 0
+
+        # 0 and 1 are not prime.
+        ans &#x3D; sum(isprime) - 2
+        return ans if ans &gt; 0 else 0</code></pre>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/post/leetcode/164-Maximum-Gap-Hard/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon-64.png">
+      <meta itemprop="name" content="Richard Zen">
+      <meta itemprop="description" content="<small><b>TOPICS</b></small><br>
+前端 ｜ Python ｜ Java<br>
+数据结构 ｜ 算法<br><br>
+用代码替代言语<br>记录创作与学习的脚步<br><br>
+">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HOME">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/post/leetcode/164-Maximum-Gap-Hard/" class="post-title-link" itemprop="url">164. Maximum Gap (Hard)</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-05-12 15:36:05" itemprop="dateModified" datetime="2021-05-12T15:36:05+08:00">2021-05-12</time>
+      </span>
+
+  
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.1k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>桶排序实现常数 n 的 O(n)复杂度。</p>
+<p>桶排序是指将数据划分为诺干子数组，称之为桶，在桶内使用一般排序算法（比如 O(n^2)的插入排序等）排序，等到每一个桶就完成各自的排序之后，将所有桶按照顺序组合起来，获得最终排序完成的数组。</p>
+<p>这样做的优势，通过一个例子可以清晰的明白：我们有一个长度为 10 的数组需要排序；</p>
+<ul>
+<li>使用插入排序，O(n^2)的情况下最差的情况将进行 10*10=100 次操作；</li>
+<li>使用桶排序，选择最大的桶将数组分为两个长度为 5 的子数组，分别应用排序，最差情况将进行 10（分桶）+5*5（插入排序）*2（2 个桶） =60 次操作。</li>
+</ul>
+<p>但是桶的尺寸为 2 对于这个场景并不是最优的选择，这个例子解释了就算用极限分桶，也比单独使用插入排序高效。</p>
+<p>桶排序的重点在于决定桶的尺寸，这直接影响到排序效率，对于这道题来说，通过数学归纳可以得知，最大间距的最小可能应该是间距的平均值，而当所有数的间隔都是平均分布的时候才会遇到这个场景，比如 <code>[0, 5, 10, 15]</code>，其中总间距为最大值减去最小值，即 <code>15-0=15</code>，通过观察得知间距的数量为数组长度减去 <code>1</code>，即 <code>4-1=3</code>，那么平均间距为 <code>15/3=5</code>，对于这个数组来说，平均间距就是最大间距，但是一旦其中任何一个值变大或变小任意长度，比如 <code>[0, 4, 10, 15]</code>，第一个间距从 <code>5</code> 变为 <code>4</code>，就必定意味着第二个间距从 <code>5</code> 变为 <code>6</code>。</p>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def maximumGap(self, nums: List[int]) -&gt; int:
+        ans, n, hi, lo &#x3D; 0, len(nums), max(nums), min(nums)
+        if n &lt; 2: return 0
+        # Set 1 for case that max gap less than its length.
+        bsize &#x3D; (hi - lo) &#x2F;&#x2F; (n - 1) or 1
+        buckets &#x3D; [[-1, -1] for _ in range((hi - lo) &#x2F;&#x2F; bsize + 1)]
+        for x in nums:
+            b &#x3D; (x - lo) &#x2F;&#x2F; bsize
+            buckets[b][0] &#x3D; min(buckets[b][0], x) if buckets[b][0] !&#x3D; -1 else x
+            buckets[b][1] &#x3D; max(buckets[b][1], x)
+        prev &#x3D; buckets[0][1]
+        for i in range(1, len(buckets)):
+            if buckets[i][0] &#x3D;&#x3D; -1:
+                continue
+            ans &#x3D; max(ans, buckets[i][0] - prev)
+            prev &#x3D; buckets[i][1]
+        return ans</code></pre>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/post/leetcode/150-Evaluate-Reverse-Polish-Notation-Medium/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon-64.png">
+      <meta itemprop="name" content="Richard Zen">
+      <meta itemprop="description" content="<small><b>TOPICS</b></small><br>
+前端 ｜ Python ｜ Java<br>
+数据结构 ｜ 算法<br><br>
+用代码替代言语<br>记录创作与学习的脚步<br><br>
+">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HOME">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/post/leetcode/150-Evaluate-Reverse-Polish-Notation-Medium/" class="post-title-link" itemprop="url">150. Evaluate Reverse Polish Notation (Medium)</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-05-10 15:36:05" itemprop="dateModified" datetime="2021-05-10T15:36:05+08:00">2021-05-10</time>
+      </span>
+
+  
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>586</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>反向波兰表示法是一种使用 Stack 达到方便计算目的的一种数学方法。</p>
+<p>使用递归或 Stack 都能简单的完成计算。使用 Stack 为例，算法过程如下：</p>
+<ul>
+<li>遍历 tokens<ul>
+<li>遇到数字则加到栈顶</li>
+<li>遇到操作符和取出栈顶的 2 个数字做运算，运算结果放回栈顶</li>
+</ul>
+</li>
+<li>最终栈中存在的元素就是答案</li>
+</ul>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def evalRPN(self, tokens: List[str]) -&gt; int:
+        stack &#x3D; []
+
+        for t in tokens:
+            if t not in &#123;&quot;+&quot;, &quot;-&quot;, &quot;*&quot;, &quot;&#x2F;&quot;&#125;:
+                stack.append(int(t))
+            else:
+                right, left &#x3D; stack.pop(), stack.pop()
+                # print(left, t, right)
+                if t &#x3D;&#x3D; &#39;+&#39;:
+                    stack.append(left + right)
+                elif t &#x3D;&#x3D; &#39;-&#39;:
+                    stack.append(left - right)
+                elif t &#x3D;&#x3D; &#39;*&#39;:
+                    stack.append(left * right)
+                else:
+                    stack.append(trunc(left &#x2F; right))
+
+        return stack[0]</code></pre>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/post/leetcode/145-Binary-Tree-Postorder-Traversal-Easy/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon-64.png">
+      <meta itemprop="name" content="Richard Zen">
+      <meta itemprop="description" content="<small><b>TOPICS</b></small><br>
+前端 ｜ Python ｜ Java<br>
+数据结构 ｜ 算法<br><br>
+用代码替代言语<br>记录创作与学习的脚步<br><br>
+">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HOME">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/post/leetcode/145-Binary-Tree-Postorder-Traversal-Easy/" class="post-title-link" itemprop="url">145. Binary Tree Postorder Traversal (Easy)</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-05-08 15:36:05" itemprop="dateModified" datetime="2021-05-08T15:36:05+08:00">2021-05-08</time>
+      </span>
+
+  
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.5k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>遍历树通常有三种方法，分别是前序遍历（pre-order traversal）、中序遍历（in-order traversal）和后序遍历（post-order traversal）。这道题是后序遍历。</p>
+<p>思路 1，递归</p>
+<p>三种递归遍历方式的区别仅在于处理的顺序。</p>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def postorderTraversal(self, root: TreeNode) -&gt; List[int]:
+        ans &#x3D; []
+
+        def traverse(node):
+            if node is None:
+                return
+            traverse(node.left)
+            traverse(node.right)
+            ans.append(node.val)
+
+        traverse(root)
+        return ans</code></pre>
+
+<p>思路 2，迭代遍历</p>
+<p>后序遍历按照 left -&gt; right -&gt; root 的顺序遍历树，你会发现这和前序遍历相似，我们只需要将前序遍历方法中左右子节点的遍历顺序对调，并将其结果颠倒一下顺序，即可得到后序遍历的结果。</p>
+<p>但是这样不够优雅。</p>
+<p>我们延续 stack 的思路，通过观察我们知道要完成后序遍历，每次迭代过程中我们可以把当前节点、右节点、左节点按顺序放入 stack 中，针对当前节点，需要将其左右子节点置空表示已经遍历过。</p>
+<p>我们的 Base Case 的条件是当前节点没有左右子节点，这表示该节点是叶子节点，或是已经遍历过的节点，针对这两种情况我们直接记录它的值。</p>
+<p>重复这个过程，直到完成遍历。</p>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def postorderTraversal(self, root: TreeNode) -&gt; List[int]:
+        ans, stack &#x3D; [], [root]
+
+        while len(stack) &gt; 0:
+            curr &#x3D; stack.pop()
+            if not curr:
+                continue
+            left, right &#x3D; curr.left, curr.right
+            if not left and not right:
+                ans.append(curr.val)
+                continue
+            curr.left, curr.right &#x3D; None, None
+            stack.append(curr)
+            stack.append(right)
+            stack.append(left)
+
+        return ans</code></pre>
+
+<p>思路 3，迭代遍历，基于中序迭代遍历优化</p>
+<p>由于 root 的值是最后记录的，在当前节点存在右节点的情况，还需要将当前节点的右节点置空，重新存入 stack。在空间复杂度上比思路 2 而言没有太大优化。</p>
+<p>这个思路下，我们先到达左节点的最下层左节点（即最后一个左节点，该节点的左节点为空），然后根据右节点发生下面分支：</p>
+<ul>
+<li>右节点不存在：The Base Case，这个节点是叶子节点或访问过的节点，记录它的值；</li>
+<li>右节点存在：置空当前节点的右节点并存入 stack，将右节点标记为当前节点进入下一个迭代过程。</li>
+</ul>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def postorderTraversal(self, root: TreeNode) -&gt; List[int]:
+        ans, stack, curr &#x3D; [], [], root
+
+        while curr or len(stack) &gt; 0:
+            while curr:
+                stack.append(curr)
+                curr &#x3D; curr.left
+            curr &#x3D; stack.pop()
+            if curr.right:
+                stack.append(curr)
+                # 置空当前节点的右节点，标记右节点为当前节点
+                curr.right, curr &#x3D; None, curr.right
+                continue
+            ans.append(curr.val)
+            # 节点已经遍历完成，注意需要清空指针
+            curr &#x3D; None
+
+        return ans</code></pre>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/post/leetcode/144-Binary-Tree-Preorder-Traversal-Easy/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon-64.png">
+      <meta itemprop="name" content="Richard Zen">
+      <meta itemprop="description" content="<small><b>TOPICS</b></small><br>
+前端 ｜ Python ｜ Java<br>
+数据结构 ｜ 算法<br><br>
+用代码替代言语<br>记录创作与学习的脚步<br><br>
+">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HOME">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/post/leetcode/144-Binary-Tree-Preorder-Traversal-Easy/" class="post-title-link" itemprop="url">144. Binary Tree Preorder Traversal (Easy)</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-05-06 15:36:05" itemprop="dateModified" datetime="2021-05-06T15:36:05+08:00">2021-05-06</time>
+      </span>
+
+  
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>615</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>遍历树有三种方法，分别是前序 pre-order、中序 in-order 和后序 post-order 遍历。这道题是前序遍历。</p>
+<p>前序遍历的递归写法没有难度。</p>
+<p>思路 1，递归</p>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def preorderTraversal(self, root: TreeNode) -&gt; List[int]:
+        ans &#x3D; []
+
+        def traverse(node):
+            if node is None:
+                return
+            ans.append(node.val)
+            traverse(node.left)
+            traverse(node.right)
+
+        traverse(root)
+        return ans</code></pre>
+
+<p>思路 2，遍历</p>
+<p>使用 stack 或队列按顺序记录需要检查的节点，需要关注的是：</p>
+<ul>
+<li>stack 是先进后出，要保证先左后右的顺序，需要先放入右 child，再放入左 child；</li>
+<li>队列是先进先出，按正常顺序放入左右 child 即可。</li>
+</ul>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def preorderTraversal(self, root: TreeNode) -&gt; List[int]:
+        ans, stack &#x3D; [], [root]
+
+        while len(stack) &gt; 0:
+            node &#x3D; stack.pop()
+            if node is None:
+                continue
+            ans.append(node.val)
+            stack.append(node.right)
+            stack.append(node.left)
+
+        return ans</code></pre>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 </div>
@@ -1591,13 +1593,13 @@ NestedIterator.prototype.next &#x3D; function () &#123;
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">80k</span>
+    <span title="站点总字数">78k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:13</span>
+    <span title="站点阅读时长">1:11</span>
   </span>
 </div>
 <div class="busuanzi-count">

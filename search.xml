@@ -3,8 +3,12 @@
   <entry>
     <title>1004. Max Consecutive Ones III (Medium)</title>
     <url>/post/leetcode/1004-Max-Consecutive-Ones-III-Medium/</url>
-    <content><![CDATA[<p>思路 1，滑动窗口。</p>
-<p>提示说的很清楚，题目要求找出最长的连续出现的 <code>1</code>，那么用 2 个指针实现一个滑动窗口是一个合适的选择。</p>
+    <content><![CDATA[<h2 id="Before-diving-into-the-Solution"><a href="#Before-diving-into-the-Solution" class="headerlink" title="Before diving into the Solution"></a>Before diving into the Solution</h2><p>给定一个二进制数组 <code>nums</code>（元素的值为 <code>0</code> 或 <code>1</code>），求最长的连续的 <code>1</code> 的长度。</p>
+<p>有趣的地方在于你有 <code>k</code> 次机会将 <code>0</code> 翻转为 <code>1</code>，你需要找出最合适的时机使用这些机会。</p>
+<p>“连续”是这道题的关键字，看上去我们可以使用滑动窗口来解决这道题。</p>
+<!-- more -->
+
+<h2 id="思路-1，滑动窗口"><a href="#思路-1，滑动窗口" class="headerlink" title="思路 1，滑动窗口"></a>思路 1，滑动窗口</h2><p>提示说的很清楚，题目要求找出最长的连续出现的 <code>1</code>，那么用 2 个指针实现一个滑动窗口是一个合适的选择。</p>
 <p>用一个数组储存所有遇到 <code>0</code> 的位置，当数组长度超过 <code>k</code>，将左边指针设为第一个 <code>0</code> 位置的下一位，并将第一个 <code>0</code> 从数组删除。</p>
 <p>每一步都保存一下当前连续的最大值。</p>
 <pre class="language-python" data-language="python"><code class="language-python">class Solution:
@@ -18,8 +22,7 @@
             ans &#x3D; max(ans, j - i + 1)
         return ans</code></pre>
 
-<p>思路 2，滑动窗口+内存优化。</p>
-<p>我们可以优化思路 1 的数组方法，仅使用一个计数器来提醒我们是否需要将左边的指针移动到下一个位置。</p>
+<h2 id="思路-2，滑动窗口-内存优化"><a href="#思路-2，滑动窗口-内存优化" class="headerlink" title="思路 2，滑动窗口+内存优化"></a>思路 2，滑动窗口+内存优化</h2><p>我们可以优化思路 1 的数组方法，仅使用一个计数器来提醒我们是否需要将左边的指针移动到下一个位置。</p>
 <pre class="language-python" data-language="python"><code class="language-python">class Solution:
     def longestOnes(self, nums: List[int], k: int) -&gt; int:
         ans, i &#x3D; 0, 0
@@ -163,7 +166,11 @@ class Solution:
   <entry>
     <title>1047. Remove All Adjacent Duplicates In String (Easy)</title>
     <url>/post/leetcode/1047-Remove-All-Adjacent-Duplicates-In-String-Easy/</url>
-    <content><![CDATA[<p>用 Stack 依次确认每一个字符。</p>
+    <content><![CDATA[<h2 id="Before-diving-into-the-Solution"><a href="#Before-diving-into-the-Solution" class="headerlink" title="Before diving into the Solution"></a>Before diving into the Solution</h2><p>给定一个由英文小写字母组成的字符串 <code>s</code>，要求去重并返回结果。去重的条件是 2 个字符必须接邻且相等。</p>
+<p>这道题的难点在于去重之后的字符串可能会产生新的重复。使用 Stack 可以方便的解决这道题。</p>
+<!-- more -->
+
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>用 Stack 依次确认每一个字符。</p>
 <pre class="language-python" data-language="python"><code class="language-python">class Solution:
     def removeDuplicates(self, s: str) -&gt; str:
         stack &#x3D; []
@@ -185,7 +192,18 @@ class Solution:
   <entry>
     <title>1048. Longest String Chain (Medium)</title>
     <url>/post/leetcode/1048-Longest-String-Chain-Medium/</url>
-    <content><![CDATA[<p>思路 1，hash table + memoization。明确一下要找出最长的链，我们需要完成下面的步骤才能最终确认：</p>
+    <content><![CDATA[<h2 id="Before-diving-into-the-Solution"><a href="#Before-diving-into-the-Solution" class="headerlink" title="Before diving into the Solution"></a>Before diving into the Solution</h2><p>给定一个由英文小写字母组成的字符串数组 <code>words</code>，你需要从中挑选单词构成满足下面定义的词汇链（word chain），找到能构成的最长词汇链，返回其长度。</p>
+<ul>
+<li>词汇链（word chain）指一个字符串数组中，每个字符串都是后一个字符串的前置（predecessor），如果数组只有一个字符串，这个词汇链长度为 <code>1</code>；</li>
+<li>前置（predecessor）指一个字符串 A 满足仅向其中添加一个字符可以构成字符串 B 的条件，此时字符串 A 称之为字符串 B 的前置。<ul>
+<li>比如 <code>&quot;abc&quot;</code> 是 <code>&quot;abac&quot;</code> 的前置, 而 <code>&quot;cba&quot;</code> 不是 <code>&quot;bcad&quot;</code> 的前置。</li>
+</ul>
+</li>
+</ul>
+<p>我们用 DFS 和 DP 两个思路解决这个问题。</p>
+<!-- more -->
+
+<h2 id="思路-1，hash-table-memoization"><a href="#思路-1，hash-table-memoization" class="headerlink" title="思路 1，hash table + memoization"></a>思路 1，hash table + memoization</h2><p>明确一下要找出最长的链，我们需要完成下面的步骤才能最终确认：</p>
 <ul>
 <li>遍历所有 word，找到所有可能的 predecessor</li>
 <li>遍历所有的 predecessor，找到它的所有可能的 predecessor；如此反复</li>
@@ -216,7 +234,7 @@ class Solution:
         # print(memo)
         return max(memo.values())</code></pre>
 
-<p>思路 2，DP。思路 1 的非递归版本。</p>
+<h2 id="思路-2，DP"><a href="#思路-2，DP" class="headerlink" title="思路 2，DP"></a>思路 2，DP</h2><p>思路 1 的非递归版本。</p>
 <pre class="language-python" data-language="python"><code class="language-python">class Solution:
     def longestStrChain(self, words: List[str]) -&gt; int:
         words.sort(key&#x3D;lambda x: len(x))
@@ -236,14 +254,21 @@ class Solution:
         <category>leetcode</category>
       </categories>
       <tags>
+        <tag>Array</tag>
+        <tag>String</tag>
         <tag>Hash Table</tag>
+        <tag>Two Pointers</tag>
         <tag>DP</tag>
       </tags>
   </entry>
   <entry>
     <title>1074. Number of Submatrices That Sum to Target (Hard)</title>
     <url>/post/leetcode/1074-Number-of-Submatrices-That-Sum-to-Target-Hard/</url>
-    <content><![CDATA[<p>With solutions both in Python and Java.</p>
+    <content><![CDATA[<h2 id="Before-diving-into-the-Solution"><a href="#Before-diving-into-the-Solution" class="headerlink" title="Before diving into the Solution"></a>Before diving into the Solution</h2><p>矩阵求和问题。给定一个矩阵 <code>matrix</code> 和一个目标值 <code>target</code>，求和为 <code>target</code> 的子矩阵的数量。</p>
+<p>这是典型的前缀和应用场景，我们分别用两种思路应用前缀和来解决这个问题。</p>
+<!-- more -->
+
+<h2 id="Understanding-the-Problem"><a href="#Understanding-the-Problem" class="headerlink" title="Understanding the Problem"></a>Understanding the Problem</h2><p>With solutions both in Python and Java.</p>
 <p>这是一道困难题，先读题。</p>
 <blockquote>
 <p>Given a <code>matrix</code> and a <code>target</code>, return the number of non-empty submatrices that sum to target.</p>
@@ -261,7 +286,7 @@ class Solution:
 </ul>
 <p>看看例子。</p>
 <p>Example 1:</p>
-<p><img src="./resources/1074.eg.jpg" alt="1074.eg.jpg"></p>
+<p><img src="/images/leetcode/1074.eg.jpg" alt="1074.eg.jpg"></p>
 <pre class="language-console" data-language="console"><code class="language-console">Input: matrix &#x3D; [[0,1,0],[1,1,1],[0,1,0]], target &#x3D; 0
 Output: 4
 Explanation: The four 1x1 submatrices that only contain 0.</code></pre>
@@ -724,7 +749,16 @@ var flatten &#x3D; function (root) &#123;
   <entry>
     <title>1192. Critical Connections in a Network (Hard)</title>
     <url>/post/leetcode/1192-Critical-Connections-in-a-Network-Hard/</url>
-    <content><![CDATA[<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    <content><![CDATA[<h2 id="Before-diving-into-the-Solution"><a href="#Before-diving-into-the-Solution" class="headerlink" title="Before diving into the Solution"></a>Before diving into the Solution</h2><p>图论问题。一共有 <code>n</code> 台服务器，我们将存在于任意 2 台服务器之间链接定义为边，可以构成一张无向图。</p>
+<p>给定一个 <code>connections</code> 数组定义这个服务器网络的所有链接（边），在这个网络上任何节点都可以直接或间接的相互访问。</p>
+<p>关键链接指的是这个网络中的某一个节点如果被移除，将导致一部分服务器无法访问到另一部分。</p>
+<p>要求找到所有关键链接。</p>
+<!-- more -->
+
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><blockquote>
+<p>解题思路需要 review 和重新记录。理论上思路是依次尝试移除一个链接，然后检查所有服务器是否还能互联。</p>
+</blockquote>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
     def criticalConnections(self, n: int, connections: List[List[int]]) -&gt; List[List[int]]:
         # make adjacency-list of connections
         adj &#x3D; defaultdict(list)
@@ -752,8 +786,7 @@ var flatten &#x3D; function (root) &#123;
         ids &#x3D; [-1] * n
         dfs(0, -1, 0, ids, ans)
 
-        return ans
-</code></pre>
+        return ans</code></pre>
 ]]></content>
       <categories>
         <category>leetcode</category>
@@ -762,6 +795,7 @@ var flatten &#x3D; function (root) &#123;
         <tag>DFS</tag>
         <tag>Graph</tag>
         <tag>Biconnected Component</tag>
+        <tag>Need Review</tag>
       </tags>
   </entry>
   <entry>
@@ -848,7 +882,29 @@ Output: -10</code></pre>
   <entry>
     <title>1302. Deepest Leaves Sum (Medium)</title>
     <url>/post/leetcode/1302-Deepest-Leaves-Sum-Medium/</url>
-    <content><![CDATA[]]></content>
+    <content><![CDATA[<h2 id="Before-diving-into-the-Solution"><a href="#Before-diving-into-the-Solution" class="headerlink" title="Before diving into the Solution"></a>Before diving into the Solution</h2><p>求二叉树最深层的所有节点的值之和。二叉树层序遍历的应用场景。</p>
+<p>虽然题目的 tag 包含 DFS，但是感觉用 DFS 思路比 BFS 还要复杂并且低效，所以这题我们只讨论 BFS 思路。</p>
+<!-- more -->
+
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>计算每一层的和，直到最后一层完成计算，返回计算的和。</p>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def deepestLeavesSum(self, root: TreeNode) -&gt; int:
+        queue &#x3D; [root]
+        ans &#x3D; 0
+
+        while len(queue) &gt; 0:
+            size &#x3D; len(queue)
+            ans &#x3D; 0
+            for x in range(size):
+                node &#x3D; queue.pop(0)
+                ans +&#x3D; node.val
+                if node.left:
+                    queue.append(node.left)
+                if node.right:
+                    queue.append(node.right)
+
+        return ans</code></pre>
+]]></content>
       <categories>
         <category>leetcode</category>
       </categories>
@@ -857,7 +913,6 @@ Output: -10</code></pre>
         <tag>BFS</tag>
         <tag>Binary Tree</tag>
         <tag>DFS</tag>
-        <tag>Not Solved</tag>
       </tags>
   </entry>
   <entry>
@@ -948,10 +1003,16 @@ Output: -10</code></pre>
   <entry>
     <title>1354. Construct Target Array With Multiple Sums (Hard)</title>
     <url>/post/leetcode/1354-Construct-Target-Array-With-Multiple-Sums-Hard/</url>
-    <content><![CDATA[<p>Topics:</p>
-<p>Greedy.</p>
-<p>Highlight:</p>
+    <content><![CDATA[<h2 id="Before-diving-into-the-Solution"><a href="#Before-diving-into-the-Solution" class="headerlink" title="Before diving into the Solution"></a>Before diving into the Solution</h2><p>构建目标数组问题。给你一个长度为 <code>n</code> 的目标数组 <code>target</code>，你需要从一个包含 <code>n</code> 个 <code>1</code> 的数组 <code>arr</code> 开始执行下面的过程：</p>
 <ul>
+<li>设当前的 <code>arr</code> 数组的和为 <code>x</code>；</li>
+<li>选择 <code>0</code> 到 <code>n</code> 之间的一个下标 <code>i</code>，让 <code>arr[i]</code> 等于 <code>x</code>；</li>
+<li>重复这个过程。</li>
+</ul>
+<p>判断最终能否构建出目标数组。</p>
+<!-- more -->
+
+<h2 id="Highlight"><a href="#Highlight" class="headerlink" title="Highlight:"></a>Highlight:</h2><ul>
 <li>Backward from the max value</li>
 <li>Mod operation on max value with rest sum to get replacement value</li>
 <li>Push replacement value back to heap</li>
@@ -970,7 +1031,7 @@ Output: -10</code></pre>
         heap &#x3D; [-x for x in target]
         heapify(heap)
 
-        # If the max value of heap is
+        # If the max value of heap is 1
         while -heap[0] !&#x3D; 1:
             # Get max value of current heap.
             num &#x3D; -heap[0]
@@ -993,13 +1054,20 @@ Output: -10</code></pre>
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>Greedy</tag>
+        <tag>Array</tag>
+        <tag>Heap (Priority Queue)</tag>
       </tags>
   </entry>
   <entry>
     <title>1383. Maximum Performance of a Team (Hard)</title>
     <url>/post/leetcode/1383-Maximum-Performance-of-a-Team-Hard/</url>
-    <content><![CDATA[<p>解题思路是先计算局部最优解，再计算全局的最优解，是典型的贪心算法的应用场景。但这道题困难之处在于需要保持两个排序，而意识到这个解决方案需要一定的直觉。</p>
+    <content><![CDATA[<h2 id="Before-diving-into-the-Solution"><a href="#Before-diving-into-the-Solution" class="headerlink" title="Before diving into the Solution"></a>Before diving into the Solution</h2><p>你需要从 <code>n</code> 个工程师中选择最多 <code>k</code> 位构成一个小组，并保证获得最好的绩效表现。</p>
+<p>你有两个数组 <code>speed</code> 和 <code>efficiency</code> 分别表示每个工程师的速度和效率。</p>
+<p>小组的绩效表现计算方法：小组所有成员的速度之和乘以小组成员效率的最小值。由于结果数组可能会非常大，将结果和 <code>10^9 + 7</code> 取模作为答案返回。</p>
+<p>工程师的速度和效率是捆绑的，所以要知道答案，我们只能尝试将每一位工程师编入小组，可以使用贪心算法解决问题。</p>
+<!-- more -->
+
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>解题思路是先计算局部最优解，再计算全局的最优解，是典型的贪心算法的应用场景。但这道题困难之处在于需要保持两个排序，而意识到这个解决方案需要一定的直觉。</p>
 <p>读完题我们可以了解到团队的表现计算公式为：<code>sum(speeds) * min(efficiencies)</code>，这里的细节是选择的团队成员最多可以达到<code>k</code>位，意味着当团队人数少于<code>k</code>能取得更好的表现时的结果可以作为局部最优解。</p>
 <p>据此我们开始思考，暴力解法最大的问题在于做了很多没有意义的运算，如果能找到一个方法对暴力算法进行剪枝，我们就能更快的得到答案。这道题的瓶颈在于 <code>efficiency</code> 取其最小值，而换句话来说，如果我们指定了一个队员的 <code>efficiency</code> 为最小值，那么此时的局部最优解将会是所有效率高于这个队员的人之中速度最快的前 <code>k-1</code> 个人加上这个队员的速度（我们一共选了 <code>k</code> 个人），将结果乘以这个队员的效率（因为这个队员是最小值）。</p>
 <p>要实现这个思路需要保持 2 个排序：</p>
@@ -1026,52 +1094,10 @@ Output: -10</code></pre>
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>Greedy</tag>
-        <tag>Sort</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>1423. Maximum Points You Can Obtain from Cards (Medium)</title>
-    <url>/post/leetcode/1423-Maximum-Points-You-Can-Obtain-from-Cards-Medium/</url>
-    <content><![CDATA[<h1 id="1423-Maximum-Points-You-Can-Obtain-from-Cards-Medium"><a href="#1423-Maximum-Points-You-Can-Obtain-from-Cards-Medium" class="headerlink" title="1423. Maximum Points You Can Obtain from Cards (Medium)"></a>1423. Maximum Points You Can Obtain from Cards (Medium)</h1><p>Topics:</p>
-<p>Array, DP, sliding window.</p>
-<p>思路 1，用滑动窗口检查 k 以外的连续元素的最小值，然后用数组和减去这个最小值。计算过程用 DP 简化，仅需计算数组前缀和。优势是思路简单，前缀和使用 in-place 不会占用额外空间。虽然思路简单，但是代码不算简洁。</p>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def maxScore(self, cp: List[int], k: int) -&gt; int:
-        n &#x3D; len(cp)
-
-        # Calculate prefix sum.
-        for i in range(1, n):
-            cp[i] +&#x3D; cp[i - 1]
-
-        if n &#x3D;&#x3D; k:
-            return cp[-1]
-
-        sz &#x3D; n - k
-        m &#x3D; cp[sz - 1]
-
-        for i in range(sz, n):
-            m &#x3D; min(m, cp[i] - cp[i - sz])
-
-        return cp[-1] - m</code></pre>
-
-<p>思路 2 就是直接按照提问的思路，计算所有组合并且求最大值，逻辑捋清楚之后也比较简单，这里只需要滑动窗口，每次减去离开窗口的值、加上进入窗口的值，然后取最大值。思路捋清楚后代码比较简洁.</p>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def maxScore(self, cp: List[int], k: int) -&gt; int:
-        ans &#x3D; curr &#x3D; sum(cp[:k])
-        # From k - 1 to 0
-        for i in range(k - 1, -1, -1):
-            curr +&#x3D; cp[i - k] - cp[i]
-            ans &#x3D; max(ans, curr)
-        return ans</code></pre>
-]]></content>
-      <categories>
-        <category>leetcode</category>
-      </categories>
-      <tags>
         <tag>Array</tag>
-        <tag>Sliding Window</tag>
-        <tag>DP</tag>
+        <tag>Greedy</tag>
+        <tag>Heap (Priority Queue)</tag>
+        <tag>Sorting</tag>
       </tags>
   </entry>
   <entry>
@@ -1207,50 +1233,6 @@ Output: -10</code></pre>
       </tags>
   </entry>
   <entry>
-    <title>1465. Maximum Area of a Piece of Cake After Horizontal and Vertical Cuts (Medium)</title>
-    <url>/post/leetcode/1465-Maximum-Area-of-a-Piece-of-Cake-After-Horizontal-and-Vertical-Cuts-Medium/</url>
-    <content><![CDATA[<p>将横切和竖切排序，不要忘记加上最大的长宽 <code>h</code> 和 <code>w</code>，对每条切线求出实际长度（当前长度减去前一条线的长度），保留最大值。对取得的最大长宽求面积，结果用 1e9 + 7 取模。</p>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def maxArea(self, h: int, w: int, horizontalCuts: List[int], verticalCuts: List[int]) -&gt; int:
-        horizontalCuts.sort()
-        horizontalCuts.append(h)
-        verticalCuts.sort()
-        verticalCuts.append(w)
-        mh, mv &#x3D; horizontalCuts[0], verticalCuts[0]
-        for i in range(len(horizontalCuts) - 1, 0, -1):
-            mh &#x3D; max(mh, horizontalCuts[i] - horizontalCuts[i-1])
-        for i in range(len(verticalCuts) - 1, 0, -1):
-            mv &#x3D; max(mv, verticalCuts[i] - verticalCuts[i-1])
-        return (mh * mv) % (10**9 + 7)</code></pre>
-]]></content>
-      <categories>
-        <category>leetcode</category>
-      </categories>
-      <tags>
-        <tag>Array</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>1480. Running Sum of 1d Array (Easy)</title>
-    <url>/post/leetcode/1480-Running-Sum-of-1d-Array-Easy/</url>
-    <content><![CDATA[<p>Topics:</p>
-<p>Array.</p>
-<p>连续几天 Hard 题目突然蹦出来一道 Easy 还有点不适应，提交之前都在想肯定没这么简单，有那里没考虑到，结果就 Accepted 了。</p>
-<p>简直 leetcode pstd。</p>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def runningSum(self, nums: List[int]) -&gt; List[int]:
-        for i in range(1, len(nums)):
-            nums[i] +&#x3D; nums[i - 1]
-        return nums</code></pre>
-]]></content>
-      <categories>
-        <category>leetcode</category>
-      </categories>
-      <tags>
-        <tag>Array</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>150. Evaluate Reverse Polish Notation (Medium)</title>
     <url>/post/leetcode/150-Evaluate-Reverse-Polish-Notation-Medium/</url>
     <content><![CDATA[<p>反向波兰表示法是一种使用 Stack 达到方便计算目的的一种数学方法。</p>
@@ -1326,177 +1308,6 @@ Output: -10</code></pre>
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>Sort</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>1642. Furthest Building You Can Reach (Medium)</title>
-    <url>/post/leetcode/1642-Furthest-Building-You-Can-Reach-Medium/</url>
-    <content><![CDATA[<p>Topics:</p>
-<p>Binary search (what?), heap.</p>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def furthestBuilding(self, h: List[int], bricks: int, ladders: int) -&gt; int:
-        lv &#x3D; []
-
-        for x in range(1, len(h)):
-            gap &#x3D; h[x] - h[x-1]
-            if gap &lt;&#x3D; 0:
-                continue
-            lv.append(gap)
-            if gap &lt;&#x3D; bricks:
-                bricks -&#x3D; gap
-                continue
-            elif ladders !&#x3D; 0:
-                lv.sort()
-                ladders -&#x3D; 1
-                bricks +&#x3D; lv.pop() - gap
-                continue
-            else:
-                return x - 1
-
-        return len(h) - 1</code></pre>
-
-<p>Ver 2.0 using max heap.</p>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def furthestBuilding(self, heights: List[int], bricks: int, ladders: int) -&gt; int:
-        heap &#x3D; []
-
-        for i in range(1, len(heights)):
-            if heights[i] &gt; heights[i - 1]:
-                h &#x3D; heights[i] - heights[i - 1]
-                heappush(heap, -h)
-                bricks -&#x3D; h
-                if bricks &gt;&#x3D; 0:
-                    continue
-                elif ladders !&#x3D; 0:
-                    bricks -&#x3D; heappop(heap)
-                    ladders -&#x3D; 1
-                else:
-                    return i - 1
-
-        return len(heights) - 1</code></pre>
-]]></content>
-      <categories>
-        <category>leetcode</category>
-      </categories>
-      <tags>
-        <tag>Binary Search</tag>
-        <tag>Heap</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>1689. Partitioning Into Minimum Number Of Deci-Binary Numbers (Medium)</title>
-    <url>/post/leetcode/1689-Partitioning-Into-Minimum-Number-Of-Deci-Binary-Numbers-Medium/</url>
-    <content><![CDATA[<p>???Medium??? Seriously?!</p>
-<pre class="language-java" data-language="java"><code class="language-java">class Solution &#123;
-    public int minPartitions(String n) &#123;
-        int ans &#x3D; 0;
-        for (char c : n.toCharArray()) &#123;
-            if (c - &#39;0&#39; &gt; ans) ans &#x3D; c - &#39;0&#39;;
-            if (ans &#x3D;&#x3D; 9) return ans;
-        &#125;
-        return ans;
-    &#125;
-&#125;</code></pre>
-
-<pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def minPartitions(self, n: str) -&gt; int:
-        return max(int(x) for x in n)</code></pre>
-]]></content>
-      <categories>
-        <category>leetcode</category>
-      </categories>
-      <tags>
-        <tag>Greedy</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>1695. Maximum Erasure Value (Medium)</title>
-    <url>/post/leetcode/1695-Maximum-Erasure-Value-Medium/</url>
-    <content><![CDATA[<p>双指针 Sliding Window + nmap。入参数值上限 10^4，所以我们可以准备一个能容纳最大数字的数组来储存每个数字出现的次数。</p>
-<p>双指针方法，准备 <code>left</code>、<code>right</code> 两个指针，<code>right</code> 指针遍历整个数组，每次迭代计算合计值和最大值，当数字出现次数超过 1 时，迭代 <code>left</code> 指针直到数字出现次数回到 1，迭代过程中将移出窗口的数字从合计值中减去。重复这个过程直到 <code>right</code> 到达终点。</p>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def maximumUniqueSubarray(self, nums: List[int]) -&gt; int:
-        score, left, total, mask &#x3D; 0, 0, 0, [0] * 10001
-        for right in nums:
-            mask[right] +&#x3D; 1
-            total +&#x3D; right
-            while mask[right] &gt; 1:
-                mask[nums[left]] -&#x3D; 1
-                total -&#x3D; nums[left]
-                left +&#x3D; 1
-            score &#x3D; max(score, total)
-        return score</code></pre>
-
-<pre class="language-java" data-language="java"><code class="language-java">class Solution &#123;
-    public int maximumUniqueSubarray(int[] nums) &#123;
-        int[] map &#x3D; new int[10001];
-        int score &#x3D; 0, left &#x3D; 0, total &#x3D; 0;
-        for (int right : nums) &#123;
-            total +&#x3D; right;
-            map[right]++;
-            while (map[right] &gt; 1) &#123;
-                total -&#x3D; nums[left];
-                map[nums[left++]]--;
-            &#125;
-            score &#x3D; Math.max(score, total);
-        &#125;
-        return score;
-    &#125;
-&#125;</code></pre>
-]]></content>
-      <categories>
-        <category>leetcode</category>
-      </categories>
-      <tags>
-        <tag>Two Pointers</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>1696. Jump Game VI (Medium)</title>
-    <url>/post/leetcode/1696-Jump-Game-VI-Medium/</url>
-    <content><![CDATA[<p>思路 1，DP + Heap。这道题很容易想到用 DP 来解决，我们记录 k 步以内的值，每一次用最大值来计算下一个值，可以用 O(n*k) 的复杂度完成计算，但是可惜 k 的最大值能到 10^5，O(n*k) 无法通过测试 case。</p>
-<p>我们需要减少计算最大值的次数，可以考虑用大根堆数据结构来处理最大值的计算，但是这道题的复杂度在于我我们需要根据下标来判断这个值能不能选用，毕竟如果下标不在跳跃的范围内，这个最大值对我们来说就失效了。</p>
-<p>为了处理这个问题，我们在创建大根堆的时候以 <code>(value, index)</code> 形式将值和下标建立联系。在每次迭代过程中，我们将失效的最大值从堆中移出掉，再去计算当前应该放入堆中的值。</p>
-<p>使用 Python 时需要注意 hqapq 没有原生提供大根堆的支持，我们可以在存值的使用使用负号颠倒一下值的大小，达到大根堆的效果。</p>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def maxResult(self, nums: List[int], k: int) -&gt; int:
-        ans, q &#x3D; nums[0], [(-nums[0], 0)]
-        for i in range(1, len(nums)):
-            while i - q[0][1] &gt; k:
-                heappop(q)
-            ans &#x3D; nums[i] - q[0][0]
-            heappush(q, (-ans, i))
-        return ans</code></pre>
-]]></content>
-      <categories>
-        <category>leetcode</category>
-      </categories>
-      <tags>
-        <tag>Dequeue</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>1710. Maximum Units on a Truck (Easy)</title>
-    <url>/post/leetcode/1710-Maximum-Units-on-a-Truck-Easy/</url>
-    <content><![CDATA[<p>将 <code>boxTypes</code> 按照 <code>units</code> 排序，从最大的 <code>units</code> 开始装入卡车，直到装满 <code>truckSize</code> 的数量。</p>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def maximumUnits(self, boxTypes: List[List[int]], truckSize: int) -&gt; int:
-        boxTypes.sort(key&#x3D;lambda x: x[1], reverse&#x3D;True)
-        ans &#x3D; 0
-        for nums, units in boxTypes:
-            if truckSize &lt;&#x3D; nums:
-                return ans + truckSize * units
-            else:
-                ans +&#x3D; nums * units
-                truckSize -&#x3D; nums
-        return ans</code></pre>
-]]></content>
-      <categories>
-        <category>leetcode</category>
-      </categories>
-      <tags>
-        <tag>Greedy</tag>
         <tag>Sort</tag>
       </tags>
   </entry>
@@ -1599,8 +1410,8 @@ class Solution &#123;
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>Linked List</tag>
         <tag>Two Pointers</tag>
+        <tag>Linked List</tag>
       </tags>
   </entry>
   <entry>
@@ -2867,7 +2678,7 @@ var isNumber &#x3D; function (s) &#123;
         return True</code></pre>
 
 <p>Ver 2.0，评论区大神给的思路，只允许修改一次值的情况下，只有 YABY 这种情况是直接丢出 <code>false</code>，其余情况可以通过修改一次值通过。这个算法可以在不进行任何值的修改的前提下，进行正确的判断。</p>
-<p><img src="resources/665.idea.png" alt="665.idea.png"></p>
+<p><img src="/images/leetcode/665.idea.png" alt="665.idea.png"></p>
 <pre class="language-python" data-language="python"><code class="language-python">class Solution:
     def checkPossibility(self, nums: List[int]) -&gt; bool:
         modified &#x3D; False
@@ -3570,7 +3381,7 @@ class Solution:
 </ul>
 </li>
 </ul>
-<p><img src="./resources/792.bucket.png" alt="bucket"></p>
+<p><img src="/images/leetcode/792.bucket.png" alt="bucket"></p>
 <pre class="language-python" data-language="python"><code class="language-python">class Solution:
     def numMatchingSubseq(self, s: str, words: List[str]) -&gt; int:
         ans, bucket &#x3D; 0, defaultdict(list)
@@ -3630,9 +3441,9 @@ class Solution:
   <entry>
     <title>816. Ambiguous Coordinates (Medium)</title>
     <url>/post/leetcode/816-Ambiguous-Coordinates-Medium/</url>
-    <content><![CDATA[<p>Topics:</p>
-<p>String.</p>
-<p>思路 1 偷懒用正则检查字符串。</p>
+    <content><![CDATA[<h2 id="Before-diving-into-the-Solution"><a href="#Before-diving-into-the-Solution" class="headerlink" title="Before diving into the Solution"></a>Before diving into the Solution</h2><!-- more -->
+
+<h2 id="思路-1，正则"><a href="#思路-1，正则" class="headerlink" title="思路 1，正则"></a>思路 1，正则</h2><p>偷懒用正则检查字符串。</p>
 <pre class="language-python" data-language="python"><code class="language-python">class Solution:
     def ambiguousCoordinates(self, s: str) -&gt; List[str]:
 
@@ -3665,7 +3476,7 @@ class Solution:
 
         return ans</code></pre>
 
-<p>思路 2 老老实实拼正确的字符串，跳过检查。其实正确字符串规则只有 2 个，无论对整数还是浮点数来说，整数部分只能是 0 或 0 以上，所以判断这部分只要判断是否有前缀 0，以及是否为 0。</p>
+<h2 id="思路-2，回溯算法"><a href="#思路-2，回溯算法" class="headerlink" title="思路 2，回溯算法"></a>思路 2，回溯算法</h2><p>老老实实拼正确的字符串，跳过检查。其实正确字符串规则只有 2 个，无论对整数还是浮点数来说，整数部分只能是 0 或 0 以上，所以判断这部分只要判断是否有前缀 0，以及是否为 0。</p>
 <ul>
 <li>浮点数：<ul>
 <li>左边只能是 0 或大于 0 的数；</li>
@@ -3706,6 +3517,7 @@ class Solution:
       </categories>
       <tags>
         <tag>String</tag>
+        <tag>Backtracking</tag>
       </tags>
   </entry>
   <entry>
@@ -3821,14 +3633,19 @@ class Solution &#123;
         <category>leetcode</category>
       </categories>
       <tags>
-        <tag>Linked List</tag>
         <tag>Two Pointers</tag>
+        <tag>Linked List</tag>
       </tags>
   </entry>
   <entry>
     <title>890. Find and Replace Pattern (Medium)</title>
     <url>/post/leetcode/890-Find-and-Replace-Pattern-Medium/</url>
-    <content><![CDATA[<p>思路 1，先计算 <code>pattern</code> 的排列码表，使用这个码表来过滤输入数据。简单来说，我们这样做。</p>
+    <content><![CDATA[<h2 id="Before-diving-into-the-Solution"><a href="#Before-diving-into-the-Solution" class="headerlink" title="Before diving into the Solution"></a>Before diving into the Solution</h2><p>给定一组字符串和一个模式（pattern），返回字符串中所有匹配这个模式的对象。</p>
+<p>这里的模式（pattern）描述字母如何重复，即如果模式匹配，那么将模式中的字母替换成映射的字母，就可以还原成目标字符串。</p>
+<p>使用字符串映射，或者码表来解决这道题。</p>
+<!-- more -->
+
+<h2 id="思路-1，先计算-pattern-的排列码表"><a href="#思路-1，先计算-pattern-的排列码表" class="headerlink" title="思路 1，先计算 pattern 的排列码表"></a>思路 1，先计算 <code>pattern</code> 的排列码表</h2><p>使用这个码表来过滤输入数据。简单来说，我们这样做。</p>
 <ul>
 <li>计算 <code>pattern</code> 的排列码表<ul>
 <li>用一个计数器将 <code>pattern</code> 中的字符按出现顺序编码；</li>
@@ -3867,7 +3684,7 @@ class Solution &#123;
         # print(ptn)
         return filter(match, words)</code></pre>
 
-<p>思路 2，双射（bijection）。用两个哈希表分别映射 <code>pattern</code> 字符和目标字符，检查映射结果是否一致。</p>
+<h2 id="思路-2，双射（bijection）"><a href="#思路-2，双射（bijection）" class="headerlink" title="思路 2，双射（bijection）"></a>思路 2，双射（bijection）</h2><p>用两个哈希表分别映射 <code>pattern</code> 字符和目标字符，检查映射结果是否一致。</p>
 <ul>
 <li>用 <code>m1</code> 储存目标字符到 <code>pattern</code> 字符的映射，比如字符 <code>x</code> -&gt; <code>a</code>;</li>
 <li>用 <code>m2</code> 储存 <code>pattern</code> 字符到目标字符的映射，比如字符 <code>a</code> -&gt; <code>x</code>；</li>
@@ -3901,7 +3718,7 @@ class Solution &#123;
     &#125;
 &#125;</code></pre>
 
-<p>思路 3，单哈希表。在双射的思路里我们用到了 2 个哈希表，这里还有优化的空间，我们考虑一下只使用一个哈希表时需要处理的问题。</p>
+<h2 id="思路-3，单哈希表"><a href="#思路-3，单哈希表" class="headerlink" title="思路 3，单哈希表"></a>思路 3，单哈希表</h2><p>在双射的思路里我们用到了 2 个哈希表，这里还有优化的空间，我们考虑一下只使用一个哈希表时需要处理的问题。</p>
 <ul>
 <li>首先按照思路 2 准备好哈希表，这次我们仅作目标字符到 <code>pattern</code> 字符的映射；</li>
 <li>第一个错误条件是目标字符在哈希表中对应的 <code>pattern</code> 字符和当前不匹配：<ul>
@@ -3974,15 +3791,18 @@ var findAndReplacePattern &#x3D; function (words, pattern) &#123;
         <category>leetcode</category>
       </categories>
       <tags>
+        <tag>Array</tag>
         <tag>String</tag>
+        <tag>Hash Table</tag>
       </tags>
   </entry>
   <entry>
     <title>906. Super Palindromes (Hard)</title>
     <url>/post/leetcode/906-Super-Palindromes-Hard/</url>
-    <content><![CDATA[<p>Topics:</p>
-<p>Math.</p>
-<p>Don’t know the reason but not interested in this problem, so let’s calculate a table to break it.</p>
+    <content><![CDATA[<h2 id="Before-diving-into-the-Solution"><a href="#Before-diving-into-the-Solution" class="headerlink" title="Before diving into the Solution"></a>Before diving into the Solution</h2><p>嗯…暂且打表吧…</p>
+<!-- more -->
+
+<h2 id="思路，打表"><a href="#思路，打表" class="headerlink" title="思路，打表"></a>思路，打表</h2><p>Don’t know the reason but not interested in this problem, so let’s calculate a table to break it.</p>
 <pre class="language-python" data-language="python"><code class="language-python">class Solution:
     def superpalindromesInRange(self, left: str, right: str) -&gt; int:
         L, R &#x3D; int(left), int(right)
@@ -4076,6 +3896,7 @@ var findAndReplacePattern &#x3D; function (words, pattern) &#123;
       </categories>
       <tags>
         <tag>Math</tag>
+        <tag>Enumeration</tag>
       </tags>
   </entry>
   <entry>
@@ -4258,22 +4079,29 @@ class Solution:
   <entry>
     <title>943. Find the Shortest Superstring (Hard)</title>
     <url>/post/leetcode/943-Find-the-Shortest-Superstring-Hard/</url>
-    <content><![CDATA[<p><strong>NOT SOLVED YET!!</strong></p>
-<p>计算完每个字符串的 overlap 之后，这个问题变成了有向加权图的最短路径问题，这是一个典型的 TSP 问题，NP-Hard 难度。</p>
+    <content><![CDATA[<h2 id="NOT-SOLVED-YET"><a href="#NOT-SOLVED-YET" class="headerlink" title="NOT SOLVED YET!!"></a>NOT SOLVED YET!!</h2><p>计算完每个字符串的 overlap 之后，这个问题变成了有向加权图的最短路径问题，这是一个典型的 TSP 问题，NP-Hard 难度。</p>
 <p>由于暂时还是我的只是盲区，先做记录，等学到图论和 TSP 解法的时候再来看看这道题。</p>
 ]]></content>
       <categories>
         <category>leetcode</category>
       </categories>
       <tags>
+        <tag>Array</tag>
+        <tag>String</tag>
         <tag>DP</tag>
+        <tag>Bit Manipulation</tag>
+        <tag>Bitmask</tag>
+        <tag>Not Solved</tag>
       </tags>
   </entry>
   <entry>
     <title>968. Binary Tree Cameras (Hard)</title>
     <url>/post/leetcode/968-Binary-Tree-Cameras-Hard/</url>
-    <content><![CDATA[<p><strong>思路 1，贪心从下而上</strong></p>
-<p>这里能使用贪心算法是因为我们可以从叶子节点开始，给叶子节点的父节点安装摄像头，并一步步往上推出需要安装摄像头的最小数量。</p>
+    <content><![CDATA[<h2 id="Before-diving-into-the-Solution"><a href="#Before-diving-into-the-Solution" class="headerlink" title="Before diving into the Solution"></a>Before diving into the Solution</h2><p>在二叉树上安装摄像头，每个摄像头可以监控 +1 的距离，也就是它的父节点、子节点和自身。求最少需要安装多少摄像头才能监控整棵树。</p>
+<p>这道题我们讨论贪心算法和 DP 的应用。</p>
+<!-- more -->
+
+<h2 id="思路-1，贪心从下而上"><a href="#思路-1，贪心从下而上" class="headerlink" title="思路 1，贪心从下而上"></a>思路 1，贪心从下而上</h2><p>这里能使用贪心算法是因为我们可以从叶子节点开始，给叶子节点的父节点安装摄像头，并一步步往上推出需要安装摄像头的最小数量。</p>
 <p>解题思路的第一步是要推算一个节点能有多少种状态，这道题每个节点存在 3 种状态：</p>
 <ul>
 <li><code>0</code>: 无摄像头覆盖</li>
@@ -4341,8 +4169,7 @@ class Solution:
 
         return self.ans</code></pre>
 
-<p><strong>思路 2，DP</strong></p>
-<p>忘掉思路 1，来看看 DP 的解决方案。</p>
+<h2 id="思路-2，DP"><a href="#思路-2，DP" class="headerlink" title="思路 2，DP"></a>思路 2，DP</h2><p>忘掉思路 1，来看看 DP 的解决方案。</p>
 <p>思路 1 总结的状态对 DP 方案不适用，忘掉它，我们重新总结一个节点<strong>允许的状态</strong>，这里不再包括无摄像头覆盖的场景。</p>
 <p>第一步，总结节点可能的状态有三种：</p>
 <ul>
@@ -4435,8 +4262,10 @@ class Solution:
         <category>leetcode</category>
       </categories>
       <tags>
+        <tag>Tree</tag>
+        <tag>Binary Tree</tag>
+        <tag>DFS</tag>
         <tag>DP</tag>
-        <tag>Greedy</tag>
       </tags>
   </entry>
   <entry>
@@ -4588,7 +4417,14 @@ class Solution:
   <entry>
     <title>970. Powerful Integers (Medium)</title>
     <url>/post/leetcode/970-Powerful-Integers-Medium/</url>
-    <content><![CDATA[<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    <content><![CDATA[<h2 id="Before-diving-into-the-Solution"><a href="#Before-diving-into-the-Solution" class="headerlink" title="Before diving into the Solution"></a>Before diving into the Solution</h2><p>给定 3 个整数 <code>x</code>， <code>y</code>， <code>bound</code>，求所有小于等于 <code>bound</code> 的强整数（Powerful Integers）。</p>
+<p>强整数（Powerful Integers）指一个数可以用 <code>x^i + y^j</code> 的形式表现，其中 <code>i</code> 和 <code>j</code> 均大于等于 0。</p>
+<p>答案无所谓排序，但是不能有重复的值。需要用到一些数学方法来解决这道题。</p>
+<!-- more -->
+
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>先找到指数的边界，然后枚举所有可能的结果。</p>
+<p>使用一个 <code>set</code> 来进行去重。</p>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
     def powerfulIntegers(self, x: int, y: int, bound: int) -&gt; List[int]:
         a &#x3D; 0 if x &#x3D;&#x3D; 1 else int(log(bound, x))
         b &#x3D; 0 if y &#x3D;&#x3D; 1 else int(log(bound, y))

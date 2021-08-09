@@ -20,17 +20,22 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Mist","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":null,"sidebar":"fadeInUp"}},"prism":true,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/config.min.js"></script>
-<meta name="description" content="NOT SOLVED YET!! 计算完每个字符串的 overlap 之后，这个问题变成了有向加权图的最短路径问题，这是一个典型的 TSP 问题，NP-Hard 难度。 由于暂时还是我的只是盲区，先做记录，等学到图论和 TSP 解法的时候再来看看这道题。">
+<meta name="description" content="NOT SOLVED YET!!计算完每个字符串的 overlap 之后，这个问题变成了有向加权图的最短路径问题，这是一个典型的 TSP 问题，NP-Hard 难度。 由于暂时还是我的只是盲区，先做记录，等学到图论和 TSP 解法的时候再来看看这道题。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="943. Find the Shortest Superstring (Hard)">
 <meta property="og:url" content="http://example.com/post/leetcode/943-Find-the-Shortest-Superstring-Hard/">
 <meta property="og:site_name" content="HOME">
-<meta property="og:description" content="NOT SOLVED YET!! 计算完每个字符串的 overlap 之后，这个问题变成了有向加权图的最短路径问题，这是一个典型的 TSP 问题，NP-Hard 难度。 由于暂时还是我的只是盲区，先做记录，等学到图论和 TSP 解法的时候再来看看这道题。">
+<meta property="og:description" content="NOT SOLVED YET!!计算完每个字符串的 overlap 之后，这个问题变成了有向加权图的最短路径问题，这是一个典型的 TSP 问题，NP-Hard 难度。 由于暂时还是我的只是盲区，先做记录，等学到图论和 TSP 解法的时候再来看看这道题。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-07-03T07:36:05.562Z">
 <meta property="article:modified_time" content="2021-07-03T07:36:05.562Z">
 <meta property="article:author" content="Richard Zen">
+<meta property="article:tag" content="Array">
+<meta property="article:tag" content="String">
 <meta property="article:tag" content="DP">
+<meta property="article:tag" content="Bit Manipulation">
+<meta property="article:tag" content="Bitmask">
+<meta property="article:tag" content="Not Solved">
 <meta name="twitter:card" content="summary">
 
 
@@ -196,7 +201,7 @@
 
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -209,6 +214,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#NOT-SOLVED-YET"><span class="nav-text">NOT SOLVED YET!!</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -324,8 +330,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p><strong>NOT SOLVED YET!!</strong></p>
-<p>计算完每个字符串的 overlap 之后，这个问题变成了有向加权图的最短路径问题，这是一个典型的 TSP 问题，NP-Hard 难度。</p>
+        <h2 id="NOT-SOLVED-YET"><a href="#NOT-SOLVED-YET" class="headerlink" title="NOT SOLVED YET!!"></a>NOT SOLVED YET!!</h2><p>计算完每个字符串的 overlap 之后，这个问题变成了有向加权图的最短路径问题，这是一个典型的 TSP 问题，NP-Hard 难度。</p>
 <p>由于暂时还是我的只是盲区，先做记录，等学到图论和 TSP 解法的时候再来看看这道题。</p>
 
     </div>
@@ -336,7 +341,12 @@
 
     <footer class="post-footer">
           <div class="post-tags">
+              <a href="/tags/Array/" rel="tag"># Array</a>
+              <a href="/tags/String/" rel="tag"># String</a>
               <a href="/tags/DP/" rel="tag"># DP</a>
+              <a href="/tags/Bit-Manipulation/" rel="tag"># Bit Manipulation</a>
+              <a href="/tags/Bitmask/" rel="tag"># Bitmask</a>
+              <a href="/tags/Not-Solved/" rel="tag"># Not Solved</a>
           </div>
 
         
@@ -382,13 +392,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">80k</span>
+    <span title="站点总字数">78k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:13</span>
+    <span title="站点阅读时长">1:11</span>
   </span>
 </div>
 <div class="busuanzi-count">

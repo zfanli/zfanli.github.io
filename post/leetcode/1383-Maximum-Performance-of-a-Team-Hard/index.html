@@ -20,18 +20,20 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Mist","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":null,"sidebar":"fadeInUp"}},"prism":true,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/config.min.js"></script>
-<meta name="description" content="解题思路是先计算局部最优解，再计算全局的最优解，是典型的贪心算法的应用场景。但这道题困难之处在于需要保持两个排序，而意识到这个解决方案需要一定的直觉。 读完题我们可以了解到团队的表现计算公式为：sum(speeds) * min(efficiencies)，这里的细节是选择的团队成员最多可以达到k位，意味着当团队人数少于k能取得更好的表现时的结果可以作为局部最优解。 据此我们开始思考，暴力解法最大">
+<meta name="description" content="Before diving into the Solution你需要从 n 个工程师中选择最多 k 位构成一个小组，并保证获得最好的绩效表现。 你有两个数组 speed 和 efficiency 分别表示每个工程师的速度和效率。 小组的绩效表现计算方法：小组所有成员的速度之和乘以小组成员效率的最小值。由于结果数组可能会非常大，将结果和 10^9 + 7 取模作为答案返回。 工程师的速度和效率是捆绑">
 <meta property="og:type" content="article">
 <meta property="og:title" content="1383. Maximum Performance of a Team (Hard)">
 <meta property="og:url" content="http://example.com/post/leetcode/1383-Maximum-Performance-of-a-Team-Hard/">
 <meta property="og:site_name" content="HOME">
-<meta property="og:description" content="解题思路是先计算局部最优解，再计算全局的最优解，是典型的贪心算法的应用场景。但这道题困难之处在于需要保持两个排序，而意识到这个解决方案需要一定的直觉。 读完题我们可以了解到团队的表现计算公式为：sum(speeds) * min(efficiencies)，这里的细节是选择的团队成员最多可以达到k位，意味着当团队人数少于k能取得更好的表现时的结果可以作为局部最优解。 据此我们开始思考，暴力解法最大">
+<meta property="og:description" content="Before diving into the Solution你需要从 n 个工程师中选择最多 k 位构成一个小组，并保证获得最好的绩效表现。 你有两个数组 speed 和 efficiency 分别表示每个工程师的速度和效率。 小组的绩效表现计算方法：小组所有成员的速度之和乘以小组成员效率的最小值。由于结果数组可能会非常大，将结果和 10^9 + 7 取模作为答案返回。 工程师的速度和效率是捆绑">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-07-23T07:36:05.585Z">
 <meta property="article:modified_time" content="2021-07-23T07:36:05.585Z">
 <meta property="article:author" content="Richard Zen">
+<meta property="article:tag" content="Array">
 <meta property="article:tag" content="Greedy">
-<meta property="article:tag" content="Sort">
+<meta property="article:tag" content="Heap (Priority Queue)">
+<meta property="article:tag" content="Sorting">
 <meta name="twitter:card" content="summary">
 
 
@@ -197,7 +199,7 @@
 
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -210,6 +212,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Before-diving-into-the-Solution"><span class="nav-text">Before diving into the Solution</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF"><span class="nav-text">思路</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -307,7 +310,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>923</span>
+      <span>1.1k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -325,7 +328,13 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p>解题思路是先计算局部最优解，再计算全局的最优解，是典型的贪心算法的应用场景。但这道题困难之处在于需要保持两个排序，而意识到这个解决方案需要一定的直觉。</p>
+        <h2 id="Before-diving-into-the-Solution"><a href="#Before-diving-into-the-Solution" class="headerlink" title="Before diving into the Solution"></a>Before diving into the Solution</h2><p>你需要从 <code>n</code> 个工程师中选择最多 <code>k</code> 位构成一个小组，并保证获得最好的绩效表现。</p>
+<p>你有两个数组 <code>speed</code> 和 <code>efficiency</code> 分别表示每个工程师的速度和效率。</p>
+<p>小组的绩效表现计算方法：小组所有成员的速度之和乘以小组成员效率的最小值。由于结果数组可能会非常大，将结果和 <code>10^9 + 7</code> 取模作为答案返回。</p>
+<p>工程师的速度和效率是捆绑的，所以要知道答案，我们只能尝试将每一位工程师编入小组，可以使用贪心算法解决问题。</p>
+<!-- more -->
+
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>解题思路是先计算局部最优解，再计算全局的最优解，是典型的贪心算法的应用场景。但这道题困难之处在于需要保持两个排序，而意识到这个解决方案需要一定的直觉。</p>
 <p>读完题我们可以了解到团队的表现计算公式为：<code>sum(speeds) * min(efficiencies)</code>，这里的细节是选择的团队成员最多可以达到<code>k</code>位，意味着当团队人数少于<code>k</code>能取得更好的表现时的结果可以作为局部最优解。</p>
 <p>据此我们开始思考，暴力解法最大的问题在于做了很多没有意义的运算，如果能找到一个方法对暴力算法进行剪枝，我们就能更快的得到答案。这道题的瓶颈在于 <code>efficiency</code> 取其最小值，而换句话来说，如果我们指定了一个队员的 <code>efficiency</code> 为最小值，那么此时的局部最优解将会是所有效率高于这个队员的人之中速度最快的前 <code>k-1</code> 个人加上这个队员的速度（我们一共选了 <code>k</code> 个人），将结果乘以这个队员的效率（因为这个队员是最小值）。</p>
 <p>要实现这个思路需要保持 2 个排序：</p>
@@ -356,8 +365,10 @@
 
     <footer class="post-footer">
           <div class="post-tags">
+              <a href="/tags/Array/" rel="tag"># Array</a>
               <a href="/tags/Greedy/" rel="tag"># Greedy</a>
-              <a href="/tags/Sort/" rel="tag"># Sort</a>
+              <a href="/tags/Heap-Priority-Queue/" rel="tag"># Heap (Priority Queue)</a>
+              <a href="/tags/Sorting/" rel="tag"># Sorting</a>
           </div>
 
         
@@ -369,9 +380,6 @@
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/post/leetcode/1423-Maximum-Points-You-Can-Obtain-from-Cards-Medium/" rel="next" title="1423. Maximum Points You Can Obtain from Cards (Medium)">
-                  1423. Maximum Points You Can Obtain from Cards (Medium) <i class="fa fa-chevron-right"></i>
-                </a>
             </div>
           </div>
     </footer>
@@ -403,13 +411,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">80k</span>
+    <span title="站点总字数">78k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:13</span>
+    <span title="站点阅读时长">1:11</span>
   </span>
 </div>
 <div class="busuanzi-count">

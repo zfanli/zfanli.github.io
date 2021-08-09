@@ -20,17 +20,18 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Mist","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":null,"sidebar":"fadeInUp"}},"prism":true,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/config.min.js"></script>
-<meta name="description" content="Topics: String. 思路 1 偷懒用正则检查字符串。 class Solution:     def ambiguousCoordinates(self, s: str) -&gt; List[str]:          def isvalid(s):             ptn &#x3D; r&quot;^(([1-9]+\d*|0)\.\d*[1-9]|([1-9]+\d*">
+<meta name="description" content="Before diving into the Solution  思路 1，正则偷懒用正则检查字符串。 class Solution:     def ambiguousCoordinates(self, s: str) -&gt; List[str]:          def isvalid(s):             ptn &#x3D; r&quot;^(([1-9]+\d*|0)\.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="816. Ambiguous Coordinates (Medium)">
 <meta property="og:url" content="http://example.com/post/leetcode/816-Ambiguous-Coordinates-Medium/">
 <meta property="og:site_name" content="HOME">
-<meta property="og:description" content="Topics: String. 思路 1 偷懒用正则检查字符串。 class Solution:     def ambiguousCoordinates(self, s: str) -&gt; List[str]:          def isvalid(s):             ptn &#x3D; r&quot;^(([1-9]+\d*|0)\.\d*[1-9]|([1-9]+\d*">
+<meta property="og:description" content="Before diving into the Solution  思路 1，正则偷懒用正则检查字符串。 class Solution:     def ambiguousCoordinates(self, s: str) -&gt; List[str]:          def isvalid(s):             ptn &#x3D; r&quot;^(([1-9]+\d*|0)\.">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-06-27T07:36:05.556Z">
 <meta property="article:modified_time" content="2021-06-27T07:36:05.556Z">
 <meta property="article:author" content="Richard Zen">
 <meta property="article:tag" content="String">
+<meta property="article:tag" content="Backtracking">
 <meta name="twitter:card" content="summary">
 
 
@@ -196,7 +197,7 @@
 
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -209,6 +210,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Before-diving-into-the-Solution"><span class="nav-text">Before diving into the Solution</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF-1%EF%BC%8C%E6%AD%A3%E5%88%99"><span class="nav-text">思路 1，正则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF-2%EF%BC%8C%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95"><span class="nav-text">思路 2，回溯算法</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -324,9 +326,9 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p>Topics:</p>
-<p>String.</p>
-<p>思路 1 偷懒用正则检查字符串。</p>
+        <h2 id="Before-diving-into-the-Solution"><a href="#Before-diving-into-the-Solution" class="headerlink" title="Before diving into the Solution"></a>Before diving into the Solution</h2><!-- more -->
+
+<h2 id="思路-1，正则"><a href="#思路-1，正则" class="headerlink" title="思路 1，正则"></a>思路 1，正则</h2><p>偷懒用正则检查字符串。</p>
 <pre class="language-python" data-language="python"><code class="language-python">class Solution:
     def ambiguousCoordinates(self, s: str) -&gt; List[str]:
 
@@ -359,7 +361,7 @@
 
         return ans</code></pre>
 
-<p>思路 2 老老实实拼正确的字符串，跳过检查。其实正确字符串规则只有 2 个，无论对整数还是浮点数来说，整数部分只能是 0 或 0 以上，所以判断这部分只要判断是否有前缀 0，以及是否为 0。</p>
+<h2 id="思路-2，回溯算法"><a href="#思路-2，回溯算法" class="headerlink" title="思路 2，回溯算法"></a>思路 2，回溯算法</h2><p>老老实实拼正确的字符串，跳过检查。其实正确字符串规则只有 2 个，无论对整数还是浮点数来说，整数部分只能是 0 或 0 以上，所以判断这部分只要判断是否有前缀 0，以及是否为 0。</p>
 <ul>
 <li>浮点数：<ul>
 <li>左边只能是 0 或大于 0 的数；</li>
@@ -404,6 +406,7 @@
     <footer class="post-footer">
           <div class="post-tags">
               <a href="/tags/String/" rel="tag"># String</a>
+              <a href="/tags/Backtracking/" rel="tag"># Backtracking</a>
           </div>
 
         
@@ -449,13 +452,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">80k</span>
+    <span title="站点总字数">78k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:13</span>
+    <span title="站点阅读时长">1:11</span>
   </span>
 </div>
 <div class="busuanzi-count">
