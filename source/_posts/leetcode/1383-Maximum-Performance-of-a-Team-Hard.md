@@ -1,14 +1,12 @@
 ---
-date: '2021-07-23T15:36:05.585Z'
-excerpt: ''
+date: "2021-07-23T15:36:05.585Z"
+
 tags:
   - Array
   - Greedy
   - Sorting
   - Heap (Priority Queue)
 title: 1383. Maximum Performance of a Team (Hard)
-categories:
-  - leetcode
 ---
 
 ## Before diving into the Solution

@@ -1,6 +1,6 @@
 ---
-date: '2021-08-04T15:36:05.604Z'
-excerpt:
+date: "2021-08-04T15:36:05.604Z"
+
 tags:
   - Array
   - Hash Table

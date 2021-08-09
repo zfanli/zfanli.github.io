@@ -1,6 +1,6 @@
 ---
-date: '2021-07-31T15:36:05.597Z'
-excerpt:
+date: "2021-07-31T15:36:05.597Z"
+
 tags:
   - Array
   - Greedy

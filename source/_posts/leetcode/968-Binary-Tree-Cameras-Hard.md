@@ -1,14 +1,12 @@
 ---
-date: '2021-07-05T15:36:05.564Z'
-excerpt: ''
+date: "2021-07-05T15:36:05.564Z"
+
 tags:
   - DP
   - Tree
   - DFS
   - Binary Tree
 title: 968. Binary Tree Cameras (Hard)
-categories:
-  - leetcode
 ---
 
 ## Before diving into the Solution

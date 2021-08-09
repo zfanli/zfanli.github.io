@@ -1,6 +1,6 @@
 ---
-date: '2021-07-29T15:36:05.595Z'
-excerpt:
+date: "2021-07-29T15:36:05.595Z"
+
 tags:
   - Array
   - Prefix Sum

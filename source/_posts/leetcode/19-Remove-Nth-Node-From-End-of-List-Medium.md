@@ -1,12 +1,10 @@
 ---
-date: '2021-03-19T15:36:05.444Z'
-excerpt: ''
+date: "2021-03-19T15:36:05.444Z"
+
 tags:
   - Linked List
   - Two Pointers
 title: 19. Remove Nth Node From End of List (Medium)
-categories:
-  - leetcode
 ---
 
 With solutions both in Java and Python.

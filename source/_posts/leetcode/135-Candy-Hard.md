@@ -1,12 +1,10 @@
 ---
-date: '2021-05-04T15:36:05.490Z'
-excerpt: ''
+date: "2021-05-04T15:36:05.490Z"
+
 tags:
   - Array
   - Greedy
 title: 135. Candy (Hard)
-categories:
-  - leetcode
 ---
 
 > 做完后才意识到是一道 hard 难度的题。

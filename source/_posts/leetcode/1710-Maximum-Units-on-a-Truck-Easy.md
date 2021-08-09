@@ -1,6 +1,6 @@
 ---
-date: '2021-08-08T15:36:05.609Z'
-excerpt:
+date: "2021-08-08T15:36:05.609Z"
+
 tags:
   - Greedy
   - Sort

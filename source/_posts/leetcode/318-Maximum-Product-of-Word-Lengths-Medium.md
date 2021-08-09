@@ -1,11 +1,9 @@
 ---
-date: '2021-05-22T15:36:05.514Z'
-excerpt: ''
+date: "2021-05-22T15:36:05.514Z"
+
 tags:
   - Bit Manipulation
 title: 318. Maximum Product of Word Lengths (Medium)
-categories:
-  - leetcode
 ---
 
 思路 1，找到所有组合求最大值，用一个帮助函数 `pair` 来帮助我们判断是否需要进行相乘。

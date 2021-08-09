@@ -1,6 +1,6 @@
 ---
-date: '2021-08-02T15:36:05.600Z'
-excerpt:
+date: "2021-08-02T15:36:05.600Z"
+
 tags:
   - Greedy
   - String

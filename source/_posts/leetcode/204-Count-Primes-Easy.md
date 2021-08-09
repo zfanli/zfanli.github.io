@@ -1,12 +1,10 @@
 ---
-date: '2021-05-14T15:36:05.504Z'
-excerpt: ''
+date: "2021-05-14T15:36:05.504Z"
+
 tags:
   - Math
   - Hash Table
 title: 204. Count Primes (Easy)
-categories:
-  - leetcode
 ---
 
 Topics:

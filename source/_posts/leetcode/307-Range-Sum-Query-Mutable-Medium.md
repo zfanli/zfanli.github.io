@@ -1,12 +1,10 @@
 ---
-date: '2021-05-20T15:36:05.511Z'
-excerpt: ''
+date: "2021-05-20T15:36:05.511Z"
+
 tags:
   - Binary Indexed Tree
   - Segment Tree
 title: 307. Range Sum Query - Mutable (Medium)
-categories:
-  - leetcode
 ---
 
 给定数组，可以更新元素，还要快速查询范围内的和、最大最小值，这是典型的 Segment Tree （线段树）的应用场景。

@@ -1,6 +1,6 @@
 ---
-date: '2021-07-13T15:36:05.571Z'
-excerpt: ''
+date: "2021-07-13T15:36:05.571Z"
+
 tags:
   - Array
   - Hash Table
@@ -8,8 +8,6 @@ tags:
   - String
   - DP
 title: 1048. Longest String Chain (Medium)
-categories:
-  - leetcode
 ---
 
 ## Before diving into the Solution

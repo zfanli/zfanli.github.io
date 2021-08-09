@@ -1,12 +1,10 @@
 ---
-date: '2021-07-11T15:36:05.569Z'
-excerpt: ''
+date: "2021-07-11T15:36:05.569Z"
+
 tags:
   - String
   - Stack
 title: 1047. Remove All Adjacent Duplicates In String (Easy)
-categories:
-  - leetcode
 ---
 
 ## Before diving into the Solution

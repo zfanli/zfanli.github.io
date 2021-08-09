@@ -1,14 +1,12 @@
 ---
-date: '2021-07-09T15:36:05.567Z'
-excerpt: ''
+date: "2021-07-09T15:36:05.567Z"
+
 tags:
   - Array
   - Binary Search
   - Sliding Window
   - Prefix Sum
 title: 1004. Max Consecutive Ones III (Medium)
-categories:
-  - leetcode
 ---
 
 ## Before diving into the Solution

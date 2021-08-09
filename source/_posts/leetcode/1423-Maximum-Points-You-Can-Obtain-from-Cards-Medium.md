@@ -1,6 +1,6 @@
 ---
-date: '2021-07-25T15:36:05.589Z'
-excerpt:
+date: "2021-07-25T15:36:05.589Z"
+
 tags:
   - Array
   - Sliding Window

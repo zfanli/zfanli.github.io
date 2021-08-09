@@ -1,12 +1,10 @@
 ---
-date: '2021-06-19T15:36:05.548Z'
-excerpt: ''
+date: "2021-06-19T15:36:05.548Z"
+
 tags:
   - Array
   - DP
 title: 746. Min Cost Climbing Stairs (Easy)
-categories:
-  - leetcode
 ---
 
 思路 1，DP。仔细观察能发现每一步的 cost 都取前两步 cost 的最小值，那么我们可以准备一个数组来存计算过的最小 cost。

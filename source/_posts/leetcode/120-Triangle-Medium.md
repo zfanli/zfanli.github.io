@@ -1,12 +1,10 @@
 ---
-date: '2021-04-30T15:36:05.485Z'
-excerpt: ''
+date: "2021-04-30T15:36:05.485Z"
+
 tags:
   - Array
   - DP
 title: 120. Triangle (Medium)
-categories:
-  - leetcode
 ---
 
 > Given a `triangle` array, return the minimum path sum from top to bottom.
