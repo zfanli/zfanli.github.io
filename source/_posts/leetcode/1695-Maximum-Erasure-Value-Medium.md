@@ -1,16 +1,18 @@
 ---
 date: '2021-08-04T15:36:05.604Z'
-excerpt: >
-  双指针 Sliding Window + nmap。入参数值上限 10^4，所以我们可以准备一个能容纳最大数字的数组来储存每个数字出现的次数。
-
-  双指针方法，准备 `left`、`right` 两个指针，`right` 指针遍历整个数组，每次迭代计算合计值和最大值，当数字出现次数超过 1 时，迭代
-  `left` 指针直到数字出现次数回到 1，迭代过程中将移出窗口的数字从合计值中减去。重复这个过程直到 `right` 到达终点。
+excerpt:
 tags:
-  - Two Pointers
+  - Array
+  - Hash Table
+  - Sliding Window
 title: 1695. Maximum Erasure Value (Medium)
-categories:
-  - leetcode
 ---
+
+## Before diving into the Solution
+
+有一个正整数数组 `nums`，你需要找到一个不存在重复元素的子数组，子数组的值之和是你获得的分数。求你可以获得的最大分数。这道题可以运用滑动窗口来解决。
+
+<!-- more -->
 
 双指针 Sliding Window + nmap。入参数值上限 10^4，所以我们可以准备一个能容纳最大数字的数组来储存每个数字出现的次数。
 

@@ -1,14 +1,12 @@
 ---
-date: '2021-05-06T15:36:05.493Z'
-excerpt: ''
+date: "2021-05-06T15:36:05.493Z"
+excerpt: ""
 tags:
   - Stack
   - Tree
   - DFS
   - Binary Tree
 title: 144. Binary Tree Preorder Traversal (Easy)
-categories:
-  - leetcode
 ---
 
 遍历树有三种方法，分别是前序 pre-order、中序 in-order 和后序 post-order 遍历。这道题是前序遍历。

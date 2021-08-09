@@ -4,8 +4,6 @@ excerpt: ''
 tags:
   - Array
 title: 792. Number of Matching Subsequences (Medium)
-categories:
-  - leetcode
 ---
 
 无脑思路...这道题定义的子序列不需要是连续的字符串，只需要字符按照原本的先后顺序排列即可，所以遗憾 `for in` 不能派上用场（废话）。
@@ -42,7 +40,7 @@ class Solution:
     - 否则：将字符串去头（第一个字符）后，按照首字母继续放入对应的桶中，等待后面有机会取出来；
   - 重复这个过程直到目标字符串遍历结束。
 
-![bucket](./resources/792.bucket.png)
+![bucket](/images/leetcode/792.bucket.png)
 
 ```python
 class Solution:

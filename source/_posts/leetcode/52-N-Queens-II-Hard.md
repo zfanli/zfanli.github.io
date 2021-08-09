@@ -1,11 +1,9 @@
 ---
-date: '2021-04-02T15:36:05.457Z'
-excerpt: ''
+date: "2021-04-02T15:36:05.457Z"
+excerpt: ""
 tags:
   - Backtracking
 title: 52. N-Queens II (Hard)
-categories:
-  - leetcode
 ---
 
 感觉在刷分 hhh。和 51 完全一样，不同之处在于这题只要计数。

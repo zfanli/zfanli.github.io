@@ -1,13 +1,11 @@
 ---
-date: '2021-06-03T15:36:05.527Z'
-excerpt: ''
+date: "2021-06-03T15:36:05.527Z"
+excerpt: ""
 tags:
   - Stack
   - Tree
   - DFS
 title: 589. N-ary Tree Preorder Traversal (Easy)
-categories:
-  - leetcode
 ---
 
 > Given the root of an n-ary tree, return the preorder traversal of its nodes' values.

@@ -3,14 +3,17 @@ date: '2021-07-01T15:36:05.560Z'
 excerpt: ''
 tags:
   - Math
+  - Enumeration
 title: 906. Super Palindromes (Hard)
-categories:
-  - leetcode
 ---
 
-Topics:
+## Before diving into the Solution
 
-Math.
+嗯...暂且打表吧...
+
+<!-- more -->
+
+## 思路，打表
 
 Don't know the reason but not interested in this problem, so let's calculate a table to break it.
 

@@ -1,13 +1,11 @@
 ---
-date: '2021-03-29T15:36:05.453Z'
-excerpt: ''
+date: "2021-03-29T15:36:05.453Z"
+excerpt: ""
 tags:
   - Array
   - Math
   - Matrix
 title: 48. Rotate Image (Medium)
-categories:
-  - leetcode
 ---
 
 ```python

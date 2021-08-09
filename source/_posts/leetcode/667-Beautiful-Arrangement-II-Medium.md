@@ -1,12 +1,10 @@
 ---
-date: '2021-06-11T15:36:05.539Z'
-excerpt: ''
+date: "2021-06-11T15:36:05.539Z"
+excerpt: ""
 tags:
   - Array
   - Math
 title: 667. Beautiful Arrangement II （Medium）
-categories:
-  - leetcode
 ---
 
 With solutions both in Python and Java.

@@ -1,17 +1,23 @@
 ---
 date: '2021-07-31T15:36:05.597Z'
-excerpt: 'Binary search (what?), heap.'
+excerpt:
 tags:
-  - Binary Search
-  - Heap
+  - Array
+  - Greedy
+  - Heap (Priority Queue)
 title: 1642. Furthest Building You Can Reach (Medium)
-categories:
-  - leetcode
 ---
 
-Topics:
+## Before diving into the Solution
 
-Binary search (what?), heap.
+爬楼游戏。给你一个数组 `heights` 表示你面前的大楼的高度，你从 `0` 出发，你有一些砖块的梯子。当你从当前位置爬到下一个位置时需要满足下面的条件。
+
+- 如果当前楼层高度**大于或等于**下一个大楼的高度，你可以直接过去，不需要使用砖块或梯子；
+- 如果当前楼岑高度**小于**下一个大楼的高度，你可以选择使用 1 个梯子，或者两栋楼高度差数量的砖块过去。
+
+重点在于梯子可以爬任意高度，砖块则需要消耗高度差的数量。求你可以到达的最远距离。贪心算法和优先队列可以解决这个问题。
+
+<!-- more -->
 
 ```python
 class Solution:

@@ -7,9 +7,17 @@ tags:
   - Matrix
   - Prefix Sum
 title: 1074. Number of Submatrices That Sum to Target (Hard)
-categories:
-  - leetcode
 ---
+
+## Before diving into the Solution
+
+矩阵求和问题。给定一个矩阵 `matrix` 和一个目标值 `target`，求和为 `target` 的子矩阵的数量。
+
+这是典型的前缀和应用场景，我们分别用两种思路应用前缀和来解决这个问题。
+
+<!-- more -->
+
+## Understanding the Problem
 
 With solutions both in Python and Java.
 
@@ -32,7 +40,7 @@ With solutions both in Python and Java.
 
 Example 1:
 
-![1074.eg.jpg](./resources/1074.eg.jpg)
+![1074.eg.jpg](/images/leetcode/1074.eg.jpg)
 
 ```console
 Input: matrix = [[0,1,0],[1,1,1],[0,1,0]], target = 0

@@ -2,13 +2,16 @@
 date: '2021-07-03T15:36:05.562Z'
 excerpt: ''
 tags:
+  - Array
+  - String
   - DP
+  - Bit Manipulation
+  - Bitmask
+  - Not Solved
 title: 943. Find the Shortest Superstring (Hard)
-categories:
-  - leetcode
 ---
 
-**NOT SOLVED YET!!**
+## NOT SOLVED YET!!
 
 计算完每个字符串的 overlap 之后，这个问题变成了有向加权图的最短路径问题，这是一个典型的 TSP 问题，NP-Hard 难度。
 

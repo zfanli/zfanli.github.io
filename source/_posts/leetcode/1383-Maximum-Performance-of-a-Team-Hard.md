@@ -2,12 +2,26 @@
 date: '2021-07-23T15:36:05.585Z'
 excerpt: ''
 tags:
+  - Array
   - Greedy
-  - Sort
+  - Sorting
+  - Heap (Priority Queue)
 title: 1383. Maximum Performance of a Team (Hard)
-categories:
-  - leetcode
 ---
+
+## Before diving into the Solution
+
+你需要从 `n` 个工程师中选择最多 `k` 位构成一个小组，并保证获得最好的绩效表现。
+
+你有两个数组 `speed` 和 `efficiency` 分别表示每个工程师的速度和效率。
+
+小组的绩效表现计算方法：小组所有成员的速度之和乘以小组成员效率的最小值。由于结果数组可能会非常大，将结果和 `10^9 + 7` 取模作为答案返回。
+
+工程师的速度和效率是捆绑的，所以要知道答案，我们只能尝试将每一位工程师编入小组，可以使用贪心算法解决问题。
+
+<!-- more -->
+
+## 思路
 
 解题思路是先计算局部最优解，再计算全局的最优解，是典型的贪心算法的应用场景。但这道题困难之处在于需要保持两个排序，而意识到这个解决方案需要一定的直觉。
 

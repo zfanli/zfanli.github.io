@@ -3,13 +3,21 @@ date: '2021-07-05T15:36:05.564Z'
 excerpt: ''
 tags:
   - DP
-  - Greedy
+  - Tree
+  - DFS
+  - Binary Tree
 title: 968. Binary Tree Cameras (Hard)
-categories:
-  - leetcode
 ---
 
-**思路 1，贪心从下而上**
+## Before diving into the Solution
+
+在二叉树上安装摄像头，每个摄像头可以监控 +1 的距离，也就是它的父节点、子节点和自身。求最少需要安装多少摄像头才能监控整棵树。
+
+这道题我们讨论贪心算法和 DP 的应用。
+
+<!-- more -->
+
+## 思路 1，贪心从下而上
 
 这里能使用贪心算法是因为我们可以从叶子节点开始，给叶子节点的父节点安装摄像头，并一步步往上推出需要安装摄像头的最小数量。
 
@@ -75,7 +83,7 @@ class Solution:
         return self.ans
 ```
 
-**思路 2，DP**
+## 思路 2，DP
 
 忘掉思路 1，来看看 DP 的解决方案。
 

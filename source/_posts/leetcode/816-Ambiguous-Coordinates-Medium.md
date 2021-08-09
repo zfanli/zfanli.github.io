@@ -3,16 +3,17 @@ date: '2021-06-27T15:36:05.556Z'
 excerpt: ''
 tags:
   - String
+  - Backtracking
 title: 816. Ambiguous Coordinates (Medium)
-categories:
-  - leetcode
 ---
 
-Topics:
+## Before diving into the Solution
 
-String.
+<!-- more -->
 
-思路 1 偷懒用正则检查字符串。
+## 思路 1，正则
+
+偷懒用正则检查字符串。
 
 ```python
 class Solution:
@@ -48,7 +49,9 @@ class Solution:
         return ans
 ```
 
-思路 2 老老实实拼正确的字符串，跳过检查。其实正确字符串规则只有 2 个，无论对整数还是浮点数来说，整数部分只能是 0 或 0 以上，所以判断这部分只要判断是否有前缀 0，以及是否为 0。
+## 思路 2，回溯算法
+
+老老实实拼正确的字符串，跳过检查。其实正确字符串规则只有 2 个，无论对整数还是浮点数来说，整数部分只能是 0 或 0 以上，所以判断这部分只要判断是否有前缀 0，以及是否为 0。
 
 - 浮点数：
   - 左边只能是 0 或大于 0 的数；

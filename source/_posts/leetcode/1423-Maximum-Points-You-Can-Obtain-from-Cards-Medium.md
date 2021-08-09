@@ -1,22 +1,18 @@
 ---
 date: '2021-07-25T15:36:05.589Z'
-excerpt: >-
-  思路 1，用滑动窗口检查 k 以外的连续元素的最小值，然后用数组和减去这个最小值。计算过程用 DP 简化，仅需计算数组前缀和。优势是思路简单，前缀和使用
-  in-place 不会占用额外空间。虽然思路简单，但是代码不算简洁。
+excerpt:
 tags:
   - Array
-  - DP
   - Sliding Window
+  - Prefix Sum
 title: 1423. Maximum Points You Can Obtain from Cards (Medium)
-categories:
-  - leetcode
 ---
 
-# 1423. Maximum Points You Can Obtain from Cards (Medium)
+## Before diving into the Solution
 
-Topics:
+抽卡求最大得分问题。有一堆卡排成一行，每张卡的卡面有其对应的分值，你有 `k` 次机会抽取卡片，每次机会中你可以选择抽取最左边的一张卡，或者抽取最右边的一张卡。你所抽取的所有卡片的分值之和是你的得分。求你能获得的最大分数。
 
-Array, DP, sliding window.
+<!-- more -->
 
 思路 1，用滑动窗口检查 k 以外的连续元素的最小值，然后用数组和减去这个最小值。计算过程用 DP 简化，仅需计算数组前缀和。优势是思路简单，前缀和使用 in-place 不会占用额外空间。虽然思路简单，但是代码不算简洁。
 

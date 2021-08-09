@@ -2,14 +2,29 @@
 date: '2021-07-13T15:36:05.571Z'
 excerpt: ''
 tags:
+  - Array
   - Hash Table
+  - Two Pointers
+  - String
   - DP
 title: 1048. Longest String Chain (Medium)
-categories:
-  - leetcode
 ---
 
-思路 1，hash table + memoization。明确一下要找出最长的链，我们需要完成下面的步骤才能最终确认：
+## Before diving into the Solution
+
+给定一个由英文小写字母组成的字符串数组 `words`，你需要从中挑选单词构成满足下面定义的词汇链（word chain），找到能构成的最长词汇链，返回其长度。
+
+- 词汇链（word chain）指一个字符串数组中，每个字符串都是后一个字符串的前置（predecessor），如果数组只有一个字符串，这个词汇链长度为 `1`；
+- 前置（predecessor）指一个字符串 A 满足仅向其中添加一个字符可以构成字符串 B 的条件，此时字符串 A 称之为字符串 B 的前置。
+  - 比如 `"abc"` 是 `"abac"` 的前置, 而 `"cba"` 不是 `"bcad"` 的前置。
+
+我们用 DFS 和 DP 两个思路解决这个问题。
+
+<!-- more -->
+
+## 思路 1，hash table + memoization
+
+明确一下要找出最长的链，我们需要完成下面的步骤才能最终确认：
 
 - 遍历所有 word，找到所有可能的 predecessor
 - 遍历所有的 predecessor，找到它的所有可能的 predecessor；如此反复
@@ -45,7 +60,9 @@ class Solution:
         return max(memo.values())
 ```
 
-思路 2，DP。思路 1 的非递归版本。
+## 思路 2，DP
+
+思路 1 的非递归版本。
 
 ```python
 class Solution:

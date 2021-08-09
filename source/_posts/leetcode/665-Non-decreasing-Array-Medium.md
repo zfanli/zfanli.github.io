@@ -4,8 +4,6 @@ excerpt: ''
 tags:
   - Array
 title: 665. Non-decreasing Array (Medium)
-categories:
-  - leetcode
 ---
 
 Topics:
@@ -47,7 +45,7 @@ class Solution:
 
 Ver 2.0，评论区大神给的思路，只允许修改一次值的情况下，只有 YABY 这种情况是直接丢出 `false`，其余情况可以通过修改一次值通过。这个算法可以在不进行任何值的修改的前提下，进行正确的判断。
 
-![665.idea.png](resources/665.idea.png)
+![665.idea.png](/images/leetcode/665.idea.png)
 
 ```python
 class Solution:

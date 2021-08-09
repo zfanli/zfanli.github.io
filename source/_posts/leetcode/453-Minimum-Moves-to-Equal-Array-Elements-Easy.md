@@ -1,11 +1,9 @@
 ---
-date: '2021-05-26T15:36:05.518Z'
-excerpt: ''
+date: "2021-05-26T15:36:05.518Z"
+excerpt: ""
 tags:
   - Math
 title: 453. Minimum Moves to Equal Array Elements (Easy)
-categories:
-  - leetcode
 ---
 
 题目要求每次给 `n - 1` 个元素加 1，重复这个步骤直到数组所有元素相等。我们不应该给 `max` 加 1，所以这一步实际上是给最大值以外的所有元素加 1，其等价于最大值减去 1。
