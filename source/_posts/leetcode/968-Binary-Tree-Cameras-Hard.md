@@ -7,6 +7,8 @@ tags:
   - DFS
   - Binary Tree
 title: 968. Binary Tree Cameras (Hard)
+categories:
+  - leetcode
 ---
 
 ## Before diving into the Solution

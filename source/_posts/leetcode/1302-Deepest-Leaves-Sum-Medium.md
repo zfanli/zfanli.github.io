@@ -7,6 +7,8 @@ tags:
   - BFS
   - Binary Tree
 title: 1302. Deepest Leaves Sum (Medium)
+categories:
+  - leetcode
 ---
 
 ## Before diving into the Solution

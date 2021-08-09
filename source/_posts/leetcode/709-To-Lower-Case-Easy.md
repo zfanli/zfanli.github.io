@@ -1,9 +1,11 @@
 ---
-date: "2021-06-15T15:36:05.543Z"
-excerpt: ""
+date: '2021-06-15T15:36:05.543Z'
+excerpt: ''
 tags:
   - String
 title: 709. To Lower Case (Easy)
+categories:
+  - leetcode
 ---
 
 只要记得大写字母 `A-Z` 的 ASCII 码区间是 `65-90`，大写字母和小写字母的差值是 32，这道题就很好解决。

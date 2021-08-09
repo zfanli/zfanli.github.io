@@ -7,6 +7,8 @@ tags:
   - Sorting
   - Heap (Priority Queue)
 title: 1383. Maximum Performance of a Team (Hard)
+categories:
+  - leetcode
 ---
 
 ## Before diving into the Solution

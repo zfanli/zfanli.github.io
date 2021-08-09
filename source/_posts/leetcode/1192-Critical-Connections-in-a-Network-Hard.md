@@ -7,6 +7,8 @@ tags:
   - Biconnected Component
   - Need Review
 title: 1192. Critical Connections in a Network (Hard)
+categories:
+  - leetcode
 ---
 
 ## Before diving into the Solution

@@ -4,6 +4,8 @@ excerpt: ''
 tags:
   - Array
 title: 665. Non-decreasing Array (Medium)
+categories:
+  - leetcode
 ---
 
 Topics:

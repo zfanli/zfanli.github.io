@@ -1,11 +1,13 @@
 ---
-date: "2021-04-06T15:36:05.461Z"
-excerpt: ""
+date: '2021-04-06T15:36:05.461Z'
+excerpt: ''
 tags:
   - Array
   - DP
   - Matrix
 title: 63. Unique Paths II (Medium)
+categories:
+  - leetcode
 ---
 
 ```python

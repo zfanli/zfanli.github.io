@@ -5,6 +5,8 @@ tags:
   - String
   - Stack
 title: 1047. Remove All Adjacent Duplicates In String (Easy)
+categories:
+  - leetcode
 ---
 
 ## Before diving into the Solution

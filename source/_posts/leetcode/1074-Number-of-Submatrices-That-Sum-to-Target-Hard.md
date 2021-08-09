@@ -7,6 +7,8 @@ tags:
   - Matrix
   - Prefix Sum
 title: 1074. Number of Submatrices That Sum to Target (Hard)
+categories:
+  - leetcode
 ---
 
 ## Before diving into the Solution

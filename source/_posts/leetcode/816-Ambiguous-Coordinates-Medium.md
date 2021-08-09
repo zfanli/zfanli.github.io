@@ -5,6 +5,8 @@ tags:
   - String
   - Backtracking
 title: 816. Ambiguous Coordinates (Medium)
+categories:
+  - leetcode
 ---
 
 ## Before diving into the Solution

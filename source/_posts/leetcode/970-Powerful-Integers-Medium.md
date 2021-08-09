@@ -5,6 +5,8 @@ tags:
   - Hash Table
   - Math
 title: 970. Powerful Integers (Medium)
+categories:
+  - leetcode
 ---
 
 ## Before diving into the Solution

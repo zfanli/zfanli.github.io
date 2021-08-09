@@ -6,6 +6,8 @@ tags:
   - Array
   - Hash Table
 title: 890. Find and Replace Pattern (Medium)
+categories:
+  - leetcode
 ---
 
 ## Before diving into the Solution

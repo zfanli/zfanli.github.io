@@ -1,9 +1,11 @@
 ---
-date: "2021-05-28T15:36:05.520Z"
-excerpt: ""
+date: '2021-05-28T15:36:05.520Z'
+excerpt: ''
 tags:
   - Math
 title: 462. Minimum Moves to Equal Array Elements II (Medium)
+categories:
+  - leetcode
 ---
 
 数学法，题目要求我们用最少的步数将数组元素修正到全部相等，换句话来说就是需要找到一个合适的目标，将其他数补上差值修正到与这个数相等，答案就是这些差值的和。

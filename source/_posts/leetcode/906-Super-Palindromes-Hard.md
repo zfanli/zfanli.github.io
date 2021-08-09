@@ -5,6 +5,8 @@ tags:
   - Math
   - Enumeration
 title: 906. Super Palindromes (Hard)
+categories:
+  - leetcode
 ---
 
 ## Before diving into the Solution

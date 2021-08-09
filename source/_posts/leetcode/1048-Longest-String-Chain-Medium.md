@@ -8,6 +8,8 @@ tags:
   - String
   - DP
 title: 1048. Longest String Chain (Medium)
+categories:
+  - leetcode
 ---
 
 ## Before diving into the Solution

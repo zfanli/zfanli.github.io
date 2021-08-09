@@ -5,6 +5,8 @@ tags:
   - Array
   - Heap (Priority Queue)
 title: 1354. Construct Target Array With Multiple Sums (Hard)
+categories:
+  - leetcode
 ---
 
 ## Before diving into the Solution

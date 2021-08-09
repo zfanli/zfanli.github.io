@@ -7,6 +7,8 @@ tags:
   - Sliding Window
   - Prefix Sum
 title: 1004. Max Consecutive Ones III (Medium)
+categories:
+  - leetcode
 ---
 
 ## Before diving into the Solution
