@@ -5,6 +5,8 @@ tags:
   - Design
   - Prefix Sum
 title: 303. Range Sum Query - Immutable (Easy)
+categories:
+  - leetcode
 ---
 
 前缀和，然后查询区间，最右减去最左，注意一个 index 的 offset。

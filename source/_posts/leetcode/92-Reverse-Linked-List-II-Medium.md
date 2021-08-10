@@ -3,6 +3,8 @@ date: '2021-04-14T15:36:05.469Z'
 tags:
   - Linked List
 title: 92. Reverse Linked List II (Medium)
+categories:
+  - leetcode
 ---
 
 暴力解法。啥也不多说，看看算法。

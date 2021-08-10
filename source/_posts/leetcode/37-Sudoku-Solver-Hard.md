@@ -4,6 +4,8 @@ tags:
   - Hash Table
   - Backtracking
 title: 37. Sudoku Solver (Hard)
+categories:
+  - leetcode
 ---
 
 数独问题，适合回溯算法。

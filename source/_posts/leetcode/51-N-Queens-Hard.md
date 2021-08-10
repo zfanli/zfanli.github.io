@@ -3,6 +3,8 @@ date: '2021-03-31T15:36:05.455Z'
 tags:
   - Backtracking
 title: 51. N-Queens (Hard)
+categories:
+  - leetcode
 ---
 
 > Tips

@@ -3,6 +3,8 @@ date: '2021-05-12T15:36:05.501Z'
 tags:
   - Sort
 title: 164. Maximum Gap (Hard)
+categories:
+  - leetcode
 ---
 
 桶排序实现常数 n 的 O(n)复杂度。

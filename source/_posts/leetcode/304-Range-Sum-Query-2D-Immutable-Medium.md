@@ -3,6 +3,8 @@ date: '2021-05-18T15:36:05.509Z'
 tags:
   - DP
 title: 304. Range Sum Query 2D - Immutable (Medium)
+categories:
+  - leetcode
 ---
 
 Topics:

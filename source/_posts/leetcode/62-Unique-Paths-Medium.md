@@ -5,6 +5,8 @@ tags:
   - DP
   - Combinatorics
 title: 62. Unique Paths (Medium)
+categories:
+  - leetcode
 ---
 
 ```python
