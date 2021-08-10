@@ -19,11 +19,11 @@ minify: true
 # Define custom file paths.
 # Create your custom files in site directory `source/_data` and uncomment needed files below.
 custom_file_path:
-  #head: source/_data/head.njk
+  head: source/_styles/head.njk
   header: source/_styles/header.html
   #sidebar: source/_data/sidebar.njk
-  #postMeta: source/_data/post-meta.njk
-  #postBodyEnd: source/_data/post-body-end.njk
+  postMeta: source/_styles/post-meta.njk
+  postBodyEnd: source/_styles/post-body-end.njk
   footer: source/_styles/footer.html
   #bodyEnd: source/_data/body-end.njk
   #variable: source/_data/variables.styl
@@ -130,7 +130,7 @@ avatar:
   rotated: false
 
 # Posts / Categories / Tags in sidebar.
-site_state: false
+site_state: true
 
 # Social Links
 # Usage: `Key: permalink || icon`
@@ -185,7 +185,7 @@ footer:
     # Icon name in Font Awesome. See: https://fontawesome.com/icons
     name: fa fa-heart
     # If you want to animate the icon, set it to true.
-    animated: false
+    animated: true
     # Change the color of icon, using Hex Code.
     color: "#ff0000"
 
@@ -224,7 +224,7 @@ post_meta:
   created_at: false
   updated_at:
     enable: true
-    another_day: true
+    another_day: false
   categories: false
 
 # Post wordcount display settings
@@ -261,11 +261,11 @@ follow_me:
 # Related popular posts
 # Dependencies: https://github.com/tea3/hexo-related-popular-posts
 related_posts:
-  enable: false
+  enable: true
   title: # Custom header, leave empty to use the default one
   display_in_home: false
   params:
-    maxCount: 5
+    maxCount: 3
     #PPMixingRate: 0.0
     #isDate: false
     #isImage: false
@@ -280,7 +280,7 @@ post_edit:
 
 # Show previous post and next post in post footer if exists
 # Available values: left | right | false
-post_navigation: left
+post_navigation: right
 
 # ---------------------------------------------------------------
 # Custom Page Settings
@@ -803,7 +803,7 @@ motion:
     post_block: fadeIn
     post_header: fadeInDown
     post_body: fadeInDown
-    coll_header:
+    coll_header: fadeInLeft
     # Only for Pisces | Gemini.
     sidebar: fadeInUp
 

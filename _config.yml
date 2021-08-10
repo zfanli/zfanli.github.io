@@ -11,6 +11,14 @@ description: |
   数据结构 ｜ 算法<br><br>
   用代码替代言语<br>记录创作与学习的脚步<br><br>
 keywords:
+  - 前端
+  - Java
+  - Python
+  - TECH
+  - BLOG
+  - 数据结构
+  - 算法
+  - Richard Zen
 author: Richard Zen
 language:
   - zh-CN
@@ -19,7 +27,7 @@ timezone: Asia/Shanghai
 
 # URL
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
-url: http://example.com
+url: https://richard.bizcat.xyz
 permalink: post/:title/
 permalink_defaults:
 pretty_urls:
