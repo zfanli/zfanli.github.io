@@ -4,8 +4,6 @@ tags:
   - Linked List
   - Two Pointers
 title: 19. Remove Nth Node From End of List (Medium)
-categories:
-  - leetcode
 ---
 
 With solutions both in Java and Python.

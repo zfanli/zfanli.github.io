@@ -5,11 +5,7 @@ tags:
   - Greedy
   - Heap (Priority Queue)
 title: 1642. Furthest Building You Can Reach (Medium)
-categories:
-  - leetcode
 ---
-
-## Before diving into the Solution
 
 爬楼游戏。给你一个数组 `heights` 表示你面前的大楼的高度，你从 `0` 出发，你有一些砖块的梯子。当你从当前位置爬到下一个位置时需要满足下面的条件。
 
@@ -19,6 +15,8 @@ categories:
 重点在于梯子可以爬任意高度，砖块则需要消耗高度差的数量。求你可以到达的最远距离。贪心算法和优先队列可以解决这个问题。
 
 <!-- more -->
+
+## 思路...算了直接 Solution
 
 ```python
 class Solution:

@@ -4,8 +4,6 @@ tags:
   - Linked List
   - Two Pointers
 title: 86. Partition List (Medium)
-categories:
-  - leetcode
 ---
 
 With solutions both in Python and Java.

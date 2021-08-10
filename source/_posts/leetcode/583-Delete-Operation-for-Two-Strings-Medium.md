@@ -2,14 +2,17 @@
 date: '2021-06-01T15:36:05.524Z'
 tags:
   - String
+  - DP
 title: 583. Delete Operation for Two Strings (Medium)
-categories:
-  - leetcode
 ---
 
-Topics:
+字符串问题。你有两个字符串，允许你每次在任意一个字符串上删除一个字符，求需要多少步才能让两个字符串相等。
 
-String.
+使用 DP 解决这道题。
+
+<!-- more -->
+
+## 思路
 
 ```python
 class Solution:

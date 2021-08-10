@@ -1,20 +1,25 @@
 ---
 date: '2021-06-23T15:36:05.552Z'
 tags:
+  - Array
   - Binary Search
-  - Heap
+  - Heap (Priority Queue)
   - DFS
+  - BFS
   - Union Fold
+  - Matrix
 title: 778. Swim in Rising Water (Hard)
-categories:
-  - leetcode
 ---
 
-这是一道求最合适路径的题目，可以应用图论中的 Dijkstra 算法。
+这是一道求最合适路径的题目，根据提示可以应用图论中的 Dijkstra 算法。
 
 > Dijkstra‘s Algorithm 适用于求**权重不为负数的加权图**起点到终点的最优路径。
 
 这道题的 input 是一个 `n * n` 的矩阵，可以将其视作所有元素都与其上下左右相互连接的一张无向图，每个顶点的数值表示到达这个顶点的边的权重，我们需要求的是从起点 `(0, 0)` 到终点 `(n, n)` 的最优路径。这道题要求我们计算的是这条路径上权重最大值，所以我们用一个变量来保持每一次选择后的权重最大值。
+
+<!-- more -->
+
+## 思路
 
 下面是算法：
 

@@ -1,14 +1,21 @@
 ---
 date: '2021-06-05T15:36:05.530Z'
 tags:
+  - Array
   - Hash Table
   - String
 title: 609. Find Duplicate File in System (Medium)
-categories:
-  - leetcode
 ---
 
-思路 1 是使用哈希表，以文件内容为 key，拼出文件名存到字典中，最后遍历字典所有值，存在长度大于 1 的列表则表示存在内容重复。这道题还是比较亲切，实际工作中确实会遇到这类问题。
+寻找系统中的重复文件。你会得到下面结构的字符串数组，这表示在 `root/d1/d2/.../dm` 目录下存在 `n` 个文件，分别命名为 `f1, f2, ..., fn`，文件名后括号内为文件的内容。你需要找到所有内容重复的文件，并返回文件的路径。
+
+> "root/d1/d2/.../dm f1.txt(f1_content) f2.txt(f2_content) ... fn.txt(fn_content)"
+
+<!-- more -->
+
+## 思路 1 使用哈希表
+
+以文件内容为 key，拼出文件名存到字典中，最后遍历字典所有值，存在长度大于 1 的列表则表示存在内容重复。这道题还是比较亲切，实际工作中确实会遇到这类问题。
 
 下面是代码例子。
 
@@ -70,12 +77,12 @@ JS 例子。
 var findDuplicate = function (paths) {
   table = {};
   for (let p of paths) {
-    p = p.split(" ");
+    p = p.split(' ');
     const pr = p[0];
     for (let i = 1; i < p.length; i++) {
-      const file = p[i].split("(");
+      const file = p[i].split('(');
       if (!table[file[1]]) table[file[1]] = [];
-      table[file[1]].push(pr + "/" + file[0]);
+      table[file[1]].push(pr + '/' + file[0]);
     }
   }
   const ans = [];

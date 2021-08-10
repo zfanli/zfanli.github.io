@@ -4,11 +4,15 @@ tags:
   - String
   - Backtracking
 title: 816. Ambiguous Coordinates (Medium)
-categories:
-  - leetcode
 ---
 
-## Before diving into the Solution
+模棱两可的平面坐标。你需要从一个删除了逗号、空格和小数点的平面坐标中还原它的所有可能的坐标值。
+
+> For example, "(1, 3)" becomes s = "(13)" and "(2, 0.5)" becomes s = "(205)".
+
+结果坐标值不会有多余的前置 0，并且小数点后的数字不会以 0 结尾。还原后的坐标的两个值应该用逗号和一个空格隔开。
+
+我们讨论用正则和回溯算法来解决这道题。
 
 <!-- more -->
 

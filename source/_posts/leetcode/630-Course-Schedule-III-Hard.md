@@ -2,17 +2,20 @@
 date: '2021-06-07T15:36:05.534Z'
 tags:
   - Array
-  - DFS
-  - Graph
-  - BFS
+  - Greedy
+  - Heap (Priority Queue)
 title: 630. Course Schedule III (Hard)
-categories:
-  - leetcode
 ---
 
-Topics:
+课程安排问题。一共有 `n` 门不同的在线课程，你会得到一个 `courses` 数组包含每门课程的持续时间和最后期限。
 
-Greed, graph, dfs, bfs.
+你将从第 1 天开始课程学习，你 1 天只能专注一门课程，不能多门课程同时进行。
+
+计算出你最多能完成多少门课程。
+
+<!-- more -->
+
+## 思路 1，优先队列
 
 虽然做出来了，但是成绩比较差，这一块需要研究一下。
 
@@ -36,7 +39,7 @@ class Solution:
         return len(heap)
 ```
 
-Ver 2.0, using max heap.
+## 思路 2, 大根堆
 
 ```python
 class Solution:

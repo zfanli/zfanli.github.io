@@ -6,8 +6,6 @@ tags:
   - DFS
   - Binary Tree
 title: 104. Maximum Depth of Binary Tree (Easy)
-categories:
-  - leetcode
 ---
 
 求二叉树的最大深度。

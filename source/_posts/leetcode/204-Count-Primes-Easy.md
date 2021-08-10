@@ -4,8 +4,6 @@ tags:
   - Math
   - Hash Table
 title: 204. Count Primes (Easy)
-categories:
-  - leetcode
 ---
 
 Topics:

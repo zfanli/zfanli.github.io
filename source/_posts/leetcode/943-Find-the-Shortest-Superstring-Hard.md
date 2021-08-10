@@ -8,8 +8,6 @@ tags:
   - Bitmask
   - Not Solved
 title: 943. Find the Shortest Superstring (Hard)
-categories:
-  - leetcode
 ---
 
 ## NOT SOLVED YET!!

@@ -6,11 +6,7 @@ tags:
   - DFS
   - Binary Tree
 title: 968. Binary Tree Cameras (Hard)
-categories:
-  - leetcode
 ---
-
-## Before diving into the Solution
 
 在二叉树上安装摄像头，每个摄像头可以监控 +1 的距离，也就是它的父节点、子节点和自身。求最少需要安装多少摄像头才能监控整棵树。
 

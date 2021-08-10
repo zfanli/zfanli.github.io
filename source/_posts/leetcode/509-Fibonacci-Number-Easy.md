@@ -6,11 +6,9 @@ tags:
   - Recursion
   - Memoization
 title: 509. Fibonacci Number (Easy)
-categories:
-  - leetcode
 ---
 
-先读题。
+生成指定位置的斐波那契数。Hello World 级别的问题，难点是对时间和空间复杂度的控制。
 
 > The Fibonacci numbers, commonly denoted `F(n)` form a sequence, called the Fibonacci sequence, such that each number is the sum of the two preceding ones, starting from 0 and 1. That is,
 >
@@ -18,25 +16,25 @@ categories:
 > - F(n) = F(n - 1) + F(n - 2), for n > 1.
 > - Given n, calculate F(n).
 
-斐波那契数列的问题，Hello World 级别的问题，难点是对时间和空间复杂度的控制。
+<!-- more -->
 
-> 官解也比较变态。
+> 官解比较变态。
 
 不多说，上正文。
 
-### 思路 & Solutions
+## 思路 & Solutions
 
-**方法一，递归（不推荐）**
+### 方法一，递归（不推荐）
 
 实现一个 `F(n) = F(n - 1) + F(n - 2)`，缺点就是时间复杂度是 O(2^n)。
 
-**方法二，递归+DP**
+### 方法二，递归+DP
 
 实现一个 `F(n) = F(n - 1) + F(n - 2)`，但是每次计算结果缓存起来，不再重复相同的计算。
 
 跳过。
 
-**方法三，Bottom-Up**
+### 方法三，Bottom-Up
 
 抛开递归，记录前一个值，按照斐波那契数列的规律计算到 n 为止。
 

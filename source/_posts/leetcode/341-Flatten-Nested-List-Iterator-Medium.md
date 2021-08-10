@@ -8,9 +8,13 @@ tags:
   - Queue
   - Iterator
 title: 341. Flatten Nested List Iterator (Medium)
-categories:
-  - leetcode
 ---
+
+你需要实现一个迭代器来扁平化一个嵌套的整数数组。嵌套整数数组中可能存在整数元素和嵌套整数数组两种元素。
+
+如果你选择的语言有生成器机制，那么这题会很简单。我们分别从生成器和 Stack 的应用来解决这道题。
+
+<!-- more -->
 
 With solutions both in Python and JavaScript.
 
@@ -44,7 +48,7 @@ Output: [1,4,6]
 Explanation: By calling next repeatedly until hasNext returns false, the order of elements returned by next should be: [1,4,6].
 ```
 
-### Submissions
+## Submissions
 
 先贴一下我的结果，防止剧透，具体代码会贴在最后。
 
@@ -62,9 +66,9 @@ Explanation: By calling next repeatedly until hasNext returns false, the order o
 | Runtime | 88 ms   | 100.00% | O(n) for initialization, O(1) for retrieve values |
 | Memory  | 49.6 MB | 72.22%  | O(n)                                              |
 
-### 思路 & Solutions
+## 思路 & Solutions
 
-**Python**
+### Python
 
 先来说说 Python 方案，说到最优的迭代方法，这就不得不说 Python 的生成器机制了。
 
@@ -110,7 +114,7 @@ class NestedIterator:
 | Runtime | 60 ms   | 92.67% | O(n)       |
 | Memory  | 17.5 MB | 89.70% | O(1)       |
 
-**JavaScript**
+### JavaScript
 
 再来看看一般思路。在初始化时将嵌套数组解构，然后每次从缓存中取值。
 

@@ -4,9 +4,13 @@ tags:
   - Array
   - Math
 title: 667. Beautiful Arrangement II （Medium）
-categories:
-  - leetcode
 ---
+
+给定两个数 `n` 和 `k`，你需要构建一个数组包含从 `1` 到 `n` 的正整数，并且相邻两个数的差组成的数组必须要有 `k` 个不重复的元素。
+
+<!-- more -->
+
+## Understanding the Problem
 
 With solutions both in Python and Java.
 
@@ -42,7 +46,7 @@ Explanation: The [1, 3, 2] has three different positive integers ranging from 1 
 
 输出结果为整数 1 ～ 3，相邻整数的差为 [2, 1]，满足 `k = 2` 的需求。
 
-### Submission
+## Submission
 
 先贴一下我自己独立完成的结果，防止剧透，具体代码会贴在最后。
 
@@ -55,7 +59,7 @@ Explanation: The [1, 3, 2] has three different positive integers ranging from 1 
 | Runtime | 40 ms   | 96.55% |
 | Memory  | 15.1 MB | 50.34% |
 
-### 思路
+## 思路
 
 这道题偏重考验观察。我们要做的是观察并找到数组排列的规律，用算法实现出来。
 
@@ -117,9 +121,9 @@ UAADs       => [X, 8, 7, 6, 5, 4, 3, 2, 1]
 - 控制循环次数
 - 不使用非必要的变量
 
-### Solutions
+## Solutions
 
-**Python**
+### Python
 
 ```python
 class Solution:
@@ -142,7 +146,7 @@ class Solution:
 | Runtime | 40 ms   | 96.55% |
 | Memory  | 15.1 MB | 50.34% |
 
-**Java**
+### Java
 
 由于先做出了 Python 版本，相同思路转换成 Java 代码结果很糟糕。
 
@@ -198,11 +202,11 @@ class Solution {
 > | Runtime | 40 ms   | 96.55% |
 > | Memory  | 15.1 MB | 82.76% |
 
-### 官方 Solution
+## 官方 Solution
 
 来学习一下官方答案的思路。这个问题官方给出了 2 个方案。
 
-**Approach #1: Brute Force [Time Limit Exceeded]**
+### Approach #1: Brute Force [Time Limit Exceeded]
 
 顾名思义，这个方法是暴力枚举所有排列，直到找到合适的排列。具体做法是准备一个检查唯一相邻数差数量的函数，然后对 1 ～ n 的数组排列进行枚举，直到找到该函数返回的唯一相邻数差的数量匹配 k 的值...
 
@@ -228,7 +232,7 @@ class Solution(object):
                 return cand
 ```
 
-**Approach #2: Construction [Accepted]**
+### Approach #2: Construction [Accepted]
 
 先看看官方原文，不过有些 LaTex 表达式不一定能正常显示，可以去 [原地址](https://leetcode.com/problems/beautiful-arrangement-ii/solution/) 查看。看完原文我们来分析和理解一下官方的思路。
 
@@ -285,7 +289,7 @@ class Solution(object):
         return ans
 ```
 
-总结：
+## 总结
 
 - 从代码上来看，先取 k = 1 的排序，再取 k = n - 1 的排序确实让代码逻辑更加简洁和易懂；
 - 从结果上来看，这段代码在空间复杂度上有改善（beats 82.76%），但是时间复杂度上有上升（beats 86.21%）。

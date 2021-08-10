@@ -4,11 +4,7 @@ tags:
   - Array
   - Heap (Priority Queue)
 title: 1354. Construct Target Array With Multiple Sums (Hard)
-categories:
-  - leetcode
 ---
-
-## Before diving into the Solution
 
 构建目标数组问题。给你一个长度为 `n` 的目标数组 `target`，你需要从一个包含 `n` 个 `1` 的数组 `arr` 开始执行下面的过程：
 

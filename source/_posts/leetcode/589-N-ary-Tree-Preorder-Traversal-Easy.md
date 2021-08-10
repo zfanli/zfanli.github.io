@@ -5,13 +5,17 @@ tags:
   - Tree
   - DFS
 title: 589. N-ary Tree Preorder Traversal (Easy)
-categories:
-  - leetcode
 ---
+
+N 叉树前序遍历问题。和二叉树前序遍历的区别在于...多了几个 child，仅此而已。
 
 > Given the root of an n-ary tree, return the preorder traversal of its nodes' values.
 >
 > Nary-Tree input serialization is represented in their level order traversal. Each group of children is separated by the null value (See examples)
+
+<!-- more -->
+
+## 思路
 
 ```python
 """

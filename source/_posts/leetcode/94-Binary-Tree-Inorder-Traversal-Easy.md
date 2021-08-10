@@ -6,8 +6,6 @@ tags:
   - DFS
   - Binary Tree
 title: 94. Binary Tree Inorder Traversal (Easy)
-categories:
-  - leetcode
 ---
 
 遍历树的方法通常有三种，分别是前序遍历 pre-order traversal、中序遍历 in-order traversal 和后序遍历 post-order traversal。这道题是中序遍历。

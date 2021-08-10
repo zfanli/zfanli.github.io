@@ -4,11 +4,7 @@ tags:
   - Array
   - Prefix Sum
 title: 1480. Running Sum of 1d Array (Easy)
-categories:
-  - leetcode
 ---
-
-## Before diving into the Solution
 
 求动态和，也就是前缀和。让你熟悉一下什么是前缀和。
 
@@ -18,7 +14,7 @@ categories:
 
 <!-- more -->
 
-简直 leetcode pstd。
+## 简直 leetcode pstd。
 
 ```python
 class Solution:

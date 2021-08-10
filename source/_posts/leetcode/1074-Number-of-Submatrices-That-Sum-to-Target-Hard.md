@@ -6,11 +6,7 @@ tags:
   - Matrix
   - Prefix Sum
 title: 1074. Number of Submatrices That Sum to Target (Hard)
-categories:
-  - leetcode
 ---
-
-## Before diving into the Solution
 
 矩阵求和问题。给定一个矩阵 `matrix` 和一个目标值 `target`，求和为 `target` 的子矩阵的数量。
 
@@ -93,7 +89,7 @@ Output: 0
 
 矩阵的尺寸从最小一个元素到最大 100\*100 个元素，并且元素的值可能为负数，这意味着没有取巧的办法，对于每一种子矩阵的组合我们都必须算出和才能断定是否符合条件。
 
-### 思路 & Solutions
+## 思路 & Solutions
 
 **递归方法（X 超时）**
 
@@ -119,7 +115,7 @@ Output: 0
 
 要应用这个思路，我们可以得到两种方法。
 
-**方法一，计算矩阵所有元素的前缀和**
+### 方法一，计算矩阵所有元素的前缀和
 
 - 首先计算矩阵所有元素的前缀和；
   - prefixSum[x][y] = matrix[x][y] + prefixSum[x-1][y] + prefixSum[x][y-1] - prefixSum[x-1][y-1]
@@ -191,7 +187,7 @@ class Solution {
 }
 ```
 
-**方法二，仅按行或列计算前缀和**
+### 方法二，仅按行或列计算前缀和
 
 - 与方法一最大的区别在于，方法二不去计算一个 2D 矩阵的前缀和，而是逐行计算这一行的前缀和；
 - 这个前缀和数组由循环外部的变量，变成列循环内部的变量，随着基础行的变化而重置；
@@ -217,7 +213,7 @@ class Solution:
         return ans
 ```
 
-### 总结
+## 总结
 
 这是一道困难的题，难点在于把计算计划到规定的复杂度中。
 
