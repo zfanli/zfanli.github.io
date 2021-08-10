@@ -20,12 +20,12 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Mist","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":null,"sidebar":"fadeInUp"}},"prism":true,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/config.min.js"></script>
-<meta name="description" content="Before diving into the Solution给定一个字符串格式的十进制整数 n，要求你分析最少需要多少个“二进制式十进制数”（Deci-Binary）求和可以得到这个给定的数 n。 “二进制式十进制数”的定义：一个十进制的整数，并且每一位数都只能是 0 或 1，不能有前置 0。比如 101 和 1100 符合要求，但是 112 和 3001 不符合要求。  这道题确定不是脑筋急转">
+<meta name="description" content="给定一个字符串格式的十进制整数 n，要求你分析最少需要多少个“二进制式十进制数”（Deci-Binary）求和可以得到这个给定的数 n。 “二进制式十进制数”的定义：一个十进制的整数，并且每一位数都只能是 0 或 1，不能有前置 0。比如 101 和 1100 符合要求，但是 112 和 3001 不符合要求。  这道题确定不是脑筋急转弯吗？！">
 <meta property="og:type" content="article">
 <meta property="og:title" content="1689. Partitioning Into Minimum Number Of Deci-Binary Numbers (Medium)">
 <meta property="og:url" content="http://example.com/post/leetcode/1689-Partitioning-Into-Minimum-Number-Of-Deci-Binary-Numbers-Medium/">
 <meta property="og:site_name" content="HOME">
-<meta property="og:description" content="Before diving into the Solution给定一个字符串格式的十进制整数 n，要求你分析最少需要多少个“二进制式十进制数”（Deci-Binary）求和可以得到这个给定的数 n。 “二进制式十进制数”的定义：一个十进制的整数，并且每一位数都只能是 0 或 1，不能有前置 0。比如 101 和 1100 符合要求，但是 112 和 3001 不符合要求。  这道题确定不是脑筋急转">
+<meta property="og:description" content="给定一个字符串格式的十进制整数 n，要求你分析最少需要多少个“二进制式十进制数”（Deci-Binary）求和可以得到这个给定的数 n。 “二进制式十进制数”的定义：一个十进制的整数，并且每一位数都只能是 0 或 1，不能有前置 0。比如 101 和 1100 符合要求，但是 112 和 3001 不符合要求。  这道题确定不是脑筋急转弯吗？！">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-08-02T07:36:05.600Z">
 <meta property="article:modified_time" content="2021-08-02T07:36:05.600Z">
@@ -210,7 +210,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Before-diving-into-the-Solution"><span class="nav-text">Before diving into the Solution</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Medium-Seriously"><span class="nav-text">???Medium??? Seriously?!</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -308,7 +308,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>579</span>
+      <span>552</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -326,15 +326,14 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h2 id="Before-diving-into-the-Solution"><a href="#Before-diving-into-the-Solution" class="headerlink" title="Before diving into the Solution"></a>Before diving into the Solution</h2><p>给定一个字符串格式的十进制整数 <code>n</code>，要求你分析最少需要多少个“二进制式十进制数”（Deci-Binary）求和可以得到这个给定的数 <code>n</code>。</p>
+        <p>给定一个字符串格式的十进制整数 <code>n</code>，要求你分析最少需要多少个“二进制式十进制数”（Deci-Binary）求和可以得到这个给定的数 <code>n</code>。</p>
 <p>“二进制式十进制数”的定义：一个十进制的整数，并且每一位数都只能是 <code>0</code> 或 <code>1</code>，不能有前置 <code>0</code>。比如 <code>101</code> 和 <code>1100</code> 符合要求，但是 <code>112</code> 和 <code>3001</code> 不符合要求。</p>
 <blockquote>
 <p>这道题确定不是脑筋急转弯吗？！</p>
 </blockquote>
 <span id="more"></span>
 
-<p>???Medium??? Seriously?!</p>
-<p>解释一句，仔细观察你会发现，由于二进制式十进制数每一位最大值是 <code>1</code>，想要从 <code>0</code> 开始用最少数量的二进制式十进制数来求和得到 <code>n</code>，你只需要知道 <code>n</code> 每一位数字的最大值即可，所以答案会在 <code>1-9</code> 之间。</p>
+<h2 id="Medium-Seriously"><a href="#Medium-Seriously" class="headerlink" title="???Medium??? Seriously?!"></a>???Medium??? Seriously?!</h2><p>解释一句，仔细观察你会发现，由于二进制式十进制数每一位最大值是 <code>1</code>，想要从 <code>0</code> 开始用最少数量的二进制式十进制数来求和得到 <code>n</code>，你只需要知道 <code>n</code> 每一位数字的最大值即可，所以答案会在 <code>1-9</code> 之间。</p>
 <pre class="language-java" data-language="java"><code class="language-java">class Solution &#123;
     public int minPartitions(String n) &#123;
         int ans &#x3D; 0;
@@ -405,13 +404,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">83k</span>
+    <span title="站点总字数">85k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:16</span>
+    <span title="站点阅读时长">1:17</span>
   </span>
 </div>
 <div class="busuanzi-count">

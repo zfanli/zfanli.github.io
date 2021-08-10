@@ -295,7 +295,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>1.2k</span>
+      <span>1.3k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -313,59 +313,16 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>Topics:</p>
-<p>Array.</p>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def checkPossibility(self, nums: List[int]) -&gt; bool:
-        modified &#x3D; False
-        for i in reversed(range(1, len(nums))):
-            # print(nums[i] , nums[i - 1])
-            if nums[i] &lt; nums[i - 1]:
-                if not modified:
-                    if i !&#x3D; len(nums) - 1 and nums[i + 1] &lt; nums[i - 1]:
-                        nums[i - 1] &#x3D; nums[i]
-                    modified &#x3D; True
-                else:
-                    return False
-        return True</code></pre>
-
-<p>把题目转化为递增数组的思路，避免了颠倒数组。</p>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def checkPossibility(self, nums: List[int]) -&gt; bool:
-        modified &#x3D; False
-        for i in range(1, len(nums)):
-            if nums[i] &lt; nums[i - 1]:
-                if not modified:
-                    if i &gt; 1 and nums[i] &lt; nums[i - 2]:
-                        nums[i] &#x3D; nums[i - 1]
-                    modified &#x3D; True
-                else:
-                    return False
-        return True</code></pre>
-
-<p>Ver 2.0，评论区大神给的思路，只允许修改一次值的情况下，只有 YABY 这种情况是直接丢出 <code>false</code>，其余情况可以通过修改一次值通过。这个算法可以在不进行任何值的修改的前提下，进行正确的判断。</p>
-<p><img src="/images/leetcode/665.idea.png" alt="665.idea.png"></p>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def checkPossibility(self, nums: List[int]) -&gt; bool:
-        modified &#x3D; False
-        for i in range(1, len(nums)):
-            if nums[i] &lt; nums[i - 1]:
-                # Return False if modified before, or if these conditions are satisfied.
-                if modified or (
-                    # Ensure &#96;i - 2&#96; and  &#96;i + 1&#96; exist,
-                    i &gt; 1
-                    and i &lt; len(nums) - 1
-                    # if &#96;i - 2&#96; &gt; &#96;i&#96;, it&#39;s a YAB of YABY,
-                    and nums[i - 2] &gt; nums[i]
-                    # if &#96;i - 1&#96; &gt; &#96;i + 1&#96;, it&#39;s a ABY of YABY.
-                    and nums[i - 1] &gt; nums[i + 1]
-                ):
-                    return False
-                # If it&#39;s not the cases above, set modified to True,
-                # no more chance for the next violation.
-                modified &#x3D; True
-        return True</code></pre>
-
+          <p>数组问题。你有一个整数数组，你有一次机会修改其中的一个值，你需要检查这个数组是否能构成一个非递减数组。</p>
+<p>非递减，换个思路就是递增数组。检查数组元素顺序是否为递增，并允许一次例外。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/post/leetcode/665-Non-decreasing-Array-Medium/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -427,7 +384,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>752</span>
+      <span>823</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -445,44 +402,17 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>Topics:</p>
-<p>Greed, graph, dfs, bfs.</p>
-<p>虽然做出来了，但是成绩比较差，这一块需要研究一下。</p>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def scheduleCourse(self, courses: List[List[int]]) -&gt; int:
-        c &#x3D; [x for x in sorted(courses, key&#x3D;lambda x: x[1])]
-        heap &#x3D; []
-        time &#x3D; 0
-        for i, x in enumerate(c):
-            if time + x[0] &lt;&#x3D; x[1]:
-                time +&#x3D; x[0]
-            elif len(heap) &gt; 0 and heap[-1] &gt; x[0] and time - heap[-1] + x[0] &lt;&#x3D; x[1]:
-                time +&#x3D;  - heap.pop() + x[0]
-            else:
-                continue
-
-            heap.append(x[0])
-            heap.sort()
-
-        return len(heap)</code></pre>
-
-<p>Ver 2.0, using max heap.</p>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def scheduleCourse(self, courses: List[List[int]]) -&gt; int:
-        c &#x3D; [x for x in sorted(courses, key&#x3D;lambda x: x[1])]
-        time, heap &#x3D; 0, []
-
-        for i, x in enumerate(c):
-            if time + x[0] &lt;&#x3D; x[1]:
-                time +&#x3D; x[0]
-                heappush(heap, -x[0])
-            elif heap:
-                if -heap[0] &gt; x[0]:
-                    time +&#x3D; heappop(heap) + x[0]
-                    heappush(heap, -x[0])
-
-        return len(heap)</code></pre>
-
+          <p>课程安排问题。一共有 <code>n</code> 门不同的在线课程，你会得到一个 <code>courses</code> 数组包含每门课程的持续时间和最后期限。</p>
+<p>你将从第 1 天开始课程学习，你 1 天只能专注一门课程，不能多门课程同时进行。</p>
+<p>计算出你最多能完成多少门课程。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/post/leetcode/630-Course-Schedule-III-Hard/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -544,7 +474,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>1.7k</span>
+      <span>1.9k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -562,77 +492,18 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>思路 1 是使用哈希表，以文件内容为 key，拼出文件名存到字典中，最后遍历字典所有值，存在长度大于 1 的列表则表示存在内容重复。这道题还是比较亲切，实际工作中确实会遇到这类问题。</p>
-<p>下面是代码例子。</p>
+          <p>寻找系统中的重复文件。你会得到下面结构的字符串数组，这表示在 <code>root/d1/d2/.../dm</code> 目录下存在 <code>n</code> 个文件，分别命名为 <code>f1, f2, ..., fn</code>，文件名后括号内为文件的内容。你需要找到所有内容重复的文件，并返回文件的路径。</p>
 <blockquote>
-<p>其实做的粗糙一点，去掉 <code>c = c[:-1]</code> 这句也能实现，而且少一个字符串处理性能会更好。毕竟我们不在意文件内容实际是什么，只在意有没有重复。</p>
+<p>“root/d1/d2/…/dm f1.txt(f1_content) f2.txt(f2_content) … fn.txt(fn_content)”</p>
 </blockquote>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def findDuplicate(self, paths: List[str]) -&gt; List[List[str]]:
-        table &#x3D; defaultdict(list)
-        for f in paths:
-            f &#x3D; f.split(&quot; &quot;)
-            p &#x3D; f[0]
-            for i in f[1:]:
-                fn, c &#x3D; i.split(&quot;(&quot;)
-                c &#x3D; c[:-1]
-                table[c].append(f&quot;&#123;p&#125;&#x2F;&#123;fn&#125;&quot;)
-        ans &#x3D; []
-        for v in table.values():
-            if len(v) &gt; 1:
-                ans.append(v)
-        return ans</code></pre>
-
-<p>Java 例子。</p>
-<pre class="language-java" data-language="java"><code class="language-java">class Solution &#123;
-    public List&lt;List&lt;String&gt;&gt; findDuplicate(String[] paths) &#123;
-        Map&lt;String, List&lt;String&gt;&gt; table &#x3D; new HashMap&lt;&gt;();
-        for (String p : paths) &#123;
-            String[] f &#x3D; p.split(&quot; &quot;);
-            String pr &#x3D; f[0];
-            for (int i &#x3D; 1; i &lt; f.length; i++) &#123;
-                String[] file &#x3D; f[i].split(&quot;\\(&quot;);
-                if (!table.containsKey(file[1])) &#123;
-                    table.put(file[1], new ArrayList&lt;String&gt;());
-                &#125;
-                table.get(file[1]).add(pr + &quot;&#x2F;&quot; + file[0]);
-            &#125;
-        &#125;
-        List&lt;List&lt;String&gt;&gt; ans &#x3D; new ArrayList&lt;&gt;();
-        for (List&lt;String&gt; val : table.values()) &#123;
-            if (val.size() &gt; 1) &#123;
-                ans.add(val);
-            &#125;
-        &#125;
-        return ans;
-    &#125;
-&#125;</code></pre>
-
-<p>JS 例子。</p>
-<pre class="language-js" data-language="js"><code class="language-js">&#x2F;**
- * @param &#123;string[]&#125; paths
- * @return &#123;string[][]&#125;
- *&#x2F;
-var findDuplicate &#x3D; function (paths) &#123;
-  table &#x3D; &#123;&#125;;
-  for (let p of paths) &#123;
-    p &#x3D; p.split(&quot; &quot;);
-    const pr &#x3D; p[0];
-    for (let i &#x3D; 1; i &lt; p.length; i++) &#123;
-      const file &#x3D; p[i].split(&quot;(&quot;);
-      if (!table[file[1]]) table[file[1]] &#x3D; [];
-      table[file[1]].push(pr + &quot;&#x2F;&quot; + file[0]);
-    &#125;
-  &#125;
-  const ans &#x3D; [];
-  for (let k in table) &#123;
-    if (table[k].length &gt; 1) &#123;
-      ans.push(table[k]);
-    &#125;
-  &#125;
-  return ans;
-&#125;;</code></pre>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/post/leetcode/609-Find-Duplicate-File-in-System-Medium/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -694,7 +565,7 @@ var findDuplicate &#x3D; function (paths) &#123;
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>558</span>
+      <span>599</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -712,34 +583,19 @@ var findDuplicate &#x3D; function (paths) &#123;
     
     
     <div class="post-body" itemprop="articleBody">
-          <blockquote>
+          <p>N 叉树前序遍历问题。和二叉树前序遍历的区别在于…多了几个 child，仅此而已。</p>
+<blockquote>
 <p>Given the root of an n-ary tree, return the preorder traversal of its nodes’ values.</p>
 <p>Nary-Tree input serialization is represented in their level order traversal. Each group of children is separated by the null value (See examples)</p>
 </blockquote>
-<pre class="language-python" data-language="python"><code class="language-python">&quot;&quot;&quot;
-# Definition for a Node.
-class Node:
-    def __init__(self, val&#x3D;None, children&#x3D;None):
-        self.val &#x3D; val
-        self.children &#x3D; children
-&quot;&quot;&quot;
-
-class Solution:
-    def preorder(self, root: &#39;Node&#39;) -&gt; List[int]:
-        if root is None:
-            return []
-
-        ans, stack &#x3D; [], [root,]
-
-        while stack:
-            top &#x3D; stack.pop()
-            ans.append(top.val)
-            stack.extend(top.children[::-1])
-
-        return ans
-
-</code></pre>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/post/leetcode/589-N-ary-Tree-Preorder-Traversal-Easy/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -801,7 +657,7 @@ class Solution:
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>328</span>
+      <span>378</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -819,24 +675,16 @@ class Solution:
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>Topics:</p>
-<p>String.</p>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def minDistance(self, word1: str, word2: str) -&gt; int:
-        m, n &#x3D; len(word1), len(word2)
-        dp &#x3D; &#123;&#125;
-
-        for i in range(m + 1):
-            for j in range(n + 1):
-                if i &#x3D;&#x3D; 0 or j &#x3D;&#x3D; 0:
-                    dp[i, j] &#x3D; i + j
-                elif word1[i - 1] &#x3D;&#x3D; word2[j - 1]:
-                    dp[i, j] &#x3D; dp[i - 1, j - 1]
-                else:
-                    dp[i, j] &#x3D; 1 + min(dp[i - 1, j], dp[i, j - 1])
-
-        return dp[m, n]</code></pre>
-
+          <p>字符串问题。你有两个字符串，允许你每次在任意一个字符串上删除一个字符，求需要多少步才能让两个字符串相等。</p>
+<p>使用 DP 解决这道题。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/post/leetcode/583-Delete-Operation-for-Two-Strings-Medium/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -898,7 +746,7 @@ class Solution:
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>600</span>
+      <span>598</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -916,7 +764,7 @@ class Solution:
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>先读题。</p>
+          <p>生成指定位置的斐波那契数。Hello World 级别的问题，难点是对时间和空间复杂度的控制。</p>
 <blockquote>
 <p>The Fibonacci numbers, commonly denoted <code>F(n)</code> form a sequence, called the Fibonacci sequence, such that each number is the sum of the two preceding ones, starting from 0 and 1. That is,</p>
 <ul>
@@ -925,33 +773,14 @@ class Solution:
 <li>Given n, calculate F(n).</li>
 </ul>
 </blockquote>
-<p>斐波那契数列的问题，Hello World 级别的问题，难点是对时间和空间复杂度的控制。</p>
-<blockquote>
-<p>官解也比较变态。</p>
-</blockquote>
-<p>不多说，上正文。</p>
-<h3 id="思路-amp-Solutions"><a href="#思路-amp-Solutions" class="headerlink" title="思路 &amp; Solutions"></a>思路 &amp; Solutions</h3><p><strong>方法一，递归（不推荐）</strong></p>
-<p>实现一个 <code>F(n) = F(n - 1) + F(n - 2)</code>，缺点就是时间复杂度是 O(2^n)。</p>
-<p><strong>方法二，递归+DP</strong></p>
-<p>实现一个 <code>F(n) = F(n - 1) + F(n - 2)</code>，但是每次计算结果缓存起来，不再重复相同的计算。</p>
-<p>跳过。</p>
-<p><strong>方法三，Bottom-Up</strong></p>
-<p>抛开递归，记录前一个值，按照斐波那契数列的规律计算到 n 为止。</p>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def fib(self, n: int) -&gt; int:
-        if n &lt; 2:
-          return n
-        else:
-            pre &#x3D; 0
-            ans &#x3D; 1
-            for _ in range(2, n+1):
-                ans, pre &#x3D; ans + pre, ans
-            return ans</code></pre>
-
-<blockquote>
-<p>官解给出了矩阵幂和黄金比例的方法，跳过…</p>
-</blockquote>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/post/leetcode/509-Fibonacci-Number-Easy/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1013,7 +842,7 @@ class Solution:
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>583</span>
+      <span>634</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -1031,31 +860,15 @@ class Solution:
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>数学法，题目要求我们用最少的步数将数组元素修正到全部相等，换句话来说就是需要找到一个合适的目标，将其他数补上差值修正到与这个数相等，答案就是这些差值的和。</p>
-<p>题目的难点在于如何意识到我们要寻找的目标是数组的中位数。</p>
-<p>我们可以准备一个数组，首先将其排序，思考一下第一个数和最后一个数修正到目标数需要的步数。</p>
-<p>我们会发现，第一个数和最后一个数中间的任何数都符合要求，因为最少步数实际上就是第一个数和最后一个数的差值。</p>
-<p>我们进一步发现需要确认合适的目标，我们还需要继续确认第二个数和倒数第二个数修正到目标需要的步数。</p>
-<p>我们重复这个过程，最终会有两种情况。</p>
-<ul>
-<li>如果数组的长度为奇数：最后找到的唯一一个数就是目标值；</li>
-<li>如果数组的长度为偶数：最后找到的一对数之间的任何值都是目标值，也包括这对数本身。</li>
-</ul>
-<p>再仔细想想，我们在寻找的其实就是数组的中位数。现在算法浮出水面了。</p>
-<ul>
-<li>方便起见我们将数组进行排序；</li>
-<li>根据长度找到数组中位数的值，不用考虑太多，直接取长度除以 2 的整数值；</li>
-<li>计算所有元素与目标的差的绝对值，进行求和。</li>
-</ul>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def minMoves2(self, nums: List[int]) -&gt; int:
-        nums.sort()
-        m &#x3D; nums[len(nums) &gt;&gt; 1]
-        ans &#x3D; 0
-        for i in nums:
-            ans +&#x3D; abs(i - m)
-        return ans</code></pre>
-
+          <p>你有一个数组，允许你每次操作将任意一个元素的值 +1 或 -1，求最少需要多少操作次数让数组中的所有元素相等。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/post/leetcode/462-Minimum-Moves-to-Equal-Array-Elements-II-Medium/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1117,7 +930,7 @@ class Solution:
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>454</span>
+      <span>510</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -1135,24 +948,15 @@ class Solution:
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>题目要求每次给 <code>n - 1</code> 个元素加 1，重复这个步骤直到数组所有元素相等。我们不应该给 <code>max</code> 加 1，所以这一步实际上是给最大值以外的所有元素加 1，其等价于最大值减去 1。</p>
-<p>一旦在脑子中把这个思路捋顺了，方案就简单了。实际上我们要找到的是每一个元素减到最小值需要减去的次数。</p>
-<p>算法已经浮出水面，我们先找到最小值，然后计算每个元素和最小值的差的和，这个和就是答案。</p>
-<blockquote>
-<p>这是数学法，也称“感觉智商丢掉”法。</p>
-</blockquote>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def minMoves(self, nums: List[int]) -&gt; int:
-        m, ans &#x3D; min(nums), 0
-        for n in nums:
-            ans +&#x3D; n - m
-        return ans</code></pre>
-
-<p>基于这个思路，实际上我们把最小值减去了 <code>n</code> 次，那么找到最小值之后，我们对数组求和之后再减去数组长度乘以最小值，得到的结果就是答案。</p>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def minMoves(self, nums: List[int]) -&gt; int:
-        return sum(nums) - min(nums) * len(nums)</code></pre>
-
+          <p>你有一个长度为 <code>n</code> 的数组，允许你每次操作将 <code>n - 1</code> 个元素的值 +1，求最少需要多少操作次数让数组中的所有元素相等。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/post/leetcode/453-Minimum-Moves-to-Equal-Array-Elements-Easy/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1214,7 +1018,7 @@ class Solution:
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>2.6k</span>
+      <span>2.7k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -1232,193 +1036,16 @@ class Solution:
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>With solutions both in Python and JavaScript.</p>
-<p>先读题：</p>
-<blockquote>
-<p>You are given a nested list of integers <code>nestedList</code>. Each element is either an integer or a list whose elements may also be integers or other lists. Implement an iterator to flatten it.</p>
-<p>Implement the <code>NestedIterator</code> class:</p>
-<ul>
-<li><code>NestedIterator(List&lt;NestedInteger&gt; nestedList)</code> Initializes the iterator with the nested list <code>nestedList</code>.</li>
-<li><code>int next()</code> Returns the next integer in the nested list.</li>
-<li><code>boolean hasNext()</code> Returns <code>true</code> if there are still some integers in the nested list and <code>false</code> otherwise.</li>
-</ul>
-</blockquote>
-<p>题目比较明确，需要我们用迭代器接口来扁平化嵌套数组，需要实现 <code>next</code> 和 <code>hasNext</code> 接口。测试 Case 会调用 <code>hasNext</code> 来检查是否还有值没输出，然后调用 <code>next</code> 获取具体的值。</p>
-<p>需求比较明确，例子看看就好。</p>
-<p>Example 1:</p>
-<pre class="language-console" data-language="console"><code class="language-console">Input: nestedList &#x3D; [[1,1],2,[1,1]]
-Output: [1,1,2,1,1]
-Explanation: By calling next repeatedly until hasNext returns false, the order of elements returned by next should be: [1,1,2,1,1].</code></pre>
-
-<p>Example 2:</p>
-<pre class="language-console" data-language="console"><code class="language-console">Input: nestedList &#x3D; [1,[4,[6]]]
-Output: [1,4,6]
-Explanation: By calling next repeatedly until hasNext returns false, the order of elements returned by next should be: [1,4,6].</code></pre>
-
-<h3 id="Submissions"><a href="#Submissions" class="headerlink" title="Submissions"></a>Submissions</h3><p>先贴一下我的结果，防止剧透，具体代码会贴在最后。</p>
-<p><strong>Python</strong></p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>Result</th>
-<th>Beats</th>
-<th>Complexity</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Runtime</td>
-<td>60 ms</td>
-<td>92.67%</td>
-<td>O(n)</td>
-</tr>
-<tr>
-<td>Memory</td>
-<td>17.5 MB</td>
-<td>89.70%</td>
-<td>O(1)</td>
-</tr>
-</tbody></table>
-<p><strong>JavaScript</strong></p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>Result</th>
-<th>Beats</th>
-<th>Complexity</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Runtime</td>
-<td>88 ms</td>
-<td>100.00%</td>
-<td>O(n) for initialization, O(1) for retrieve values</td>
-</tr>
-<tr>
-<td>Memory</td>
-<td>49.6 MB</td>
-<td>72.22%</td>
-<td>O(n)</td>
-</tr>
-</tbody></table>
-<h3 id="思路-amp-Solutions"><a href="#思路-amp-Solutions" class="headerlink" title="思路 &amp; Solutions"></a>思路 &amp; Solutions</h3><p><strong>Python</strong></p>
-<p>先来说说 Python 方案，说到最优的迭代方法，这就不得不说 Python 的生成器机制了。</p>
-<p>下面是我的代码，可以看到逻辑上只是一个简单的递归，但是使用了生成器，让时间复杂度可以控制在 O(n)，同时由于没有使用额外的变量，空间复杂度为 O(1)。</p>
-<pre class="language-python" data-language="python"><code class="language-python">class NestedIterator:
-    _gen &#x3D; None
-    _next &#x3D; None
-
-    def __init__(self, nestedList: [NestedInteger]):
-        def integer_retriever(l):
-            for i in l:
-                if i.isInteger():
-                    yield i.getInteger()
-                else:
-                    for _i in integer_retriever(i.getList()):
-                        yield _i
-
-        self._gen &#x3D; integer_retriever(nestedList)
-        self._retrieve()
-
-    def _retrieve(self):
-        try:
-            self._next &#x3D; next(self._gen)
-        except StopIteration:
-            self._next &#x3D; None
-
-    def next(self) -&gt; int:
-        res &#x3D; self._next
-        self._retrieve()
-        return res
-
-    def hasNext(self) -&gt; bool:
-        return self._next is not None
-</code></pre>
-
-<p>结果如下。</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>Result</th>
-<th>Beats</th>
-<th>Complexity</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Runtime</td>
-<td>60 ms</td>
-<td>92.67%</td>
-<td>O(n)</td>
-</tr>
-<tr>
-<td>Memory</td>
-<td>17.5 MB</td>
-<td>89.70%</td>
-<td>O(1)</td>
-</tr>
-</tbody></table>
-<p><strong>JavaScript</strong></p>
-<p>再来看看一般思路。在初始化时将嵌套数组解构，然后每次从缓存中取值。</p>
-<pre class="language-javascript" data-language="javascript"><code class="language-javascript">&#x2F;**
- * @constructor
- * @param &#123;NestedInteger[]&#125; nestedList
- *&#x2F;
-var NestedIterator &#x3D; function (nestedList) &#123;
-  this._list &#x3D; [];
-  const denest &#x3D; (nl) &#x3D;&gt; &#123;
-    for (nest of nl) &#123;
-      if (nest.isInteger()) &#123;
-        this._list.push(nest.getInteger());
-      &#125; else &#123;
-        denest(nest.getList());
-      &#125;
-    &#125;
-  &#125;;
-  denest(nestedList);
-&#125;;
-
-&#x2F;**
- * @this NestedIterator
- * @returns &#123;boolean&#125;
- *&#x2F;
-NestedIterator.prototype.hasNext &#x3D; function () &#123;
-  return this._list.length &gt; 0;
-&#125;;
-
-&#x2F;**
- * @this NestedIterator
- * @returns &#123;integer&#125;
- *&#x2F;
-NestedIterator.prototype.next &#x3D; function () &#123;
-  return this._list.shift();
-&#125;;</code></pre>
-
-<p>结果如下。</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>Result</th>
-<th>Beats</th>
-<th>Complexity</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Runtime</td>
-<td>88 ms</td>
-<td>100.00%</td>
-<td>O(n) for initialization, O(1) for retrieve value</td>
-</tr>
-<tr>
-<td>Memory</td>
-<td>49.6 MB</td>
-<td>72.22%</td>
-<td>O(n)</td>
-</tr>
-</tbody></table>
-
+          <p>你需要实现一个迭代器来扁平化一个嵌套的整数数组。嵌套整数数组中可能存在整数元素和嵌套整数数组两种元素。</p>
+<p>如果你选择的语言有生成器机制，那么这题会很简单。我们分别从生成器和 Stack 的应用来解决这道题。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/post/leetcode/341-Flatten-Nested-List-Iterator-Medium/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1498,58 +1125,16 @@ NestedIterator.prototype.next &#x3D; function () &#123;
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>思路 1，找到所有组合求最大值，用一个帮助函数 <code>pair</code> 来帮助我们判断是否需要进行相乘。</p>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def maxProduct(self, words: List[str]) -&gt; int:
-        def pair(w1, w2):
-            for w in w1:
-                if w in w2:
-                    return False
-            return True
-
-        ans, n &#x3D; 0, len(words)
-        for i in range(n):
-            for j in range(i + 1, n):
-                if pair(words[i], words[j]):
-                    ans &#x3D; max(ans, len(words[i]) * len(words[j]))
-        return ans</code></pre>
-
-<p>思路 2，英文小写字母只有 26 位，设想我们有一个长度为 26 的二进制数字，按照顺序将每一位映射成一个字母，0 表示有这个字母，1 则表示没有，这就是位掩码。判断相同字符串经常用到位掩码操作，在计算机中位操作往往有更好的效率。要判断两个字符串是否有共同的字母，只需要将他们的位掩码进行 <code>&amp;</code> 操作，这样相同位存在 1 的情况就会让结果大于 0，相反如果没有任何一位存在两边都为 1 的情况，则结果一定是 0。所以我们仅在结果为 0 的时候去计算长度相乘。</p>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def maxProduct(self, words: List[str]) -&gt; int:
-        bitmasks, ans &#x3D; &#123;&#125;, 0
-        for w in words:
-            bitmask &#x3D; 0
-            for c in w:
-                bitmask |&#x3D; 1 &lt;&lt; (ord(c) - ord(&#39;a&#39;))
-            for k, v in bitmasks.items():
-                if not bitmask &amp; k:
-                    ans &#x3D; max(ans, len(w) * v)
-            bitmasks[bitmask] &#x3D; max(len(w), bitmasks.get(bitmask, 0))
-            # print(bitmask, ans)
-        return ans</code></pre>
-
-<p>另一种位掩码的实现，按照下标映射位掩码，省去了 HashMap。</p>
-<pre class="language-java" data-language="java"><code class="language-java">class Solution &#123;
-    public int maxProduct(String[] words) &#123;
-        int[] bitmasks &#x3D; new int[words.length];
-        for (int i &#x3D; 0; i &lt; words.length; i++) &#123;
-            for (char c : words[i].toCharArray()) &#123;
-                bitmasks[i] |&#x3D; 1 &lt;&lt; (c - &#39;a&#39;);
-            &#125;
-        &#125;
-        int ans &#x3D; 0;
-        for (int i &#x3D; 0; i &lt; words.length; i++) &#123;
-            for (int j &#x3D; i + 1; j &lt; words.length; j++) &#123;
-                if ((bitmasks[i] &amp; bitmasks[j]) &#x3D;&#x3D; 0) &#123;
-                    ans &#x3D; Math.max(ans, words[i].length() * words[j].length());
-                &#125;
-            &#125;
-        &#125;
-        return ans;
-    &#125;
-&#125;</code></pre>
-
+          <p>字符串问题。给定一个字符串数组，求数组中字符串 A 和字符串 B 的长度的最大乘积，其中 A 和 B 中不能有任何相同的字母存在。</p>
+<p>应用位掩码解决这个问题。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/post/leetcode/318-Maximum-Product-of-Word-Lengths-Medium/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1591,13 +1176,13 @@ NestedIterator.prototype.next &#x3D; function () &#123;
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">83k</span>
+    <span title="站点总字数">85k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:16</span>
+    <span title="站点阅读时长">1:17</span>
   </span>
 </div>
 <div class="busuanzi-count">

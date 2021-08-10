@@ -20,12 +20,12 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Mist","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":null,"sidebar":"fadeInUp"}},"prism":true,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/config.min.js"></script>
-<meta name="description" content="Before diving into the Solution抽卡求最大得分问题。有一堆卡排成一行，每张卡的卡面有其对应的分值，你有 k 次机会抽取卡片，每次机会中你可以选择抽取最左边的一张卡，或者抽取最右边的一张卡。你所抽取的所有卡片的分值之和是你的得分。求你能获得的最大分数。">
+<meta name="description" content="抽卡求最大得分问题。有一堆卡排成一行，每张卡的卡面有其对应的分值，你有 k 次机会抽取卡片，每次机会中你可以选择抽取最左边的一张卡，或者抽取最右边的一张卡。你所抽取的所有卡片的分值之和是你的得分。求你能获得的最大分数。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="1423. Maximum Points You Can Obtain from Cards (Medium)">
 <meta property="og:url" content="http://example.com/post/leetcode/1423-Maximum-Points-You-Can-Obtain-from-Cards-Medium/">
 <meta property="og:site_name" content="HOME">
-<meta property="og:description" content="Before diving into the Solution抽卡求最大得分问题。有一堆卡排成一行，每张卡的卡面有其对应的分值，你有 k 次机会抽取卡片，每次机会中你可以选择抽取最左边的一张卡，或者抽取最右边的一张卡。你所抽取的所有卡片的分值之和是你的得分。求你能获得的最大分数。">
+<meta property="og:description" content="抽卡求最大得分问题。有一堆卡排成一行，每张卡的卡面有其对应的分值，你有 k 次机会抽取卡片，每次机会中你可以选择抽取最左边的一张卡，或者抽取最右边的一张卡。你所抽取的所有卡片的分值之和是你的得分。求你能获得的最大分数。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-07-25T07:36:05.589Z">
 <meta property="article:modified_time" content="2021-07-25T07:36:05.589Z">
@@ -211,7 +211,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Before-diving-into-the-Solution"><span class="nav-text">Before diving into the Solution</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF-1%EF%BC%8C%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3"><span class="nav-text">思路 1，滑动窗口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF-2%EF%BC%8C%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3-V2"><span class="nav-text">思路 2，滑动窗口 V2</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -309,7 +309,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>751</span>
+      <span>735</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -327,10 +327,10 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h2 id="Before-diving-into-the-Solution"><a href="#Before-diving-into-the-Solution" class="headerlink" title="Before diving into the Solution"></a>Before diving into the Solution</h2><p>抽卡求最大得分问题。有一堆卡排成一行，每张卡的卡面有其对应的分值，你有 <code>k</code> 次机会抽取卡片，每次机会中你可以选择抽取最左边的一张卡，或者抽取最右边的一张卡。你所抽取的所有卡片的分值之和是你的得分。求你能获得的最大分数。</p>
+        <p>抽卡求最大得分问题。有一堆卡排成一行，每张卡的卡面有其对应的分值，你有 <code>k</code> 次机会抽取卡片，每次机会中你可以选择抽取最左边的一张卡，或者抽取最右边的一张卡。你所抽取的所有卡片的分值之和是你的得分。求你能获得的最大分数。</p>
 <span id="more"></span>
 
-<p>思路 1，用滑动窗口检查 k 以外的连续元素的最小值，然后用数组和减去这个最小值。计算过程用 DP 简化，仅需计算数组前缀和。优势是思路简单，前缀和使用 in-place 不会占用额外空间。虽然思路简单，但是代码不算简洁。</p>
+<h2 id="思路-1，滑动窗口"><a href="#思路-1，滑动窗口" class="headerlink" title="思路 1，滑动窗口"></a>思路 1，滑动窗口</h2><p>用滑动窗口检查 k 以外的连续元素的最小值，然后用数组和减去这个最小值。计算过程用 DP 简化，仅需计算数组前缀和。优势是思路简单，前缀和使用 in-place 不会占用额外空间。虽然思路简单，但是代码不算简洁。</p>
 <pre class="language-python" data-language="python"><code class="language-python">class Solution:
     def maxScore(self, cp: List[int], k: int) -&gt; int:
         n &#x3D; len(cp)
@@ -350,7 +350,7 @@
 
         return cp[-1] - m</code></pre>
 
-<p>思路 2 就是直接按照提问的思路，计算所有组合并且求最大值，逻辑捋清楚之后也比较简单，这里只需要滑动窗口，每次减去离开窗口的值、加上进入窗口的值，然后取最大值。思路捋清楚后代码比较简洁.</p>
+<h2 id="思路-2，滑动窗口-V2"><a href="#思路-2，滑动窗口-V2" class="headerlink" title="思路 2，滑动窗口 V2"></a>思路 2，滑动窗口 V2</h2><p>就是直接按照提问的思路，计算所有组合并且求最大值，逻辑捋清楚之后也比较简单，这里只需要滑动窗口，每次减去离开窗口的值、加上进入窗口的值，然后取最大值。思路捋清楚后代码比较简洁.</p>
 <pre class="language-python" data-language="python"><code class="language-python">class Solution:
     def maxScore(self, cp: List[int], k: int) -&gt; int:
         ans &#x3D; curr &#x3D; sum(cp[:k])
@@ -416,13 +416,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">83k</span>
+    <span title="站点总字数">85k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:16</span>
+    <span title="站点阅读时长">1:17</span>
   </span>
 </div>
 <div class="busuanzi-count">

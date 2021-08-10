@@ -313,7 +313,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h2 id="Before-diving-into-the-Solution"><a href="#Before-diving-into-the-Solution" class="headerlink" title="Before diving into the Solution"></a>Before diving into the Solution</h2><p>给定一组字符串和一个模式（pattern），返回字符串中所有匹配这个模式的对象。</p>
+          <p>给定一组字符串和一个模式（pattern），返回字符串中所有匹配这个模式的对象。</p>
 <p>这里的模式（pattern）描述字母如何重复，即如果模式匹配，那么将模式中的字母替换成映射的字母，就可以还原成目标字符串。</p>
 <p>使用字符串映射，或者码表来解决这道题。</p>
           <!--noindex-->
@@ -385,7 +385,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>1.2k</span>
+      <span>1.3k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -403,7 +403,12 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h2 id="Before-diving-into-the-Solution"><a href="#Before-diving-into-the-Solution" class="headerlink" title="Before diving into the Solution"></a>Before diving into the Solution</h2>
+          <p>模棱两可的平面坐标。你需要从一个删除了逗号、空格和小数点的平面坐标中还原它的所有可能的坐标值。</p>
+<blockquote>
+<p>For example, “(1, 3)” becomes s = “(13)” and “(2, 0.5)” becomes s = “(205)”.</p>
+</blockquote>
+<p>结果坐标值不会有多余的前置 0，并且小数点后的数字不会以 0 结尾。还原后的坐标的两个值应该用逗号和一个空格隔开。</p>
+<p>我们讨论用正则和回溯算法来解决这道题。</p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/post/leetcode/816-Ambiguous-Coordinates-Medium/#more" rel="contents">
@@ -473,14 +478,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>1.6k</span>
+      <span>1.8k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
+      <span>2 分钟</span>
     </span>
 </div>
 
@@ -491,88 +496,20 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>无脑思路…这道题定义的子序列不需要是连续的字符串，只需要字符按照原本的先后顺序排列即可，所以遗憾 <code>for in</code> 不能派上用场（废话）。</p>
-<p>但这也难不倒无脑的我，定义在于先后顺序，那么我们每一次仅搜索从上一次找到的下标往后是不是存在下一个字符，如果找到下一个字符，这个下标保存继续循环，最后判断找到的字符数量是不是和愿字符串长度一致。</p>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def numMatchingSubseq(self, s: str, words: List[str]) -&gt; int:
-        ans &#x3D; 0
-        for w in words:
-            curr, cnt &#x3D; 0, 0
-            for c in w:
-                try:
-                    curr &#x3D; curr + s[curr:].index(c) + 1
-                    cnt +&#x3D; 1
-                except:
-                    break
-            if cnt &#x3D;&#x3D; len(w):
-                ans +&#x3D;1
-        return ans</code></pre>
-
-<p>正常思路，桶。评论区的一个思路，作者命名为 “Next Letter Pointer” 方法。</p>
-<p>我们将每个检查对象按照首字母放到对应的桶中，通过下面的方法实现仅遍历一次目标字符串就检查完所有目标的算法。</p>
-<p>作者还做了一张图来可视化这个过程。算法思路如下。</p>
-<ul>
-<li>准备好桶后，开始遍历目标字符串：<ul>
-<li>用当前位置的字符取出对应的桶保留，就桶原本的位置重置为空桶；</li>
-<li>遍历取出的桶：<ul>
-<li>如果字符长度为 1：说明找到了一个答案，计数器+1；</li>
-<li>否则：将字符串去头（第一个字符）后，按照首字母继续放入对应的桶中，等待后面有机会取出来；</li>
-</ul>
-</li>
-<li>重复这个过程直到目标字符串遍历结束。</li>
-</ul>
-</li>
-</ul>
-<p><img src="/images/leetcode/792.bucket.png" alt="bucket"></p>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def numMatchingSubseq(self, s: str, words: List[str]) -&gt; int:
-        ans, bucket &#x3D; 0, defaultdict(list)
-        for w in words:
-            bucket[w[0]].append(w)
-        for c in s:
-            target, bucket[c] &#x3D; bucket[c], []
-            for w in target:
-                if len(w) &#x3D;&#x3D; 1:
-                    ans +&#x3D; 1
-                    continue
-                bucket[w[1]].append(w[1:])
-        return ans</code></pre>
-
-<p>Java 版本，好长长长…</p>
-<pre class="language-java" data-language="java"><code class="language-java">class Solution &#123;
-    private class Node &#123;
-        public String w;
-        public int p;
-        public Node(String w, int p) &#123;
-            this.w &#x3D; w;
-            this.p &#x3D; p;
-        &#125;
-    &#125;
-    public int numMatchingSubseq(String s, String[] words) &#123;
-        List&lt;Node&gt;[] bucket &#x3D; new ArrayList[26];
-        int ans &#x3D; 0;
-        for (int i &#x3D; 0; i &lt; 26; i++) &#123;
-            bucket[i] &#x3D; new ArrayList&lt;Node&gt;();
-        &#125;
-        for (String word : words) &#123;
-            bucket[word.charAt(0) - 97].add(new Node(word, 0));
-        &#125;
-        for (char c : s.toCharArray()) &#123;
-            List&lt;Node&gt; target &#x3D; bucket[c - 97];
-            bucket[c - 97] &#x3D; new ArrayList&lt;Node&gt;();
-            for (Node n : target) &#123;
-                if (n.p + 1 &#x3D;&#x3D; n.w.length()) &#123;
-                    ans++;
-                &#125; else &#123;
-                    n.p ++;
-                    bucket[n.w.charAt(n.p) - 97].add(n);
-                &#125;
-            &#125;
-        &#125;
-        return ans;
-    &#125;
-&#125;</code></pre>
-
+          <p>字符串问题。找出匹配子序列（Subsequences）的数量。</p>
+<p>子序列（Subsequences）的定义：一个字符串中删除某些字符（也可以不删除字符）之后，字符出现的相对顺序没有被改变，则这个新的字符串称之为原字符串的子序列。</p>
+<blockquote>
+<p>For example, “ace” is a subsequence of “abcde”.</p>
+</blockquote>
+<p>我们用暴力法和桶来解决这道题。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/post/leetcode/792-Number-of-Matching-Subsequences-Medium/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -652,74 +589,19 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>这是一道求最合适路径的题目，可以应用图论中的 Dijkstra 算法。</p>
+          <p>这是一道求最合适路径的题目，根据提示可以应用图论中的 Dijkstra 算法。</p>
 <blockquote>
 <p>Dijkstra‘s Algorithm 适用于求<strong>权重不为负数的加权图</strong>起点到终点的最优路径。</p>
 </blockquote>
 <p>这道题的 input 是一个 <code>n * n</code> 的矩阵，可以将其视作所有元素都与其上下左右相互连接的一张无向图，每个顶点的数值表示到达这个顶点的边的权重，我们需要求的是从起点 <code>(0, 0)</code> 到终点 <code>(n, n)</code> 的最优路径。这道题要求我们计算的是这条路径上权重最大值，所以我们用一个变量来保持每一次选择后的权重最大值。</p>
-<p>下面是算法：</p>
-<ul>
-<li>从 <code>(0, 0)</code> 开始，将四个方向能访问的顶点加权后放入小根堆：<ul>
-<li>根据题目的限制，<code>n &lt;= 50</code>，所以我们留出 2 进制 6 位（<code>2^6=64</code>）便足够放下下标的长度来；</li>
-<li>加权后的值 = <code>(grid[x][y] &lt;&lt; 12) + (x &lt;&lt; 6) + y</code>;</li>
-</ul>
-</li>
-<li>选择小根堆中的最小值继续往下走：<ul>
-<li>现在我们选了一个新的值，用其和全局最大值再取一次最大值，更新全局变量；</li>
-<li>从加权后的值中恢复这个值的 <code>x, y</code> 下标；</li>
-</ul>
-</li>
-<li>重复这个过程直到终点 <code>(n, n)</code>。</li>
-</ul>
-<pre class="language-python" data-language="python"><code class="language-python">moves &#x3D; ((-1, 0), (0, -1), (1, 0), (0, 1))
-mask &#x3D; (1 &lt;&lt; 6) - 1
-
-class Solution:
-    def swimInWater(self, grid: List[List[int]]) -&gt; int:
-        n, ans, i, j, q &#x3D; len(grid) - 1, grid[0][0], 0, 0, []
-        while i &lt; n or j &lt; n:
-            for a, b in moves:
-                _i, _j &#x3D; i + a, j + b
-                if _i &lt; 0 or _i &gt; n or _j &lt; 0 or _j &gt; n or grid[_i][_j] &#x3D;&#x3D; math.inf:
-                    continue
-                heapq.heappush(q, (grid[_i][_j] &lt;&lt; 12) + (_i &lt;&lt; 6) + _j)
-                grid[_i][_j] &#x3D; math.inf
-            nxt &#x3D; heapq.heappop(q)
-            ans &#x3D; max(ans, nxt &gt;&gt; 12)
-            i, j &#x3D; (nxt &gt;&gt; 6) &amp; mask, nxt &amp; mask
-        return ans</code></pre>
-
-<p>Java 版用 PriorityQueue 实现小根堆。</p>
-<pre class="language-java" data-language="java"><code class="language-java">class Solution &#123;
-    private int[][] moves &#x3D; new int[][] &#123;
-        &#123;0, 1&#125;, &#123;1, 0&#125;, &#123;0, -1&#125;, &#123;-1, 0&#125;
-    &#125;;
-    private int mask &#x3D; (1 &lt;&lt; 6) - 1;
-
-    public int swimInWater(int[][] grid) &#123;
-        int ans &#x3D; grid[0][0];
-        int n &#x3D; grid.length - 1;
-        Queue&lt;Integer&gt; pq &#x3D; new PriorityQueue&lt;&gt;();
-        int i &#x3D; 0, j &#x3D; 0;
-        while (i !&#x3D; n || j !&#x3D; n) &#123;
-            for (int[] m : moves) &#123;
-                int mi &#x3D; i + m[0], mj &#x3D; j + m[1];
-                if (mi &lt; 0 || mi &gt; n || mj &lt; 0 || mj &gt; n
-                    || grid[mi][mj] &#x3D;&#x3D; Integer.MAX_VALUE) &#123;
-                    continue;
-                &#125;
-                pq.add((grid[mi][mj] &lt;&lt; 12) + (mi &lt;&lt; 6) + mj);
-                grid[mi][mj] &#x3D; Integer.MAX_VALUE;
-            &#125;
-            int next &#x3D; pq.poll();
-            ans &#x3D; Math.max(ans, next &gt;&gt; 12);
-            i &#x3D; (next &gt;&gt; 6) &amp; mask;
-            j &#x3D; next &amp; mask;
-        &#125;
-        return ans;
-    &#125;
-&#125;</code></pre>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/post/leetcode/778-Swim-in-Rising-Water-Hard/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -781,7 +663,7 @@ class Solution:
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>983</span>
+      <span>1.2k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -799,54 +681,17 @@ class Solution:
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>圆盘锁有 4 个，每个锁上有 0 ～ 9 共十个数字，换个角度我们需要求出一个 10000 个节点的图中从 <code>0000</code> 出发到目标节点的最短路径，并且要避开给定的死路。总结一下已知的情报。</p>
-<ul>
-<li>每个锁每次操作可以 +1 or -1；</li>
-<li>当前状态的下一步操作有 4 * 2 = 8 中选择；</li>
-<li>要求最少步数，需要穷尽每一步的所有选择 -&gt; 确定 BFS 应用场景；</li>
-<li>为避免重复搜索，准备一个 <code>seen</code> 数组进行剪枝；<ul>
-<li>已知圆盘锁的值都为数字且不重复，<code>seen</code> 数组可以初始化为长度为 10000 的布尔值 or 0/1 数组；</li>
-<li><code>deadends</code> 可以视作已经处理过的组合，可以将其对应的 <code>seen</code> 数组的元素设为 true；</li>
-</ul>
-</li>
-<li>为了方面计算，先将不好处理的特殊场景排除在外，这题有 2 个特殊场景：<ul>
-<li>当目标等于初始值时，直接返回 0；</li>
-<li>当初始值被标记为死路时，直接返回 -1；</li>
-</ul>
-</li>
-<li>开始实现算法。</li>
-</ul>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def openLock(self, deadends: List[str], target: str) -&gt; int:
-        if target &#x3D;&#x3D; &#39;0000&#39;:
-            return 0
-
-        depth, queue, seen, target &#x3D; 0, [0], [0] * 10000, int(target)
-
-        for d in deadends:
-            seen[int(d)] &#x3D; 1
-
-        if seen[0]:
-            return -1
-
-        while len(queue) &gt; 0:
-            n, depth &#x3D; len(queue), depth + 1
-            for i in range(n):
-                first &#x3D; queue.pop(0)
-                for k in range(4):
-                    base &#x3D; first &#x2F;&#x2F; 10 ** k % 10
-                    for d in (-1, 1):
-                        # first - base * 10 ** k -&gt; get the base number with target digit reset to 0.
-                        # ~ + (base + d) % 10 * 10 ** k -&gt; add back the caculated target digit.
-                        nxt &#x3D; first - base * 10 ** k + (base + d) % 10 * 10 ** k
-                        if nxt &#x3D;&#x3D; target:
-                            return depth
-                        if seen[int(nxt)]:
-                            continue
-                        seen[int(nxt)] &#x3D; 1
-                        queue.append(nxt)
-        return -1</code></pre>
-
+          <p>开锁游戏。你有一个圆盘锁，锁有 4 个转轮，每个转轮上有 0 ～ 9 共十个数字。</p>
+<p>你可以自由转动每个转轮，每次转动一个转轮后它的值会 +1 或 -1，当你从 0 开始转动 -1 后为 9，反之亦然。</p>
+<p>你会得到一个死锁列表 <code>deadends</code>，表示当你转动圆盘锁到这个值的时候游戏结束。你还会得到目标值 <code>target</code>，你需要在避免遇到死锁的情况下解开圆盘锁，返回操作圆盘锁的最少步骤数，或者返回 -1 表示在已知条件下无法解锁。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/post/leetcode/752-Open-the-Lock-Medium/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -908,7 +753,7 @@ class Solution:
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>741</span>
+      <span>857</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -926,37 +771,17 @@ class Solution:
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>思路 1，DP。仔细观察能发现每一步的 cost 都取前两步 cost 的最小值，那么我们可以准备一个数组来存计算过的最小 cost。</p>
-<p>话虽如此，这道题叙述有些模糊，经过尝试可以明确以下信息：</p>
-<ul>
-<li>下标 0 和 1 的 cost 都为 0，因为第一步最大可以走到下标 1 的位置，而第一步是没有 cost 的；</li>
-<li>最后一步要超过最后一个元素，下标要达到数组长度。</li>
-</ul>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def minCostClimbingStairs(self, cost: List[int]) -&gt; int:
-        n &#x3D; len(cost)
-        mincost &#x3D; [0] * (n + 1)
-        # 0，1 的 cost 都为 0，我们直接从 2 开始遍历，到 n （包含）结束。
-        for i in range(2, n + 1):
-            # 每一步 i 的 cost 都为前一步的值加上到达前一步的最小值。
-            # 其中前一步可以选择 i - 1 和 i - 2。
-            mincost[i] &#x3D; min(
-                mincost[i - 1] + cost[i - 1],
-                mincost[i - 2] + cost[i - 2]
-            )
-        return mincost[-1]</code></pre>
-
-<p>思路 2，优化 DP。仔细一看发现我们每次只看 2 个值，那么可以优化 O(n)空间复杂度到 O(1)。</p>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def minCostClimbingStairs(self, cost: List[int]) -&gt; int:
-        st1 &#x3D; st2 &#x3D; 0
-        for i in range(2, len(cost) + 1):
-            # 按照从左到右的顺序依次是 st2、st1、st0，每一个迭代我们丢弃 st2 的值，
-            # 将 st1、st0 作为下一次迭代的 st2、st1。
-            st0 &#x3D; min(st1 + cost[i - 1], st2 + cost[i - 2])
-            st1, st2 &#x3D; st0, st1
-        return st1</code></pre>
-
+          <p>爬楼梯游戏。你在爬一段楼梯，你会得到一个 <code>cost</code> 数组记录爬到每一级台阶的消耗。</p>
+<p>一旦你付出当前台阶的消耗，你可以选择往上爬一级或两级台阶。另外，你可以选择从第一级台阶或第二级台阶开始游戏。</p>
+<p>求爬到顶部的最小消耗。这是一道 DP 应用的简单题目。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/post/leetcode/746-Min-Cost-Climbing-Stairs-Easy/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1018,7 +843,7 @@ class Solution:
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>1.1k</span>
+      <span>1.6k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -1036,61 +861,17 @@ class Solution:
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>Trie</p>
-<pre class="language-java" data-language="java"><code class="language-java">class WordFilter &#123;
-
-    private Map&lt;Integer, String[]&gt; index &#x3D; new HashMap&lt;&gt;();
-    private int len;
-    private String[] reversed;
-    private Map&lt;String, Integer&gt; dp &#x3D; new HashMap&lt;&gt;();
-
-    public WordFilter(String[] words) &#123;
-        this.len &#x3D; words.length;
-        Collections.reverse(Arrays.asList(words));
-        this.reversed &#x3D; words;
-    &#125;
-
-    public int f(String prefix, String suffix) &#123;
-        String query &#x3D; suffix + &quot;#&quot; + prefix;
-        Integer ans &#x3D; dp.get(query);
-        if (ans !&#x3D; null) &#123;
-            return ans;
-        &#125;
-
-        dp.put(query, -1);
-        int l &#x3D; suffix.length();
-
-        String[] arr &#x3D; index.get(l);
-
-        if (arr &#x3D;&#x3D; null) &#123;
-            arr &#x3D; new String[len];
-            for (int i &#x3D; 0; i &lt; arr.length; i++) &#123;
-                String w &#x3D; reversed[i];
-                arr[i] &#x3D; w.substring(w.length() - l) + &quot;#&quot; + w;
-                &#x2F;&#x2F; System.out.println(arr[i]);
-            &#125;
-            index.put(l, arr);
-        &#125;
-
-
-        for (int i &#x3D; 0; i &lt; arr.length; i++) &#123;
-            if (arr[i].startsWith(query)) &#123;
-                ans &#x3D; len - 1 - i;
-                dp.put(query, ans);
-                return ans;
-            &#125;
-        &#125;
-
-        return -1;
-    &#125;
-&#125;
-
-&#x2F;**
- * Your WordFilter object will be instantiated and called as such:
- * WordFilter obj &#x3D; new WordFilter(words);
- * int param_1 &#x3D; obj.f(prefix,suffix);
- *&#x2F;</code></pre>
-
+          <p>字典树题目。实现一个字典根据指定的前缀和后缀来定位单词，如果存在多个单词则返回最大的下标位置，如果不存在单词则返回 -1。</p>
+<p>测试 case 中单词最大数量为 15000，查询次数最大为 15000，查询性能不够的话会遇到超时问题。</p>
+<p>字符串索引问题是字典树（Trie）的应用场景，我们用字典树来解决这道题。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/post/leetcode/745-Prefix-and-Suffix-Search-Hard/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1152,7 +933,7 @@ class Solution:
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>468</span>
+      <span>539</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -1170,30 +951,16 @@ class Solution:
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>只要记得大写字母 <code>A-Z</code> 的 ASCII 码区间是 <code>65-90</code>，大写字母和小写字母的差值是 32，这道题就很好解决。</p>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def toLowerCase(self, s: str) -&gt; str:
-        ans &#x3D; &#39;&#39;
-        for c in s:
-            _c &#x3D; ord(c)
-            if _c &gt;&#x3D; 65 and _c &lt;&#x3D; 90:
-                ans +&#x3D; chr(_c + 32)
-            else:
-                ans +&#x3D; c
-        return ans</code></pre>
-
-<pre class="language-java" data-language="java"><code class="language-java">class Solution &#123;
-    public String toLowerCase(String s) &#123;
-        char[] ans &#x3D; s.toCharArray();
-        for (int i &#x3D; 0; i &lt; ans.length; i++) &#123;
-            if (ans[i] &gt;&#x3D; 65 &amp;&amp; ans[i] &lt;&#x3D; 90) &#123;
-                ans[i] +&#x3D; 32;
-            &#125;
-        &#125;
-        return new String(ans);
-    &#125;
-&#125;</code></pre>
-
+          <p>字符串问题。将给定的字符串中的大写字母转换为小写字母并返回。</p>
+<p>很简单的一道题目，考察点在于实现的思路。通过 ASCII 码可以简单的解决这道题。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/post/leetcode/709-To-Lower-Case-Easy/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1255,7 +1022,7 @@ class Solution:
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>1k</span>
+      <span>1.1k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -1273,46 +1040,17 @@ class Solution:
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>思路 1，递归。使用 DFS 搜索所有陆地（1），将搜索过的元素标注为 1 以外的数，避免重复计算，每次搜索到一个目标，保持一个最大结果作为答案。</p>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def maxAreaOfIsland(self, grid: List[List[int]]) -&gt; int:
-        m, n, ans &#x3D; len(grid), len(grid[0]), 0
-
-        def search(x, y):
-            if x &lt; 0 or x &#x3D;&#x3D; m or y &lt; 0 or y &#x3D;&#x3D; n or grid[x][y] !&#x3D; 1:
-                return 0
-            grid[x][y]  &#x3D; -1
-            return 1 + search(x, y - 1) + search(x, y + 1) + search(x + 1, y) + search(x - 1, y)
-
-        for i in range(m):
-            for j in range(n):
-                if grid[i][j] &#x3D;&#x3D; 1:
-                    ans &#x3D; max(ans, search(i, j))
-
-        return ans</code></pre>
-
-<p>思路 2，栈。用一个 set <code>seen</code> 储存遇到过的格子，避免重复计算。每当遇到陆地，新建一个栈，遍历这个栈，取出栈顶的格子，将其上下左右四个方向存在陆地的格子放到栈顶，重复这个过程直到栈清空，维持一个计数最大值作为答案。</p>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def maxAreaOfIsland(self, grid: List[List[int]]) -&gt; int:
-        m, n, ans, seen &#x3D; len(grid), len(grid[0]), 0, set()
-        for i in range(m):
-            for j in range(n):
-                if grid[i][j] !&#x3D; 1:
-                    continue
-                count, stack &#x3D; 0, [(i, j)]
-                while len(stack) &gt; 0:
-                    # print(stack)
-                    x, y &#x3D; stack.pop()
-                    seen.add((x, y))
-                    count +&#x3D; 1
-                    for _x, _y in ((x-1, y), (x+1, y), (x, y-1), (x, y+1)):
-                        if _x &gt;&#x3D; 0 and _x &lt; m and _y &gt;&#x3D; 0 and _y &lt; n and (_x, _y) not in seen:
-                            if grid[_x][_y] &#x3D;&#x3D; 1:
-                                stack.append((_x, _y))
-                                seen.add((_x, _y))
-                ans &#x3D; max(ans, count)
-        return ans</code></pre>
-
+          <p>给定一个尺寸为 <code>m x n</code> 的二进制值的矩阵。定义元素的值为 <code>1</code> 表示土地，元素值为 <code>0</code> 表示海水。</p>
+<p>陆地由四边邻接的土地组合而成，陆地的面积是接邻的土地的数量。</p>
+<p>求矩阵中的陆地的最大面积，如果不存在陆地则返回 0。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/post/leetcode/695-Max-Area-of-Island-Medium/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1374,7 +1112,7 @@ class Solution:
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>5.8k</span>
+      <span>5.9k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -1392,277 +1130,15 @@ class Solution:
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>With solutions both in Python and Java.</p>
-<p>先读题：</p>
-<blockquote>
-<p>Given two integers <code>n</code> and <code>k</code>, you need to construct a list which contains <code>n</code> different positive integers ranging from 1 to <code>n</code> and obeys the following requirement:</p>
-<p>Suppose this list is <code>[a1, a2, a3, ... , an]</code>, then the list <code>[|a1 - a2|, |a2 - a3|, |a3 - a4|, ... , |an-1 - an|]</code> has exactly <code>k</code> distinct integers.</p>
-<p>If there are multiple answers, print any of them.</p>
-</blockquote>
-<p>简而言之，我们要根据两个整数参数 <code>n</code> 和 <code>k</code>，来输出一个从 1 开始到 <code>n</code> 的整数数组，并且这个数组中，所有相邻的两个整数之间的差，其绝对值要凑齐 <code>k</code> 个不同的整数。</p>
-<p>来看看例子。</p>
-<p>Example 1:</p>
-<pre class="language-none"><code class="language-none">Input: n &#x3D; 3, k &#x3D; 1
-Output: [1, 2, 3]
-Explanation: The [1, 2, 3] has three different positive integers ranging from 1 to 3, and the [1, 1] has exactly 1 distinct integer: 1.</code></pre>
-
-<p>输出结果为整数 1 ～ 3，相邻整数的差为 [1, 1]，去重后长度为 1，满足 <code>k = 1</code> 的需求。</p>
-<p>Example 2:</p>
-<pre class="language-none"><code class="language-none">Input: n &#x3D; 3, k &#x3D; 2
-Output: [1, 3, 2]
-Explanation: The [1, 3, 2] has three different positive integers ranging from 1 to 3, and the [2, 1] has exactly 2 distinct integers: 1 and 2.</code></pre>
-
-<p>输出结果为整数 1 ～ 3，相邻整数的差为 [2, 1]，满足 <code>k = 2</code> 的需求。</p>
-<h3 id="Submission"><a href="#Submission" class="headerlink" title="Submission"></a>Submission</h3><p>先贴一下我自己独立完成的结果，防止剧透，具体代码会贴在最后。</p>
-<p>我的代码中，空间复杂度还需要研究一下，目前还没找到提升的思路。</p>
-<p><strong>Python</strong></p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>Result</th>
-<th>Beats</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Runtime</td>
-<td>40 ms</td>
-<td>96.55%</td>
-</tr>
-<tr>
-<td>Memory</td>
-<td>15.1 MB</td>
-<td>50.34%</td>
-</tr>
-</tbody></table>
-<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p>这道题偏重考验观察。我们要做的是观察并找到数组排列的规律，用算法实现出来。</p>
-<p>已知条件：</p>
-<ul>
-<li>输出数组包含 1 ～ n 的整数</li>
-<li>需要做的是调整数组中数字出现的顺序，致使相邻的两个数之间的差不同</li>
-<li>相邻两个数的差只考虑绝对值</li>
-<li>相邻两个数的差的绝对值构成的数组长度为 k</li>
-<li>由于不关注具体的差的值，所以有不同解法，只需要找出一种</li>
-</ul>
-<p>先硬算几个例子来找找规律。</p>
-<p>(因为懒，这里我直接贴讨论帖中的例子，UAADs 指的是唯一绝对相邻数差，贴主原文全称是 Unique Absolute Adjacent Difference，为了方便理解，后面我们就称之为“相邻数差”。)</p>
-<pre class="language-console" data-language="console"><code class="language-console">For eg.
-1. let n &#x3D; 10, k &#x3D; 4
-permutation &#x3D;&gt; [1, 5, 2, 4, 3, 6, 7, 8, 9, 10]
-UAADs       &#x3D;&gt; [X, 4, 3, 2, 1, 3, 1, 1, 1, 1]
-
-
-2. n &#x3D; 10, k &#x3D; 5
-permutation &#x3D;&gt; [1, 6, 2, 5, 3, 4, 7, 8, 9, 10]
-UAADs       &#x3D;&gt; [X, 5, 4, 3, 2, 1, 3, 1, 1, 1]
-
-
-3. n &#x3D; 9, k &#x3D; 8
-permutation &#x3D;&gt; [1, 9, 2, 8, 3, 7, 4, 6, 5]
-UAADs       &#x3D;&gt; [X, 8, 7, 6, 5, 4, 3, 2, 1]</code></pre>
-
-<p>题目不关注相邻数差的具体数值，所以正确的排列方式不止一种，这里我们只讨论可以相对直观理解的一种。</p>
-<p>观察上面例子可以了解到：</p>
-<ul>
-<li>输出的数组从 1 开始</li>
-<li>第二个数是 k + 1</li>
-<li>要求 k 个不同相邻数差会影响 k 个元素</li>
-<li>不受 k 影响的数按自然顺序排序</li>
-</ul>
-<blockquote>
-<p>可能 <code>要求 k 个不同相邻数差会影响 k 个元素</code> 不是很直观，我们通过分解上面的例子来理解。</p>
-<p>下面结论中，1 一直处于固定位置，高亮出来的部分是排序受到 k 影响的数，而剩余的数（如果有的话）将按照递增排序。</p>
-<p>n = 10, k = 4 =&gt; [1, <code>5, 2, 4, 3,</code> 6, 7, 8, 9, 10]</p>
-<p>n = 10, k = 5 =&gt; [1, <code>6, 2, 5, 3, 4,</code> 7, 8, 9, 10]</p>
-<p>n = 9, k = 8 =&gt; [1, <code>9, 2, 8, 3, 7, 4, 6, 5</code>]</p>
-</blockquote>
-<p>设定好了前提，接下来我们需要关注的问题变成了观察并理解“受到 k 影响的元素应该如何排序”。</p>
-<p>多看几眼上面的例子，我们可以直观的意识到规律：为了满足 k 个不同的相邻数差，我们将排序靠后的数依次插入到 <code>1, 2, 3, ..., n</code> 之间，来制造不同的绝对差。</p>
-<p>了解规律之后，可以开始实现算法了，这是一些对于时间复杂度和空间复杂度的考虑。</p>
-<ul>
-<li>避免使用尾递归</li>
-<li>控制循环次数</li>
-<li>不使用非必要的变量</li>
-</ul>
-<h3 id="Solutions"><a href="#Solutions" class="headerlink" title="Solutions"></a>Solutions</h3><p><strong>Python</strong></p>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def constructArray(self, n: int, k: int) -&gt; List[int]:
-        # 初始化一个数组，由于前两个值是已知的，所以直接写入字面量
-        ans &#x3D; [1, k + 1]
-        # 以 k 为基准进行循环
-        for x in range(1, k):
-            # 取倒数第二个值为计算基数，根据当前 index 决定做递增或递减
-            ans.append(ans[-2] + (1 if x % 2 &#x3D;&#x3D; 1 else -1))
-        # 按自然顺序填充剩下的元素
-        ans +&#x3D; range(k + 2, n + 1)
-        return ans</code></pre>
-
-<p>结果如下。</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>Result</th>
-<th>Beats</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Runtime</td>
-<td>40 ms</td>
-<td>96.55%</td>
-</tr>
-<tr>
-<td>Memory</td>
-<td>15.1 MB</td>
-<td>50.34%</td>
-</tr>
-</tbody></table>
-<p><strong>Java</strong></p>
-<p>由于先做出了 Python 版本，相同思路转换成 Java 代码结果很糟糕。</p>
-<p>这里根据讨论帖的提示完成了一个较优的方案。</p>
-<pre class="language-java" data-language="java"><code class="language-java">class Solution &#123;
-    public int[] constructArray(int n, int k) &#123;
-        int[] ans &#x3D; new int[n];
-        &#x2F;&#x2F; l 为递增初始值，r 为递减初始值，用 i 来保存 index
-        int l &#x3D; 1, r &#x3D; k + 1, i &#x3D; 0;
-        &#x2F;&#x2F; 执行一个步长为 2 的循环来填充数组直到满足 k 个相邻数差
-        while (i &lt; k) &#123;
-            ans[i++] &#x3D; l++;
-            ans[i++] &#x3D; r--;
-        &#125;
-        &#x2F;&#x2F; 由于数组以1起始，故当 k 为偶数时做 2 步长的循环将漏掉一个数
-        if (l &#x3D;&#x3D; r) ans[i++] &#x3D; r;
-        &#x2F;&#x2F; 依序填充自然递增的数直到填至 n 为止
-        while (i &lt; n) ans[i++] &#x3D; i;
-        return ans;
-    &#125;
-&#125;</code></pre>
-
-<p>结果如下。</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>Result</th>
-<th>Beats</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Runtime</td>
-<td>0 ms</td>
-<td>100.00%</td>
-</tr>
-<tr>
-<td>Memory</td>
-<td>39.1 MB</td>
-<td>73.71%</td>
-</tr>
-</tbody></table>
-<blockquote>
-<p>受 Java 版本思路启发，我修改了一下 Python 的算法，在空间复杂度上得到一些提升。</p>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution:
-   def constructArray(self, n: int, k: int) -&gt; List[int]:
-       ans &#x3D; [1, k + 1]
-       # 执行一个步长为 2 的循环来制造不同的相邻数差
-       for x in range(2, k, 2):
-           ans.append(ans[x-2] + 1)
-           ans.append(ans[x-1] - 1)
-       # 补充 k 为偶数时漏掉的数
-       if ans[-1] -2 &#x3D;&#x3D; ans[-2]: ans.append(ans[-1] - 1)
-       ans +&#x3D; range(len(ans) + 1, n + 1)
-       return ans</code></pre>
-
-<p>结果如下。</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>Result</th>
-<th>Beats</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Runtime</td>
-<td>40 ms</td>
-<td>96.55%</td>
-</tr>
-<tr>
-<td>Memory</td>
-<td>15.1 MB</td>
-<td>82.76%</td>
-</tr>
-</tbody></table>
-</blockquote>
-<h3 id="官方-Solution"><a href="#官方-Solution" class="headerlink" title="官方 Solution"></a>官方 Solution</h3><p>来学习一下官方答案的思路。这个问题官方给出了 2 个方案。</p>
-<p><strong>Approach #1: Brute Force [Time Limit Exceeded]</strong></p>
-<p>顾名思义，这个方法是暴力枚举所有排列，直到找到合适的排列。具体做法是准备一个检查唯一相邻数差数量的函数，然后对 1 ～ n 的数组排列进行枚举，直到找到该函数返回的唯一相邻数差的数量匹配 k 的值…</p>
-<p>这个方法就不细说了，下面的代码看看就好。</p>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution(object):
-    def constructArray(self, n, k):
-        seen &#x3D; [False] * n
-        def num_uniq_diffs(arr):
-            ans &#x3D; 0
-            for i in range(n):
-                seen[i] &#x3D; False
-            for i in range(len(arr) - 1):
-                delta &#x3D; abs(arr[i] - arr[i+1])
-                if not seen[delta]:
-                    ans +&#x3D; 1
-                    seen[delta] &#x3D; True
-            return ans
-
-        for cand in itertools.permutations(range(1, n+1)):
-            if num_uniq_diffs(cand) &#x3D;&#x3D; k:
-                return cand</code></pre>
-
-<p><strong>Approach #2: Construction [Accepted]</strong></p>
-<p>先看看官方原文，不过有些 LaTex 表达式不一定能正常显示，可以去 <a target="_blank" rel="noopener" href="https://leetcode.com/problems/beautiful-arrangement-ii/solution/">原地址</a> 查看。看完原文我们来分析和理解一下官方的思路。</p>
-<blockquote>
-<p><strong>Intuition</strong></p>
-<p>When \text{k = n-1}k = n-1, a valid construction is \text{[1, n, 2, n-1, 3, n-2, ….]}[1, n, 2, n-1, 3, &gt; n-2, ….]. One way to see this is, we need to have a difference of \text{n-1}n-1, which means we need &gt; \text{1}1 and \text{n}n adjacent; then, we need a difference of \text{n-2}n-2, etc.</p>
-<p>Also, when \text{k = 1}k = 1, a valid construction is \text{[1, 2, 3, …, n]}[1, 2, 3, …, n]. So we &gt; have a construction when \text{n-k}n-k is tiny, and when it is large. This leads to the idea that we can &gt; stitch together these two constructions: we can put \text{[1, 2, …, n-k-1]}[1, 2, …, n-k-1] first so &gt; that \text{n}n is effectively \text{k+1}k+1, and then finish the construction with the first \text{“k = &gt; n-1”}”k = n-1” method.</p>
-<p>For example, when \text{n = 6}n = 6 and \text{k = 3}k = 3, we will construct the array as \text{[1, 2, 3, &gt; 6, 4, 5]}[1, 2, 3, 6, 4, 5]. This consists of two parts: a construction of \text{[1, 2]}[1, 2] and a &gt; construction of \text{[1, 4, 2, 3]}[1, 4, 2, 3] where every element had \text{2}2 added to it (i.e. \text{&gt; [3, 6, 4, 5]}[3, 6, 4, 5]).</p>
-<p><strong>Algorithm</strong></p>
-<p>As before, write \text{[1, 2, …, n-k-1]}[1, 2, …, n-k-1] first. The remaining \text{k+1}k+1 elements &gt; to be written are \text{[n-k, n-k+1, …, n]}[n-k, n-k+1, …, n], and we’ll write them in alternating &gt; head and tail order.</p>
-<p>When we are writing the i^{th}i<br>th<br>element from the remaining \text{k+1}k+1, every even ii is going to be chosen from the head, and will &gt; have value \text{n-k + i//2}n-k + i//2. Every odd ii is going to be chosen from the tail, and will have &gt; value \text{n - i//2}n - i//2.</p>
-</blockquote>
-<p>按照这个方案的思路，首先我们观察俩个极端：k 为最大值 n-1 时的结果；以及 k 为最小值 1 时的结果。</p>
-<p>当 k = n - 1 时，这个时候数组根据数组序列（index）的奇偶性，出现奇数取头部（[1, 2, 3, …]），偶数取尾部（[n, n-1, n-2, …]）的规律。其最终结果如下。</p>
-<p><code>[1, n, 2, n-1, 3, n-2, ...]</code></p>
-<p>而当 k = 1 时，数组按照自然顺序递增排列。</p>
-<p><code>[1, 2, 3, ..., n]</code></p>
-<p>了解到这两个规律之后，我们可以将其结合：</p>
-<ul>
-<li>将 n-k-1 的部分的数按照 k = 1 时的规律处理；</li>
-<li>而剩下的 k + 1 个元素单独视作一个数组，采取 k = n - 1 时的处理。</li>
-</ul>
-<p>这样就可以将处理划分为两类，用最简单的方法来构建这个数组。</p>
-<ul>
-<li>首先构建 <code>[1, 2, ..., n-k-1]</code> 数组</li>
-<li>从 n-k 开始的数根据 index 的奇偶性来取值<ul>
-<li>当 index 为偶数时从头部取值，这时值为 n-k + i//2</li>
-<li>当 index 为奇数时从尾部取值，这时值为 n - i//2</li>
-</ul>
-</li>
-</ul>
-<p>参考代码。</p>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution(object):
-    def constructArray(self, n, k):
-        ans &#x3D; list(range(1, n - k))
-        for i in range(k+1):
-            if i % 2 &#x3D;&#x3D; 0:
-                ans.append(n-k + i&#x2F;&#x2F;2)
-            else:
-                ans.append(n - i&#x2F;&#x2F;2)
-
-        return ans</code></pre>
-
-<p>总结：</p>
-<ul>
-<li>从代码上来看，先取 k = 1 的排序，再取 k = n - 1 的排序确实让代码逻辑更加简洁和易懂；</li>
-<li>从结果上来看，这段代码在空间复杂度上有改善（beats 82.76%），但是时间复杂度上有上升（beats 86.21%）。</li>
-</ul>
-
+          <p>给定两个数 <code>n</code> 和 <code>k</code>，你需要构建一个数组包含从 <code>1</code> 到 <code>n</code> 的正整数，并且相邻两个数的差组成的数组必须要有 <code>k</code> 个不重复的元素。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/post/leetcode/667-Beautiful-Arrangement-II-Medium/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1704,13 +1180,13 @@ UAADs       &#x3D;&gt; [X, 8, 7, 6, 5, 4, 3, 2, 1]</code></pre>
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">83k</span>
+    <span title="站点总字数">85k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:16</span>
+    <span title="站点阅读时长">1:17</span>
   </span>
 </div>
 <div class="busuanzi-count">

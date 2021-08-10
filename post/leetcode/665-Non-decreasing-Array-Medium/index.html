@@ -20,12 +20,12 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Mist","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":null,"sidebar":"fadeInUp"}},"prism":true,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/config.min.js"></script>
-<meta name="description" content="Topics: Array. class Solution:     def checkPossibility(self, nums: List[int]) -&gt; bool:         modified &#x3D; False         for i in reversed(range(1, len(nums))):             # print(nums[i] , n">
+<meta name="description" content="数组问题。你有一个整数数组，你有一次机会修改其中的一个值，你需要检查这个数组是否能构成一个非递减数组。 非递减，换个思路就是递增数组。检查数组元素顺序是否为递增，并允许一次例外。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="665. Non-decreasing Array (Medium)">
 <meta property="og:url" content="http://example.com/post/leetcode/665-Non-decreasing-Array-Medium/">
 <meta property="og:site_name" content="HOME">
-<meta property="og:description" content="Topics: Array. class Solution:     def checkPossibility(self, nums: List[int]) -&gt; bool:         modified &#x3D; False         for i in reversed(range(1, len(nums))):             # print(nums[i] , n">
+<meta property="og:description" content="数组问题。你有一个整数数组，你有一次机会修改其中的一个值，你需要检查这个数组是否能构成一个非递减数组。 非递减，换个思路就是递增数组。检查数组元素顺序是否为递增，并允许一次例外。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/images/leetcode/665.idea.png">
 <meta property="article:published_time" content="2021-06-09T07:36:05.537Z">
@@ -198,7 +198,7 @@
 
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -211,6 +211,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF-1%EF%BC%8C%E4%BB%8E%E5%90%8E%E5%BE%80%E5%89%8D%E5%88%A4%E6%96%AD%EF%BC%8C%E5%85%81%E8%AE%B8%E4%B8%80%E6%AC%A1%E5%A4%B1%E8%B4%A5"><span class="nav-text">思路 1，从后往前判断，允许一次失败</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF-2%EF%BC%8C%E9%A2%A0%E5%80%92%E7%AC%A6%E5%8F%B7%E4%BB%8E%E5%89%8D%E5%BE%80%E5%90%8E%EF%BC%8C%E5%85%81%E8%AE%B8%E4%B8%80%E6%AC%A1%E5%A4%B1%E8%B4%A5"><span class="nav-text">思路 2，颠倒符号从前往后，允许一次失败</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF-3%EF%BC%8C%E6%95%B0%E5%AD%A6%E5%BD%92%E7%BA%B3"><span class="nav-text">思路 3，数学归纳</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -308,7 +309,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>1.2k</span>
+      <span>1.3k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -326,9 +327,11 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p>Topics:</p>
-<p>Array.</p>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+        <p>数组问题。你有一个整数数组，你有一次机会修改其中的一个值，你需要检查这个数组是否能构成一个非递减数组。</p>
+<p>非递减，换个思路就是递增数组。检查数组元素顺序是否为递增，并允许一次例外。</p>
+<span id="more"></span>
+
+<h2 id="思路-1，从后往前判断，允许一次失败"><a href="#思路-1，从后往前判断，允许一次失败" class="headerlink" title="思路 1，从后往前判断，允许一次失败"></a>思路 1，从后往前判断，允许一次失败</h2><pre class="language-python" data-language="python"><code class="language-python">class Solution:
     def checkPossibility(self, nums: List[int]) -&gt; bool:
         modified &#x3D; False
         for i in reversed(range(1, len(nums))):
@@ -342,7 +345,7 @@
                     return False
         return True</code></pre>
 
-<p>把题目转化为递增数组的思路，避免了颠倒数组。</p>
+<h2 id="思路-2，颠倒符号从前往后，允许一次失败"><a href="#思路-2，颠倒符号从前往后，允许一次失败" class="headerlink" title="思路 2，颠倒符号从前往后，允许一次失败"></a>思路 2，颠倒符号从前往后，允许一次失败</h2><p>把题目转化为递增数组的思路，避免了颠倒数组。</p>
 <pre class="language-python" data-language="python"><code class="language-python">class Solution:
     def checkPossibility(self, nums: List[int]) -&gt; bool:
         modified &#x3D; False
@@ -356,7 +359,7 @@
                     return False
         return True</code></pre>
 
-<p>Ver 2.0，评论区大神给的思路，只允许修改一次值的情况下，只有 YABY 这种情况是直接丢出 <code>false</code>，其余情况可以通过修改一次值通过。这个算法可以在不进行任何值的修改的前提下，进行正确的判断。</p>
+<h2 id="思路-3，数学归纳"><a href="#思路-3，数学归纳" class="headerlink" title="思路 3，数学归纳"></a>思路 3，数学归纳</h2><p>评论区大神给的思路，只允许修改一次值的情况下，只有 YABY 这种情况是直接丢出 <code>false</code>，其余情况可以通过修改一次值通过。这个算法可以在不进行任何值的修改的前提下，进行正确的判断。</p>
 <p><img src="/images/leetcode/665.idea.png" alt="665.idea.png"></p>
 <pre class="language-python" data-language="python"><code class="language-python">class Solution:
     def checkPossibility(self, nums: List[int]) -&gt; bool:
@@ -433,13 +436,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">83k</span>
+    <span title="站点总字数">85k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:16</span>
+    <span title="站点阅读时长">1:17</span>
   </span>
 </div>
 <div class="busuanzi-count">

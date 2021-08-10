@@ -20,18 +20,21 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Mist","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":null,"sidebar":"fadeInUp"}},"prism":true,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/config.min.js"></script>
-<meta name="description" content="无脑思路…这道题定义的子序列不需要是连续的字符串，只需要字符按照原本的先后顺序排列即可，所以遗憾 for in 不能派上用场（废话）。 但这也难不倒无脑的我，定义在于先后顺序，那么我们每一次仅搜索从上一次找到的下标往后是不是存在下一个字符，如果找到下一个字符，这个下标保存继续循环，最后判断找到的字符数量是不是和愿字符串长度一致。 class Solution:     def numMatchin">
+<meta name="description" content="字符串问题。找出匹配子序列（Subsequences）的数量。 子序列（Subsequences）的定义：一个字符串中删除某些字符（也可以不删除字符）之后，字符出现的相对顺序没有被改变，则这个新的字符串称之为原字符串的子序列。  For example, “ace” is a subsequence of “abcde”.  我们用暴力法和桶来解决这道题。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="792. Number of Matching Subsequences (Medium)">
 <meta property="og:url" content="http://example.com/post/leetcode/792-Number-of-Matching-Subsequences-Medium/">
 <meta property="og:site_name" content="HOME">
-<meta property="og:description" content="无脑思路…这道题定义的子序列不需要是连续的字符串，只需要字符按照原本的先后顺序排列即可，所以遗憾 for in 不能派上用场（废话）。 但这也难不倒无脑的我，定义在于先后顺序，那么我们每一次仅搜索从上一次找到的下标往后是不是存在下一个字符，如果找到下一个字符，这个下标保存继续循环，最后判断找到的字符数量是不是和愿字符串长度一致。 class Solution:     def numMatchin">
+<meta property="og:description" content="字符串问题。找出匹配子序列（Subsequences）的数量。 子序列（Subsequences）的定义：一个字符串中删除某些字符（也可以不删除字符）之后，字符出现的相对顺序没有被改变，则这个新的字符串称之为原字符串的子序列。  For example, “ace” is a subsequence of “abcde”.  我们用暴力法和桶来解决这道题。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/images/leetcode/792.bucket.png">
 <meta property="article:published_time" content="2021-06-25T07:36:05.554Z">
 <meta property="article:modified_time" content="2021-06-25T07:36:05.554Z">
 <meta property="article:author" content="Richard Zen">
-<meta property="article:tag" content="Array">
+<meta property="article:tag" content="String">
+<meta property="article:tag" content="Hash Table">
+<meta property="article:tag" content="Sorting">
+<meta property="article:tag" content="Trie">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/images/leetcode/792.bucket.png">
 
@@ -198,7 +201,7 @@
 
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -211,6 +214,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%A0%E8%84%91%E6%80%9D%E8%B7%AF%E2%80%A6"><span class="nav-text">无脑思路…</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%A3%E5%B8%B8%E6%80%9D%E8%B7%AF%EF%BC%8C%E6%A1%B6"><span class="nav-text">正常思路，桶</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -308,14 +312,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>1.6k</span>
+      <span>1.8k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
+      <span>2 分钟</span>
     </span>
 </div>
 
@@ -326,7 +330,15 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p>无脑思路…这道题定义的子序列不需要是连续的字符串，只需要字符按照原本的先后顺序排列即可，所以遗憾 <code>for in</code> 不能派上用场（废话）。</p>
+        <p>字符串问题。找出匹配子序列（Subsequences）的数量。</p>
+<p>子序列（Subsequences）的定义：一个字符串中删除某些字符（也可以不删除字符）之后，字符出现的相对顺序没有被改变，则这个新的字符串称之为原字符串的子序列。</p>
+<blockquote>
+<p>For example, “ace” is a subsequence of “abcde”.</p>
+</blockquote>
+<p>我们用暴力法和桶来解决这道题。</p>
+<span id="more"></span>
+
+<h2 id="无脑思路…"><a href="#无脑思路…" class="headerlink" title="无脑思路…"></a>无脑思路…</h2><p>这道题定义的子序列不需要是连续的字符串，只需要字符按照原本的先后顺序排列即可，所以遗憾 <code>for in</code> 不能派上用场（废话）。</p>
 <p>但这也难不倒无脑的我，定义在于先后顺序，那么我们每一次仅搜索从上一次找到的下标往后是不是存在下一个字符，如果找到下一个字符，这个下标保存继续循环，最后判断找到的字符数量是不是和愿字符串长度一致。</p>
 <pre class="language-python" data-language="python"><code class="language-python">class Solution:
     def numMatchingSubseq(self, s: str, words: List[str]) -&gt; int:
@@ -343,7 +355,7 @@
                 ans +&#x3D;1
         return ans</code></pre>
 
-<p>正常思路，桶。评论区的一个思路，作者命名为 “Next Letter Pointer” 方法。</p>
+<h2 id="正常思路，桶"><a href="#正常思路，桶" class="headerlink" title="正常思路，桶"></a>正常思路，桶</h2><p>评论区的一个思路，作者命名为 “Next Letter Pointer” 方法。</p>
 <p>我们将每个检查对象按照首字母放到对应的桶中，通过下面的方法实现仅遍历一次目标字符串就检查完所有目标的算法。</p>
 <p>作者还做了一张图来可视化这个过程。算法思路如下。</p>
 <ul>
@@ -416,7 +428,10 @@
 
     <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/Array/" rel="tag"># Array</a>
+              <a href="/tags/String/" rel="tag"># String</a>
+              <a href="/tags/Hash-Table/" rel="tag"># Hash Table</a>
+              <a href="/tags/Sorting/" rel="tag"># Sorting</a>
+              <a href="/tags/Trie/" rel="tag"># Trie</a>
           </div>
 
         
@@ -462,13 +477,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">83k</span>
+    <span title="站点总字数">85k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:16</span>
+    <span title="站点阅读时长">1:17</span>
   </span>
 </div>
 <div class="busuanzi-count">
