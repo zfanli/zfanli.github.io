@@ -1,11 +1,20 @@
 ---
-date: '2021-05-12T15:36:05.501Z'
+date: "2021-05-12T15:36:05.501Z"
 tags:
-  - Sort
+  - Array
+  - Sorting
+  - Bucket Sort
+  - Radix Sort
 title: 164. Maximum Gap (Hard)
-categories:
-  - leetcode
 ---
+
+给定一个整数数组 `nums`，你需要将其排序后，找到相邻两个数之间的最大间隙（差）。如果不足两个元素则返回 0。
+
+你必须在线性时间内，仅使用线性额外空间完成计算。
+
+<!-- more -->
+
+## 思路
 
 桶排序实现常数 n 的 O(n)复杂度。
 

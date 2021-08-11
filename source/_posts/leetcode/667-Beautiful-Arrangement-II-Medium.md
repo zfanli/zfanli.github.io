@@ -4,8 +4,6 @@ tags:
   - Array
   - Math
 title: 667. Beautiful Arrangement II （Medium）
-categories:
-  - leetcode
 ---
 
 给定两个数 `n` 和 `k`，你需要构建一个数组包含从 `1` 到 `n` 的正整数，并且相邻两个数的差组成的数组必须要有 `k` 个不重复的元素。

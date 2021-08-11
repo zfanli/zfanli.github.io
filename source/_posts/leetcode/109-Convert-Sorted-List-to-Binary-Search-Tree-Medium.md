@@ -4,8 +4,6 @@ tags:
   - Linked List
   - DFS
 title: 109. Convert Sorted List to Binary Search Tree (Medium)
-categories:
-  - leetcode
 ---
 
 Topics:

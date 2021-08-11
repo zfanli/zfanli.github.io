@@ -4,8 +4,6 @@ tags:
   - String
   - Backtracking
 title: 22. Generate Parentheses (Medium)
-categories:
-  - leetcode
 ---
 
 把括号转换成数字，我们可以观察到其中的规律。转数字的方法在于对括号嵌套的层级进行计数，比如 `((()))` 一共嵌套了 3 层，所以转化为数字为 `123`，而 `()(())` 可以转化为 `112`。

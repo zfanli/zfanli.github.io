@@ -5,8 +5,6 @@ tags:
   - Hash Table
   - Sliding Window
 title: 1695. Maximum Erasure Value (Medium)
-categories:
-  - leetcode
 ---
 
 有一个正整数数组 `nums`，你需要找到一个不存在重复元素的子数组，子数组的值之和是你获得的分数。求你可以获得的最大分数。这道题可以运用滑动窗口来解决。

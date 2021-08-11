@@ -4,8 +4,6 @@ tags:
   - String
   - DP
 title: 97. Interleaving String (Medium)
-categories:
-  - leetcode
 ---
 
 思路 1，2D 数组动态规划。这题乍一看用快慢指针可以解出来，但是这是个陷阱，设想如果下一个字符可以同时从 `s1` 和 `s2` 中取得，如果使用快慢指针这里如何处理？可以考虑回溯算法，但是这变成了暴力破解，无法在时限内通过测试 case。

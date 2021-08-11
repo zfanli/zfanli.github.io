@@ -5,9 +5,17 @@ tags:
   - Design
   - Prefix Sum
 title: 303. Range Sum Query - Immutable (Easy)
-categories:
-  - leetcode
 ---
+
+你有一个整数数组 `nums`，你需要实现一个程序处理范围求和的查询
+
+每次查询得到两个下标 `left` 和 `right` 作为参数，查询区间 [`left`, `right`] 的和，其中 `left <= right`。
+
+前缀和的教学题，我们讨论前缀和如何解决这道题。
+
+<!-- more -->
+
+## 思路
 
 前缀和，然后查询区间，最右减去最左，注意一个 index 的 offset。
 

@@ -5,8 +5,6 @@ tags:
   - DP
   - Matrix
 title: 63. Unique Paths II (Medium)
-categories:
-  - leetcode
 ---
 
 ```python

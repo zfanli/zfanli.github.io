@@ -4,8 +4,6 @@ tags:
   - Array
   - Greedy
 title: 135. Candy (Hard)
-categories:
-  - leetcode
 ---
 
 > 做完后才意识到是一道 hard 难度的题。

@@ -5,8 +5,6 @@ tags:
   - Math
   - Matrix
 title: 48. Rotate Image (Medium)
-categories:
-  - leetcode
 ---
 
 ```python

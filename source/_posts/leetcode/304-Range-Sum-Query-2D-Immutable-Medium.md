@@ -1,15 +1,22 @@
 ---
 date: '2021-05-18T15:36:05.509Z'
 tags:
-  - DP
+  - Array
+  - Design
+  - Matrix
+  - Prefix Sum
 title: 304. Range Sum Query 2D - Immutable (Medium)
-categories:
-  - leetcode
 ---
 
-Topics:
+你有一个 2D 矩阵 `matrix`，你需要实现一个程序处理多次子矩阵求和的查询。
 
-DP.
+每次查询你会得到 2 个坐标，分别代表子矩阵的左上坐标和右下坐标，返回这个子矩阵的和。
+
+典型的前缀和问题，所以我们讨论如何应用前缀和解决这道题。
+
+<!-- more -->
+
+## 思路
 
 类似 1074，先求 Prefix Sum，然后计算子矩阵和。
 
