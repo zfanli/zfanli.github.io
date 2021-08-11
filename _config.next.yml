@@ -25,7 +25,7 @@ custom_file_path:
   postMeta: source/_styles/post-meta.njk
   postBodyEnd: source/_styles/post-body-end.njk
   footer: source/_styles/footer.html
-  #bodyEnd: source/_data/body-end.njk
+  bodyEnd: source/_styles/body-end.njk
   #variable: source/_data/variables.styl
   mixin: source/_styles/mixins.styl
   style: source/_styles/styles.styl
@@ -605,12 +605,12 @@ gitalk:
 # Utterances
 # For more information: https://utteranc.es
 utterances:
-  enable: false
-  repo: # Github repository name
+  enable: true
+  repo: zfanli/zfanli.github.io # Github repository name
   # Available values: pathname | url | title | og:title
-  issue_term: pathname
+  issue_term: title
   # Available values: github-light | github-dark | preferred-color-scheme | github-dark-orange | icy-dark | dark-blue | photon-dark | boxy-light
-  theme: github-light
+  theme: preferred-color-scheme
 
 # Isso
 # For more information: https://posativ.org/isso/
