@@ -4,6 +4,8 @@ tags:
   - Array
   - Greedy
 title: 45. Jump Game II (Medium)
+categories:
+  - leetcode
 ---
 
 Topics:

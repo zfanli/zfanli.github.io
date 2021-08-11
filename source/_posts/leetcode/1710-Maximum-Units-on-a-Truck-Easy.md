@@ -4,6 +4,8 @@ tags:
   - Greedy
   - Sort
 title: 1710. Maximum Units on a Truck (Easy)
+categories:
+  - leetcode
 ---
 
 卡车装箱问题。你有一辆卡车和一个货物清单（2D 数组），货物清单每个项目列出了这种货物的数量和每个货物所占的容量。

@@ -4,6 +4,8 @@ tags:
   - Math
   - String
 title: 65. Valid Number (Hard)
+categories:
+  - leetcode
 ---
 
 取巧使用正则，一行方案。
