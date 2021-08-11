@@ -154,6 +154,16 @@
       if (switcher.classList.contains(ROTATE))
         switcher.classList.remove(ROTATE);
       else switcher.classList.add(ROTATE);
+      // update the comments' theme
+      document
+        .querySelector(".utterances-frame")
+        .contentWindow.postMessage(
+          {
+            type: "set-theme",
+            theme: add === DARK ? "github-dark" : "github-light",
+          },
+          "https://utteranc.es"
+        );
     });
   })();
 </script>
@@ -244,7 +254,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">40</span>
+        <span class="site-state-item-count">43</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -360,6 +370,46 @@
     <header class="post-header">
       <div class="post-meta-container">
         <time itemprop="dateCreated"
+              datetime="2021-05-20T15:36:05+08:00"
+              content="2021-05-20">
+          05-20
+        </time>
+      </div>
+
+      <div class="post-title">
+          <a class="post-title-link" href="/post/leetcode/307-Range-Sum-Query-Mutable-Medium/" itemprop="url">
+            <span itemprop="name">307. Range Sum Query - Mutable (Medium)</span>
+          </a>
+      </div>
+
+      
+    </header>
+  </article>
+
+  <article itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+      <div class="post-meta-container">
+        <time itemprop="dateCreated"
+              datetime="2021-05-18T15:36:05+08:00"
+              content="2021-05-18">
+          05-18
+        </time>
+      </div>
+
+      <div class="post-title">
+          <a class="post-title-link" href="/post/leetcode/304-Range-Sum-Query-2D-Immutable-Medium/" itemprop="url">
+            <span itemprop="name">304. Range Sum Query 2D - Immutable (Medium)</span>
+          </a>
+      </div>
+
+      
+    </header>
+  </article>
+
+  <article itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+      <div class="post-meta-container">
+        <time itemprop="dateCreated"
               datetime="2021-05-16T15:36:05+08:00"
               content="2021-05-16">
           05-16
@@ -369,6 +419,46 @@
       <div class="post-title">
           <a class="post-title-link" href="/post/leetcode/303-Range-Sum-Query-Immutable-Easy/" itemprop="url">
             <span itemprop="name">303. Range Sum Query - Immutable (Easy)</span>
+          </a>
+      </div>
+
+      
+    </header>
+  </article>
+
+  <article itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+      <div class="post-meta-container">
+        <time itemprop="dateCreated"
+              datetime="2021-05-14T15:36:05+08:00"
+              content="2021-05-14">
+          05-14
+        </time>
+      </div>
+
+      <div class="post-title">
+          <a class="post-title-link" href="/post/leetcode/204-Count-Primes-Easy/" itemprop="url">
+            <span itemprop="name">204. Count Primes (Easy)</span>
+          </a>
+      </div>
+
+      
+    </header>
+  </article>
+
+  <article itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+      <div class="post-meta-container">
+        <time itemprop="dateCreated"
+              datetime="2021-05-12T15:36:05+08:00"
+              content="2021-05-12">
+          05-12
+        </time>
+      </div>
+
+      <div class="post-title">
+          <a class="post-title-link" href="/post/leetcode/164-Maximum-Gap-Hard/" itemprop="url">
+            <span itemprop="name">164. Maximum Gap (Hard)</span>
           </a>
       </div>
 
@@ -416,86 +506,6 @@
     </header>
   </article>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2021-04-30T15:36:05+08:00"
-              content="2021-04-30">
-          04-30
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/post/leetcode/120-Triangle-Medium/" itemprop="url">
-            <span itemprop="name">120. Triangle (Medium)</span>
-          </a>
-      </div>
-
-      
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2021-04-28T15:36:05+08:00"
-              content="2021-04-28">
-          04-28
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/post/leetcode/118-Pascal-s-Triangle-Easy/" itemprop="url">
-            <span itemprop="name">118. Pascal's Triangle (Easy)</span>
-          </a>
-      </div>
-
-      
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2021-04-06T15:36:05+08:00"
-              content="2021-04-06">
-          04-06
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/post/leetcode/63-Unique-Paths-II-Medium/" itemprop="url">
-            <span itemprop="name">63. Unique Paths II (Medium)</span>
-          </a>
-      </div>
-
-      
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2021-03-29T15:36:05+08:00"
-              content="2021-03-29">
-          03-29
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/post/leetcode/48-Rotate-Image-Medium/" itemprop="url">
-            <span itemprop="name">48. Rotate Image (Medium)</span>
-          </a>
-      </div>
-
-      
-    </header>
-  </article>
-
     </div>
   </div>
   
@@ -531,7 +541,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:17</span>
+    <span title="站点阅读时长">1:18</span>
   </span>
 </div>
 <div class="busuanzi-count">
@@ -587,6 +597,8 @@
 
 
 
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"zfanli/zfanli.github.io","issue_term":"title","theme":"preferred-color-scheme"}</script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/third-party/comments/utterances.min.js"></script>
 
 </body>
 </html>

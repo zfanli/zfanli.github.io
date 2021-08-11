@@ -154,6 +154,16 @@
       if (switcher.classList.contains(ROTATE))
         switcher.classList.remove(ROTATE);
       else switcher.classList.add(ROTATE);
+      // update the comments' theme
+      document
+        .querySelector(".utterances-frame")
+        .contentWindow.postMessage(
+          {
+            type: "set-theme",
+            theme: add === DARK ? "github-dark" : "github-light",
+          },
+          "https://utteranc.es"
+        );
     });
   })();
 </script>
@@ -244,7 +254,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">40</span>
+        <span class="site-state-item-count">43</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -323,7 +333,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>1.3k</span>
+      <span>1.5k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -341,66 +351,20 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>给定数组，可以更新元素，还要快速查询范围内的和、最大最小值，这是典型的 Segment Tree （线段树）的应用场景。</p>
-<p>线段树可以用数组和 TreeNode 的结构表达。这里需要构建一个和线段树，方便起见用数组来表达线段树。</p>
-<p><strong>Build Tree</strong></p>
-<p>线段树是一个二叉树结构，在给定数组上构建一个线段树，最终节点数约等于原数组长度的 2 倍，所以我们准备一个原数组长度 2 倍的数组，将原数组的元素放在从 <code>n</code> 开始的后半段。</p>
-<p>前半段从 <code>n - 1</code> 开始遍历到 <code>0</code>，每个位置的值等于 <code>2 * i</code> + <code>2 * i + 1</code>，即其左右节点的和。树的构建就完成了。</p>
-<p><strong>Update Values</strong></p>
-<p>更新线段树时，只需要更新从目标叶子节点开始到根节点的路径。</p>
-<p>我们从叶子节点出发，用下标除以 2，更新每一个途径的节点，直到根节点，我们一共更新 log n 个元素。</p>
-<p><strong>Range Sum Query</strong></p>
-<p>查询给定范围的和，分左右边界进行讨论：</p>
-<p>左边界：</p>
+          <p>你有一个整数数组 <code>nums</code>，你需要实现一个程序处理下面两种类型的多次查询：</p>
 <ul>
-<li>如果左边元素属于节点的 right child，这意味着它的父节点包含一个值在查询的范围之外，所以我们仅加上左边元素的值本身，然后将边界向右移动一位；</li>
-<li>如果左边元素属于节点的 left child，我们查询它的父元素即可。</li>
+<li>更新：更新数组中某个字段的值；</li>
+<li>求和：通过下标 <code>left</code> 和 <code>right</code> 查询区间 [<code>left</code>, <code>right</code>] 的和，其中 <code>left &lt;= right</code>。</li>
 </ul>
-<p>右边界：</p>
-<ul>
-<li>相反，如果右边元素属于节点的 left child，我们仅加上元素本身的值，将边界向左移动一位；</li>
-<li>如果右边元素属于节点的 right child，我们查询它的父元素。</li>
-</ul>
-<p>我们更新左右边界，重复这个过程直到左右边界接错开（left &gt; right），这时我们得到了答案。</p>
-<pre class="language-python" data-language="python"><code class="language-python">class NumArray:
-
-    def __init__(self, nums: List[int]):
-        n &#x3D; len(nums)
-        tree &#x3D; [0] * 2 * n
-        for i in range(n):
-            tree[i + n] &#x3D; nums[i]
-        for i in range(n - 1, -1, -1):
-            tree[i] &#x3D; tree[i * 2] + tree[i * 2 + 1]
-
-        self.n &#x3D; n
-        self.tree &#x3D; tree
-
-
-    def update(self, index: int, val: int) -&gt; None:
-        n, tree &#x3D; self.n, self.tree
-        index +&#x3D; n
-        tree[index] &#x3D; val
-        while index !&#x3D; 0:
-            index &#x2F;&#x2F;&#x3D; 2
-            tree[index] &#x3D; tree[2 * index] + tree[2 * index + 1]
-
-
-    def sumRange(self, left: int, right: int) -&gt; int:
-        n, tree &#x3D; self.n, self.tree
-        left +&#x3D; n
-        right +&#x3D; n
-        ans &#x3D; 0
-        while left &lt;&#x3D; right:
-            if left % 2 &#x3D;&#x3D; 1:
-                ans +&#x3D; tree[left]
-                left +&#x3D; 1
-            if right % 2 &#x3D;&#x3D; 0:
-                ans +&#x3D; tree[right]
-                right -&#x3D; 1
-            left &#x2F;&#x2F;&#x3D; 2
-            right &#x2F;&#x2F;&#x3D; 2
-        return ans</code></pre>
-
+<p>看到求和或许你开始思考能否用前缀和解题，但是题目要求能对原数组进行更新，显然前缀和不是最好的方案。这题可以运用线段树解决。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/post/leetcode/307-Range-Sum-Query-Mutable-Medium/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -462,7 +426,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>694</span>
+      <span>792</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -480,40 +444,17 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>Topics:</p>
-<p>DP.</p>
-<p>类似 1074，先求 Prefix Sum，然后计算子矩阵和。</p>
-<pre class="language-python" data-language="python"><code class="language-python">class NumMatrix:
-
-    def __init__(self, matrix: List[List[int]]):
-        m, n &#x3D; len(matrix), len(matrix[0])
-
-        for j in range(1, n):
-            matrix[0][j] +&#x3D; matrix[0][j - 1]
-
-        for i in range(1, m):
-            for j in range(n):
-                if j &gt; 0:
-                    matrix[i][j] +&#x3D; matrix[i][j - 1] - matrix[i - 1][j - 1]
-                matrix[i][j] +&#x3D; matrix[i - 1][j]
-
-        self._m &#x3D; matrix
-
-
-    def sumRegion(self, row1: int, col1: int, row2: int, col2: int) -&gt; int:
-        ans &#x3D; self._m[row2][col2]
-        if row1 &gt; 0:
-            ans -&#x3D; self._m[row1 - 1][col2]
-        if col1 &gt; 0:
-            ans -&#x3D; self._m[row2][col1 - 1]
-        if row1 &gt; 0 and col1 &gt; 0:
-            ans +&#x3D; self._m[row1 - 1][col1 - 1]
-        return ans
-
-# Your NumMatrix object will be instantiated and called as such:
-# obj &#x3D; NumMatrix(matrix)
-# param_1 &#x3D; obj.sumRegion(row1,col1,row2,col2)</code></pre>
-
+          <p>你有一个 2D 矩阵 <code>matrix</code>，你需要实现一个程序处理多次子矩阵求和的查询。</p>
+<p>每次查询你会得到 2 个坐标，分别代表子矩阵的左上坐标和右下坐标，返回这个子矩阵的和。</p>
+<p>典型的前缀和问题，所以我们讨论如何应用前缀和解决这道题。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/post/leetcode/304-Range-Sum-Query-2D-Immutable-Medium/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -575,7 +516,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>295</span>
+      <span>412</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -593,20 +534,17 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>前缀和，然后查询区间，最右减去最左，注意一个 index 的 offset。</p>
-<p>查询 0 开始的范围，需要减去 -1 下标的和，这不合理，所以遇到 -1 可以选择重置为 0，但这不优雅。</p>
-<p>通过向数组左端添加一个 0，可以避免处理 query 范围左端为 -1 的场景。</p>
-<pre class="language-python" data-language="python"><code class="language-python">class NumArray:
-
-    def __init__(self, nums: List[int]):
-        self.q &#x3D; [0]
-        for n in nums:
-            self.q.append(self.q[-1] + n)
-
-
-    def sumRange(self, left: int, right: int) -&gt; int:
-        return self.q[right + 1] - self.q[left]</code></pre>
-
+          <p>你有一个整数数组 <code>nums</code>，你需要实现一个程序处理范围求和的查询</p>
+<p>每次查询得到两个下标 <code>left</code> 和 <code>right</code> 作为参数，查询区间 [<code>left</code>, <code>right</code>] 的和，其中 <code>left &lt;= right</code>。</p>
+<p>前缀和的教学题，我们讨论前缀和如何解决这道题。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/post/leetcode/303-Range-Sum-Query-Immutable-Easy/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -668,7 +606,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>249</span>
+      <span>430</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -686,22 +624,19 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>Topics:</p>
-<p>Hash table, math.</p>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def countPrimes(self, n: int) -&gt; int:
-
-        isprime &#x3D; [1] * n
-
-        for i in range(2, int(math.sqrt(n)) + 1):
-            if isprime[i] !&#x3D; 0:
-                for j in range(i ** 2, n, i):
-                    isprime[j] &#x3D; 0
-
-        # 0 and 1 are not prime.
-        ans &#x3D; sum(isprime) - 2
-        return ans if ans &gt; 0 else 0</code></pre>
-
+          <p>计算所有小于非负整数 <code>n</code> 的质数的数量。</p>
+<blockquote>
+<p>质数（Prime）： 只能被 1 和其本身整除的数。</p>
+</blockquote>
+<p>可以暴力、枚举解题，也可以找到一定规律优化一下暴力算法。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/post/leetcode/204-Count-Primes-Easy/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -763,7 +698,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>1.1k</span>
+      <span>1.2k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -781,34 +716,16 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>桶排序实现常数 n 的 O(n)复杂度。</p>
-<p>桶排序是指将数据划分为诺干子数组，称之为桶，在桶内使用一般排序算法（比如 O(n^2)的插入排序等）排序，等到每一个桶就完成各自的排序之后，将所有桶按照顺序组合起来，获得最终排序完成的数组。</p>
-<p>这样做的优势，通过一个例子可以清晰的明白：我们有一个长度为 10 的数组需要排序；</p>
-<ul>
-<li>使用插入排序，O(n^2)的情况下最差的情况将进行 10*10=100 次操作；</li>
-<li>使用桶排序，选择最大的桶将数组分为两个长度为 5 的子数组，分别应用排序，最差情况将进行 10（分桶）+5*5（插入排序）*2（2 个桶） =60 次操作。</li>
-</ul>
-<p>但是桶的尺寸为 2 对于这个场景并不是最优的选择，这个例子解释了就算用极限分桶，也比单独使用插入排序高效。</p>
-<p>桶排序的重点在于决定桶的尺寸，这直接影响到排序效率，对于这道题来说，通过数学归纳可以得知，最大间距的最小可能应该是间距的平均值，而当所有数的间隔都是平均分布的时候才会遇到这个场景，比如 <code>[0, 5, 10, 15]</code>，其中总间距为最大值减去最小值，即 <code>15-0=15</code>，通过观察得知间距的数量为数组长度减去 <code>1</code>，即 <code>4-1=3</code>，那么平均间距为 <code>15/3=5</code>，对于这个数组来说，平均间距就是最大间距，但是一旦其中任何一个值变大或变小任意长度，比如 <code>[0, 4, 10, 15]</code>，第一个间距从 <code>5</code> 变为 <code>4</code>，就必定意味着第二个间距从 <code>5</code> 变为 <code>6</code>。</p>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def maximumGap(self, nums: List[int]) -&gt; int:
-        ans, n, hi, lo &#x3D; 0, len(nums), max(nums), min(nums)
-        if n &lt; 2: return 0
-        # Set 1 for case that max gap less than its length.
-        bsize &#x3D; (hi - lo) &#x2F;&#x2F; (n - 1) or 1
-        buckets &#x3D; [[-1, -1] for _ in range((hi - lo) &#x2F;&#x2F; bsize + 1)]
-        for x in nums:
-            b &#x3D; (x - lo) &#x2F;&#x2F; bsize
-            buckets[b][0] &#x3D; min(buckets[b][0], x) if buckets[b][0] !&#x3D; -1 else x
-            buckets[b][1] &#x3D; max(buckets[b][1], x)
-        prev &#x3D; buckets[0][1]
-        for i in range(1, len(buckets)):
-            if buckets[i][0] &#x3D;&#x3D; -1:
-                continue
-            ans &#x3D; max(ans, buckets[i][0] - prev)
-            prev &#x3D; buckets[i][1]
-        return ans</code></pre>
-
+          <p>给定一个整数数组 <code>nums</code>，你需要将其排序后，找到相邻两个数之间的最大间隙（差）。如果不足两个元素则返回 0。</p>
+<p>你必须在线性时间内，仅使用线性额外空间完成计算。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/post/leetcode/164-Maximum-Gap-Hard/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1486,7 +1403,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:17</span>
+    <span title="站点阅读时长">1:18</span>
   </span>
 </div>
 <div class="busuanzi-count">
@@ -1542,6 +1459,8 @@
 
 
 
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"zfanli/zfanli.github.io","issue_term":"title","theme":"preferred-color-scheme"}</script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/third-party/comments/utterances.min.js"></script>
 
 </body>
 </html>

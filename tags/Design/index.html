@@ -154,6 +154,16 @@
       if (switcher.classList.contains(ROTATE))
         switcher.classList.remove(ROTATE);
       else switcher.classList.add(ROTATE);
+      // update the comments' theme
+      document
+        .querySelector(".utterances-frame")
+        .contentWindow.postMessage(
+          {
+            type: "set-theme",
+            theme: add === DARK ? "github-dark" : "github-light",
+          },
+          "https://utteranc.es"
+        );
     });
   })();
 </script>
@@ -244,7 +254,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">40</span>
+        <span class="site-state-item-count">43</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -320,6 +330,46 @@
     <header class="post-header">
       <div class="post-meta-container">
         <time itemprop="dateCreated"
+              datetime="2021-05-20T15:36:05+08:00"
+              content="2021-05-20">
+          05-20
+        </time>
+      </div>
+
+      <div class="post-title">
+          <a class="post-title-link" href="/post/leetcode/307-Range-Sum-Query-Mutable-Medium/" itemprop="url">
+            <span itemprop="name">307. Range Sum Query - Mutable (Medium)</span>
+          </a>
+      </div>
+
+      
+    </header>
+  </article>
+
+  <article itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+      <div class="post-meta-container">
+        <time itemprop="dateCreated"
+              datetime="2021-05-18T15:36:05+08:00"
+              content="2021-05-18">
+          05-18
+        </time>
+      </div>
+
+      <div class="post-title">
+          <a class="post-title-link" href="/post/leetcode/304-Range-Sum-Query-2D-Immutable-Medium/" itemprop="url">
+            <span itemprop="name">304. Range Sum Query 2D - Immutable (Medium)</span>
+          </a>
+      </div>
+
+      
+    </header>
+  </article>
+
+  <article itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+      <div class="post-meta-container">
+        <time itemprop="dateCreated"
               datetime="2021-05-16T15:36:05+08:00"
               content="2021-05-16">
           05-16
@@ -368,7 +418,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:17</span>
+    <span title="站点阅读时长">1:18</span>
   </span>
 </div>
 <div class="busuanzi-count">
@@ -424,6 +474,8 @@
 
 
 
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"zfanli/zfanli.github.io","issue_term":"title","theme":"preferred-color-scheme"}</script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/third-party/comments/utterances.min.js"></script>
 
 </body>
 </html>

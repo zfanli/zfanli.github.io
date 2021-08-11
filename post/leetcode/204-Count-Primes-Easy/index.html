@@ -20,18 +20,20 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"richard.bizcat.xyz","root":"/","images":"/images","scheme":"Mist","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":true,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/config.min.js"></script>
-<meta name="description" content="Topics: Hash table, math. class Solution:     def countPrimes(self, n: int) -&gt; int:          isprime &#x3D; [1] * n          for i in range(2, int(math.sqrt(n)) + 1):             if isprime[i] !&amp;#x">
+<meta name="description" content="计算所有小于非负整数 n 的质数的数量。  质数（Prime）： 只能被 1 和其本身整除的数。  可以暴力、枚举解题，也可以找到一定规律优化一下暴力算法。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="204. Count Primes (Easy)">
 <meta property="og:url" content="https://richard.bizcat.xyz/post/leetcode/204-Count-Primes-Easy/">
 <meta property="og:site_name" content="HOME">
-<meta property="og:description" content="Topics: Hash table, math. class Solution:     def countPrimes(self, n: int) -&gt; int:          isprime &#x3D; [1] * n          for i in range(2, int(math.sqrt(n)) + 1):             if isprime[i] !&amp;#x">
+<meta property="og:description" content="计算所有小于非负整数 n 的质数的数量。  质数（Prime）： 只能被 1 和其本身整除的数。  可以暴力、枚举解题，也可以找到一定规律优化一下暴力算法。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-05-14T07:36:05.504Z">
 <meta property="article:modified_time" content="2021-05-14T07:36:05.504Z">
 <meta property="article:author" content="Richard Zen">
-<meta property="article:tag" content="Hash Table">
+<meta property="article:tag" content="Array">
 <meta property="article:tag" content="Math">
+<meta property="article:tag" content="Enumeration">
+<meta property="article:tag" content="Number Theory">
 <meta name="twitter:card" content="summary">
 
 
@@ -150,6 +152,16 @@
       if (switcher.classList.contains(ROTATE))
         switcher.classList.remove(ROTATE);
       else switcher.classList.add(ROTATE);
+      // update the comments' theme
+      document
+        .querySelector(".utterances-frame")
+        .contentWindow.postMessage(
+          {
+            type: "set-theme",
+            theme: add === DARK ? "github-dark" : "github-light",
+          },
+          "https://utteranc.es"
+        );
     });
   })();
 </script>
@@ -197,7 +209,7 @@
 
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -210,6 +222,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF-Sieve-of-Eratosthenes"><span class="nav-text">思路 Sieve of Eratosthenes</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -240,7 +253,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">40</span>
+        <span class="site-state-item-count">43</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -327,7 +340,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>249</span>
+      <span>430</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -345,8 +358,17 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p>Topics:</p>
-<p>Hash table, math.</p>
+        <p>计算所有小于非负整数 <code>n</code> 的质数的数量。</p>
+<blockquote>
+<p>质数（Prime）： 只能被 1 和其本身整除的数。</p>
+</blockquote>
+<p>可以暴力、枚举解题，也可以找到一定规律优化一下暴力算法。</p>
+<span id="more"></span>
+
+<h2 id="思路-Sieve-of-Eratosthenes"><a href="#思路-Sieve-of-Eratosthenes" class="headerlink" title="思路 Sieve of Eratosthenes"></a>思路 Sieve of Eratosthenes</h2><p>埃拉托色尼筛法。</p>
+<p>准备一个长度为 <code>n</code> 的数组并且用 1 填充。</p>
+<p>思路在于从 2 开始到 <code>n</code> 的平方根为止，将每个值到 <code>n</code> 为止的倍数作为下标，将数组中的值标记为 0，即非质数。</p>
+<p>最终将数组求和，剩下的 1 都是质数。注意 0 和 1 不是质数，需要将其从结果中排除。</p>
 <pre class="language-python" data-language="python"><code class="language-python">class Solution:
     def countPrimes(self, n: int) -&gt; int:
 
@@ -370,21 +392,23 @@
   <div class="popular-posts-header">相关文章</div>
   <ul class="popular-posts">
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/post/leetcode/970-Powerful-Integers-Medium/" rel="bookmark">970. Powerful Integers (Medium)</a></div>
+      <div class="popular-posts-title"><a href="/post/leetcode/462-Minimum-Moves-to-Equal-Array-Elements-II-Medium/" rel="bookmark">462. Minimum Moves to Equal Array Elements II (Medium)</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/post/leetcode/1048-Longest-String-Chain-Medium/" rel="bookmark">1048. Longest String Chain (Medium)</a></div>
+      <div class="popular-posts-title"><a href="/post/leetcode/48-Rotate-Image-Medium/" rel="bookmark">48. Rotate Image (Medium)</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/post/leetcode/1074-Number-of-Submatrices-That-Sum-to-Target-Hard/" rel="bookmark">1074. Number of Submatrices That Sum to Target (Hard)</a></div>
+      <div class="popular-posts-title"><a href="/post/leetcode/667-Beautiful-Arrangement-II-Medium/" rel="bookmark">667. Beautiful Arrangement II （Medium）</a></div>
     </li>
   </ul>
 
 
     <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/Hash-Table/" rel="tag"># Hash Table</a>
+              <a href="/tags/Array/" rel="tag"># Array</a>
               <a href="/tags/Math/" rel="tag"># Math</a>
+              <a href="/tags/Enumeration/" rel="tag"># Enumeration</a>
+              <a href="/tags/Number-Theory/" rel="tag"># Number Theory</a>
           </div>
 
         
@@ -410,6 +434,7 @@
 
 
 
+    <div class="comments utterances-container"></div>
 </div>
   </main>
 
@@ -436,7 +461,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:17</span>
+    <span title="站点阅读时长">1:18</span>
   </span>
 </div>
 <div class="busuanzi-count">
@@ -492,6 +517,8 @@
 
 
 
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"zfanli/zfanli.github.io","issue_term":"title","theme":"preferred-color-scheme"}</script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/third-party/comments/utterances.min.js"></script>
 
 </body>
 </html>

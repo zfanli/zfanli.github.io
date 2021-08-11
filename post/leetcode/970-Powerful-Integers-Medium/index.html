@@ -150,6 +150,16 @@
       if (switcher.classList.contains(ROTATE))
         switcher.classList.remove(ROTATE);
       else switcher.classList.add(ROTATE);
+      // update the comments' theme
+      document
+        .querySelector(".utterances-frame")
+        .contentWindow.postMessage(
+          {
+            type: "set-theme",
+            theme: add === DARK ? "github-dark" : "github-light",
+          },
+          "https://utteranc.es"
+        );
     });
   })();
 </script>
@@ -241,7 +251,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">40</span>
+        <span class="site-state-item-count">43</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -378,13 +388,13 @@
   <div class="popular-posts-header">相关文章</div>
   <ul class="popular-posts">
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/post/leetcode/204-Count-Primes-Easy/" rel="bookmark">204. Count Primes (Easy)</a></div>
-    </li>
-    <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/post/leetcode/1048-Longest-String-Chain-Medium/" rel="bookmark">1048. Longest String Chain (Medium)</a></div>
     </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/post/leetcode/1074-Number-of-Submatrices-That-Sum-to-Target-Hard/" rel="bookmark">1074. Number of Submatrices That Sum to Target (Hard)</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/post/leetcode/1695-Maximum-Erasure-Value-Medium/" rel="bookmark">1695. Maximum Erasure Value (Medium)</a></div>
     </li>
   </ul>
 
@@ -418,6 +428,7 @@
 
 
 
+    <div class="comments utterances-container"></div>
 </div>
   </main>
 
@@ -444,7 +455,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:17</span>
+    <span title="站点阅读时长">1:18</span>
   </span>
 </div>
 <div class="busuanzi-count">
@@ -500,6 +511,8 @@
 
 
 
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"zfanli/zfanli.github.io","issue_term":"title","theme":"preferred-color-scheme"}</script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/third-party/comments/utterances.min.js"></script>
 
 </body>
 </html>

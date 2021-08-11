@@ -154,6 +154,16 @@
       if (switcher.classList.contains(ROTATE))
         switcher.classList.remove(ROTATE);
       else switcher.classList.add(ROTATE);
+      // update the comments' theme
+      document
+        .querySelector(".utterances-frame")
+        .contentWindow.postMessage(
+          {
+            type: "set-theme",
+            theme: add === DARK ? "github-dark" : "github-light",
+          },
+          "https://utteranc.es"
+        );
     });
   })();
 </script>
@@ -245,7 +255,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">40</span>
+        <span class="site-state-item-count">43</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -557,13 +567,13 @@ Output: 0</code></pre>
   <div class="popular-posts-header">相关文章</div>
   <ul class="popular-posts">
     <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/post/leetcode/304-Range-Sum-Query-2D-Immutable-Medium/" rel="bookmark">304. Range Sum Query 2D - Immutable (Medium)</a></div>
+    </li>
+    <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/post/leetcode/1004-Max-Consecutive-Ones-III-Medium/" rel="bookmark">1004. Max Consecutive Ones III (Medium)</a></div>
     </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/post/leetcode/1048-Longest-String-Chain-Medium/" rel="bookmark">1048. Longest String Chain (Medium)</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/post/leetcode/1423-Maximum-Points-You-Can-Obtain-from-Cards-Medium/" rel="bookmark">1423. Maximum Points You Can Obtain from Cards (Medium)</a></div>
     </li>
   </ul>
 
@@ -599,6 +609,7 @@ Output: 0</code></pre>
 
 
 
+    <div class="comments utterances-container"></div>
 </div>
   </main>
 
@@ -625,7 +636,7 @@ Output: 0</code></pre>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:17</span>
+    <span title="站点阅读时长">1:18</span>
   </span>
 </div>
 <div class="busuanzi-count">
@@ -681,6 +692,8 @@ Output: 0</code></pre>
 
 
 
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"zfanli/zfanli.github.io","issue_term":"title","theme":"preferred-color-scheme"}</script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/third-party/comments/utterances.min.js"></script>
 
 </body>
 </html>
