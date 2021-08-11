@@ -132,9 +132,21 @@
     const switcher = document.querySelector("#colorSwitcher"),
       body = document.body,
       isDark = window.matchMedia("(prefers-color-scheme: dark)").matches,
-      stored = window.localStorage.getItem(COLOR_SCHEME);
+      stored = window.localStorage.getItem(COLOR_SCHEME),
+      current = stored ? stored : isDark ? DARK : LIGHT;
 
-    body.classList.add(stored ? stored : isDark ? DARK : LIGHT);
+    body.classList.add(current);
+    if (current === LIGHT) {
+      setTimeout(function setupCommentTheme() {
+        try {
+          const utt = document.querySelector(".utterances-frame");
+          utt.src = utt.src.replace("theme=github-dark", "theme=github-light");
+          // console.log(document.querySelector(".utterances-frame").src);
+        } catch (e) {
+          setTimeout(setupCommentTheme, 100);
+        }
+      }, 100);
+    }
 
     // setup actions
     switcher.addEventListener("click", function () {
@@ -150,15 +162,13 @@
         switcher.classList.remove(ROTATE);
       else switcher.classList.add(ROTATE);
       // update the comments' theme
-      document
-        .querySelector(".utterances-frame")
-        .contentWindow.postMessage(
-          {
-            type: "set-theme",
-            theme: add === DARK ? "github-dark" : "github-light",
-          },
-          "https://utteranc.es"
-        );
+      document.querySelector(".utterances-frame").contentWindow.postMessage(
+        {
+          type: "set-theme",
+          theme: add === DARK ? "github-dark" : "github-light",
+        },
+        "https://utteranc.es"
+      );
     });
   })();
 </script>

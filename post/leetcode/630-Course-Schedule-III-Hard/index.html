@@ -31,8 +31,8 @@
 <meta property="article:modified_time" content="2021-06-07T07:36:05.534Z">
 <meta property="article:author" content="Richard Zen">
 <meta property="article:tag" content="Array">
-<meta property="article:tag" content="Heap (Priority Queue)">
 <meta property="article:tag" content="Greedy">
+<meta property="article:tag" content="Heap (Priority Queue)">
 <meta name="twitter:card" content="summary">
 
 
@@ -134,9 +134,21 @@
     const switcher = document.querySelector("#colorSwitcher"),
       body = document.body,
       isDark = window.matchMedia("(prefers-color-scheme: dark)").matches,
-      stored = window.localStorage.getItem(COLOR_SCHEME);
+      stored = window.localStorage.getItem(COLOR_SCHEME),
+      current = stored ? stored : isDark ? DARK : LIGHT;
 
-    body.classList.add(stored ? stored : isDark ? DARK : LIGHT);
+    body.classList.add(current);
+    if (current === LIGHT) {
+      setTimeout(function setupCommentTheme() {
+        try {
+          const utt = document.querySelector(".utterances-frame");
+          utt.src = utt.src.replace("theme=github-dark", "theme=github-light");
+          // console.log(document.querySelector(".utterances-frame").src);
+        } catch (e) {
+          setTimeout(setupCommentTheme, 100);
+        }
+      }, 100);
+    }
 
     // setup actions
     switcher.addEventListener("click", function () {
@@ -152,15 +164,13 @@
         switcher.classList.remove(ROTATE);
       else switcher.classList.add(ROTATE);
       // update the comments' theme
-      document
-        .querySelector(".utterances-frame")
-        .contentWindow.postMessage(
-          {
-            type: "set-theme",
-            theme: add === DARK ? "github-dark" : "github-light",
-          },
-          "https://utteranc.es"
-        );
+      document.querySelector(".utterances-frame").contentWindow.postMessage(
+        {
+          type: "set-theme",
+          theme: add === DARK ? "github-dark" : "github-light",
+        },
+        "https://utteranc.es"
+      );
     });
   })();
 </script>
@@ -412,7 +422,7 @@
       <div class="popular-posts-title"><a href="/post/leetcode/1642-Furthest-Building-You-Can-Reach-Medium/" rel="bookmark">1642. Furthest Building You Can Reach (Medium)</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/post/leetcode/1354-Construct-Target-Array-With-Multiple-Sums-Hard/" rel="bookmark">1354. Construct Target Array With Multiple Sums (Hard)</a></div>
+      <div class="popular-posts-title"><a href="/post/leetcode/135-Candy-Hard/" rel="bookmark">135. Candy (Hard)</a></div>
     </li>
   </ul>
 
@@ -420,8 +430,8 @@
     <footer class="post-footer">
           <div class="post-tags">
               <a href="/tags/Array/" rel="tag"># Array</a>
-              <a href="/tags/Heap-Priority-Queue/" rel="tag"># Heap (Priority Queue)</a>
               <a href="/tags/Greedy/" rel="tag"># Greedy</a>
+              <a href="/tags/Heap-Priority-Queue/" rel="tag"># Heap (Priority Queue)</a>
           </div>
 
         
