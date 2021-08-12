@@ -20,19 +20,19 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"richard.bizcat.xyz","root":"/","images":"/images","scheme":"Mist","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":true,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/config.min.js"></script>
-<meta name="description" content="遍历树的方法通常有三种，分别是前序遍历 pre-order traversal、中序遍历 in-order traversal 和后序遍历 post-order traversal。这道题是中序遍历。 难度上来说，前序最简单，中序和后序遍历会复杂一点。 思路 1，递归 class Solution:     def inorderTraversal(self, root: TreeNode) -&amp;">
+<meta name="description" content="遍历树的方法通常有三种，分别是前序遍历 pre-order traversal、中序遍历 in-order traversal 和后序遍历 post-order traversal。这道题是中序遍历。 难度上来说，前序最简单，中序和后序遍历会复杂一点。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="94. Binary Tree Inorder Traversal (Easy)">
 <meta property="og:url" content="https://richard.bizcat.xyz/post/leetcode/94-Binary-Tree-Inorder-Traversal-Easy/">
 <meta property="og:site_name" content="HOME">
-<meta property="og:description" content="遍历树的方法通常有三种，分别是前序遍历 pre-order traversal、中序遍历 in-order traversal 和后序遍历 post-order traversal。这道题是中序遍历。 难度上来说，前序最简单，中序和后序遍历会复杂一点。 思路 1，递归 class Solution:     def inorderTraversal(self, root: TreeNode) -&amp;">
+<meta property="og:description" content="遍历树的方法通常有三种，分别是前序遍历 pre-order traversal、中序遍历 in-order traversal 和后序遍历 post-order traversal。这道题是中序遍历。 难度上来说，前序最简单，中序和后序遍历会复杂一点。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-04-16T07:36:05.471Z">
 <meta property="article:modified_time" content="2021-04-16T07:36:05.471Z">
 <meta property="article:author" content="Richard Zen">
 <meta property="article:tag" content="Tree">
-<meta property="article:tag" content="Binary Tree">
 <meta property="article:tag" content="DFS">
+<meta property="article:tag" content="Binary Tree">
 <meta property="article:tag" content="Stack">
 <meta name="twitter:card" content="summary">
 
@@ -221,7 +221,7 @@
 
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -234,6 +234,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF-1%EF%BC%8C%E9%80%92%E5%BD%92"><span class="nav-text">思路 1，递归</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF-2%EF%BC%8C%E9%81%8D%E5%8E%86"><span class="nav-text">思路 2，遍历</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF-3%EF%BC%8C%E9%81%8D%E5%8E%86%EF%BC%8C%E4%BC%98%E5%8C%96%E7%89%88%E6%9C%AC"><span class="nav-text">思路 3，遍历，优化版本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF-4%EF%BC%8C%E8%8E%AB%E9%87%8C%E6%96%AF%E9%81%8D%E5%8E%86-Morris-Traversal"><span class="nav-text">思路 4，莫里斯遍历 Morris Traversal</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -253,7 +254,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">72</span>
+          <span class="site-state-item-count">73</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -264,7 +265,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">43</span>
+        <span class="site-state-item-count">45</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -371,8 +372,9 @@
     <div class="post-body" itemprop="articleBody">
         <p>遍历树的方法通常有三种，分别是前序遍历 pre-order traversal、中序遍历 in-order traversal 和后序遍历 post-order traversal。这道题是中序遍历。</p>
 <p>难度上来说，前序最简单，中序和后序遍历会复杂一点。</p>
-<p>思路 1，递归</p>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+<span id="more"></span>
+
+<h2 id="思路-1，递归"><a href="#思路-1，递归" class="headerlink" title="思路 1，递归"></a>思路 1，递归</h2><pre class="language-python" data-language="python"><code class="language-python">class Solution:
     def inorderTraversal(self, root: TreeNode) -&gt; List[int]:
         ans &#x3D; []
 
@@ -386,8 +388,7 @@
         traverse(root)
         return ans</code></pre>
 
-<p>思路 2，遍历</p>
-<p>基于前序遍历的方案做的修改，可以解决问题，但是在空间复杂度上有优化余地，为了储存 stack 使用了额外的 2n 的空间。</p>
+<h2 id="思路-2，遍历"><a href="#思路-2，遍历" class="headerlink" title="思路 2，遍历"></a>思路 2，遍历</h2><p>基于前序遍历的方案做的修改，可以解决问题，但是在空间复杂度上有优化余地，为了储存 stack 使用了额外的 2n 的空间。</p>
 <pre class="language-python" data-language="python"><code class="language-python">class Solution:
     def inorderTraversal(self, root: TreeNode) -&gt; List[int]:
         ans, stack &#x3D; [], [root]
@@ -405,8 +406,7 @@
 
         return ans</code></pre>
 
-<p>思路 3，遍历，优化版本</p>
-<p>中序遍历要先遍历左节点，所以先抵达最左路径的最后一个节点，从这个节点开始回溯，重复检查左节点，本体和右节点的顺序。</p>
+<h2 id="思路-3，遍历，优化版本"><a href="#思路-3，遍历，优化版本" class="headerlink" title="思路 3，遍历，优化版本"></a>思路 3，遍历，优化版本</h2><p>中序遍历要先遍历左节点，所以先抵达最左路径的最后一个节点，从这个节点开始回溯，重复检查左节点，本体和右节点的顺序。</p>
 <p>这其实是思路 1 递归的扁平化处理，使用 stack 来替代递归过程。时间复杂度和空间复杂度均为 O(n)。</p>
 <pre class="language-python" data-language="python"><code class="language-python">class Solution:
     def inorderTraversal(self, root: TreeNode) -&gt; List[int]:
@@ -425,8 +425,7 @@
 
         return ans</code></pre>
 
-<p>思路 4，莫里斯遍历 Morris Traversal</p>
-<p>也叫线索二叉树（Threaded Binary Tree），修改树的结构，让其“穿起来”成为一条线，整个遍历过程重复修改结构 -&gt; 遍历数据的过程。</p>
+<h2 id="思路-4，莫里斯遍历-Morris-Traversal"><a href="#思路-4，莫里斯遍历-Morris-Traversal" class="headerlink" title="思路 4，莫里斯遍历 Morris Traversal"></a>思路 4，莫里斯遍历 Morris Traversal</h2><p>也叫线索二叉树（Threaded Binary Tree），修改树的结构，让其“穿起来”成为一条线，整个遍历过程重复修改结构 -&gt; 遍历数据的过程。</p>
 <p>具体做法如下：</p>
 <ul>
 <li>当前节点不存在左节点时<ul>
@@ -508,13 +507,13 @@
   <div class="popular-posts-header">相关文章</div>
   <ul class="popular-posts">
     <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/post/leetcode/114-Flatten-Binary-Tree-to-Linked-List-Medium/" rel="bookmark">114. Flatten Binary Tree to Linked List (Medium)</a></div>
+    </li>
+    <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/post/leetcode/144-Binary-Tree-Preorder-Traversal-Easy/" rel="bookmark">144. Binary Tree Preorder Traversal (Easy)</a></div>
     </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/post/leetcode/145-Binary-Tree-Postorder-Traversal-Easy/" rel="bookmark">145. Binary Tree Postorder Traversal (Easy)</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/post/leetcode/104-Maximum-Depth-of-Binary-Tree-Easy/" rel="bookmark">104. Maximum Depth of Binary Tree (Easy)</a></div>
     </li>
   </ul>
 
@@ -522,8 +521,8 @@
     <footer class="post-footer">
           <div class="post-tags">
               <a href="/tags/Tree/" rel="tag"># Tree</a>
-              <a href="/tags/Binary-Tree/" rel="tag"># Binary Tree</a>
               <a href="/tags/DFS/" rel="tag"># DFS</a>
+              <a href="/tags/Binary-Tree/" rel="tag"># Binary Tree</a>
               <a href="/tags/Stack/" rel="tag"># Stack</a>
           </div>
 
@@ -571,13 +570,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">85k</span>
+    <span title="站点总字数">89k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:18</span>
+    <span title="站点阅读时长">1:21</span>
   </span>
 </div>
 <div class="busuanzi-count">

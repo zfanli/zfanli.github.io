@@ -20,17 +20,19 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"richard.bizcat.xyz","root":"/","images":"/images","scheme":"Mist","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":true,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/config.min.js"></script>
-<meta name="description" content="反向波兰表示法是一种使用 Stack 达到方便计算目的的一种数学方法。 使用递归或 Stack 都能简单的完成计算。使用 Stack 为例，算法过程如下：  遍历 tokens 遇到数字则加到栈顶 遇到操作符和取出栈顶的 2 个数字做运算，运算结果放回栈顶   最终栈中存在的元素就是答案  class Solution:     def evalRPN(self, tokens: List[str">
+<meta name="description" content="演算反向波兰表示法。反向波兰表示法是一种为减少内存访问的使用 Stack 的演算表达法，这种方法按照先操作对象后操作符的方式表达算术运算。 所以我们讨论如何使用 Stack 解决这道题。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="150. Evaluate Reverse Polish Notation (Medium)">
 <meta property="og:url" content="https://richard.bizcat.xyz/post/leetcode/150-Evaluate-Reverse-Polish-Notation-Medium/">
 <meta property="og:site_name" content="HOME">
-<meta property="og:description" content="反向波兰表示法是一种使用 Stack 达到方便计算目的的一种数学方法。 使用递归或 Stack 都能简单的完成计算。使用 Stack 为例，算法过程如下：  遍历 tokens 遇到数字则加到栈顶 遇到操作符和取出栈顶的 2 个数字做运算，运算结果放回栈顶   最终栈中存在的元素就是答案  class Solution:     def evalRPN(self, tokens: List[str">
+<meta property="og:description" content="演算反向波兰表示法。反向波兰表示法是一种为减少内存访问的使用 Stack 的演算表达法，这种方法按照先操作对象后操作符的方式表达算术运算。 所以我们讨论如何使用 Stack 解决这道题。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-05-10T07:36:05.499Z">
 <meta property="article:modified_time" content="2021-05-10T07:36:05.499Z">
 <meta property="article:author" content="Richard Zen">
+<meta property="article:tag" content="Array">
 <meta property="article:tag" content="Stack">
+<meta property="article:tag" content="Math">
 <meta name="twitter:card" content="summary">
 
 
@@ -218,7 +220,7 @@
 
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -231,6 +233,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF"><span class="nav-text">思路</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -250,7 +253,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">72</span>
+          <span class="site-state-item-count">73</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -261,7 +264,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">43</span>
+        <span class="site-state-item-count">45</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -348,7 +351,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>586</span>
+      <span>676</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -366,7 +369,11 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p>反向波兰表示法是一种使用 Stack 达到方便计算目的的一种数学方法。</p>
+        <p>演算反向波兰表示法。反向波兰表示法是一种为减少内存访问的使用 Stack 的演算表达法，这种方法按照先操作对象后操作符的方式表达算术运算。</p>
+<p>所以我们讨论如何使用 Stack 解决这道题。</p>
+<span id="more"></span>
+
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>反向波兰表示法是一种使用 Stack 达到方便计算目的的一种数学方法。</p>
 <p>使用递归或 Stack 都能简单的完成计算。使用 Stack 为例，算法过程如下：</p>
 <ul>
 <li>遍历 tokens<ul>
@@ -406,20 +413,22 @@
   <div class="popular-posts-header">相关文章</div>
   <ul class="popular-posts">
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/post/leetcode/1047-Remove-All-Adjacent-Duplicates-In-String-Easy/" rel="bookmark">1047. Remove All Adjacent Duplicates In String (Easy)</a></div>
+      <div class="popular-posts-title"><a href="/post/leetcode/204-Count-Primes-Easy/" rel="bookmark">204. Count Primes (Easy)</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/post/leetcode/144-Binary-Tree-Preorder-Traversal-Easy/" rel="bookmark">144. Binary Tree Preorder Traversal (Easy)</a></div>
+      <div class="popular-posts-title"><a href="/post/leetcode/462-Minimum-Moves-to-Equal-Array-Elements-II-Medium/" rel="bookmark">462. Minimum Moves to Equal Array Elements II (Medium)</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/post/leetcode/145-Binary-Tree-Postorder-Traversal-Easy/" rel="bookmark">145. Binary Tree Postorder Traversal (Easy)</a></div>
+      <div class="popular-posts-title"><a href="/post/leetcode/48-Rotate-Image-Medium/" rel="bookmark">48. Rotate Image (Medium)</a></div>
     </li>
   </ul>
 
 
     <footer class="post-footer">
           <div class="post-tags">
+              <a href="/tags/Array/" rel="tag"># Array</a>
               <a href="/tags/Stack/" rel="tag"># Stack</a>
+              <a href="/tags/Math/" rel="tag"># Math</a>
           </div>
 
         
@@ -466,13 +475,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">85k</span>
+    <span title="站点总字数">89k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:18</span>
+    <span title="站点阅读时长">1:21</span>
   </span>
 </div>
 <div class="busuanzi-count">

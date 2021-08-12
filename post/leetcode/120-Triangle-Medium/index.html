@@ -20,12 +20,12 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"richard.bizcat.xyz","root":"/","images":"/images","scheme":"Mist","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":true,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/config.min.js"></script>
-<meta name="description" content="Given a triangle array, return the minimum path sum from top to bottom. For each step, you may move to an adjacent number of the row below. More formally, if you are on index i on the current row, yo">
+<meta name="description" content="你有一个三角形形状的 2D 数组，你需要找到从最顶层走到最底层的最短路径。 限制是每一步你只能下一层，且每一步你只能选择下一层的同下标位置或者下标 +1 位置。  Given a triangle array, return the minimum path sum from top to bottom. For each step, you may move to an adjacent num">
 <meta property="og:type" content="article">
 <meta property="og:title" content="120. Triangle (Medium)">
 <meta property="og:url" content="https://richard.bizcat.xyz/post/leetcode/120-Triangle-Medium/">
 <meta property="og:site_name" content="HOME">
-<meta property="og:description" content="Given a triangle array, return the minimum path sum from top to bottom. For each step, you may move to an adjacent number of the row below. More formally, if you are on index i on the current row, yo">
+<meta property="og:description" content="你有一个三角形形状的 2D 数组，你需要找到从最顶层走到最底层的最短路径。 限制是每一步你只能下一层，且每一步你只能选择下一层的同下标位置或者下标 +1 位置。  Given a triangle array, return the minimum path sum from top to bottom. For each step, you may move to an adjacent num">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-04-30T07:36:05.485Z">
 <meta property="article:modified_time" content="2021-04-30T07:36:05.485Z">
@@ -232,7 +232,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF-amp-Solutions"><span class="nav-text">思路 &amp; Solutions</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF-amp-Solutions"><span class="nav-text">思路 &amp; Solutions</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -252,7 +252,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">72</span>
+          <span class="site-state-item-count">73</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -263,7 +263,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">43</span>
+        <span class="site-state-item-count">45</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -350,7 +350,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>982</span>
+      <span>1.1k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -368,10 +368,15 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <blockquote>
+        <p>你有一个三角形形状的 2D 数组，你需要找到从最顶层走到最底层的最短路径。</p>
+<p>限制是每一步你只能下一层，且每一步你只能选择下一层的同下标位置或者下标 +1 位置。</p>
+<blockquote>
 <p>Given a <code>triangle</code> array, return the minimum path sum from top to bottom.</p>
 <p>For each step, you may move to an adjacent number of the row below. More formally, if you are on index <code>i</code> on the current row, you may move to either index <code>i</code> or index <code>i + 1</code> on the next row.</p>
 </blockquote>
+<p>看看例子才能更好理解题目，这题看上去需要计算所有可能才能知道答案，或许是 DP 的用武之地。</p>
+<span id="more"></span>
+
 <p>Example 1:</p>
 <pre class="language-none"><code class="language-none">Input: triangle &#x3D; [[2],[3,4],[6,5,7],[4,1,8,3]]
 Output: 11
@@ -388,7 +393,7 @@ Output: -10</code></pre>
 
 <p>Constraints:</p>
 <p>1 &lt;= triangle.length &lt;= 200<br>triangle[0].length == 1<br>triangle[i].length == triangle[i - 1].length + 1<br>-104 &lt;= triangle[i][j] &lt;= 104</p>
-<h3 id="思路-amp-Solutions"><a href="#思路-amp-Solutions" class="headerlink" title="思路 &amp; Solutions"></a>思路 &amp; Solutions</h3><pre class="language-python" data-language="python"><code class="language-python">class Solution:
+<h2 id="思路-amp-Solutions"><a href="#思路-amp-Solutions" class="headerlink" title="思路 &amp; Solutions"></a>思路 &amp; Solutions</h2><pre class="language-python" data-language="python"><code class="language-python">class Solution:
     def minimumTotal(self, triangle: List[List[int]]) -&gt; int:
         for depth in range(1, len(triangle)):
             lastsz &#x3D; len(triangle[depth-1])
@@ -415,10 +420,10 @@ Output: -10</code></pre>
       <div class="popular-posts-title"><a href="/post/leetcode/1048-Longest-String-Chain-Medium/" rel="bookmark">1048. Longest String Chain (Medium)</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/post/leetcode/1696-Jump-Game-VI-Medium/" rel="bookmark">1696. Jump Game VI (Medium)</a></div>
+      <div class="popular-posts-title"><a href="/post/leetcode/118-Pascal-s-Triangle-Easy/" rel="bookmark">118. Pascal's Triangle (Easy)</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/post/leetcode/63-Unique-Paths-II-Medium/" rel="bookmark">63. Unique Paths II (Medium)</a></div>
+      <div class="popular-posts-title"><a href="/post/leetcode/1696-Jump-Game-VI-Medium/" rel="bookmark">1696. Jump Game VI (Medium)</a></div>
     </li>
   </ul>
 
@@ -473,13 +478,13 @@ Output: -10</code></pre>
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">85k</span>
+    <span title="站点总字数">89k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:18</span>
+    <span title="站点阅读时长">1:21</span>
   </span>
 </div>
 <div class="busuanzi-count">

@@ -20,18 +20,21 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"richard.bizcat.xyz","root":"/","images":"/images","scheme":"Mist","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":true,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/config.min.js"></script>
-<meta name="description" content="思路 1，有序递归。重复先左后右的递归，用递归方法实现 O(1)的难点在于将右节点挂在左节点的末尾，这里我们将递归函数的返回值设为递归最后一个元素，来解决这个难题。 # Definition for a binary tree node. # class TreeNode: #     def __init__(self, val&#x3D;0, left&#x3D;None, right&amp;#x3">
+<meta name="description" content="将二叉树结构数据扁平化为链表，采用前序遍历（pre-order traversal）顺序。 题目要求修改二叉树结构去构成数组，在这个限制下我们要对前序遍历做一些修改才能解决这道题。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="114. Flatten Binary Tree to Linked List (Medium)">
 <meta property="og:url" content="https://richard.bizcat.xyz/post/leetcode/114-Flatten-Binary-Tree-to-Linked-List-Medium/">
 <meta property="og:site_name" content="HOME">
-<meta property="og:description" content="思路 1，有序递归。重复先左后右的递归，用递归方法实现 O(1)的难点在于将右节点挂在左节点的末尾，这里我们将递归函数的返回值设为递归最后一个元素，来解决这个难题。 # Definition for a binary tree node. # class TreeNode: #     def __init__(self, val&#x3D;0, left&#x3D;None, right&amp;#x3">
+<meta property="og:description" content="将二叉树结构数据扁平化为链表，采用前序遍历（pre-order traversal）顺序。 题目要求修改二叉树结构去构成数组，在这个限制下我们要对前序遍历做一些修改才能解决这道题。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-04-26T07:36:05.482Z">
 <meta property="article:modified_time" content="2021-04-26T07:36:05.482Z">
 <meta property="article:author" content="Richard Zen">
 <meta property="article:tag" content="Tree">
 <meta property="article:tag" content="DFS">
+<meta property="article:tag" content="Binary Tree">
+<meta property="article:tag" content="Stack">
+<meta property="article:tag" content="Linked List">
 <meta name="twitter:card" content="summary">
 
 
@@ -219,7 +222,7 @@
 
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -232,6 +235,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF-1%EF%BC%8C%E6%9C%89%E5%BA%8F%E9%80%92%E5%BD%92"><span class="nav-text">思路 1，有序递归</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF-2%EF%BC%8C%E5%AD%A6%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%9A%84%E6%80%9D%E8%B7%AF"><span class="nav-text">思路 2，学习题解的思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF-3%EF%BC%8C%E4%BB%8E%E4%B8%8B%E8%80%8C%E4%B8%8A"><span class="nav-text">思路 3，从下而上</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -251,7 +255,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">72</span>
+          <span class="site-state-item-count">73</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -262,7 +266,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">43</span>
+        <span class="site-state-item-count">45</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -349,7 +353,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>2.8k</span>
+      <span>2.9k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -367,7 +371,11 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p>思路 1，有序递归。重复先左后右的递归，用递归方法实现 O(1)的难点在于将右节点挂在左节点的末尾，这里我们将递归函数的返回值设为递归最后一个元素，来解决这个难题。</p>
+        <p>将二叉树结构数据扁平化为链表，采用前序遍历（pre-order traversal）顺序。</p>
+<p>题目要求修改二叉树结构去构成数组，在这个限制下我们要对前序遍历做一些修改才能解决这道题。</p>
+<span id="more"></span>
+
+<h2 id="思路-1，有序递归"><a href="#思路-1，有序递归" class="headerlink" title="思路 1，有序递归"></a>思路 1，有序递归</h2><p>重复先左后右的递归，用递归方法实现 O(1) 的难点在于将右节点挂在左节点的末尾，这里我们将递归函数的返回值设为递归最后一个元素，来解决这个难题。</p>
 <pre class="language-python" data-language="python"><code class="language-python"># Definition for a binary tree node.
 # class TreeNode:
 #     def __init__(self, val&#x3D;0, left&#x3D;None, right&#x3D;None):
@@ -396,7 +404,7 @@ class Solution:
 
         _flatten(root)</code></pre>
 
-<p>思路 2，学习题解的思路。如果我们发现有左节点，找到左节点最下端的右节点，将 root 的右节点挂在上面，将左节点替换为 root 的右节点，重置 root 的左节点为空，root 节点向右进一位，检查左节点，如此往复，直到最后一个左节点消失，二分树转链表结束。</p>
+<h2 id="思路-2，学习题解的思路"><a href="#思路-2，学习题解的思路" class="headerlink" title="思路 2，学习题解的思路"></a>思路 2，学习题解的思路</h2><p>如果我们发现有左节点，找到左节点最下端的右节点，将 root 的右节点挂在上面，将左节点替换为 root 的右节点，重置 root 的左节点为空，root 节点向右进一位，检查左节点，如此往复，直到最后一个左节点消失，二分树转链表结束。</p>
 <pre class="language-python" data-language="python"><code class="language-python">class Solution:
     def flatten(self, root: TreeNode) -&gt; None:
         &quot;&quot;&quot;
@@ -412,7 +420,7 @@ class Solution:
                 root.left &#x3D; None
             root &#x3D; root.right</code></pre>
 
-<p>思路 3，和之前思路不同之处在于，这次我们从下而上的去将二叉树转化为链表，转化的顺序是 right -&gt; left -&gt; node，因为我们需要先 node，再 left，再 right 的顺序去组成这个链表。我们用递归来帮助完成这个过程，使用一个全局变量 <code>head</code> 来储存当前处理的节点，因为我们已经确保有序递归，所以 <code>head</code> 将从空（链表最后一个节点的子节点）开始，每次指向上一个节点，直到达到 <code>root</code> 节点。</p>
+<h2 id="思路-3，从下而上"><a href="#思路-3，从下而上" class="headerlink" title="思路 3，从下而上"></a>思路 3，从下而上</h2><p>和之前思路不同之处在于，这次我们从下而上的去将二叉树转化为链表，转化的顺序是 right -&gt; left -&gt; node，因为我们需要先 node，再 left，再 right 的顺序去组成这个链表。我们用递归来帮助完成这个过程，使用一个全局变量 <code>head</code> 来储存当前处理的节点，因为我们已经确保有序递归，所以 <code>head</code> 将从空（链表最后一个节点的子节点）开始，每次指向上一个节点，直到达到 <code>root</code> 节点。</p>
 <pre class="language-python" data-language="python"><code class="language-python">class Solution:
     def flatten(self, root: TreeNode) -&gt; None:
         &quot;&quot;&quot;
@@ -490,13 +498,13 @@ var flatten &#x3D; function (root) &#123;
   <div class="popular-posts-header">相关文章</div>
   <ul class="popular-posts">
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/post/leetcode/104-Maximum-Depth-of-Binary-Tree-Easy/" rel="bookmark">104. Maximum Depth of Binary Tree (Easy)</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/post/leetcode/1302-Deepest-Leaves-Sum-Medium/" rel="bookmark">1302. Deepest Leaves Sum (Medium)</a></div>
+      <div class="popular-posts-title"><a href="/post/leetcode/109-Convert-Sorted-List-to-Binary-Search-Tree-Medium/" rel="bookmark">109. Convert Sorted List to Binary Search Tree (Medium)</a></div>
     </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/post/leetcode/144-Binary-Tree-Preorder-Traversal-Easy/" rel="bookmark">144. Binary Tree Preorder Traversal (Easy)</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/post/leetcode/145-Binary-Tree-Postorder-Traversal-Easy/" rel="bookmark">145. Binary Tree Postorder Traversal (Easy)</a></div>
     </li>
   </ul>
 
@@ -505,6 +513,9 @@ var flatten &#x3D; function (root) &#123;
           <div class="post-tags">
               <a href="/tags/Tree/" rel="tag"># Tree</a>
               <a href="/tags/DFS/" rel="tag"># DFS</a>
+              <a href="/tags/Binary-Tree/" rel="tag"># Binary Tree</a>
+              <a href="/tags/Stack/" rel="tag"># Stack</a>
+              <a href="/tags/Linked-List/" rel="tag"># Linked List</a>
           </div>
 
         
@@ -551,13 +562,13 @@ var flatten &#x3D; function (root) &#123;
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">85k</span>
+    <span title="站点总字数">89k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:18</span>
+    <span title="站点阅读时长">1:21</span>
   </span>
 </div>
 <div class="busuanzi-count">

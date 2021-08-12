@@ -20,19 +20,19 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"richard.bizcat.xyz","root":"/","images":"/images","scheme":"Mist","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":true,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/config.min.js"></script>
-<meta name="description" content="遍历树通常有三种方法，分别是前序遍历（pre-order traversal）、中序遍历（in-order traversal）和后序遍历（post-order traversal）。这道题是后序遍历。 思路 1，递归 三种递归遍历方式的区别仅在于处理的顺序。 class Solution:     def postorderTraversal(self, root: TreeNode) -&amp;gt">
+<meta name="description" content="遍历树通常有三种方法，分别是前序遍历（pre-order traversal）、中序遍历（in-order traversal）和后序遍历（post-order traversal）。这道题是后序遍历。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="145. Binary Tree Postorder Traversal (Easy)">
 <meta property="og:url" content="https://richard.bizcat.xyz/post/leetcode/145-Binary-Tree-Postorder-Traversal-Easy/">
 <meta property="og:site_name" content="HOME">
-<meta property="og:description" content="遍历树通常有三种方法，分别是前序遍历（pre-order traversal）、中序遍历（in-order traversal）和后序遍历（post-order traversal）。这道题是后序遍历。 思路 1，递归 三种递归遍历方式的区别仅在于处理的顺序。 class Solution:     def postorderTraversal(self, root: TreeNode) -&amp;gt">
+<meta property="og:description" content="遍历树通常有三种方法，分别是前序遍历（pre-order traversal）、中序遍历（in-order traversal）和后序遍历（post-order traversal）。这道题是后序遍历。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-05-08T07:36:05.496Z">
 <meta property="article:modified_time" content="2021-05-08T07:36:05.496Z">
 <meta property="article:author" content="Richard Zen">
 <meta property="article:tag" content="Tree">
-<meta property="article:tag" content="Binary Tree">
 <meta property="article:tag" content="DFS">
+<meta property="article:tag" content="Binary Tree">
 <meta property="article:tag" content="Stack">
 <meta name="twitter:card" content="summary">
 
@@ -221,7 +221,7 @@
 
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -234,6 +234,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF-1%EF%BC%8C%E9%80%92%E5%BD%92"><span class="nav-text">思路 1，递归</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF-2%EF%BC%8C%E8%BF%AD%E4%BB%A3%E9%81%8D%E5%8E%86"><span class="nav-text">思路 2，迭代遍历</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF-3%EF%BC%8C%E8%BF%AD%E4%BB%A3%E9%81%8D%E5%8E%86%EF%BC%8C%E5%9F%BA%E4%BA%8E%E4%B8%AD%E5%BA%8F%E8%BF%AD%E4%BB%A3%E9%81%8D%E5%8E%86%E4%BC%98%E5%8C%96"><span class="nav-text">思路 3，迭代遍历，基于中序迭代遍历优化</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -253,7 +254,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">72</span>
+          <span class="site-state-item-count">73</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -264,7 +265,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">43</span>
+        <span class="site-state-item-count">45</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -370,8 +371,9 @@
     
     <div class="post-body" itemprop="articleBody">
         <p>遍历树通常有三种方法，分别是前序遍历（pre-order traversal）、中序遍历（in-order traversal）和后序遍历（post-order traversal）。这道题是后序遍历。</p>
-<p>思路 1，递归</p>
-<p>三种递归遍历方式的区别仅在于处理的顺序。</p>
+<span id="more"></span>
+
+<h2 id="思路-1，递归"><a href="#思路-1，递归" class="headerlink" title="思路 1，递归"></a>思路 1，递归</h2><p>三种递归遍历方式的区别仅在于处理的顺序。</p>
 <pre class="language-python" data-language="python"><code class="language-python">class Solution:
     def postorderTraversal(self, root: TreeNode) -&gt; List[int]:
         ans &#x3D; []
@@ -386,8 +388,7 @@
         traverse(root)
         return ans</code></pre>
 
-<p>思路 2，迭代遍历</p>
-<p>后序遍历按照 left -&gt; right -&gt; root 的顺序遍历树，你会发现这和前序遍历相似，我们只需要将前序遍历方法中左右子节点的遍历顺序对调，并将其结果颠倒一下顺序，即可得到后序遍历的结果。</p>
+<h2 id="思路-2，迭代遍历"><a href="#思路-2，迭代遍历" class="headerlink" title="思路 2，迭代遍历"></a>思路 2，迭代遍历</h2><p>后序遍历按照 left -&gt; right -&gt; root 的顺序遍历树，你会发现这和前序遍历相似，我们只需要将前序遍历方法中左右子节点的遍历顺序对调，并将其结果颠倒一下顺序，即可得到后序遍历的结果。</p>
 <p>但是这样不够优雅。</p>
 <p>我们延续 stack 的思路，通过观察我们知道要完成后序遍历，每次迭代过程中我们可以把当前节点、右节点、左节点按顺序放入 stack 中，针对当前节点，需要将其左右子节点置空表示已经遍历过。</p>
 <p>我们的 Base Case 的条件是当前节点没有左右子节点，这表示该节点是叶子节点，或是已经遍历过的节点，针对这两种情况我们直接记录它的值。</p>
@@ -411,8 +412,7 @@
 
         return ans</code></pre>
 
-<p>思路 3，迭代遍历，基于中序迭代遍历优化</p>
-<p>由于 root 的值是最后记录的，在当前节点存在右节点的情况，还需要将当前节点的右节点置空，重新存入 stack。在空间复杂度上比思路 2 而言没有太大优化。</p>
+<h2 id="思路-3，迭代遍历，基于中序迭代遍历优化"><a href="#思路-3，迭代遍历，基于中序迭代遍历优化" class="headerlink" title="思路 3，迭代遍历，基于中序迭代遍历优化"></a>思路 3，迭代遍历，基于中序迭代遍历优化</h2><p>由于 root 的值是最后记录的，在当前节点存在右节点的情况，还需要将当前节点的右节点置空，重新存入 stack。在空间复杂度上比思路 2 而言没有太大优化。</p>
 <p>这个思路下，我们先到达左节点的最下层左节点（即最后一个左节点，该节点的左节点为空），然后根据右节点发生下面分支：</p>
 <ul>
 <li>右节点不存在：The Base Case，这个节点是叶子节点或访问过的节点，记录它的值；</li>
@@ -447,13 +447,13 @@
   <div class="popular-posts-header">相关文章</div>
   <ul class="popular-posts">
     <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/post/leetcode/114-Flatten-Binary-Tree-to-Linked-List-Medium/" rel="bookmark">114. Flatten Binary Tree to Linked List (Medium)</a></div>
+    </li>
+    <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/post/leetcode/144-Binary-Tree-Preorder-Traversal-Easy/" rel="bookmark">144. Binary Tree Preorder Traversal (Easy)</a></div>
     </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/post/leetcode/94-Binary-Tree-Inorder-Traversal-Easy/" rel="bookmark">94. Binary Tree Inorder Traversal (Easy)</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/post/leetcode/104-Maximum-Depth-of-Binary-Tree-Easy/" rel="bookmark">104. Maximum Depth of Binary Tree (Easy)</a></div>
     </li>
   </ul>
 
@@ -461,8 +461,8 @@
     <footer class="post-footer">
           <div class="post-tags">
               <a href="/tags/Tree/" rel="tag"># Tree</a>
-              <a href="/tags/Binary-Tree/" rel="tag"># Binary Tree</a>
               <a href="/tags/DFS/" rel="tag"># DFS</a>
+              <a href="/tags/Binary-Tree/" rel="tag"># Binary Tree</a>
               <a href="/tags/Stack/" rel="tag"># Stack</a>
           </div>
 
@@ -510,13 +510,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">85k</span>
+    <span title="站点总字数">89k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:18</span>
+    <span title="站点阅读时长">1:21</span>
   </span>
 </div>
 <div class="busuanzi-count">

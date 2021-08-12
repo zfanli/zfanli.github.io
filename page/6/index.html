@@ -255,7 +255,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">72</span>
+          <span class="site-state-item-count">73</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -266,7 +266,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">43</span>
+        <span class="site-state-item-count">45</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -300,6 +300,110 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://richard.bizcat.xyz/post/leetcode/128-Longest-Consecutive-Sequence-Medium/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon-64.png">
+      <meta itemprop="name" content="Richard Zen">
+      <meta itemprop="description" content="<small><b>TOPICS</b></small><br>
+前端 ｜ Python ｜ Java<br>
+数据结构 ｜ 算法<br><br>
+用代码替代言语<br>记录创作与学习的脚步<br><br>
+">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HOME">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/post/leetcode/128-Longest-Consecutive-Sequence-Medium/" class="post-title-link" itemprop="url">128. Longest Consecutive Sequence (Medium)</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-05-02 15:36:05" itemprop="dateModified" datetime="2021-05-02T15:36:05+08:00">2021-05-02</time>
+      </span>
+
+  
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>521</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>你有一个未排序的整数数组 <code>nums</code>，你要在 O(n) 时间复杂度内找到最长的连续子序列，返回其长度</p>
+<p><code>nums</code> 数组的元素可以构成诺干个连续的子数组，我们需要找到最大的子数组，返回其长度。</p>
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>要找到最大的子数组，首先我们要找到子数组的第一个元素，可以将 <code>nums</code> 转成一个 HashSet，然后遍历它：</p>
+<ul>
+<li>查询每个元素的前一个值（<code>n - 1</code>）是否存在；<ul>
+<li>存在则表示这个元素不是子数组的最小值，直接跳过；</li>
+<li>不存在时，循环查询这个值的下一个值是否存在（<code>n + 1</code>），直到下一个值不存在为止；</li>
+<li>在查询下一个值的过程中保持一个计数器，一直计数到不存在下一个值；</li>
+<li>将其和全局变量取一个最大值；</li>
+</ul>
+</li>
+<li>返回全局最大值。</li>
+</ul>
+<p>因为我们只在子数组的最小值开始遍历，所以能避免不需要的运算，让时间复杂度在 O(n)。</p>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def longestConsecutive(self, nums: List[int]) -&gt; int:
+        ans, nums &#x3D; 0, set(nums)
+        for n in nums:
+            if n - 1 not in nums:
+                count &#x3D; 1
+                while n + 1 in nums:
+                    n, count &#x3D; n + 1, count + 1
+                ans &#x3D; max(ans, count)
+        return ans</code></pre>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -345,7 +449,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>982</span>
+      <span>1.1k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -363,41 +467,21 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <blockquote>
+          <p>你有一个三角形形状的 2D 数组，你需要找到从最顶层走到最底层的最短路径。</p>
+<p>限制是每一步你只能下一层，且每一步你只能选择下一层的同下标位置或者下标 +1 位置。</p>
+<blockquote>
 <p>Given a <code>triangle</code> array, return the minimum path sum from top to bottom.</p>
 <p>For each step, you may move to an adjacent number of the row below. More formally, if you are on index <code>i</code> on the current row, you may move to either index <code>i</code> or index <code>i + 1</code> on the next row.</p>
 </blockquote>
-<p>Example 1:</p>
-<pre class="language-none"><code class="language-none">Input: triangle &#x3D; [[2],[3,4],[6,5,7],[4,1,8,3]]
-Output: 11
-Explanation: The triangle looks like:
-   2
-  3 4
- 6 5 7
-4 1 8 3
-The minimum path sum from top to bottom is 2 + 3 + 5 + 1 &#x3D; 11 (underlined above).</code></pre>
-
-<p>Example 2:</p>
-<pre class="language-none"><code class="language-none">Input: triangle &#x3D; [[-10]]
-Output: -10</code></pre>
-
-<p>Constraints:</p>
-<p>1 &lt;= triangle.length &lt;= 200<br>triangle[0].length == 1<br>triangle[i].length == triangle[i - 1].length + 1<br>-104 &lt;= triangle[i][j] &lt;= 104</p>
-<h3 id="思路-amp-Solutions"><a href="#思路-amp-Solutions" class="headerlink" title="思路 &amp; Solutions"></a>思路 &amp; Solutions</h3><pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def minimumTotal(self, triangle: List[List[int]]) -&gt; int:
-        for depth in range(1, len(triangle)):
-            lastsz &#x3D; len(triangle[depth-1])
-            for pos, x in enumerate(triangle[depth]):
-                if pos &#x3D;&#x3D; 0:
-                    prev &#x3D; triangle[depth-1][pos]
-                elif pos &#x3D;&#x3D; lastsz:
-                    prev &#x3D; triangle[depth-1][-1]
-                else:
-                    prev &#x3D; min(triangle[depth-1][pos-1], triangle[depth-1][pos])
-                triangle[depth][pos] &#x3D; x + prev
-
-        return min(triangle[-1])</code></pre>
-
+<p>看看例子才能更好理解题目，这题看上去需要计算所有可能才能知道答案，或许是 DP 的用武之地。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/post/leetcode/120-Triangle-Medium/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -459,7 +543,7 @@ Output: -10</code></pre>
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>313</span>
+      <span>404</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -477,20 +561,16 @@ Output: -10</code></pre>
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>杨辉三角，做完这题发现，这就是 DP 呀，简明扼要。思路就是用当前行计算下一行，每一个值都等于上一行相同位置加上前一位，注意首位两个特殊 case 即可。</p>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def generate(self, numRows: int) -&gt; List[List[int]]:
-        ans &#x3D; [[1]]
-        for n in range(1, numRows):
-            curr, nxt &#x3D; ans[-1], []
-            for i in range(n + 1):
-                if i - 1 &lt; 0 or i &#x3D;&#x3D; n:
-                    nxt.append(1)
-                else:
-                    nxt.append(curr[i - 1] + curr[i])
-            ans.append(nxt)
-        return ans</code></pre>
-
+          <p>杨辉三角问题。在杨辉三角中每个元素 <code>i</code> 的值由上一行同位置 <code>i</code> 的值加上上一行前一个位置 <code>i-1</code> 的值决定。</p>
+<p>你需要实现一个程序接受一个行数，返回到这行位置的杨辉三角数组。枚举问题，DP 解决。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/post/leetcode/118-Pascal-s-Triangle-Easy/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -552,7 +632,7 @@ Output: -10</code></pre>
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>2.8k</span>
+      <span>2.9k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -570,120 +650,16 @@ Output: -10</code></pre>
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>思路 1，有序递归。重复先左后右的递归，用递归方法实现 O(1)的难点在于将右节点挂在左节点的末尾，这里我们将递归函数的返回值设为递归最后一个元素，来解决这个难题。</p>
-<pre class="language-python" data-language="python"><code class="language-python"># Definition for a binary tree node.
-# class TreeNode:
-#     def __init__(self, val&#x3D;0, left&#x3D;None, right&#x3D;None):
-#         self.val &#x3D; val
-#         self.left &#x3D; left
-#         self.right &#x3D; right
-class Solution:
-    def flatten(self, root: TreeNode) -&gt; None:
-        &quot;&quot;&quot;
-        Do not return anything, modify root in-place instead.
-        &quot;&quot;&quot;
-        if root is None:
-            return root
-        def _flatten(node):
-            left, right &#x3D; node.left, node.right
-            if left:
-                left &#x3D; _flatten(left)
-                left.right &#x3D; node.right
-                node.right &#x3D; node.left
-                node.left &#x3D; None
-            if right:
-                right &#x3D; _flatten(right)
-            else:
-                right &#x3D; left
-            return right if right else node
-
-        _flatten(root)</code></pre>
-
-<p>思路 2，学习题解的思路。如果我们发现有左节点，找到左节点最下端的右节点，将 root 的右节点挂在上面，将左节点替换为 root 的右节点，重置 root 的左节点为空，root 节点向右进一位，检查左节点，如此往复，直到最后一个左节点消失，二分树转链表结束。</p>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def flatten(self, root: TreeNode) -&gt; None:
-        &quot;&quot;&quot;
-        Do not return anything, modify root in-place instead.
-        &quot;&quot;&quot;
-        while root:
-            if root.left:
-                left &#x3D; root.left
-                while left.right:
-                    left &#x3D; left.right
-                left.right &#x3D; root.right
-                root.right &#x3D; root.left
-                root.left &#x3D; None
-            root &#x3D; root.right</code></pre>
-
-<p>思路 3，和之前思路不同之处在于，这次我们从下而上的去将二叉树转化为链表，转化的顺序是 right -&gt; left -&gt; node，因为我们需要先 node，再 left，再 right 的顺序去组成这个链表。我们用递归来帮助完成这个过程，使用一个全局变量 <code>head</code> 来储存当前处理的节点，因为我们已经确保有序递归，所以 <code>head</code> 将从空（链表最后一个节点的子节点）开始，每次指向上一个节点，直到达到 <code>root</code> 节点。</p>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def flatten(self, root: TreeNode) -&gt; None:
-        &quot;&quot;&quot;
-        Do not return anything, modify root in-place instead.
-        &quot;&quot;&quot;
-        self.head &#x3D; None
-
-        def f(node):
-            if node.right:
-                f(node.right)
-            if node.left:
-                f(node.left)
-            node.left, node.right, self.head &#x3D; None, self.head, node
-
-        if root:
-            f(root)</code></pre>
-
-<p>相同思路的 Java 代码。</p>
-<pre class="language-java" data-language="java"><code class="language-java">&#x2F;**
- * Definition for a binary tree node.
- * public class TreeNode &#123;
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode() &#123;&#125;
- *     TreeNode(int val) &#123; this.val &#x3D; val; &#125;
- *     TreeNode(int val, TreeNode left, TreeNode right) &#123;
- *         this.val &#x3D; val;
- *         this.left &#x3D; left;
- *         this.right &#x3D; right;
- *     &#125;
- * &#125;
- *&#x2F;
-class Solution &#123;
-    private TreeNode head &#x3D; null;
-    public void flatten(TreeNode root) &#123;
-        if (root !&#x3D; null) f(root);
-    &#125;
-    private void f(TreeNode node) &#123;
-        if (node.right !&#x3D; null) f(node.right);
-        if (node.left !&#x3D; null) f(node.left);
-        node.left &#x3D; null; node.right &#x3D; head; head &#x3D; node;
-    &#125;
-&#125;</code></pre>
-
-<p>JS 代码。</p>
-<pre class="language-js" data-language="js"><code class="language-js">&#x2F;**
- * Definition for a binary tree node.
- * function TreeNode(val, left, right) &#123;
- *     this.val &#x3D; (val&#x3D;&#x3D;&#x3D;undefined ? 0 : val)
- *     this.left &#x3D; (left&#x3D;&#x3D;&#x3D;undefined ? null : left)
- *     this.right &#x3D; (right&#x3D;&#x3D;&#x3D;undefined ? null : right)
- * &#125;
- *&#x2F;
-&#x2F;**
- * @param &#123;TreeNode&#125; root
- * @return &#123;void&#125; Do not return anything, modify root in-place instead.
- *&#x2F;
-var flatten &#x3D; function (root) &#123;
-  let head &#x3D; null;
-  const f &#x3D; (node) &#x3D;&gt; &#123;
-    if (node.right) f(node.right);
-    if (node.left) f(node.left);
-    (node.left &#x3D; null), (node.right &#x3D; head), (head &#x3D; node);
-  &#125;;
-  if (root) f(root);
-&#125;;</code></pre>
-
+          <p>将二叉树结构数据扁平化为链表，采用前序遍历（pre-order traversal）顺序。</p>
+<p>题目要求修改二叉树结构去构成数组，在这个限制下我们要对前序遍历做一些修改才能解决这道题。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/post/leetcode/114-Flatten-Binary-Tree-to-Linked-List-Medium/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -745,7 +721,7 @@ var flatten &#x3D; function (root) &#123;
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>2.3k</span>
+      <span>2.5k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -763,118 +739,17 @@ var flatten &#x3D; function (root) &#123;
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>Topics:</p>
-<p>Linked-list, DFS.</p>
-<p>比较简洁的解法是快慢指针。</p>
-<pre class="language-java" data-language="java"><code class="language-java">&#x2F;**
- * Definition for singly-linked list.
- * public class ListNode &#123;
- *     int val;
- *     ListNode next;
- *     ListNode() &#123;&#125;
- *     ListNode(int val) &#123; this.val &#x3D; val; &#125;
- *     ListNode(int val, ListNode next) &#123; this.val &#x3D; val; this.next &#x3D; next; &#125;
- * &#125;
- *&#x2F;
-&#x2F;**
- * Definition for a binary tree node.
- * public class TreeNode &#123;
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode() &#123;&#125;
- *     TreeNode(int val) &#123; this.val &#x3D; val; &#125;
- *     TreeNode(int val, TreeNode left, TreeNode right) &#123;
- *         this.val &#x3D; val;
- *         this.left &#x3D; left;
- *         this.right &#x3D; right;
- *     &#125;
- * &#125;
- *&#x2F;
-class Solution &#123;
-    public TreeNode sortedListToBST(ListNode head) &#123;
-        return tree(head, null);
-    &#125;
-
-    private TreeNode tree(ListNode b, ListNode e) &#123;
-        if (b &#x3D;&#x3D; e) return null;
-        ListNode fast &#x3D; b;
-        ListNode slow &#x3D; b;
-        while (fast.next !&#x3D; e &amp;&amp; fast.next.next !&#x3D; e) &#123;
-            fast &#x3D; fast.next.next;
-            slow &#x3D; slow.next;
-        &#125;
-        TreeNode root &#x3D; new TreeNode(slow.val);
-        root.left &#x3D; tree(b, slow);
-        root.right &#x3D; tree(slow.next, e);
-        return root;
-    &#125;
-&#125;</code></pre>
-
-<p>Python 强行和官方答案匹配。</p>
-<pre class="language-python" data-language="python"><code class="language-python"># Definition for singly-linked list.
-# class ListNode:
-#     def __init__(self, val&#x3D;0, next&#x3D;None):
-#         self.val &#x3D; val
-#         self.next &#x3D; next
-# Definition for a binary tree node.
-# class TreeNode:
-#     def __init__(self, val&#x3D;0, left&#x3D;None, right&#x3D;None):
-#         self.val &#x3D; val
-#         self.left &#x3D; left
-#         self.right &#x3D; right
-class Solution:
-    def sortedListToBST(self, head: ListNode) -&gt; TreeNode:
-
-        def tree(head, end):
-            if head &#x3D;&#x3D; end:
-                return None
-
-            fast &#x3D; slow &#x3D; head
-
-            while fast.next !&#x3D; end:
-                fast, slow &#x3D; fast.next, slow.next
-                if fast.next !&#x3D; end:
-                    fast &#x3D; fast.next
-
-            root &#x3D; TreeNode(slow.val)
-            root.left &#x3D; tree(head, slow)
-            root.right &#x3D; tree(slow.next, end)
-            return root
-
-        return tree(head, None)</code></pre>
-
-<p>下面是基于长度二分。</p>
-<pre class="language-python" data-language="python"><code class="language-python"># Definition for singly-linked list.
-# class ListNode:
-#     def __init__(self, val&#x3D;0, next&#x3D;None):
-#         self.val &#x3D; val
-#         self.next &#x3D; next
-# Definition for a binary tree node.
-# class TreeNode:
-#     def __init__(self, val&#x3D;0, left&#x3D;None, right&#x3D;None):
-#         self.val &#x3D; val
-#         self.left &#x3D; left
-#         self.right &#x3D; right
-class Solution:
-    def sortedListToBST(self, head: ListNode) -&gt; TreeNode:
-        self.head, n &#x3D; head, 0
-        while head:
-            head &#x3D; head.next
-            n +&#x3D; 1
-
-        def dfs(b, e):
-            if b &gt;&#x3D; e:
-                return None
-            m &#x3D; b + e &gt;&gt; 1
-            left &#x3D; dfs(b, m)
-            root &#x3D; TreeNode(self.head.val, left)
-            self.head &#x3D; self.head.next
-            root.right &#x3D; dfs(m + 1, e)
-            return root
-
-        return dfs(0, n)</code></pre>
-
+          <p>你有一个链表的 <code>head</code> 元素，链表数组按照升序排列，现在你需要实现一个程序将其转换为高度平衡的二叉查找树。</p>
+<p>对这道题来说，高度平衡的二叉树定义为所有节点的子节点深度相差不大于 1。</p>
+<p>题目的难点在于你不知道链表的长度。我们从几个思路讨论如何解决这道题。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/post/leetcode/109-Convert-Sorted-List-to-Binary-Search-Tree-Medium/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -936,7 +811,7 @@ class Solution:
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>634</span>
+      <span>724</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -954,38 +829,17 @@ class Solution:
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>求二叉树的最大深度。</p>
-<p>思路 1，Top-Down，递归</p>
-<p>在递归过程中，我们先根据当前层的深度更新结果，然后针对子节点进行递归调用，重复这个过程直到遍历完整棵树。这是从上至下的解题方法，顺序体现在我们何时处理当前节点的值。</p>
-<p>这个思路可以解决问题，但是从逻辑上来说，如果存在子节点，那么当前节点的深度肯定不是最终答案，Top-Down 方法或许不是最符合这道题目逻辑的方法。</p>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def maxDepth(self, root: TreeNode) -&gt; int:
-        ans &#x3D; 0
-
-        def traverse(node, depth):
-            if not node:
-                return
-            nonlocal ans
-            ans &#x3D; max(ans, depth)
-            traverse(node.left, depth + 1)
-            traverse(node.right, depth + 1)
-
-        traverse(root, 1)
-        return ans</code></pre>
-
-<p>思路 2，Bottom-Up，递归</p>
-<p>在从下至上的方法中，我们先去计算以当前节点开始其子节点的最大深度，在结果的基础上 +1 作为当前节点的深度结束递归过程。</p>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def maxDepth(self, root: TreeNode) -&gt; int:
-
-        def traverse(node):
-            if not node:
-                return 0
-            return 1 + max(traverse(node.left),
-                           traverse(node.right))
-
-        return traverse(root)</code></pre>
-
+          <p>求二叉树的最大深度。二叉树的深度指的是其节点的最大层数。</p>
+<p>这是一道简单题，但是可以视作是 Top-Down 和 Bottom-Up 方法的教学题。</p>
+<p>我们应用 DFS 来处理之道题，来看看自上而下与自下而上方法的区别。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/post/leetcode/104-Maximum-Depth-of-Binary-Tree-Easy/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1067,63 +921,14 @@ class Solution:
     <div class="post-body" itemprop="articleBody">
           <p>遍历树的方式除了通常的前序遍历、中序遍历和后序遍历之外，还有本题的层序遍历。</p>
 <p>层序遍历的顺序是从左到右依次遍历同层级到节点，然后在进入下一层级重复这个过程，直到不再存在下一层级。这是一个典型的宽度优先搜索（BFS）算法。</p>
-<p>完成层序遍历，我们可以利于先进先出的队列来记录每一个层级的节点数。</p>
-<p>具体过程如下：</p>
-<ul>
-<li>将 root 放入队列，开始进入迭代；</li>
-<li>每次迭代开始先取得队列的长度，这个长度表示当前层级的节点数；</li>
-<li>循环依次取出所有当前层级的节点，将其子节点按照左右顺序放入队列，并将当前节点的值存入新的列表；</li>
-<li>将列表放入答案列表，重复迭代直到队列清空。</li>
-</ul>
-<p>需要注意的一点是，虽然我们在放入子节点的时候会进行存在判定，但是 root 本身也存在为空（None）的情况，下面代码中我们新建了一个 Dummy 节点来处理这个问题，将 root 作为 Dummy 节点的子节点，然后在放入子节点的过程中进行存在判定，这样就规避了 root 节点本身不存在的问题。</p>
-<p>最终在返回结果时，将位于数组 0 位置的 Dummy 节点的值删除。</p>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def levelOrder(self, root: TreeNode) -&gt; List[List[int]]:
-        ans, queue &#x3D; [], [TreeNode(-1, root)]
-
-        while len(queue) &gt; 0:
-            lst, n &#x3D; [], len(queue)
-            for _ in range(n):
-                node &#x3D; queue.pop(0)
-                if node.left:
-                    queue.append(node.left)
-                if node.right:
-                    queue.append(node.right)
-                lst.append(node.val)
-            ans.append(lst)
-
-        return ans[1:]</code></pre>
-
-<hr>
-<p>bk，旧思路，这个方法会额外创建 log n 个新数组，这个额外空间其实没有必要。</p>
-<ul>
-<li>同级的元素全都放到一个数组；</li>
-<li>按照顺序提取元素的值放到答案数组；</li>
-<li>同时将存在的子节点放到新的数组；</li>
-<li>重复这个过程直到不存在任何子节点；</li>
-<li>此时答案数组已经编辑完成。</li>
-</ul>
-<pre class="language-python" data-language="python"><code class="language-python"># Definition for a binary tree node.
-# class TreeNode:
-#     def __init__(self, val&#x3D;0, left&#x3D;None, right&#x3D;None):
-#         self.val &#x3D; val
-#         self.left &#x3D; left
-#         self.right &#x3D; right
-class Solution:
-    def levelOrder(self, root: TreeNode) -&gt; List[List[int]]:
-        ans, lv &#x3D; [], [root]
-        while len(lv) !&#x3D; 0:
-            _ans, _lv &#x3D; [], []
-            for n in lv:
-                if n:
-                    _ans.append(n.val)
-                    _lv.append(n.left)
-                    _lv.append(n.right)
-            if len(_ans) &gt; 0:
-                ans.append(_ans)
-            lv &#x3D; _lv
-        return ans</code></pre>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/post/leetcode/102-Binary-Tree-Level-Order-Traversal-Medium/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1185,14 +990,14 @@ class Solution:
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>1.6k</span>
+      <span>1.8k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
+      <span>2 分钟</span>
     </span>
 </div>
 
@@ -1203,141 +1008,22 @@ class Solution:
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>思路 1，2D 数组动态规划。这题乍一看用快慢指针可以解出来，但是这是个陷阱，设想如果下一个字符可以同时从 <code>s1</code> 和 <code>s2</code> 中取得，如果使用快慢指针这里如何处理？可以考虑回溯算法，但是这变成了暴力破解，无法在时限内通过测试 case。</p>
-<p>DP 相关的题目对思路和直觉有要求，为了方便后面的计算，我们先把一个特殊 case 排除在外：</p>
+          <p>字符串问题。定义字符串交错指的是俩个字符串的字符交错出现构成一个新的字符串。比如对字符串 <code>s</code> 和 <code>t</code> 来说：</p>
 <ul>
-<li>如果 <code>s1.length</code> + <code>s2.length</code> != <code>s3.length</code>，那就没有必要计算了，直接返回 <code>false</code>。</li>
+<li><code>s = s1 + s2 + ... + sn</code></li>
+<li><code>t = t1 + t2 + ... + tm</code></li>
+<li><code>|n - m| &lt;= 1</code></li>
+<li>The <strong>interleaving</strong> is <code>s1 + t1 + s2 + t2 + s3 + t3 + ...</code> or <code>t1 + s1 + t2 + s2 + t3 + s3 + ...</code></li>
 </ul>
-<p>接下来分析 DP 的思路。</p>
-<ul>
-<li>准备一个 <code>(m + 1)</code> * <code>(n + 1)</code> 的 2D 数组；<ul>
-<li><code>m</code>：<code>s1.length</code>；<code>n</code>：<code>s2.length</code>；</li>
-<li>+ 1 的原因是要留出第一个字符不选 <code>s1</code> 或 <code>s2</code> 的空间；</li>
-</ul>
-</li>
-<li>初始化 <code>dp[0][0]</code> 为 <code>true</code> or 1，这个坐标意味长度为 0 的场景；</li>
-<li>接下来要做的事情就是遍历 <code>dp</code> 的所有元素，计算对应下标的元素的值；</li>
-<li>如果最后一个元素 <code>dp[-1][-1]</code> 的值为 <code>true</code> or 1，则 <code>s1</code> 和 <code>s2</code> 可以交替构成 <code>s3</code>。</li>
-</ul>
-<p>我们可以用示例画出对应的表格来帮助理解。</p>
-<p>s1 = “aabcc”, s2 = “dbbca”, s3 = “aadbbcbcac”</p>
-<table>
-<thead>
-<tr>
-<th align="center">n \ m</th>
-<th align="center">0</th>
-<th align="center">1(a)</th>
-<th align="center">2(a)</th>
-<th align="center">3(b)</th>
-<th align="center">4(c)</th>
-<th align="center">5(c)</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">0</td>
-</tr>
-<tr>
-<td align="center">1(d)</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">0</td>
-</tr>
-<tr>
-<td align="center">2(b)</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">0</td>
-</tr>
-<tr>
-<td align="center">3(b)</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">0</td>
-</tr>
-<tr>
-<td align="center">4(c)</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">0</td>
-</tr>
-<tr>
-<td align="center">5(a)</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">1</td>
-</tr>
-</tbody></table>
-<p>可以观察到，从 （0， 0） 开始，我们行走的方向只有向右和向下。</p>
-<ul>
-<li>向右：选择使用 <code>s1</code> 的字符，如果下一个字符匹配 <code>s3[row + col - 1]</code> 则设其值为 1；</li>
-<li>向下：选择使用 <code>s2</code> 的字符，如果下一个字符匹配 <code>s3[row + col - 1]</code> 则设其值为 1。</li>
-</ul>
-<p>换言之，要计算当前位置的值时，需要先检查上面一个和左边一个值是否被选用。</p>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def isInterleave(self, s1: str, s2: str, s3: str) -&gt; bool:
-        if len(s1) + len(s2) !&#x3D; len(s3):
-            return False
-
-        m, n &#x3D; len(s1), len(s2)
-
-        dp &#x3D; [[False] * (n + 1) for _ in range(m + 1)]
-        dp[0][0] &#x3D; True
-
-        for i, j in itertools.product(range(m + 1), range(n + 1)):
-            k, top, left &#x3D; i + j - 1, False, False
-            if i !&#x3D; 0:
-                top &#x3D; s3[k] &#x3D;&#x3D; s1[i - 1] and dp[i - 1][j]
-            if j !&#x3D; 0:
-                left &#x3D; s3[k] &#x3D;&#x3D; s2[j - 1] and dp[i][j - 1]
-            if i + j &gt; 0:
-                dp[i][j] &#x3D; top or left
-
-        return dp[-1][-1]</code></pre>
-
-<p>思路 2，1D 数组动态规划。</p>
-<p>通过观察可以知道上面方法每次最多只看到上一行，那么实际上我们没必要准备一个全量的 2D 数组，一个 1D 数组足够处理这些数据了。</p>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def isInterleave(self, s1: str, s2: str, s3: str) -&gt; bool:
-        if len(s1) + len(s2) !&#x3D; len(s3):
-            return False
-
-        m, n &#x3D; len(s1), len(s2)
-
-        dp &#x3D; [False] * (n + 1)
-        dp[0] &#x3D; True
-
-        for i, j in itertools.product(range(m + 1), range(n + 1)):
-            k, top, left &#x3D; i + j - 1, False, False
-            if i !&#x3D; 0:
-                top &#x3D; s3[k] &#x3D;&#x3D; s1[i - 1] and dp[j]
-            if j !&#x3D; 0:
-                left &#x3D; s3[k] &#x3D;&#x3D; s2[j - 1] and dp[j - 1]
-            if i + j &gt; 0:
-                dp[j] &#x3D; top or left
-
-        return dp[-1]</code></pre>
-
+<p>现在你需要实现一个程序接受三个字符串 <code>s1</code>、 <code>s2</code>、 <code>s3</code>，判断 <code>s3</code> 是否是 <code>s1</code> 和 <code>s2</code> 字符串交错组成。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/post/leetcode/97-Interleaving-String-Medium/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1419,134 +1105,14 @@ class Solution:
     <div class="post-body" itemprop="articleBody">
           <p>遍历树的方法通常有三种，分别是前序遍历 pre-order traversal、中序遍历 in-order traversal 和后序遍历 post-order traversal。这道题是中序遍历。</p>
 <p>难度上来说，前序最简单，中序和后序遍历会复杂一点。</p>
-<p>思路 1，递归</p>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def inorderTraversal(self, root: TreeNode) -&gt; List[int]:
-        ans &#x3D; []
-
-        def traverse(node):
-            if node is None:
-                return
-            traverse(node.left)
-            ans.append(node.val)
-            traverse(node.right)
-
-        traverse(root)
-        return ans</code></pre>
-
-<p>思路 2，遍历</p>
-<p>基于前序遍历的方案做的修改，可以解决问题，但是在空间复杂度上有优化余地，为了储存 stack 使用了额外的 2n 的空间。</p>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def inorderTraversal(self, root: TreeNode) -&gt; List[int]:
-        ans, stack &#x3D; [], [root]
-
-        while len(stack) &gt; 0:
-            node &#x3D; stack.pop()
-            if node is None:
-                continue
-            if type(node) &#x3D;&#x3D; int:
-                ans.append(node)
-            else:
-                stack.append(node.right)
-                stack.append(node.val)
-                stack.append(node.left)
-
-        return ans</code></pre>
-
-<p>思路 3，遍历，优化版本</p>
-<p>中序遍历要先遍历左节点，所以先抵达最左路径的最后一个节点，从这个节点开始回溯，重复检查左节点，本体和右节点的顺序。</p>
-<p>这其实是思路 1 递归的扁平化处理，使用 stack 来替代递归过程。时间复杂度和空间复杂度均为 O(n)。</p>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def inorderTraversal(self, root: TreeNode) -&gt; List[int]:
-        ans, stack, curr &#x3D; [], [], root
-
-        while curr or len(stack) &gt; 0:
-            # find the leftmost node
-            while curr:
-                stack.append(curr)
-                curr &#x3D; curr.left
-            curr &#x3D; stack.pop()
-            # record its value
-            ans.append(curr.val)
-            # start the next turn with its right node
-            curr &#x3D; curr.right
-
-        return ans</code></pre>
-
-<p>思路 4，莫里斯遍历 Morris Traversal</p>
-<p>也叫线索二叉树（Threaded Binary Tree），修改树的结构，让其“穿起来”成为一条线，整个遍历过程重复修改结构 -&gt; 遍历数据的过程。</p>
-<p>具体做法如下：</p>
-<ul>
-<li>当前节点不存在左节点时<ul>
-<li>记录当前节点值</li>
-<li>将右节点标记为当前节点</li>
-</ul>
-</li>
-<li>当前节点存在左节点时<ul>
-<li>将当前节点挂在左节点的最后一个右节点上</li>
-<li>将左节点标记为当前节点</li>
-</ul>
-</li>
-<li>重复这个过程直到不存在当前节点</li>
-</ul>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def inorderTraversal(self, root: TreeNode) -&gt; List[int]:
-        ans, curr &#x3D; [], root
-
-        while curr:
-            if curr.left is None:
-                ans.append(curr.val)
-                curr &#x3D; curr.right
-            else:
-                pre &#x3D; curr.left
-                while pre.right:
-                    pre &#x3D; pre.right
-                pre.right &#x3D; curr
-                curr.left, curr &#x3D; None, curr.left
-
-        return ans</code></pre>
-
-<p>抄一个 Threaded Binary Tree 的解释方便理解。</p>
-<blockquote>
-<p>For example:</p>
-<pre class="language-none"><code class="language-none">     1
-   &#x2F;   \
-  2     3
- &#x2F; \   &#x2F;
-4   5 6</code></pre>
-
-<p>First, 1 is the root, so initialize 1 as current, 1 has left child which is 2, the current’s left subtree is</p>
-<pre class="language-none"><code class="language-none">  2
- &#x2F; \
-4   5</code></pre>
-
-<p>So in this subtree, the rightmost node is 5, then make the current(1) as the right child of 5. Set current = cuurent.left (current = 2). The tree now looks like:</p>
-<pre class="language-none"><code class="language-none">  2
- &#x2F; \
-4   5
-     \
-      1
-       \
-        3
-       &#x2F;
-      6</code></pre>
-
-<p>For current 2, which has left child 4, we can continue with thesame process as we did above</p>
-<pre class="language-none"><code class="language-none">4
- \
-  2
-   \
-    5
-     \
-      1
-       \
-        3
-       &#x2F;
-      6</code></pre>
-
-<p>then add 4 because it has no left child, then add 2, 5, 1, 3 one by one, for node 3 which has left child 6, do the same as above. Finally, the inorder traversal is [4,2,5,1,6,3].</p>
-</blockquote>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/post/leetcode/94-Binary-Tree-Inorder-Traversal-Easy/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1608,7 +1174,7 @@ class Solution:
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>504</span>
+      <span>607</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -1626,215 +1192,17 @@ class Solution:
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>暴力解法。啥也不多说，看看算法。</p>
-<ul>
-<li>把 <code>LinkedList</code> 转换成 <code>List；</code></li>
-<li>交换 <code>left</code> 和 <code>right</code> 的值；</li>
-<li>更新 <code>left</code> 和 <code>right</code> 指针；</li>
-<li>重复过程直到 <code>left</code> 不再小于 <code>right</code>。</li>
-</ul>
-<pre class="language-python" data-language="python"><code class="language-python"># Definition for singly-linked list.
-# class ListNode:
-#     def __init__(self, val&#x3D;0, next&#x3D;None):
-#         self.val &#x3D; val
-#         self.next &#x3D; next
-class Solution:
-    def reverseBetween(self, head: ListNode, left: int, right: int) -&gt; ListNode:
-        nodes &#x3D; [head]
-        while head.next:
-            head &#x3D; head.next
-            nodes.append(head)
-        while left &lt; right:
-            nodes[left - 1].val, nodes[right - 1].val &#x3D; nodes[right - 1].val, nodes[left - 1].val
-            left +&#x3D; 1
-            right -&#x3D; 1
-        return nodes[0]</code></pre>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://richard.bizcat.xyz/post/leetcode/86-Partition-List-Medium/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/icon-64.png">
-      <meta itemprop="name" content="Richard Zen">
-      <meta itemprop="description" content="<small><b>TOPICS</b></small><br>
-前端 ｜ Python ｜ Java<br>
-数据结构 ｜ 算法<br><br>
-用代码替代言语<br>记录创作与学习的脚步<br><br>
-">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HOME">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/post/leetcode/86-Partition-List-Medium/" class="post-title-link" itemprop="url">86. Partition List (Medium)</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-04-12 15:36:05" itemprop="dateModified" datetime="2021-04-12T15:36:05+08:00">2021-04-12</time>
-      </span>
-
-  
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>2.3k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>2 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>With solutions both in Python and Java.</p>
-<p>读题先。</p>
-<blockquote>
-<p>Given the <code>head</code> of a linked list and a value <code>x</code>, partition it such that all nodes less than <code>x</code> come before nodes greater than or equal to <code>x</code>.</p>
-<p>You should <strong>preserve</strong> the original relative order of the nodes in each of the two partitions.</p>
-</blockquote>
-<p>已知参数为一个 linked list 和 x，需要将数组根据 x 的值分区，小于它的放在前面，大于等于它的放在后面，并且分区后要保证原有顺序不变。</p>
-<p>从下面例子可以看出来，我们可以把数组拆成一个前一个后，保持元素相对顺序，然后拼接起来。</p>
-<p>Example 1:</p>
-<pre class="language-console" data-language="console"><code class="language-console">Input: head &#x3D; [1,4,3,2,5,2], x &#x3D; 3
-Output: [1,2,2,4,3,5]</code></pre>
-
-<p>Example 2:</p>
-<pre class="language-console" data-language="console"><code class="language-console">Input: head &#x3D; [2,1], x &#x3D; 2
-Output: [1,2]</code></pre>
-
-<h3 id="Submissions"><a href="#Submissions" class="headerlink" title="Submissions"></a>Submissions</h3><p>我的代码时间复杂度还能看，空间复杂度已经脱离排名，没法看了。</p>
-<p>虽然解题思路和官方一样，但是处理上有些愚蠢，这题就不贴我的结果了。</p>
-<h3 id="思路-amp-Solutions"><a href="#思路-amp-Solutions" class="headerlink" title="思路 &amp; Solutions"></a>思路 &amp; Solutions</h3><p>思路很简单，这道题主要考察的是对空间复杂度对处理。逻辑的流程如下。</p>
-<ul>
-<li>准备一个 before 列表存储值小于 x 的元素</li>
-<li>准备一个 after 列表存储值不小于 x 的元素</li>
-<li>将两个列表连接起来作为结果</li>
-</ul>
-<p>逻辑很简单，但是 linked list 的接口如下。</p>
-<pre class="language-python" data-language="python"><code class="language-python"># Definition for singly-linked list.
- class ListNode:
-     def __init__(self, val&#x3D;0, next&#x3D;None):
-         self.val &#x3D; val
-         self.next &#x3D; next</code></pre>
-
-<p>程序拿到的参数是这个 linked list 的第一个元素，这是一个逻辑上的列表，我们只能向下遍历，无法从下节点反推出上一个节点的值。</p>
-<p>要准备 before 和 after 列表我们首先要知道从哪里开始，以及如何开始。</p>
-<ul>
-<li>我们可以不初始化 before 和 after，等到遇到合适的值的时候再去给其赋值；</li>
-<li>也可以初始化为当前的节点，再根据与 x 比较的结果来调整赋值；这两个思路我都尝试了。</li>
-<li>官解的处理是，将 before 和 after 初始化为两个伪节点，规避了初始化问题（是我没想到的思路）。</li>
-</ul>
-<p>看一下 Python 代码理解一下这个处理。</p>
-<pre class="language-python" data-language="python"><code class="language-python"># Definition for singly-linked list.
-# class ListNode:
-#     def __init__(self, val&#x3D;0, next&#x3D;None):
-#         self.val &#x3D; val
-#         self.next &#x3D; next
-class Solution:
-    def partition(self, head: ListNode, x: int) -&gt; ListNode:
-        bef &#x3D; bf_head &#x3D; ListNode(0)
-        aft &#x3D; af_head &#x3D; ListNode(0)
-
-        while head is not None:
-            if head.val &lt; x:
-                bef.next &#x3D; head
-                bef &#x3D; head
-            else:
-                aft.next &#x3D; head
-                aft &#x3D; head
-            head &#x3D; head.next
-
-        aft.next &#x3D; None
-        bef.next &#x3D; af_head.next
-
-        return bf_head.next
-</code></pre>
-
-<p>Java 代码逻辑一样。</p>
-<pre class="language-java" data-language="java"><code class="language-java">&#x2F;**
- * Definition for singly-linked list.
- * public class ListNode &#123;
- *     int val;
- *     ListNode next;
- *     ListNode() &#123;&#125;
- *     ListNode(int val) &#123; this.val &#x3D; val; &#125;
- *     ListNode(int val, ListNode next) &#123; this.val &#x3D; val; this.next &#x3D; next; &#125;
- * &#125;
- *&#x2F;
-class Solution &#123;
-    public ListNode partition(ListNode head, int x) &#123;
-        ListNode before &#x3D; new ListNode();
-        ListNode after &#x3D; new ListNode();
-        ListNode bfHead &#x3D; before;
-        ListNode afHead &#x3D; after;
-
-        while (head !&#x3D; null) &#123;
-            if (head.val &lt; x) &#123;
-                before.next &#x3D; head;
-                before &#x3D; head;
-            &#125; else &#123;
-                after.next &#x3D; head;
-                after &#x3D; head;
-            &#125;
-            head &#x3D; head.next;
-        &#125;
-
-        after.next &#x3D; null;
-        before.next &#x3D; afHead.next;
-
-        return bfHead.next;
-    &#125;
-&#125;</code></pre>
-
-<h3 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h3><p>进行伪初始化的处理很好的规避了初始化判断，对遍历的处理也只是改变了列表的排序，两者使得程序在时间和空间复杂度上有很好的表现。</p>
-<ul>
-<li>时间复杂度：O(n)，做了一次遍历；</li>
-<li>空间复杂度：O(1)，只做了列表重组，没使用额外空间。</li>
-</ul>
-
+          <p>链表问题。实现一个程序根据 2 个下标位置对链表对于位置的元素进行翻转。</p>
+<pre class="language-none"><code class="language-none">Input: head &#x3D; [1,2,3,4,5], left &#x3D; 2, right &#x3D; 4
+Output: [1,4,3,2,5]</code></pre>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/post/leetcode/92-Reverse-Linked-List-II-Medium/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1876,13 +1244,13 @@ class Solution &#123;
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">85k</span>
+    <span title="站点总字数">89k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:18</span>
+    <span title="站点阅读时长">1:21</span>
   </span>
 </div>
 <div class="busuanzi-count">

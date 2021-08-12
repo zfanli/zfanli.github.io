@@ -20,12 +20,12 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"richard.bizcat.xyz","root":"/","images":"/images","scheme":"Mist","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":true,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/config.min.js"></script>
-<meta name="description" content="思路 1，2D 数组动态规划。这题乍一看用快慢指针可以解出来，但是这是个陷阱，设想如果下一个字符可以同时从 s1 和 s2 中取得，如果使用快慢指针这里如何处理？可以考虑回溯算法，但是这变成了暴力破解，无法在时限内通过测试 case。 DP 相关的题目对思路和直觉有要求，为了方便后面的计算，我们先把一个特殊 case 排除在外：  如果 s1.length + s2.length !&#x3D; s3.le">
+<meta name="description" content="字符串问题。定义字符串交错指的是俩个字符串的字符交错出现构成一个新的字符串。比如对字符串 s 和 t 来说：  s &#x3D; s1 + s2 + ... + sn t &#x3D; t1 + t2 + ... + tm |n - m| &lt;&#x3D; 1 The interleaving is s1 + t1 + s2 + t2 + s3 + t3 + ... or t1 + s1 + t2 + s2 + t3 +">
 <meta property="og:type" content="article">
 <meta property="og:title" content="97. Interleaving String (Medium)">
 <meta property="og:url" content="https://richard.bizcat.xyz/post/leetcode/97-Interleaving-String-Medium/">
 <meta property="og:site_name" content="HOME">
-<meta property="og:description" content="思路 1，2D 数组动态规划。这题乍一看用快慢指针可以解出来，但是这是个陷阱，设想如果下一个字符可以同时从 s1 和 s2 中取得，如果使用快慢指针这里如何处理？可以考虑回溯算法，但是这变成了暴力破解，无法在时限内通过测试 case。 DP 相关的题目对思路和直觉有要求，为了方便后面的计算，我们先把一个特殊 case 排除在外：  如果 s1.length + s2.length !&#x3D; s3.le">
+<meta property="og:description" content="字符串问题。定义字符串交错指的是俩个字符串的字符交错出现构成一个新的字符串。比如对字符串 s 和 t 来说：  s &#x3D; s1 + s2 + ... + sn t &#x3D; t1 + t2 + ... + tm |n - m| &lt;&#x3D; 1 The interleaving is s1 + t1 + s2 + t2 + s3 + t3 + ... or t1 + s1 + t2 + s2 + t3 +">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-04-18T07:36:05.473Z">
 <meta property="article:modified_time" content="2021-04-18T07:36:05.473Z">
@@ -219,7 +219,7 @@
 
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -232,6 +232,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF-1%EF%BC%8C2D-%E6%95%B0%E7%BB%84%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92"><span class="nav-text">思路 1，2D 数组动态规划</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF-2%EF%BC%8C1D-%E6%95%B0%E7%BB%84%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92"><span class="nav-text">思路 2，1D 数组动态规划</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -251,7 +252,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">72</span>
+          <span class="site-state-item-count">73</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -262,7 +263,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">43</span>
+        <span class="site-state-item-count">45</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -349,14 +350,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>1.6k</span>
+      <span>1.8k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
+      <span>2 分钟</span>
     </span>
 </div>
 
@@ -367,7 +368,17 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p>思路 1，2D 数组动态规划。这题乍一看用快慢指针可以解出来，但是这是个陷阱，设想如果下一个字符可以同时从 <code>s1</code> 和 <code>s2</code> 中取得，如果使用快慢指针这里如何处理？可以考虑回溯算法，但是这变成了暴力破解，无法在时限内通过测试 case。</p>
+        <p>字符串问题。定义字符串交错指的是俩个字符串的字符交错出现构成一个新的字符串。比如对字符串 <code>s</code> 和 <code>t</code> 来说：</p>
+<ul>
+<li><code>s = s1 + s2 + ... + sn</code></li>
+<li><code>t = t1 + t2 + ... + tm</code></li>
+<li><code>|n - m| &lt;= 1</code></li>
+<li>The <strong>interleaving</strong> is <code>s1 + t1 + s2 + t2 + s3 + t3 + ...</code> or <code>t1 + s1 + t2 + s2 + t3 + s3 + ...</code></li>
+</ul>
+<p>现在你需要实现一个程序接受三个字符串 <code>s1</code>、 <code>s2</code>、 <code>s3</code>，判断 <code>s3</code> 是否是 <code>s1</code> 和 <code>s2</code> 字符串交错组成。</p>
+<span id="more"></span>
+
+<h2 id="思路-1，2D-数组动态规划"><a href="#思路-1，2D-数组动态规划" class="headerlink" title="思路 1，2D 数组动态规划"></a>思路 1，2D 数组动态规划</h2><p>这题乍一看用快慢指针可以解出来，但是这是个陷阱，设想如果下一个字符可以同时从 <code>s1</code> 和 <code>s2</code> 中取得，如果使用快慢指针这里如何处理？可以考虑回溯算法，但是这变成了暴力破解，无法在时限内通过测试 case。</p>
 <p>DP 相关的题目对思路和直觉有要求，为了方便后面的计算，我们先把一个特殊 case 排除在外：</p>
 <ul>
 <li>如果 <code>s1.length</code> + <code>s2.length</code> != <code>s3.length</code>，那就没有必要计算了，直接返回 <code>false</code>。</li>
@@ -479,8 +490,7 @@
 
         return dp[-1][-1]</code></pre>
 
-<p>思路 2，1D 数组动态规划。</p>
-<p>通过观察可以知道上面方法每次最多只看到上一行，那么实际上我们没必要准备一个全量的 2D 数组，一个 1D 数组足够处理这些数据了。</p>
+<h2 id="思路-2，1D-数组动态规划"><a href="#思路-2，1D-数组动态规划" class="headerlink" title="思路 2，1D 数组动态规划"></a>思路 2，1D 数组动态规划</h2><p>通过观察可以知道上面方法每次最多只看到上一行，那么实际上我们没必要准备一个全量的 2D 数组，一个 1D 数组足够处理这些数据了。</p>
 <pre class="language-python" data-language="python"><code class="language-python">class Solution:
     def isInterleave(self, s1: str, s2: str, s3: str) -&gt; bool:
         if len(s1) + len(s2) !&#x3D; len(s3):
@@ -572,13 +582,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">85k</span>
+    <span title="站点总字数">89k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:18</span>
+    <span title="站点阅读时长">1:21</span>
   </span>
 </div>
 <div class="busuanzi-count">

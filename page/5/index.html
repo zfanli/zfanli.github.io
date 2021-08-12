@@ -255,7 +255,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">72</span>
+          <span class="site-state-item-count">73</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -266,7 +266,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">43</span>
+        <span class="site-state-item-count">45</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -300,6 +300,95 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://richard.bizcat.xyz/post/leetcode/318-Maximum-Product-of-Word-Lengths-Medium/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon-64.png">
+      <meta itemprop="name" content="Richard Zen">
+      <meta itemprop="description" content="<small><b>TOPICS</b></small><br>
+前端 ｜ Python ｜ Java<br>
+数据结构 ｜ 算法<br><br>
+用代码替代言语<br>记录创作与学习的脚步<br><br>
+">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HOME">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/post/leetcode/318-Maximum-Product-of-Word-Lengths-Medium/" class="post-title-link" itemprop="url">318. Maximum Product of Word Lengths (Medium)</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-05-22 15:36:05" itemprop="dateModified" datetime="2021-05-22T15:36:05+08:00">2021-05-22</time>
+      </span>
+
+  
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.4k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>字符串问题。给定一个字符串数组，求数组中字符串 A 和字符串 B 的长度的最大乘积，其中 A 和 B 中不能有任何相同的字母存在。</p>
+<p>应用位掩码解决这个问题。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/post/leetcode/318-Maximum-Product-of-Word-Lengths-Medium/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -799,7 +888,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>586</span>
+      <span>676</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -817,37 +906,16 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>反向波兰表示法是一种使用 Stack 达到方便计算目的的一种数学方法。</p>
-<p>使用递归或 Stack 都能简单的完成计算。使用 Stack 为例，算法过程如下：</p>
-<ul>
-<li>遍历 tokens<ul>
-<li>遇到数字则加到栈顶</li>
-<li>遇到操作符和取出栈顶的 2 个数字做运算，运算结果放回栈顶</li>
-</ul>
-</li>
-<li>最终栈中存在的元素就是答案</li>
-</ul>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def evalRPN(self, tokens: List[str]) -&gt; int:
-        stack &#x3D; []
-
-        for t in tokens:
-            if t not in &#123;&quot;+&quot;, &quot;-&quot;, &quot;*&quot;, &quot;&#x2F;&quot;&#125;:
-                stack.append(int(t))
-            else:
-                right, left &#x3D; stack.pop(), stack.pop()
-                # print(left, t, right)
-                if t &#x3D;&#x3D; &#39;+&#39;:
-                    stack.append(left + right)
-                elif t &#x3D;&#x3D; &#39;-&#39;:
-                    stack.append(left - right)
-                elif t &#x3D;&#x3D; &#39;*&#39;:
-                    stack.append(left * right)
-                else:
-                    stack.append(trunc(left &#x2F; right))
-
-        return stack[0]</code></pre>
-
+          <p>演算反向波兰表示法。反向波兰表示法是一种为减少内存访问的使用 Stack 的演算表达法，这种方法按照先操作对象后操作符的方式表达算术运算。</p>
+<p>所以我们讨论如何使用 Stack 解决这道题。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/post/leetcode/150-Evaluate-Reverse-Polish-Notation-Medium/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -928,74 +996,14 @@
     
     <div class="post-body" itemprop="articleBody">
           <p>遍历树通常有三种方法，分别是前序遍历（pre-order traversal）、中序遍历（in-order traversal）和后序遍历（post-order traversal）。这道题是后序遍历。</p>
-<p>思路 1，递归</p>
-<p>三种递归遍历方式的区别仅在于处理的顺序。</p>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def postorderTraversal(self, root: TreeNode) -&gt; List[int]:
-        ans &#x3D; []
-
-        def traverse(node):
-            if node is None:
-                return
-            traverse(node.left)
-            traverse(node.right)
-            ans.append(node.val)
-
-        traverse(root)
-        return ans</code></pre>
-
-<p>思路 2，迭代遍历</p>
-<p>后序遍历按照 left -&gt; right -&gt; root 的顺序遍历树，你会发现这和前序遍历相似，我们只需要将前序遍历方法中左右子节点的遍历顺序对调，并将其结果颠倒一下顺序，即可得到后序遍历的结果。</p>
-<p>但是这样不够优雅。</p>
-<p>我们延续 stack 的思路，通过观察我们知道要完成后序遍历，每次迭代过程中我们可以把当前节点、右节点、左节点按顺序放入 stack 中，针对当前节点，需要将其左右子节点置空表示已经遍历过。</p>
-<p>我们的 Base Case 的条件是当前节点没有左右子节点，这表示该节点是叶子节点，或是已经遍历过的节点，针对这两种情况我们直接记录它的值。</p>
-<p>重复这个过程，直到完成遍历。</p>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def postorderTraversal(self, root: TreeNode) -&gt; List[int]:
-        ans, stack &#x3D; [], [root]
-
-        while len(stack) &gt; 0:
-            curr &#x3D; stack.pop()
-            if not curr:
-                continue
-            left, right &#x3D; curr.left, curr.right
-            if not left and not right:
-                ans.append(curr.val)
-                continue
-            curr.left, curr.right &#x3D; None, None
-            stack.append(curr)
-            stack.append(right)
-            stack.append(left)
-
-        return ans</code></pre>
-
-<p>思路 3，迭代遍历，基于中序迭代遍历优化</p>
-<p>由于 root 的值是最后记录的，在当前节点存在右节点的情况，还需要将当前节点的右节点置空，重新存入 stack。在空间复杂度上比思路 2 而言没有太大优化。</p>
-<p>这个思路下，我们先到达左节点的最下层左节点（即最后一个左节点，该节点的左节点为空），然后根据右节点发生下面分支：</p>
-<ul>
-<li>右节点不存在：The Base Case，这个节点是叶子节点或访问过的节点，记录它的值；</li>
-<li>右节点存在：置空当前节点的右节点并存入 stack，将右节点标记为当前节点进入下一个迭代过程。</li>
-</ul>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def postorderTraversal(self, root: TreeNode) -&gt; List[int]:
-        ans, stack, curr &#x3D; [], [], root
-
-        while curr or len(stack) &gt; 0:
-            while curr:
-                stack.append(curr)
-                curr &#x3D; curr.left
-            curr &#x3D; stack.pop()
-            if curr.right:
-                stack.append(curr)
-                # 置空当前节点的右节点，标记右节点为当前节点
-                curr.right, curr &#x3D; None, curr.right
-                continue
-            ans.append(curr.val)
-            # 节点已经遍历完成，注意需要清空指针
-            curr &#x3D; None
-
-        return ans</code></pre>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/post/leetcode/145-Binary-Tree-Postorder-Traversal-Easy/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1077,41 +1085,14 @@
     <div class="post-body" itemprop="articleBody">
           <p>遍历树有三种方法，分别是前序 pre-order、中序 in-order 和后序 post-order 遍历。这道题是前序遍历。</p>
 <p>前序遍历的递归写法没有难度。</p>
-<p>思路 1，递归</p>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def preorderTraversal(self, root: TreeNode) -&gt; List[int]:
-        ans &#x3D; []
-
-        def traverse(node):
-            if node is None:
-                return
-            ans.append(node.val)
-            traverse(node.left)
-            traverse(node.right)
-
-        traverse(root)
-        return ans</code></pre>
-
-<p>思路 2，遍历</p>
-<p>使用 stack 或队列按顺序记录需要检查的节点，需要关注的是：</p>
-<ul>
-<li>stack 是先进后出，要保证先左后右的顺序，需要先放入右 child，再放入左 child；</li>
-<li>队列是先进先出，按正常顺序放入左右 child 即可。</li>
-</ul>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def preorderTraversal(self, root: TreeNode) -&gt; List[int]:
-        ans, stack &#x3D; [], [root]
-
-        while len(stack) &gt; 0:
-            node &#x3D; stack.pop()
-            if node is None:
-                continue
-            ans.append(node.val)
-            stack.append(node.right)
-            stack.append(node.left)
-
-        return ans</code></pre>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/post/leetcode/144-Binary-Tree-Preorder-Traversal-Easy/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1173,14 +1154,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>1.6k</span>
+      <span>1.7k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
+      <span>2 分钟</span>
     </span>
 </div>
 
@@ -1191,183 +1172,20 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <blockquote>
-<p>做完后才意识到是一道 hard 难度的题。</p>
-</blockquote>
-<p>思路 1，<del>野路子</del> 提取依赖。</p>
-<p>最初的想法是根据左右位置的 <code>rating</code> 值决定当前位置的糖果数量，但是仅仅如此的话会由于无法预知后面的值是否被改变，从而造成漏算；要解决漏算，可以根据 <code>rating</code> 值计算出当前位置的糖果数量是否依赖左右的值，这样遍历一次列表之后我们就获得了所有位置的依赖。</p>
-<p>接着我们准备一个递归函数来根据这些依赖，最终去计算糖果数量。</p>
-<p>数据结构上，对于无依赖项，我们直接储存字面量（int），如果存在依赖则存入 list。</p>
-<p>递归时，如果目标是字面量则直接返回，如果存在进一步的依赖则调用递归进一步计算。这样可以在 O(n) 时间内完成递归。</p>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def candy(self, ratings: List[int]) -&gt; int:
-        n &#x3D; len(ratings)
-        c &#x3D; [-1] * n
-        for i in range(n):
-            res &#x3D; []
-            if i &gt; 0 and ratings[i - 1] &lt; ratings[i]:
-                res.append(i - 1)
-            if i &lt; n - 1 and ratings[i + 1] &lt; ratings[i]:
-                res.append(i + 1)
-            c[i] &#x3D; 1 if len(res) &#x3D;&#x3D; 0 else res
-
-        def cal(idx):
-            if type(c[idx]) &#x3D;&#x3D; int:
-                return c[idx]
-            res &#x3D; []
-            for x in c[idx]:
-                res.append(cal(x) + 1)
-            c[idx] &#x3D; max(res)
-            return c[idx]
-
-
-        for i in range(n):
-            cal(i)
-
-        return sum(c)</code></pre>
-
-<p>思路 2，双列表。</p>
-<p>换一个角度看下思路一，我们能发现从左到右遍历列表时，我们无法预知右边的值是否会变动，但是我们知道左边的值都是看过的，不会发生变动。于是，我们可以准备另一个列表从右到左的遍历一次列表，这样我们就获得了一个能确保右边值都考虑到了的数据。</p>
-<p>要保证每个位置的糖果都符合题目要求，我们需要对两个列表相同位置的糖果取最大值，结果将是我们的答案。</p>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def candy(self, ratings: List[int]) -&gt; int:
-        n &#x3D; len(ratings)
-        left, right &#x3D; [1] * n, [1] * n
-
-        for i in range(n):
-            if i &gt; 0 and ratings[i - 1] &lt; ratings[i]:
-                left[i] &#x3D; left[i - 1] + 1
-
-        for i in range(n - 1, -1, -1):
-            if i &lt; n - 1 and ratings[i + 1] &lt; ratings[i]:
-                right[i] &#x3D; right[i + 1] + 1
-
-        ans &#x3D; 0
-        for i in range(n):
-            ans +&#x3D; max(left[i], right[i])
-
-        return ans</code></pre>
-
-<p>思路 3，单列表。思路 2 的优化版本，使用双列表时，实际上我们没有同时使用到它们，所以优化的思路就是在第二次遍历时对列表进行更新，而不是重新准备一个列表。</p>
-<p>这样完成第二次遍历之后，列表的和就是答案。</p>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def candy(self, ratings: List[int]) -&gt; int:
-        n &#x3D; len(ratings)
-        c &#x3D; [1] * n
-
-        for i in range(n):
-            if i &gt; 0 and ratings[i - 1] &lt; ratings[i]:
-                c[i] &#x3D; c[i - 1] + 1
-
-        for i in range(n - 1, -1, -1):
-            if i &lt; n - 1 and ratings[i + 1] &lt; ratings[i]:
-                c[i] &#x3D; max(c[i], c[i + 1] + 1)
-
-        return sum(c)</code></pre>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://richard.bizcat.xyz/post/leetcode/128-Longest-Consecutive-Sequence-Medium/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/icon-64.png">
-      <meta itemprop="name" content="Richard Zen">
-      <meta itemprop="description" content="<small><b>TOPICS</b></small><br>
-前端 ｜ Python ｜ Java<br>
-数据结构 ｜ 算法<br><br>
-用代码替代言语<br>记录创作与学习的脚步<br><br>
-">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HOME">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/post/leetcode/128-Longest-Consecutive-Sequence-Medium/" class="post-title-link" itemprop="url">128. Longest Consecutive Sequence (Medium)</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-05-02 15:36:05" itemprop="dateModified" datetime="2021-05-02T15:36:05+08:00">2021-05-02</time>
-      </span>
-
-  
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>473</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><code>nums</code> 数组的元素可以构成诺干个连续的子数组，我们需要找到最大的子数组，返回其长度。</p>
-<p>要找到最大的子数组，首先我们要找到子数组的第一个元素，可以将 <code>nums</code> 转成一个 HashSet，然后遍历它：</p>
-<ul>
-<li>查询每个元素的前一个值（<code>n - 1</code>）是否存在；<ul>
-<li>存在则表示这个元素不是子数组的最小值，直接跳过；</li>
-<li>不存在时，循环查询这个值的下一个值是否存在（<code>n + 1</code>），直到下一个值不存在为止；</li>
-<li>在查询下一个值的过程中保持一个计数器，一直计数到不存在下一个值；</li>
-<li>将其和全局变量取一个最大值；</li>
-</ul>
-</li>
-<li>返回全局最大值。</li>
-</ul>
-<p>因为我们只在子数组的最小值开始遍历，所以能避免不需要的运算，让时间复杂度在 O(n)。</p>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def longestConsecutive(self, nums: List[int]) -&gt; int:
-        ans, nums &#x3D; 0, set(nums)
-        for n in nums:
-            if n - 1 not in nums:
-                count &#x3D; 1
-                while n + 1 in nums:
-                    n, count &#x3D; n + 1, count + 1
-                ans &#x3D; max(ans, count)
-        return ans</code></pre>
-
+          <p>分糖果 🍬 问题。有 <code>n</code> 个小朋友站成一排，每个人被分配一个分值，现在你要给他们分糖果，有两个要求。</p>
+<ol>
+<li>每个小朋友至少要有一个糖果 🍬；</li>
+<li>分数高的小朋友要比两边分数低的小朋友糖果 🍬 多。</li>
+</ol>
+<p>你需要找到一个分配方案需要最少的糖果 🍬 数量。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/post/leetcode/135-Candy-Hard/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1409,13 +1227,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">85k</span>
+    <span title="站点总字数">89k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:18</span>
+    <span title="站点阅读时长">1:21</span>
   </span>
 </div>
 <div class="busuanzi-count">

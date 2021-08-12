@@ -255,7 +255,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">72</span>
+          <span class="site-state-item-count">73</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -266,7 +266,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">43</span>
+        <span class="site-state-item-count">45</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -300,6 +300,100 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://richard.bizcat.xyz/post/leetcode/37-Sudoku-Solver-Hard/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon-64.png">
+      <meta itemprop="name" content="Richard Zen">
+      <meta itemprop="description" content="<small><b>TOPICS</b></small><br>
+前端 ｜ Python ｜ Java<br>
+数据结构 ｜ 算法<br><br>
+用代码替代言语<br>记录创作与学习的脚步<br><br>
+">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HOME">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/post/leetcode/37-Sudoku-Solver-Hard/" class="post-title-link" itemprop="url">37. Sudoku Solver (Hard)</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-03-23 15:36:05" itemprop="dateModified" datetime="2021-03-23T15:36:05+08:00">2021-03-23</time>
+      </span>
+
+  
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.6k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>数独问题。你需要实现一个游戏解决数独问题，数独游戏的规则如下：</p>
+<ul>
+<li>每一行中数字 <code>1 - 9</code> 只能出现一次；</li>
+<li>每一列中数字 <code>1 - 9</code> 只能出现一次；</li>
+<li>每个 <code>3 x 3</code> 的子矩阵中数字 <code>1 - 9</code> 只能出现一次。</li>
+</ul>
+<p>典型的回溯算法问题。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/post/leetcode/37-Sudoku-Solver-Hard/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -363,63 +457,16 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>把括号转换成数字，我们可以观察到其中的规律。转数字的方法在于对括号嵌套的层级进行计数，比如 <code>((()))</code> 一共嵌套了 3 层，所以转化为数字为 <code>123</code>，而 <code>()(())</code> 可以转化为 <code>112</code>。</p>
-<blockquote>
-<p>Input: n = 3</p>
-<p>Output: [“((()))”,”(()())”,”(())()”,”()(())”,”()()()”]</p>
-</blockquote>
-<blockquote>
-<p>Layout: [123, 122, 121, 112, 111]</p>
-</blockquote>
-<p>规律在答案中的所有组合都属于 <code>1..n</code> 到 <code>1..1</code> 的枚举。比如 <code>123, 122, 121</code> 的过程中最高位 3 被枚举到 1，而下一个数第二位 2 降为 1，第三位从第二位原本的值开始继续枚举到 1。</p>
-<p>我们可以将其转化为算法，计算出所有可能的嵌套布局，然后用一个 <code>draw</code> 方法来将布局转化为实际的括号字符串。转化过程有三种模式：</p>
-<ul>
-<li>对排列的最后一个元素的处理：插入一对括号，然后关闭其他所有括号；</li>
-<li>对当前元素 &gt;= 下一个元素的处理：插入一对括号，关闭到下一个元素为止层级的括号；</li>
-<li>对当前元素 &lt; 下一个元素对处理：插入左半边括号。</li>
-</ul>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def generateParenthesis(self, n: int) -&gt; List[str]:
-        ans &#x3D; []
-        def generate(layout:[int] &#x3D; [1]):
-            if len(layout) &#x3D;&#x3D; n:
-                ans.append(draw(layout))
-                return
-            for i in range(int(layout[-1]) + 1, 0, -1):
-                generate(layout + [i])
-
-        def draw(layout:[int]):
-            res &#x3D; &quot;&quot;
-            for i in range(n):
-                if i &#x3D;&#x3D; n - 1:
-                    # Add a left parentheses and close all others.
-                    res +&#x3D; &quot;(&quot;  + &quot;)&quot; * layout[i]
-                elif layout[i] &gt;&#x3D; layout[i + 1]:
-                    # Add a left parentheses and close all others.
-                    res +&#x3D; &quot;(&quot;  + &quot;)&quot; * (layout[i] - layout[i + 1] + 1)
-                else:
-                    # Add a left parentheses only.
-                    res +&#x3D; &quot;(&quot;
-            return res
-
-        generate()
-        return ans</code></pre>
-
-<p>上面的思路只是找到了题目的答案，但是算不上优雅。对字符串的编辑可以在计算布局的适合完成，或者说，一旦我们知道了布局的规律，我们就可以完全没有额外操作的找到所有组合。</p>
-<p>但是在编辑字符串的适合很容易陷入到对多种情况的考虑，但是只要换一个角度想想问题就可以解决：括号会出现在哪里？</p>
-<p>实际上合理的括号只会出现在两个位置：当前括号的里面（嵌套变深），当前括号的右边（非嵌套）。</p>
-<p>下一个问题是，哪些括号放在里面，哪些放在右边呢？答案是，从 <code>n</code> 到 <code>1</code> 遍历，当前的 <code>index</code> 在括号里面，<code>n - index</code> 在括号的右边，当然反之亦然，影响的只是答案中每个元素出现的顺序而已。</p>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def generateParenthesis(self, n: int) -&gt; List[str]:
-        if n &#x3D;&#x3D; 0:
-            return [&#39;&#39;]
-        ans &#x3D; []
-        for i in range(n):
-            for left in self.generateParenthesis(i):
-                for right in self.generateParenthesis(n - 1 - i):
-                    ans.append(f&quot;(&#123;left&#125;)&#123;right&#125;&quot;)
-        return ans</code></pre>
-
+          <p>给你一个数字 <code>n</code>，你需要用 <code>n</code> 对括号进行组合，找到所有可能的组合。</p>
+<p>没对括号需要正常关闭才算一个有效的组合。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/post/leetcode/22-Generate-Parentheses-Medium/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -499,98 +546,19 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>With solutions both in Java and Python.</p>
-<p>先读题。</p>
+          <p>删除链表的指定节点，返回修改后的链表 <code>head</code>。</p>
 <blockquote>
 <p>Given the <code>head</code> of a linked list, remove the <code>nth</code> node from the <strong>end of the list</strong> and return its <code>head</code>.</p>
 <p><strong>Follow up</strong>: Could you do this in one pass?</p>
 </blockquote>
-<p>移除一个 linked list 末尾第 n 个节点，返回这个 linked list 的 head。最好是 One-pass 算法， 即一个流程里面获得想要的结果。</p>
-<p>Example 1:</p>
-<pre class="language-none"><code class="language-none">Input: head &#x3D; [1,2,3,4,5], n &#x3D; 2
-Output: [1,2,3,5]</code></pre>
-
-<p>Example 2:</p>
-<pre class="language-none"><code class="language-none">Input: head &#x3D; [1], n &#x3D; 1
-Output: []</code></pre>
-
-<p>Example 3:</p>
-<pre class="language-none"><code class="language-none">Input: head &#x3D; [1,2], n &#x3D; 1
-Output: [1]</code></pre>
-
-<p>Constraints:</p>
-<ul>
-<li>The number of nodes in the list is <code>sz</code>.</li>
-<li>1 &lt;= <code>sz</code> &lt;= 30</li>
-<li>0 &lt;= <code>Node.val</code> &lt;= 100</li>
-<li>1 &lt;= <code>n</code> &lt;= <code>sz</code></li>
-</ul>
-<h3 id="思路-amp-Solutions"><a href="#思路-amp-Solutions" class="headerlink" title="思路 &amp; Solutions"></a>思路 &amp; Solutions</h3><p>最简单的方法是先遍历一遍 Linked list 获得列表长度，然后重新遍历一次，在 <code>L - n - 1</code> 处停下，删掉下一个节点。</p>
-<p>但是这样就不算 One-pass 算法了。</p>
-<p>为了达成 One-pass 算法，我们可以维护 2 个指针。</p>
-<ul>
-<li>用 2 个指针，first 指向底部，一直遍历到最后；</li>
-<li>second 指向需要删除的节点的上一个节点，与 first 维持 <code>n + 1</code> 的距离。</li>
-</ul>
-<p>为了避免处理例子 2 中的那种删除唯一节点的情况，我们初始化一个 dummy 节点，从这里开始遍历。</p>
-<p>下面是 Python 代码。</p>
-<pre class="language-python" data-language="python"><code class="language-python"># Definition for singly-linked list.
-# class ListNode:
-#     def __init__(self, val&#x3D;0, next&#x3D;None):
-#         self.val &#x3D; val
-#         self.next &#x3D; next
-class Solution:
-    def removeNthFromEnd(self, head: ListNode, n: int) -&gt; ListNode:
-        dummy &#x3D; first &#x3D; second &#x3D; ListNode()
-        dummy.next &#x3D; head
-        dis &#x3D; 1
-
-        while first.next is not None:
-            first &#x3D; first.next
-            # 注意由于second指向需要删除的节点的上一个节点，所以需要与first保持n+1的距离
-            if dis !&#x3D; n + 1:
-                dis +&#x3D; 1
-            else:
-                second &#x3D; second.next
-
-        second.next &#x3D; second.next.next
-        return dummy.next</code></pre>
-
-<p>下面是相同逻辑的 Java 代码。</p>
-<pre class="language-java" data-language="java"><code class="language-java">&#x2F;**
- * Definition for singly-linked list.
- * public class ListNode &#123;
- *     int val;
- *     ListNode next;
- *     ListNode() &#123;&#125;
- *     ListNode(int val) &#123; this.val &#x3D; val; &#125;
- *     ListNode(int val, ListNode next) &#123; this.val &#x3D; val; this.next &#x3D; next; &#125;
- * &#125;
- *&#x2F;
-class Solution &#123;
-    public ListNode removeNthFromEnd(ListNode head, int n) &#123;
-        ListNode dummy &#x3D; new ListNode();
-        ListNode first &#x3D; dummy;
-        ListNode second &#x3D; dummy;
-        dummy.next &#x3D; head;
-
-        int dis &#x3D; 1;
-
-        while (first.next !&#x3D; null) &#123;
-            first &#x3D; first.next;
-            &#x2F;&#x2F; 注意由于second指向需要删除的节点的上一个节点，所以需要与first保持n+1的距离
-            if (dis !&#x3D; n + 1) &#123;
-                dis++;
-            &#125; else &#123;
-                second &#x3D; second.next;
-            &#125;
-        &#125;
-
-        second.next &#x3D; second.next.next;
-        return dummy.next;
-    &#125;
-&#125;</code></pre>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/post/leetcode/19-Remove-Nth-Node-From-End-of-List-Medium/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -632,13 +600,13 @@ class Solution &#123;
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">85k</span>
+    <span title="站点总字数">89k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:18</span>
+    <span title="站点阅读时长">1:21</span>
   </span>
 </div>
 <div class="busuanzi-count">

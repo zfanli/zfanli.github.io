@@ -20,12 +20,12 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"richard.bizcat.xyz","root":"/","images":"/images","scheme":"Mist","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":true,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/config.min.js"></script>
-<meta name="description" content="暴力解法。啥也不多说，看看算法。  把 LinkedList 转换成 List； 交换 left 和 right 的值； 更新 left 和 right 指针； 重复过程直到 left 不再小于 right。  # Definition for singly-linked list. # class ListNode: #     def __init__(self, val&#x3D;0, ne">
+<meta name="description" content="链表问题。实现一个程序根据 2 个下标位置对链表对于位置的元素进行翻转。 Input: head &#x3D; [1,2,3,4,5], left &#x3D; 2, right &#x3D; 4 Output: [1,4,3,2,5]">
 <meta property="og:type" content="article">
 <meta property="og:title" content="92. Reverse Linked List II (Medium)">
 <meta property="og:url" content="https://richard.bizcat.xyz/post/leetcode/92-Reverse-Linked-List-II-Medium/">
 <meta property="og:site_name" content="HOME">
-<meta property="og:description" content="暴力解法。啥也不多说，看看算法。  把 LinkedList 转换成 List； 交换 left 和 right 的值； 更新 left 和 right 指针； 重复过程直到 left 不再小于 right。  # Definition for singly-linked list. # class ListNode: #     def __init__(self, val&#x3D;0, ne">
+<meta property="og:description" content="链表问题。实现一个程序根据 2 个下标位置对链表对于位置的元素进行翻转。 Input: head &#x3D; [1,2,3,4,5], left &#x3D; 2, right &#x3D; 4 Output: [1,4,3,2,5]">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-04-14T07:36:05.469Z">
 <meta property="article:modified_time" content="2021-04-14T07:36:05.469Z">
@@ -218,7 +218,7 @@
 
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -231,6 +231,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9A%B4%E5%8A%9B%E8%A7%A3%E6%B3%95"><span class="nav-text">暴力解法</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -250,7 +251,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">72</span>
+          <span class="site-state-item-count">73</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -261,7 +262,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">43</span>
+        <span class="site-state-item-count">45</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -348,7 +349,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>504</span>
+      <span>607</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -366,7 +367,13 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p>暴力解法。啥也不多说，看看算法。</p>
+        <p>链表问题。实现一个程序根据 2 个下标位置对链表对于位置的元素进行翻转。</p>
+<pre class="language-none"><code class="language-none">Input: head &#x3D; [1,2,3,4,5], left &#x3D; 2, right &#x3D; 4
+Output: [1,4,3,2,5]</code></pre>
+
+<span id="more"></span>
+
+<h2 id="暴力解法"><a href="#暴力解法" class="headerlink" title="暴力解法"></a>暴力解法</h2><p>啥也不多说，看看算法。</p>
 <ul>
 <li>把 <code>LinkedList</code> 转换成 <code>List；</code></li>
 <li>交换 <code>left</code> 和 <code>right</code> 的值；</li>
@@ -402,10 +409,10 @@ class Solution:
       <div class="popular-posts-title"><a href="/post/leetcode/109-Convert-Sorted-List-to-Binary-Search-Tree-Medium/" rel="bookmark">109. Convert Sorted List to Binary Search Tree (Medium)</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/post/leetcode/19-Remove-Nth-Node-From-End-of-List-Medium/" rel="bookmark">19. Remove Nth Node From End of List (Medium)</a></div>
+      <div class="popular-posts-title"><a href="/post/leetcode/114-Flatten-Binary-Tree-to-Linked-List-Medium/" rel="bookmark">114. Flatten Binary Tree to Linked List (Medium)</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/post/leetcode/86-Partition-List-Medium/" rel="bookmark">86. Partition List (Medium)</a></div>
+      <div class="popular-posts-title"><a href="/post/leetcode/19-Remove-Nth-Node-From-End-of-List-Medium/" rel="bookmark">19. Remove Nth Node From End of List (Medium)</a></div>
     </li>
   </ul>
 
@@ -459,13 +466,13 @@ class Solution:
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">85k</span>
+    <span title="站点总字数">89k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:18</span>
+    <span title="站点阅读时长">1:21</span>
   </span>
 </div>
 <div class="busuanzi-count">

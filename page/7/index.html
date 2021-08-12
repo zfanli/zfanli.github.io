@@ -255,7 +255,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">72</span>
+          <span class="site-state-item-count">73</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -266,7 +266,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">43</span>
+        <span class="site-state-item-count">45</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -300,6 +300,98 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://richard.bizcat.xyz/post/leetcode/86-Partition-List-Medium/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon-64.png">
+      <meta itemprop="name" content="Richard Zen">
+      <meta itemprop="description" content="<small><b>TOPICS</b></small><br>
+前端 ｜ Python ｜ Java<br>
+数据结构 ｜ 算法<br><br>
+用代码替代言语<br>记录创作与学习的脚步<br><br>
+">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HOME">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/post/leetcode/86-Partition-List-Medium/" class="post-title-link" itemprop="url">86. Partition List (Medium)</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-04-12 15:36:05" itemprop="dateModified" datetime="2021-04-12T15:36:05+08:00">2021-04-12</time>
+      </span>
+
+  
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.3k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>2 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>链表问题。链表分区，给你一个链表和整数 <code>x</code>，你需要在保证相对顺序的情况下，将小于 <code>x</code> 的值排在链表前面，大于等于 <code>x</code> 的值排在后面。</p>
+<blockquote>
+<p>Given the <code>head</code> of a linked list and a value <code>x</code>, partition it such that all nodes less than <code>x</code> come before nodes greater than or equal to <code>x</code>.</p>
+<p>You should <strong>preserve</strong> the original relative order of the nodes in each of the two partitions.</p>
+</blockquote>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/post/leetcode/86-Partition-List-Medium/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -345,7 +437,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>355</span>
+      <span>414</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -363,22 +455,16 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>需要编辑的数组长度 <code>k</code> 是一个变量，看来这道题是一道典型的回溯算法题。</p>
-<p>我们从 <code>1</code> 开始尝试往目标数组中放入包含 <code>1</code> 到包含 <code>n</code> 之间的值。</p>
-<p>下一轮中我们尝试放入包含 <code>2</code> 到包含 <code>n</code> 之间的值。重复这个过程。</p>
-<p>组合不在乎元素的排序，所以也许你会觉得算法会重复取值，这里的处理重点在于下一个值永远是大于上一个值的，所以我们没有必要考虑组合重复。</p>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def combine(self, n: int, k: int) -&gt; List[List[int]]:
-        ans &#x3D; []
-        def search(pos, res):
-            if len(res) &#x3D;&#x3D; k:
-                ans.append(res)
-                return
-            for i in range(pos, n + 1):
-                search(i + 1, res + [i])
-        search(1, [])
-        return ans</code></pre>
-
+          <p>组合问题。给定两个整数 <code>n</code> 和 <code>k</code>，返回从 <code>1 ~ n</code> 中选取 <code>k</code> 个数能构成的所有组合。</p>
+<p>典型的回溯算法应用题，需要注意去重的思路。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/post/leetcode/77-Combinations-Medium/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -440,7 +526,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>1.2k</span>
+      <span>1.3k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -458,51 +544,16 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>取巧使用正则，一行方案。</p>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def isNumber(self, s: str) -&gt; bool:
-        ptn &#x3D; r&#39;^[+-]?(\d+\.|\d*\.\d+|\d+)([eE][+-]?\d+)?$&#39;
-        return re.match(ptn, s) is not None</code></pre>
-
-<p>使用数学归纳法的思路。先整理无效数字的模式。</p>
-<ul>
-<li><code>+/-</code> 出现在数字之后</li>
-<li><code>.</code> 重复或出现在 exp 之后</li>
-<li><code>e/E</code> 重复或前面没数字</li>
-</ul>
-<p>总结得知，我们需要对应是否为数字、小数、符号、指数设置 4 个 flag，然后依次迭代字符串的每一个字符，根据当前 flag 的值进行判断。</p>
-<pre class="language-js" data-language="js"><code class="language-js">&#x2F;**
- * @param &#123;string&#125; s
- * @return &#123;boolean&#125;
- *&#x2F;
-var isNumber &#x3D; function (s) &#123;
-  let num, dec, sign, exp;
-  for (let c of s.split(&quot;&quot;)) &#123;
-    &#x2F;&#x2F; Check number.
-    if (c &gt;&#x3D; &quot;0&quot; &amp;&amp; c &lt;&#x3D; &quot;9&quot;) num &#x3D; true;
-    &#x2F;&#x2F; Check sign.
-    else if (c &#x3D;&#x3D;&#x3D; &quot;+&quot; || c &#x3D;&#x3D;&#x3D; &quot;-&quot;) &#123;
-      &#x2F;&#x2F; If sign duplicated or appears after number or decimal.
-      if (sign || num || dec) return false;
-      sign &#x3D; true;
-    &#x2F;&#x2F; Check decimal.
-    &#125; else if (c &#x3D;&#x3D;&#x3D; &quot;.&quot;) &#123;
-      &#x2F;&#x2F; If duplicated or appears after exponent.
-      if (dec || exp) return false;
-      dec &#x3D; true;
-    &#x2F;&#x2F; Check exponent.
-    &#125; else if (c &#x3D;&#x3D;&#x3D; &quot;e&quot; || c &#x3D;&#x3D;&#x3D; &quot;E&quot;) &#123;
-      &#x2F;&#x2F; If duplicated or no number before it.
-      if (exp || !num)) return false;
-      (exp &#x3D; true), (num &#x3D; false), (sign &#x3D; false), (dec &#x3D; false);
-    &#x2F;&#x2F; Failed.
-    &#125; else &#123;
-      return false;
-    &#125;
-  &#125;
-  return !!num;
-&#125;;</code></pre>
-
+          <p>字符串问题。一个字符串数字，你需要判断这个数字是否有效。需要满足一堆条件。</p>
+<p>考验归纳的问题。我们从正则取巧和数学归纳的角度来解决这道题。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/post/leetcode/65-Valid-Number-Hard/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -564,7 +615,7 @@ var isNumber &#x3D; function (s) &#123;
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>320</span>
+      <span>423</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -582,21 +633,16 @@ var isNumber &#x3D; function (s) &#123;
     
     
     <div class="post-body" itemprop="articleBody">
-          <pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def uniquePathsWithObstacles(self, og: List[List[int]]) -&gt; int:
-        for x in range(len(og)):
-            for y in range(len(og[0])):
-                if x &#x3D;&#x3D; 0 and y &#x3D;&#x3D; 0:
-                    up, left &#x3D; 0, 1
-                else:
-                    up &#x3D; og[x-1][y] if x &gt; 0 else 0
-                    left &#x3D; og[x][y-1] if y &gt; 0 else 0
-                if og[x][y] &#x3D;&#x3D; 0:
-                    og[x][y] &#x3D; up + left
-                else:
-                    og[x][y] &#x3D; 0
-        return og[-1][-1]</code></pre>
-
+          <p>路径问题。一个机器人在 <code>m x n</code> 矩阵的左上角 (0, 0) 位置，矩阵中存在诺干障碍物，机器人只能向下或者向右移动，你需要实现一个程序计算机器人有多少条路径可以到达右下角的 (m, n) 位置。</p>
+<p>这是典型的 DP 问题。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/post/leetcode/63-Unique-Paths-II-Medium/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -658,7 +704,7 @@ var isNumber &#x3D; function (s) &#123;
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>159</span>
+      <span>228</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -676,14 +722,16 @@ var isNumber &#x3D; function (s) &#123;
     
     
     <div class="post-body" itemprop="articleBody">
-          <pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def uniquePaths(self, m: int, n: int) -&gt; int:
-        dp &#x3D; [[1]*n] * m
-        for x in range(1, m):
-            for y in range(1, n):
-                dp[x][y] &#x3D; dp[x-1][y] + dp[x][y-1]
-        return dp[m-1][n-1]</code></pre>
-
+          <p>组合问题。机器人在矩阵的左上角需要去矩阵的右下角，且机器人只能向下和向右行动。</p>
+<p>你需要实现一个程序计算机器人有多少条路径到达右下角。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/post/leetcode/62-Unique-Paths-Medium/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -745,7 +793,7 @@ var isNumber &#x3D; function (s) &#123;
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>375</span>
+      <span>431</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -763,27 +811,16 @@ var isNumber &#x3D; function (s) &#123;
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>感觉在刷分 hhh。和 51 完全一样，不同之处在于这题只要计数。</p>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def totalNQueens(self, n: int) -&gt; int:
-        self.ans &#x3D; 0
-        def place(pos, cols, diag, anti):
-            if pos &#x3D;&#x3D; n:
-                self.ans +&#x3D; 1
-            for i in range(n):
-                d, a &#x3D; i - pos, i + pos
-                if i not in cols and d not in diag and a not in anti:
-                    cols.add(i)
-                    diag.add(d)
-                    anti.add(a)
-                    place(pos + 1, cols, diag, anti)
-                    cols.remove(i)
-                    diag.remove(d)
-                    anti.remove(a)
-
-        place(0, set(), set(), set())
-        return self.ans</code></pre>
-
+          <p>国际象棋问题。求在 <code>n x n</code> 的棋盘上摆放 Queen 棋子并让其不能相互攻击的布局数量。</p>
+<p>和 51 是孪生问题，不再赘述。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/post/leetcode/52-N-Queens-II-Hard/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -845,7 +882,7 @@ var isNumber &#x3D; function (s) &#123;
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>1.2k</span>
+      <span>1.3k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -863,54 +900,20 @@ var isNumber &#x3D; function (s) &#123;
     
     
     <div class="post-body" itemprop="articleBody">
-          <blockquote>
+          <p>国际象棋问题。给你一个 <code>n x n</code> 大小的棋盘，你需要在上面摆放 Queen 棋子，并且让棋子之间不能相互攻击。</p>
+<blockquote>
 <p>Tips</p>
 <p>Queen 可以在行、列、对角线和反对角线这四条线上随意行动，我们在放 Queen 时要保证这四个方向上没有 Queen 存在。</p>
 </blockquote>
-<p>这是一个典型回溯法的应用场景，即我们需要尝试把 Queen 放在这一行的每个位置之后，才能知道所有可能的摆法。</p>
-<p>比较容易忽视的点是，虽然我们可以轻松观察得知一行只有一个 Queen，所以行是不需要判断的，只需要判断列、对角线和反对角线上是否存在 Queen，但是这三条线是需要分开判断的。</p>
-<p>我们需要准备 3 个 set 来保存已经使用过的列、对角线和反对角线。逻辑比较简单，我们通过代码和注释来理解。</p>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def solveNQueens(self, n: int) -&gt; List[List[str]]:
-        # Prepare the answer list and an empty board in the required format.
-        ans, board &#x3D; [], [[&#39;.&#39;] * n for _ in range(n)]
-
-        def format(res):
-            &quot;&quot;&quot;Produce the output to meet to required format.&quot;&quot;&quot;
-            out &#x3D; []
-            for row in res:
-                out.append(&#39;&#39;.join(row))
-            return out
-
-        def solve(row, cols, diag, anti, res):
-            &quot;&quot;&quot;Solve recursively.&quot;&quot;&quot;
-            # The base case that we know we&#39;ve got a right answer.
-            if row &#x3D;&#x3D; n:
-                ans.append(format(res))
-
-            # Try each position at this row.
-            for q in range(n):
-                # Calculate the top point of diagonal and anti-diagonal.
-                d, a &#x3D; q - row, q + row
-
-                # Check if the current place can place a Queen.
-                if q not in cols and d not in diag and a not in anti:
-                    cols.add(q)
-                    diag.add(d)
-                    anti.add(a)
-                    res[row][q] &#x3D; &#39;Q&#39;
-
-                    solve(row + 1, cols, diag, anti, res)
-
-                    # Backtracking.
-                    cols.remove(q)
-                    diag.remove(d)
-                    anti.remove(a)
-                    res[row][q] &#x3D; &#39;.&#39;
-
-        solve(0, set(), set(), set(), board)
-        return ans</code></pre>
-
+<p>我们需要遍历尽可能多的摆放方法才能确认最终的答案，我们用回溯算法对枚举进行剪纸来解决这道题。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/post/leetcode/51-N-Queens-Hard/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -972,7 +975,7 @@ var isNumber &#x3D; function (s) &#123;
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>294</span>
+      <span>356</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -990,17 +993,16 @@ var isNumber &#x3D; function (s) &#123;
     
     
     <div class="post-body" itemprop="articleBody">
-          <pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def rotate(self, m: List[List[int]]) -&gt; None:
-        &quot;&quot;&quot;
-        Do not return anything, modify matrix in-place instead.
-        &quot;&quot;&quot;
-        sz &#x3D; len(m)
-
-        for i in range(sz &#x2F;&#x2F; 2 + sz % 2):
-            for j in range(sz &#x2F;&#x2F; 2):
-                m[i][j], m[j][~i], m[~i][~j], m[~j][i] &#x3D; m[~j][i], m[i][j], m[j][~i], m[~i][~j]</code></pre>
-
+          <p>矩阵问题。旋转图片 90 度。</p>
+<p>图片本身是一组储存了颜色信息的矩阵数据，旋转一张图片即将矩阵中对应的颜色值移动到对应的位置上。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/post/leetcode/48-Rotate-Image-Medium/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1062,7 +1064,7 @@ var isNumber &#x3D; function (s) &#123;
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>846</span>
+      <span>906</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -1080,53 +1082,16 @@ var isNumber &#x3D; function (s) &#123;
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>Topics:</p>
-<p>Array, greedy.</p>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def jump(self, nums: List[int]) -&gt; int:
-        n, ans, curr, nxt &#x3D; len(nums), 0, 0, 0
-        # No need of the last iteration so skip it here by &#96;n - 1&#96;.
-        for i in range(n - 1):
-            nxt &#x3D; max(nxt, i + nums[i])
-            if i &#x3D;&#x3D; curr:
-                curr &#x3D; nxt
-                ans +&#x3D; 1
-            i +&#x3D; 1
-        return ans</code></pre>
-
-<pre class="language-java" data-language="java"><code class="language-java">class Solution &#123;
-    public int jump(int[] nums) &#123;
-        int n &#x3D; nums.length, ans &#x3D; 0, curr &#x3D; 0, next &#x3D; 0;
-        for (int i &#x3D; 0; i &lt; n - 1; i++) &#123;
-            next &#x3D; Math.max(next, i + nums[i]);
-            if (i &#x3D;&#x3D; curr) &#123;
-                curr &#x3D; next;
-                ans++;
-            &#125;
-        &#125;
-        return ans;
-    &#125;
-&#125;</code></pre>
-
-<pre class="language-js" data-language="js"><code class="language-js">&#x2F;**
- * @param &#123;number[]&#125; nums
- * @return &#123;number&#125;
- *&#x2F;
-var jump &#x3D; function (nums) &#123;
-  let n &#x3D; nums.length,
-    curr &#x3D; 0,
-    next &#x3D; 0,
-    ans &#x3D; 0;
-  for (let i &#x3D; 0; i &lt; n - 1; i++) &#123;
-    next &#x3D; next &lt; i + nums[i] ? i + nums[i] : next;
-    if (curr &#x3D;&#x3D;&#x3D; i) &#123;
-      curr &#x3D; next;
-      ans++;
-    &#125;
-  &#125;
-  return ans;
-&#125;;</code></pre>
-
+          <p>跳跃游戏。你有一个非负整数数组，最开始你在 0 的位置，数组每个数字意味你接下来能跳多远。</p>
+<p>游戏的目标是到达数组的最后一个位置，你需要找到最少的跳跃次数到达终点。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/post/leetcode/45-Jump-Game-II-Medium/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1212,201 +1177,14 @@ var jump &#x3D; function (nums) &#123;
 <p>The same number may be chosen from candidates an unlimited number of times. Two combinations are unique if the frequency of at least one of the chosen numbers is different.</p>
 <p>It is guaranteed that the number of unique combinations that sum up to target is less than 150 combinations for the given input.</p>
 </blockquote>
-<h3 id="思路-amp-Solutions"><a href="#思路-amp-Solutions" class="headerlink" title="思路 &amp; Solutions"></a>思路 &amp; Solutions</h3><p>Backtrack</p>
-<pre class="language-javascript" data-language="javascript"><code class="language-javascript">&#x2F;**
- * @param &#123;number[]&#125; candidates
- * @param &#123;number&#125; target
- * @return &#123;number[][]&#125;
- *&#x2F;
-var combinationSum &#x3D; function (candidates, target) &#123;
-  const ans &#x3D; [];
-  const sz &#x3D; candidates.length;
-  candidates.sort((a, b) &#x3D;&gt; a - b);
-
-  const dfs &#x3D; (c, tar, comb, begin) &#x3D;&gt; &#123;
-    if (tar &#x3D;&#x3D;&#x3D; 0) ans.push(comb);
-
-    for (let i &#x3D; begin; i &lt; sz; i++) &#123;
-      if (tar &lt; c[i]) break;
-      dfs(c, tar - c[i], [...comb, c[i]], i);
-    &#125;
-  &#125;;
-
-  dfs(candidates, target, [], 0);
-
-  return ans;
-&#125;;</code></pre>
-
-<pre class="language-java" data-language="java"><code class="language-java">class Solution &#123;
-    private List&lt;List&lt;Integer&gt;&gt; ans &#x3D; new ArrayList&lt;&gt;();
-    private int sz;
-
-    public List&lt;List&lt;Integer&gt;&gt; combinationSum(int[] candidates, int target) &#123;
-        sz &#x3D; candidates.length;
-        Arrays.sort(candidates);
-        dfs(candidates, target, new ArrayList&lt;Integer&gt;(), 0);
-        return ans;
-    &#125;
-
-    private void dfs(int[] c, int tar, List&lt;Integer&gt; comb, int begin) &#123;
-        if (tar &#x3D;&#x3D; 0) ans.add(new ArrayList&lt;&gt;(comb));
-
-        for (int i &#x3D; begin; i &lt; sz; i++) &#123;
-            if (tar &lt; c[i]) break;
-            comb.add(c[i]);
-            dfs(c, tar - c[i], comb, i);
-            comb.remove(comb.size() - 1);
-        &#125;
-    &#125;
-&#125;</code></pre>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://richard.bizcat.xyz/post/leetcode/37-Sudoku-Solver-Hard/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/icon-64.png">
-      <meta itemprop="name" content="Richard Zen">
-      <meta itemprop="description" content="<small><b>TOPICS</b></small><br>
-前端 ｜ Python ｜ Java<br>
-数据结构 ｜ 算法<br><br>
-用代码替代言语<br>记录创作与学习的脚步<br><br>
-">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HOME">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/post/leetcode/37-Sudoku-Solver-Hard/" class="post-title-link" itemprop="url">37. Sudoku Solver (Hard)</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-03-23 15:36:05" itemprop="dateModified" datetime="2021-03-23T15:36:05+08:00">2021-03-23</time>
-      </span>
-
-  
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>1.5k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>数独问题，适合回溯算法。</p>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def solveSudoku(self, board: List[List[str]]) -&gt; None:
-        &quot;&quot;&quot;
-        Do not return anything, modify board in-place instead.
-        &quot;&quot;&quot;
-
-        # Save board for further use.
-        self.board &#x3D; board
-        # print(self.solve())
-        self.solve()
-
-    def findEmptyCell(self):
-        &quot;&quot;&quot;
-        Find the next place need to be filled.
-        &quot;&quot;&quot;
-        for i in range(9):
-            for j in range(9):
-                if self.board[i][j] &#x3D;&#x3D; &quot;.&quot;:
-                    return i, j
-        return -1, -1
-
-    def checkRow(self, row, num) -&gt; bool:
-        &quot;&quot;&quot;
-        Check if the target number is safe in row.
-        &quot;&quot;&quot;
-        return num not in self.board[row]
-
-    def checkCol(self, col, num) -&gt; bool:
-        &quot;&quot;&quot;
-        Check if the target number is safe in column.
-        &quot;&quot;&quot;
-        for row in range(9):
-            if self.board[row][col] &#x3D;&#x3D; num:
-                return False
-        return True
-
-    def checkSquare(self, row, col, num) -&gt; bool:
-        &quot;&quot;&quot;
-        Check if the target number is safe in the nearest square.
-        We should find the first cell of the nearest square,
-        just subtract the result of modulo 3 from col and row to get it.
-        &quot;&quot;&quot;
-        sr, sc &#x3D; row - row % 3, col - col % 3
-        for i in range(sr, sr + 3):
-            for j in range(sc, sc + 3):
-                if self.board[i][j] &#x3D;&#x3D; num:
-                    return False
-        return True
-
-    def solve(self) -&gt; bool:
-        &quot;&quot;&quot;
-        The main body of our backtracking algorithm.
-        &quot;&quot;&quot;
-        row, col &#x3D; self.findEmptyCell()
-        if row &#x3D;&#x3D; -1 and col &#x3D;&#x3D; -1:
-            return True
-
-        for num in [str(x) for x in range(1, 10)]:
-            if (self.checkRow(row, num)
-                and self.checkCol(col, num)
-                and self.checkSquare(row, col, num)):
-                self.board[row][col] &#x3D; num
-                if self.solve():
-                    return True
-                self.board[row][col] &#x3D; &quot;.&quot;
-        return False</code></pre>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/post/leetcode/39-Combination-Sum-Medium/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1448,13 +1226,13 @@ var combinationSum &#x3D; function (candidates, target) &#123;
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">85k</span>
+    <span title="站点总字数">89k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:18</span>
+    <span title="站点阅读时长">1:21</span>
   </span>
 </div>
 <div class="busuanzi-count">
