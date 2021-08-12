@@ -4,6 +4,8 @@ tags:
   - Greedy
   - String
 title: 1689. Partitioning Into Minimum Number Of Deci-Binary Numbers (Medium)
+categories:
+  - leetcode
 ---
 
 给定一个字符串格式的十进制整数 `n`，要求你分析最少需要多少个“二进制式十进制数”（Deci-Binary）求和可以得到这个给定的数 `n`。
