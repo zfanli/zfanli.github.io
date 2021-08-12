@@ -3,10 +3,8 @@ tags:
   - Tree
   - DFS
   - Binary Tree
-tile: 112. Path Sum (Easy)
-date: '2021-08-12T12:51:38.367Z'
-categories:
-  - leetcode
+title: 112. Path Sum (Easy)
+date: "2021-08-12T12:51:38.367Z"
 ---
 
 二叉树问题。求是否存在和目标值一致的路径和。

@@ -5,8 +5,6 @@ tags:
   - Greedy
   - Heap (Priority Queue)
 title: 630. Course Schedule III (Hard)
-categories:
-  - leetcode
 ---
 
 课程安排问题。一共有 `n` 门不同的在线课程，你会得到一个 `courses` 数组包含每门课程的持续时间和最后期限。

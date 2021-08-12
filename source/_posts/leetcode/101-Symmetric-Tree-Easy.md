@@ -5,9 +5,7 @@ tags:
   - DFS
   - Binary Tree
 title: 101. Symmetric Tree (Easy)
-date: '2021-08-12T08:42:51.663Z'
-categories:
-  - leetcode
+date: "2021-08-12T08:42:51.663Z"
 ---
 
 检查给定的二叉树是否对称。如果 root 的左右子树互为镜像，那么这棵树是一颗对称树。
