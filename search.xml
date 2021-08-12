@@ -55,18 +55,19 @@
 <p>我们尝试从递归、迭代以及 DFS 和 BFS 等角度来尝试解决这道题。</p>
 <span id="more"></span>
 
-<h2 id="思路-1，递归，Top-Down"><a href="#思路-1，递归，Top-Down" class="headerlink" title="思路 1，递归，Top-Down"></a>思路 1，递归，Top-Down</h2><p>实际上我们在用前序遍历对两颗子树进行遍历，要确认它们是否对称，我们需要对左右子树的遍历顺序做一点修改：</p>
+<h2 id="思路-1，递归，"><a href="#思路-1，递归，" class="headerlink" title="思路 1，递归，"></a>思路 1，递归，</h2><p>Top-Down 做法。</p>
+<p>实际上我们需要对两颗子树同时进行前序遍历，而要确认它们是否对称，需要我们对遍历顺序做一点修改：</p>
 <ul>
 <li>左子树：root -&gt; left -&gt; right</li>
 <li>右子树：root -&gt; right -&gt; left</li>
 </ul>
-<p>由于遍历过程是同步的，所以每一次递归我们都要进行下面的检查：</p>
+<p>由于遍历过程是同步的，在每一次遍历中我们都要进行下面的操作以确定当前是否依然对称：</p>
 <ul>
 <li>当前 2 个节点的值是否相等；</li>
 <li>左左节点和右右节点是否相等；</li>
 <li>左右节点和右左节点是否相等。</li>
 </ul>
-<p>上述步骤中从上之下一旦遇到 False，程序就会一步一步退出递归流程，给出结果。</p>
+<p>上述步骤中从上至下，一旦遇到 False，程序就会一步一步退出递归流程，给出结果。</p>
 <p>这是一个 DFS 算法，我们会一条路径一条路径的检查整棵树。</p>
 <pre class="language-python" data-language="python"><code class="language-python">class Solution:
     def isSymmetric(self, root: Optional[TreeNode]) -&gt; bool:
@@ -103,7 +104,7 @@
 
         return True</code></pre>
 
-<h2 id="思路-3，BFS"><a href="#思路-3，BFS" class="headerlink" title="思路 3，BFS"></a>思路 3，BFS</h2><p>不同的算法针对不同的数据存在不同的效率。如果两棵树的层级数不同，或者靠下层的数据出现差异时使用 DFS 是高效的，因为每次我们会遍历一整条路径，一旦层级和叶子节点有差异，我们可以快速得到结果并结束程序。</p>
+<h2 id="思路-3，BFS"><a href="#思路-3，BFS" class="headerlink" title="思路 3，BFS"></a>思路 3，BFS</h2><p>不同的算法针对不同的数据存在不同的效率。如果两棵树的层级数不同，或者靠下层的数据出现差异时，使用 DFS 是高效的，因为每次我们会遍历一整条路径，一旦层级和叶子节点有差异，我们可以快速得到结果并结束程序。</p>
 <p>另一方面，如果两棵树的结构没有差异，数据的差异可能出现在树的中段位置，那么相对来说 BFS 会更加高效。</p>
 <p>从我提交的结果来看，目前这道题的测试数据是偏向于 BFS 的，Python3 实现的 BFS 平均在 24ms 左右，而 DFS 在 36ms 左右。</p>
 <p>下面是 BFS 实现的思路，与之前相同，我们同时遍历两棵树，仅在遍历顺序上做出一点修改。</p>
@@ -696,6 +697,77 @@ class Solution:
         <tag>Linked List</tag>
         <tag>Divider and Conquer</tag>
         <tag>Binary Search Tree</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title></title>
+    <url>/post/leetcode/112-Path-Sum-Easy/</url>
+    <content><![CDATA[<p>二叉树问题。求是否存在和目标值一致的路径和。</p>
+<p>路径和指的是从根节点到叶子节点的路径的值相加的结果。</p>
+<p>看上去这道题适合 DFS 一条路径一条路径的遍历解决。</p>
+<span id="more"></span>
+
+<h2 id="思路-1，递归，前序遍历"><a href="#思路-1，递归，前序遍历" class="headerlink" title="思路 1，递归，前序遍历"></a>思路 1，递归，前序遍历</h2><p>一层一层求和直到叶子节点，判断是否和目标一致。</p>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def hasPathSum(self, root: Optional[TreeNode], targetSum: int) -&gt; bool:
+        if not root:
+            return False
+
+        def dfs(node, curr):
+            curr +&#x3D; node.val
+            if not node.left and not node.right:
+                return curr &#x3D;&#x3D; targetSum
+            if node.left and dfs(node.left, curr):
+                return True
+            if node.right and dfs(node.right, curr):
+                return True
+            return False
+
+        return dfs(root, 0)</code></pre>
+
+<h2 id="思路-2，另一种前序遍历写法"><a href="#思路-2，另一种前序遍历写法" class="headerlink" title="思路 2，另一种前序遍历写法"></a>思路 2，另一种前序遍历写法</h2><p>相同思路，另一种写法。这次我们用解题函数自身作为 DFS 函数，也不再进行求和判断，相反我们每次遍历从目标值中减去遇到的值。</p>
+<p>这两种方法没有本质区别。</p>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def hasPathSum(self, root: Optional[TreeNode], targetSum: int) -&gt; bool:
+        if not root:
+            return False
+
+        if not root.left and not root.right and root.val &#x3D;&#x3D; targetSum:
+            return True
+        if self.hasPathSum(root.left, targetSum - root.val):
+            return True
+        if self.hasPathSum(root.right, targetSum - root.val):
+            return True
+
+        return False</code></pre>
+
+<h2 id="思路-3，迭代"><a href="#思路-3，迭代" class="headerlink" title="思路 3，迭代"></a>思路 3，迭代</h2><p>有递归的地方就有 Stack，来试试用迭代的方式实现这个过程。</p>
+<p>迭代的方式注意点在于我们需要同时保存节点和累积值。</p>
+<p>这个思路的逻辑看上去要更简洁。</p>
+<pre class="language-python" data-language="python"><code class="language-python">class Solution:
+    def hasPathSum(self, root: Optional[TreeNode], targetSum: int) -&gt; bool:
+        if not root:
+            return False
+
+        stack &#x3D; [(root, root.val)]
+        while stack:
+            node, val &#x3D; stack.pop()
+            if not node.left and not node.right and val &#x3D;&#x3D; targetSum:
+                return True
+            if node.left:
+                stack.append((node.left, node.left.val + val))
+            if node.right:
+                stack.append((node.right, node.right.val + val))
+
+        return False</code></pre>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>Tree</tag>
+        <tag>DFS</tag>
+        <tag>Binary Tree</tag>
       </tags>
   </entry>
   <entry>
