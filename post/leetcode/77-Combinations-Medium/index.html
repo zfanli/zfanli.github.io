@@ -162,13 +162,15 @@
         switcher.classList.remove(ROTATE);
       else switcher.classList.add(ROTATE);
       // update the comments' theme
-      document.querySelector(".utterances-frame").contentWindow.postMessage(
-        {
-          type: "set-theme",
-          theme: add === DARK ? "github-dark" : "github-light",
-        },
-        "https://utteranc.es"
-      );
+      const utt = document.querySelector(".utterances-frame");
+      utt &&
+        utt.contentWindow.postMessage(
+          {
+            type: "set-theme",
+            theme: add === DARK ? "github-dark" : "github-light",
+          },
+          "https://utteranc.es"
+        );
     });
   })();
 </script>
