@@ -6,13 +6,13 @@ tags:
   - DFS
   - Binary Tree
 title: 145. Binary Tree Postorder Traversal (Easy)
-categories:
-  - leetcode
 ---
 
 遍历树通常有三种方法，分别是前序遍历（pre-order traversal）、中序遍历（in-order traversal）和后序遍历（post-order traversal）。这道题是后序遍历。
 
-思路 1，递归
+<!-- more -->
+
+## 思路 1，递归
 
 三种递归遍历方式的区别仅在于处理的顺序。
 
@@ -32,7 +32,7 @@ class Solution:
         return ans
 ```
 
-思路 2，迭代遍历
+## 思路 2，迭代遍历
 
 后序遍历按照 left -> right -> root 的顺序遍历树，你会发现这和前序遍历相似，我们只需要将前序遍历方法中左右子节点的遍历顺序对调，并将其结果颠倒一下顺序，即可得到后序遍历的结果。
 
@@ -65,7 +65,7 @@ class Solution:
         return ans
 ```
 
-思路 3，迭代遍历，基于中序迭代遍历优化
+## 思路 3，迭代遍历，基于中序迭代遍历优化
 
 由于 root 的值是最后记录的，在当前节点存在右节点的情况，还需要将当前节点的右节点置空，重新存入 stack。在空间复杂度上比思路 2 而言没有太大优化。
 

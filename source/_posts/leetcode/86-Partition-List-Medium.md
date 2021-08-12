@@ -4,17 +4,17 @@ tags:
   - Linked List
   - Two Pointers
 title: 86. Partition List (Medium)
-categories:
-  - leetcode
 ---
 
-With solutions both in Python and Java.
-
-读题先。
+链表问题。链表分区，给你一个链表和整数 `x`，你需要在保证相对顺序的情况下，将小于 `x` 的值排在链表前面，大于等于 `x` 的值排在后面。
 
 > Given the `head` of a linked list and a value `x`, partition it such that all nodes less than `x` come before nodes greater than or equal to `x`.
 >
 > You should **preserve** the original relative order of the nodes in each of the two partitions.
+
+<!-- more -->
+
+With solutions both in Python and Java.
 
 已知参数为一个 linked list 和 x，需要将数组根据 x 的值分区，小于它的放在前面，大于等于它的放在后面，并且分区后要保证原有顺序不变。
 
@@ -34,13 +34,13 @@ Input: head = [2,1], x = 2
 Output: [1,2]
 ```
 
-### Submissions
+## Submissions
 
 我的代码时间复杂度还能看，空间复杂度已经脱离排名，没法看了。
 
 虽然解题思路和官方一样，但是处理上有些愚蠢，这题就不贴我的结果了。
 
-### 思路 & Solutions
+## 思路 & Solutions
 
 思路很简单，这道题主要考察的是对空间复杂度对处理。逻辑的流程如下。
 
@@ -134,7 +134,7 @@ class Solution {
 }
 ```
 
-### 结论
+## 结论
 
 进行伪初始化的处理很好的规避了初始化判断，对遍历的处理也只是改变了列表的排序，两者使得程序在时间和空间复杂度上有很好的表现。
 

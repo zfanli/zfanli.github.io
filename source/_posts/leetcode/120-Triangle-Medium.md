@@ -4,13 +4,19 @@ tags:
   - Array
   - DP
 title: 120. Triangle (Medium)
-categories:
-  - leetcode
 ---
+
+你有一个三角形形状的 2D 数组，你需要找到从最顶层走到最底层的最短路径。
+
+限制是每一步你只能下一层，且每一步你只能选择下一层的同下标位置或者下标 +1 位置。
 
 > Given a `triangle` array, return the minimum path sum from top to bottom.
 >
 > For each step, you may move to an adjacent number of the row below. More formally, if you are on index `i` on the current row, you may move to either index `i` or index `i + 1` on the next row.
+
+看看例子才能更好理解题目，这题看上去需要计算所有可能才能知道答案，或许是 DP 的用武之地。
+
+<!-- more -->
 
 Example 1:
 
@@ -39,7 +45,7 @@ triangle[0].length == 1
 triangle[i].length == triangle[i - 1].length + 1
 -104 <= triangle[i][j] <= 104
 
-### 思路 & Solutions
+## 思路 & Solutions
 
 ```python
 class Solution:

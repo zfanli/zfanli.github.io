@@ -6,15 +6,15 @@ tags:
   - DFS
   - Binary Tree
 title: 144. Binary Tree Preorder Traversal (Easy)
-categories:
-  - leetcode
 ---
 
 遍历树有三种方法，分别是前序 pre-order、中序 in-order 和后序 post-order 遍历。这道题是前序遍历。
 
 前序遍历的递归写法没有难度。
 
-思路 1，递归
+<!-- more -->
+
+## 思路 1，递归
 
 ```python
 class Solution:
@@ -32,7 +32,7 @@ class Solution:
         return ans
 ```
 
-思路 2，遍历
+## 思路 2，遍历
 
 使用 stack 或队列按顺序记录需要检查的节点，需要关注的是：
 

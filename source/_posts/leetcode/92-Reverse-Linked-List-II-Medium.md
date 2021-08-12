@@ -3,11 +3,20 @@ date: '2021-04-14T15:36:05.469Z'
 tags:
   - Linked List
 title: 92. Reverse Linked List II (Medium)
-categories:
-  - leetcode
 ---
 
-暴力解法。啥也不多说，看看算法。
+链表问题。实现一个程序根据 2 个下标位置对链表对于位置的元素进行翻转。
+
+```
+Input: head = [1,2,3,4,5], left = 2, right = 4
+Output: [1,4,3,2,5]
+```
+
+<!-- more -->
+
+## 暴力解法
+
+啥也不多说，看看算法。
 
 - 把 `LinkedList` 转换成 `List；`
 - 交换 `left` 和 `right` 的值；

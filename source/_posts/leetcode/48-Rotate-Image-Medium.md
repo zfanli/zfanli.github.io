@@ -5,9 +5,15 @@ tags:
   - Math
   - Matrix
 title: 48. Rotate Image (Medium)
-categories:
-  - leetcode
 ---
+
+矩阵问题。旋转图片 90 度。
+
+图片本身是一组储存了颜色信息的矩阵数据，旋转一张图片即将矩阵中对应的颜色值移动到对应的位置上。
+
+<!-- more -->
+
+## 思路
 
 ```python
 class Solution:

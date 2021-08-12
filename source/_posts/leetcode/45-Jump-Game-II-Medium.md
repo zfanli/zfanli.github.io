@@ -4,13 +4,15 @@ tags:
   - Array
   - Greedy
 title: 45. Jump Game II (Medium)
-categories:
-  - leetcode
 ---
 
-Topics:
+跳跃游戏。你有一个非负整数数组，最开始你在 0 的位置，数组每个数字意味你接下来能跳多远。
 
-Array, greedy.
+游戏的目标是到达数组的最后一个位置，你需要找到最少的跳跃次数到达终点。
+
+<!-- more -->
+
+## 思路
 
 ```python
 class Solution:

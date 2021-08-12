@@ -6,15 +6,15 @@ tags:
   - DFS
   - Binary Tree
 title: 94. Binary Tree Inorder Traversal (Easy)
-categories:
-  - leetcode
 ---
 
 遍历树的方法通常有三种，分别是前序遍历 pre-order traversal、中序遍历 in-order traversal 和后序遍历 post-order traversal。这道题是中序遍历。
 
 难度上来说，前序最简单，中序和后序遍历会复杂一点。
 
-思路 1，递归
+<!-- more -->
+
+## 思路 1，递归
 
 ```python
 class Solution:
@@ -32,7 +32,7 @@ class Solution:
         return ans
 ```
 
-思路 2，遍历
+## 思路 2，遍历
 
 基于前序遍历的方案做的修改，可以解决问题，但是在空间复杂度上有优化余地，为了储存 stack 使用了额外的 2n 的空间。
 
@@ -55,7 +55,7 @@ class Solution:
         return ans
 ```
 
-思路 3，遍历，优化版本
+## 思路 3，遍历，优化版本
 
 中序遍历要先遍历左节点，所以先抵达最左路径的最后一个节点，从这个节点开始回溯，重复检查左节点，本体和右节点的顺序。
 
@@ -80,7 +80,7 @@ class Solution:
         return ans
 ```
 
-思路 4，莫里斯遍历 Morris Traversal
+## 思路 4，莫里斯遍历 Morris Traversal
 
 也叫线索二叉树（Threaded Binary Tree），修改树的结构，让其“穿起来”成为一条线，整个遍历过程重复修改结构 -> 遍历数据的过程。
 

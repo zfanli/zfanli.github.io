@@ -2,13 +2,16 @@
 date: '2021-05-02T15:36:05.487Z'
 tags:
   - Array
+  - Hash Table
   - Union Find
 title: 128. Longest Consecutive Sequence (Medium)
-categories:
-  - leetcode
 ---
 
+你有一个未排序的整数数组 `nums`，你要在 O(n) 时间复杂度内找到最长的连续子序列，返回其长度
+
 `nums` 数组的元素可以构成诺干个连续的子数组，我们需要找到最大的子数组，返回其长度。
+
+## 思路
 
 要找到最大的子数组，首先我们要找到子数组的第一个元素，可以将 `nums` 转成一个 HashSet，然后遍历它：
 

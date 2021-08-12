@@ -1,12 +1,17 @@
 ---
 date: '2021-04-08T15:36:05.463Z'
 tags:
-  - Math
   - String
 title: 65. Valid Number (Hard)
-categories:
-  - leetcode
 ---
+
+字符串问题。一个字符串数字，你需要判断这个数字是否有效。需要满足一堆条件。
+
+考验归纳的问题。我们从正则取巧和数学归纳的角度来解决这道题。
+
+<!-- more -->
+
+## 正则思路
 
 取巧使用正则，一行方案。
 
@@ -16,6 +21,8 @@ class Solution:
         ptn = r'^[+-]?(\d+\.|\d*\.\d+|\d+)([eE][+-]?\d+)?$'
         return re.match(ptn, s) is not None
 ```
+
+## 数学归纳法
 
 使用数学归纳法的思路。先整理无效数字的模式。
 

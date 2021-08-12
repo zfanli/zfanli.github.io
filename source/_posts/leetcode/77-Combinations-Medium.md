@@ -1,11 +1,18 @@
 ---
 date: '2021-04-10T15:36:05.464Z'
 tags:
+  - Array
   - Backtracking
 title: 77. Combinations (Medium)
-categories:
-  - leetcode
 ---
+
+组合问题。给定两个整数 `n` 和 `k`，返回从 `1 ~ n` 中选取 `k` 个数能构成的所有组合。
+
+典型的回溯算法应用题，需要注意去重的思路。
+
+<!-- more -->
+
+## 思路
 
 需要编辑的数组长度 `k` 是一个变量，看来这道题是一道典型的回溯算法题。
 

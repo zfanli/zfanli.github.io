@@ -2,15 +2,23 @@
 date: '2021-04-24T15:36:05.479Z'
 tags:
   - Linked List
+  - Divider and Conquer
   - DFS
+  - Tree
+  - Binary Search Tree
+  - Binary Tree
 title: 109. Convert Sorted List to Binary Search Tree (Medium)
-categories:
-  - leetcode
 ---
 
-Topics:
+你有一个链表的 `head` 元素，链表数组按照升序排列，现在你需要实现一个程序将其转换为高度平衡的二叉查找树。
 
-Linked-list, DFS.
+对这道题来说，高度平衡的二叉树定义为所有节点的子节点深度相差不大于 1。
+
+题目的难点在于你不知道链表的长度。我们从几个思路讨论如何解决这道题。
+
+<!-- more -->
+
+## 思路 1，快慢指针
 
 比较简洁的解法是快慢指针。
 
@@ -96,6 +104,8 @@ class Solution:
 
         return tree(head, None)
 ```
+
+## 思路 2， 长度二分
 
 下面是基于长度二分。
 

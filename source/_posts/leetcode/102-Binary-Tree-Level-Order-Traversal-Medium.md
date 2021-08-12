@@ -5,13 +5,15 @@ tags:
   - BFS
   - Binary Tree
 title: 102. Binary Tree Level Order Traversal (Medium)
-categories:
-  - leetcode
 ---
 
 遍历树的方式除了通常的前序遍历、中序遍历和后序遍历之外，还有本题的层序遍历。
 
 层序遍历的顺序是从左到右依次遍历同层级到节点，然后在进入下一层级重复这个过程，直到不再存在下一层级。这是一个典型的宽度优先搜索（BFS）算法。
+
+<!-- more -->
+
+## 思路
 
 完成层序遍历，我们可以利于先进先出的队列来记录每一个层级的节点数。
 

@@ -4,17 +4,17 @@ tags:
   - Linked List
   - Two Pointers
 title: 19. Remove Nth Node From End of List (Medium)
-categories:
-  - leetcode
 ---
 
-With solutions both in Java and Python.
-
-先读题。
+删除链表的指定节点，返回修改后的链表 `head`。
 
 > Given the `head` of a linked list, remove the `nth` node from the **end of the list** and return its `head`.
 >
 > **Follow up**: Could you do this in one pass?
+
+<!-- more -->
+
+With solutions both in Java and Python.
 
 移除一个 linked list 末尾第 n 个节点，返回这个 linked list 的 head。最好是 One-pass 算法， 即一个流程里面获得想要的结果。
 
@@ -46,7 +46,7 @@ Constraints:
 - 0 <= `Node.val` <= 100
 - 1 <= `n` <= `sz`
 
-### 思路 & Solutions
+## 思路 & Solutions
 
 最简单的方法是先遍历一遍 Linked list 获得列表长度，然后重新遍历一次，在 `L - n - 1` 处停下，删掉下一个节点。
 

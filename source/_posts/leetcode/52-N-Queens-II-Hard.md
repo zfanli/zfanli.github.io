@@ -3,9 +3,15 @@ date: '2021-04-02T15:36:05.457Z'
 tags:
   - Backtracking
 title: 52. N-Queens II (Hard)
-categories:
-  - leetcode
 ---
+
+国际象棋问题。求在 `n x n` 的棋盘上摆放 Queen 棋子并让其不能相互攻击的布局数量。
+
+和 51 是孪生问题，不再赘述。
+
+<!-- more -->
+
+## 思路
 
 感觉在刷分 hhh。和 51 完全一样，不同之处在于这题只要计数。
 

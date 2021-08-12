@@ -1,11 +1,19 @@
 ---
 date: '2021-05-10T15:36:05.499Z'
 tags:
+  - Array
+  - Math
   - Stack
 title: 150. Evaluate Reverse Polish Notation (Medium)
-categories:
-  - leetcode
 ---
+
+演算反向波兰表示法。反向波兰表示法是一种为减少内存访问的使用 Stack 的演算表达法，这种方法按照先操作对象后操作符的方式表达算术运算。
+
+所以我们讨论如何使用 Stack 解决这道题。
+
+<!-- more -->
+
+## 思路
 
 反向波兰表示法是一种使用 Stack 达到方便计算目的的一种数学方法。
 

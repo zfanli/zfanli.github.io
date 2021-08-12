@@ -4,8 +4,6 @@ tags:
   - Array
   - Backtracking
 title: 39. Combination Sum (Medium)
-categories:
-  - leetcode
 ---
 
 先读题，这种题真是脑细胞的初见杀。
@@ -16,7 +14,9 @@ categories:
 >
 > It is guaranteed that the number of unique combinations that sum up to target is less than 150 combinations for the given input.
 
-### 思路 & Solutions
+<!-- more -->
+
+## 思路 & Solutions
 
 Backtrack
 
