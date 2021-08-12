@@ -700,7 +700,7 @@ class Solution:
       </tags>
   </entry>
   <entry>
-    <title></title>
+    <title>112. Path Sum (Easy)</title>
     <url>/post/leetcode/112-Path-Sum-Easy/</url>
     <content><![CDATA[<p>二叉树问题。求是否存在和目标值一致的路径和。</p>
 <p>路径和指的是从根节点到叶子节点的路径的值相加的结果。</p>
