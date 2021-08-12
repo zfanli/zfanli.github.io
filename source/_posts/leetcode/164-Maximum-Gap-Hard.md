@@ -1,13 +1,11 @@
 ---
-date: '2021-05-12T15:36:05.501Z'
+date: "2021-05-12T15:36:05.501Z"
 tags:
   - Array
   - Sorting
   - Bucket Sort
   - Radix Sort
 title: 164. Maximum Gap (Hard)
-categories:
-  - leetcode
 ---
 
 给定一个整数数组 `nums`，你需要将其排序后，找到相邻两个数之间的最大间隙（差）。如果不足两个元素则返回 0。
