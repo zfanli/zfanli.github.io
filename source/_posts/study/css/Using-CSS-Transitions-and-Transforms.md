@@ -1,8 +1,11 @@
 ---
 title: Using CSS Transitions and Transforms
-date: "2021-08-15T15:07:57.746Z"
+date: '2021-08-15T15:07:57.746Z'
 tags:
   - CSS
+categories:
+  - study
+  - css
 ---
 
 ## 过渡 transitions
