@@ -1,3 +1,8 @@
+.post-block *,
+.post-block *::before,
+.post-block *::after {
+  box-sizing: border-box;
+}
 .light-scheme {
   --body-bg-color: #fff;
   --content-bg-color: #f5f5f5;
@@ -3136,7 +3141,7 @@ hr {
   transition: all 0.2s ease-in-out;
 }
 .links-of-author a::before {
-  background: #ffe5ff;
+  background: #ffc10f;
   display: inline-block;
   margin-right: 3px;
   transform: translateY(-2px);
