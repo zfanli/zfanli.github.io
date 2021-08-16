@@ -58,9 +58,14 @@ post_asset_folder: false
 relative_link: false
 future: true
 highlight:
-  enable: false
-prismjs:
   enable: true
+  auto_detect: false
+  line_number: false
+  tab_replace: ""
+  wrap: true
+  hljs: false
+prismjs:
+  enable: false
   preprocess: false
   line_number: false
   tab_replace: ""

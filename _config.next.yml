@@ -347,14 +347,14 @@ codeblock:
   # Code Highlight theme
   # All available themes: https://theme-next.js.org/highlight/
   # theme:
-  #   light: default
-  #   dark: tomorrow-night
+  # light: default
+  # dark: tomorrow-night
   # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   # !! use `source/_styles/mixin.styl` to load highlight theme instead of this settings
   # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  prism:
-    light: none
-    dark: none
+  # prism:
+  #   light: none
+  #   dark: none
   # Add copy button on codeblock
   copy_button:
     enable: true
