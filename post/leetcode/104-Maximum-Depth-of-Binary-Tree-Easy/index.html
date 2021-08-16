@@ -19,7 +19,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"richard.bizcat.xyz","root":"/","images":"/images","scheme":"Mist","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":true,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/config.min.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"richard.bizcat.xyz","root":"/","images":"/images","scheme":"Mist","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/config.min.js"></script>
 <meta name="description" content="求二叉树的最大深度。二叉树的深度指的是其节点的最大层数。 这是一道简单题，但是可以视作是 Top-Down 和 Bottom-Up 方法的教学题。 我们应用 DFS 来处理之道题，来看看自上而下与自下而上方法的区别。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="104. Maximum Depth of Binary Tree (Easy)">
@@ -361,7 +361,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>724</span>
+      <span>714</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -386,32 +386,10 @@
 
 <h2 id="思路-1，Top-Down，递归"><a href="#思路-1，Top-Down，递归" class="headerlink" title="思路 1，Top-Down，递归"></a>思路 1，Top-Down，递归</h2><p>在递归过程中，我们先根据当前层的深度更新结果，然后针对子节点进行递归调用，重复这个过程直到遍历完整棵树。这是从上至下的解题方法，顺序体现在我们何时处理当前节点的值。</p>
 <p>这个思路可以解决问题，但是从逻辑上来说，如果存在子节点，那么当前节点的深度肯定不是最终答案，Top-Down 方法或许不是最符合这道题目逻辑的方法。</p>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def maxDepth(self, root: TreeNode) -&gt; int:
-        ans &#x3D; 0
-
-        def traverse(node, depth):
-            if not node:
-                return
-            nonlocal ans
-            ans &#x3D; max(ans, depth)
-            traverse(node.left, depth + 1)
-            traverse(node.right, depth + 1)
-
-        traverse(root, 1)
-        return ans</code></pre>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">maxDepth</span>(<span class="params">self, root: TreeNode</span>) -&gt; <span class="built_in">int</span>:</span></span><br><span class="line">        ans = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">traverse</span>(<span class="params">node, depth</span>):</span></span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">not</span> node:</span><br><span class="line">                <span class="keyword">return</span></span><br><span class="line">            <span class="keyword">nonlocal</span> ans</span><br><span class="line">            ans = <span class="built_in">max</span>(ans, depth)</span><br><span class="line">            traverse(node.left, depth + <span class="number">1</span>)</span><br><span class="line">            traverse(node.right, depth + <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">        traverse(root, <span class="number">1</span>)</span><br><span class="line">        <span class="keyword">return</span> ans</span><br></pre></td></tr></table></figure>
 
 <h2 id="思路-2，Bottom-Up，递归"><a href="#思路-2，Bottom-Up，递归" class="headerlink" title="思路 2，Bottom-Up，递归"></a>思路 2，Bottom-Up，递归</h2><p>在从下至上的方法中，我们先去计算以当前节点开始其子节点的最大深度，在结果的基础上 +1 作为当前节点的深度结束递归过程。</p>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def maxDepth(self, root: TreeNode) -&gt; int:
-
-        def traverse(node):
-            if not node:
-                return 0
-            return 1 + max(traverse(node.left),
-                           traverse(node.right))
-
-        return traverse(root)</code></pre>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">maxDepth</span>(<span class="params">self, root: TreeNode</span>) -&gt; <span class="built_in">int</span>:</span></span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">traverse</span>(<span class="params">node</span>):</span></span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">not</span> node:</span><br><span class="line">                <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">            <span class="keyword">return</span> <span class="number">1</span> + <span class="built_in">max</span>(traverse(node.left),</span><br><span class="line">                           traverse(node.right))</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> traverse(root)</span><br></pre></td></tr></table></figure>
 
     </div>
 
@@ -485,13 +463,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">101k</span>
+    <span title="站点总字数">96k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:32</span>
+    <span title="站点阅读时长">1:27</span>
   </span>
 </div>
 <div class="busuanzi-count">
@@ -520,8 +498,6 @@
 
   
   <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.24.1/components/prism-core.min.js" integrity="sha256-dz05jjFU9qYuMvQQlE6iWDtNAnEsmu6uMb1vWhKdkEM=" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.24.1/plugins/autoloader/prism-autoloader.min.js" integrity="sha256-sttoa+EIAvFFfeeIkmPn8ypyOOb6no2sZ2NbxtBXgqU=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/comments.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/utils.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/motion.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/schemes/muse.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/next-boot.min.js"></script>
 
   

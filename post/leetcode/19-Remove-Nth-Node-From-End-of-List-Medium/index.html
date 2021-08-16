@@ -19,7 +19,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"richard.bizcat.xyz","root":"/","images":"/images","scheme":"Mist","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":true,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/config.min.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"richard.bizcat.xyz","root":"/","images":"/images","scheme":"Mist","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/config.min.js"></script>
 <meta name="description" content="删除链表的指定节点，返回修改后的链表 head。  Given the head of a linked list, remove the nth node from the end of the list and return its head. Follow up: Could you do this in one pass?">
 <meta property="og:type" content="article">
 <meta property="og:title" content="19. Remove Nth Node From End of List (Medium)">
@@ -359,7 +359,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>1.9k</span>
+      <span>1.7k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -387,16 +387,13 @@
 <p>With solutions both in Java and Python.</p>
 <p>移除一个 linked list 末尾第 n 个节点，返回这个 linked list 的 head。最好是 One-pass 算法， 即一个流程里面获得想要的结果。</p>
 <p>Example 1:</p>
-<pre class="language-none"><code class="language-none">Input: head &#x3D; [1,2,3,4,5], n &#x3D; 2
-Output: [1,2,3,5]</code></pre>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Input: head = [1,2,3,4,5], n = 2</span><br><span class="line">Output: [1,2,3,5]</span><br></pre></td></tr></table></figure>
 
 <p>Example 2:</p>
-<pre class="language-none"><code class="language-none">Input: head &#x3D; [1], n &#x3D; 1
-Output: []</code></pre>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Input: head = [1], n = 1</span><br><span class="line">Output: []</span><br></pre></td></tr></table></figure>
 
 <p>Example 3:</p>
-<pre class="language-none"><code class="language-none">Input: head &#x3D; [1,2], n &#x3D; 1
-Output: [1]</code></pre>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Input: head = [1,2], n = 1</span><br><span class="line">Output: [1]</span><br></pre></td></tr></table></figure>
 
 <p>Constraints:</p>
 <ul>
@@ -414,62 +411,10 @@ Output: [1]</code></pre>
 </ul>
 <p>为了避免处理例子 2 中的那种删除唯一节点的情况，我们初始化一个 dummy 节点，从这里开始遍历。</p>
 <p>下面是 Python 代码。</p>
-<pre class="language-python" data-language="python"><code class="language-python"># Definition for singly-linked list.
-# class ListNode:
-#     def __init__(self, val&#x3D;0, next&#x3D;None):
-#         self.val &#x3D; val
-#         self.next &#x3D; next
-class Solution:
-    def removeNthFromEnd(self, head: ListNode, n: int) -&gt; ListNode:
-        dummy &#x3D; first &#x3D; second &#x3D; ListNode()
-        dummy.next &#x3D; head
-        dis &#x3D; 1
-
-        while first.next is not None:
-            first &#x3D; first.next
-            # 注意由于second指向需要删除的节点的上一个节点，所以需要与first保持n+1的距离
-            if dis !&#x3D; n + 1:
-                dis +&#x3D; 1
-            else:
-                second &#x3D; second.next
-
-        second.next &#x3D; second.next.next
-        return dummy.next</code></pre>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"># class ListNode:</span></span><br><span class="line"><span class="comment">#     def __init__(self, val=0, next=None):</span></span><br><span class="line"><span class="comment">#         self.val = val</span></span><br><span class="line"><span class="comment">#         self.next = next</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">removeNthFromEnd</span>(<span class="params">self, head: ListNode, n: <span class="built_in">int</span></span>) -&gt; ListNode:</span></span><br><span class="line">        dummy = first = second = ListNode()</span><br><span class="line">        dummy.<span class="built_in">next</span> = head</span><br><span class="line">        dis = <span class="number">1</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> first.<span class="built_in">next</span> <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">            first = first.<span class="built_in">next</span></span><br><span class="line">            <span class="comment"># 注意由于second指向需要删除的节点的上一个节点，所以需要与first保持n+1的距离</span></span><br><span class="line">            <span class="keyword">if</span> dis != n + <span class="number">1</span>:</span><br><span class="line">                dis += <span class="number">1</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                second = second.<span class="built_in">next</span></span><br><span class="line"></span><br><span class="line">        second.<span class="built_in">next</span> = second.<span class="built_in">next</span>.<span class="built_in">next</span></span><br><span class="line">        <span class="keyword">return</span> dummy.<span class="built_in">next</span></span><br></pre></td></tr></table></figure>
 
 <p>下面是相同逻辑的 Java 代码。</p>
-<pre class="language-java" data-language="java"><code class="language-java">&#x2F;**
- * Definition for singly-linked list.
- * public class ListNode &#123;
- *     int val;
- *     ListNode next;
- *     ListNode() &#123;&#125;
- *     ListNode(int val) &#123; this.val &#x3D; val; &#125;
- *     ListNode(int val, ListNode next) &#123; this.val &#x3D; val; this.next &#x3D; next; &#125;
- * &#125;
- *&#x2F;
-class Solution &#123;
-    public ListNode removeNthFromEnd(ListNode head, int n) &#123;
-        ListNode dummy &#x3D; new ListNode();
-        ListNode first &#x3D; dummy;
-        ListNode second &#x3D; dummy;
-        dummy.next &#x3D; head;
-
-        int dis &#x3D; 1;
-
-        while (first.next !&#x3D; null) &#123;
-            first &#x3D; first.next;
-            &#x2F;&#x2F; 注意由于second指向需要删除的节点的上一个节点，所以需要与first保持n+1的距离
-            if (dis !&#x3D; n + 1) &#123;
-                dis++;
-            &#125; else &#123;
-                second &#x3D; second.next;
-            &#125;
-        &#125;
-
-        second.next &#x3D; second.next.next;
-        return dummy.next;
-    &#125;
-&#125;</code></pre>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"> * public class ListNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     ListNode next;</span></span><br><span class="line"><span class="comment"> *     ListNode() &#123;&#125;</span></span><br><span class="line"><span class="comment"> *     ListNode(int val) &#123; this.val = val; &#125;</span></span><br><span class="line"><span class="comment"> *     ListNode(int val, ListNode next) &#123; this.val = val; this.next = next; &#125;</span></span><br><span class="line"><span class="comment"> * &#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> ListNode <span class="title">removeNthFromEnd</span><span class="params">(ListNode head, <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        ListNode dummy = <span class="keyword">new</span> ListNode();</span><br><span class="line">        ListNode first = dummy;</span><br><span class="line">        ListNode second = dummy;</span><br><span class="line">        dummy.next = head;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> dis = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> (first.next != <span class="keyword">null</span>) &#123;</span><br><span class="line">            first = first.next;</span><br><span class="line">            <span class="comment">// 注意由于second指向需要删除的节点的上一个节点，所以需要与first保持n+1的距离</span></span><br><span class="line">            <span class="keyword">if</span> (dis != n + <span class="number">1</span>) &#123;</span><br><span class="line">                dis++;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                second = second.next;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        second.next = second.next.next;</span><br><span class="line">        <span class="keyword">return</span> dummy.next;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
     </div>
 
@@ -538,13 +483,13 @@ class Solution &#123;
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">101k</span>
+    <span title="站点总字数">96k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:32</span>
+    <span title="站点阅读时长">1:27</span>
   </span>
 </div>
 <div class="busuanzi-count">
@@ -573,8 +518,6 @@ class Solution &#123;
 
   
   <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.24.1/components/prism-core.min.js" integrity="sha256-dz05jjFU9qYuMvQQlE6iWDtNAnEsmu6uMb1vWhKdkEM=" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.24.1/plugins/autoloader/prism-autoloader.min.js" integrity="sha256-sttoa+EIAvFFfeeIkmPn8ypyOOb6no2sZ2NbxtBXgqU=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/comments.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/utils.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/motion.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/schemes/muse.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/next-boot.min.js"></script>
 
   

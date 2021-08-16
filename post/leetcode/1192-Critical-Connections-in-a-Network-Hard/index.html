@@ -19,7 +19,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"richard.bizcat.xyz","root":"/","images":"/images","scheme":"Mist","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":true,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/config.min.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"richard.bizcat.xyz","root":"/","images":"/images","scheme":"Mist","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/config.min.js"></script>
 <meta name="description" content="图论问题。一共有 n 台服务器，我们将存在于任意 2 台服务器之间链接定义为边，可以构成一张无向图。 给定一个 connections 数组定义这个服务器网络的所有链接（边），在这个网络上任何节点都可以直接或间接的相互访问。 关键链接指的是这个网络中的某一个节点如果被移除，将导致一部分服务器无法访问到另一部分。 要求找到所有关键链接。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="1192. Critical Connections in a Network (Hard)">
@@ -361,7 +361,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>737</span>
+      <span>672</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -388,35 +388,7 @@
 <h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><blockquote>
 <p>解题思路需要 review 和重新记录。理论上思路是依次尝试移除一个链接，然后检查所有服务器是否还能互联。</p>
 </blockquote>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def criticalConnections(self, n: int, connections: List[List[int]]) -&gt; List[List[int]]:
-        # make adjacency-list of connections
-        adj &#x3D; defaultdict(list)
-        for u, v in connections:
-            adj[u].append(v)
-            adj[v].append(u)
-
-        # define dfs
-        def dfs(u, prev, id, ids, ans):
-            ids[u] &#x3D; id
-            for v in adj[u]:
-                if v &#x3D;&#x3D; prev:
-                    continue
-                elif ids[v] &#x3D;&#x3D; -1:
-                    ids[u] &#x3D; min(ids[u], dfs(v, u, id+1, ids, ans))
-                else:
-                    ids[u] &#x3D; min(ids[u], ids[v])
-
-            if id !&#x3D; 0 and ids[u] &#x3D;&#x3D; id:
-                ans.append([u, prev])
-
-            return ids[u]
-
-        ans &#x3D; []
-        ids &#x3D; [-1] * n
-        dfs(0, -1, 0, ids, ans)
-
-        return ans</code></pre>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">criticalConnections</span>(<span class="params">self, n: <span class="built_in">int</span>, connections: <span class="type">List</span>[<span class="type">List</span>[<span class="built_in">int</span>]]</span>) -&gt; <span class="type">List</span>[<span class="type">List</span>[<span class="built_in">int</span>]]:</span></span><br><span class="line">        <span class="comment"># make adjacency-list of connections</span></span><br><span class="line">        adj = defaultdict(<span class="built_in">list</span>)</span><br><span class="line">        <span class="keyword">for</span> u, v <span class="keyword">in</span> connections:</span><br><span class="line">            adj[u].append(v)</span><br><span class="line">            adj[v].append(u)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># define dfs</span></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">dfs</span>(<span class="params">u, prev, <span class="built_in">id</span>, ids, ans</span>):</span></span><br><span class="line">            ids[u] = <span class="built_in">id</span></span><br><span class="line">            <span class="keyword">for</span> v <span class="keyword">in</span> adj[u]:</span><br><span class="line">                <span class="keyword">if</span> v == prev:</span><br><span class="line">                    <span class="keyword">continue</span></span><br><span class="line">                <span class="keyword">elif</span> ids[v] == -<span class="number">1</span>:</span><br><span class="line">                    ids[u] = <span class="built_in">min</span>(ids[u], dfs(v, u, <span class="built_in">id</span>+<span class="number">1</span>, ids, ans))</span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    ids[u] = <span class="built_in">min</span>(ids[u], ids[v])</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> <span class="built_in">id</span> != <span class="number">0</span> <span class="keyword">and</span> ids[u] == <span class="built_in">id</span>:</span><br><span class="line">                ans.append([u, prev])</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> ids[u]</span><br><span class="line"></span><br><span class="line">        ans = []</span><br><span class="line">        ids = [-<span class="number">1</span>] * n</span><br><span class="line">        dfs(<span class="number">0</span>, -<span class="number">1</span>, <span class="number">0</span>, ids, ans)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> ans</span><br></pre></td></tr></table></figure>
 
     </div>
 
@@ -490,13 +462,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">101k</span>
+    <span title="站点总字数">96k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:32</span>
+    <span title="站点阅读时长">1:27</span>
   </span>
 </div>
 <div class="busuanzi-count">
@@ -525,8 +497,6 @@
 
   
   <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.24.1/components/prism-core.min.js" integrity="sha256-dz05jjFU9qYuMvQQlE6iWDtNAnEsmu6uMb1vWhKdkEM=" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.24.1/plugins/autoloader/prism-autoloader.min.js" integrity="sha256-sttoa+EIAvFFfeeIkmPn8ypyOOb6no2sZ2NbxtBXgqU=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/comments.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/utils.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/motion.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/schemes/muse.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/next-boot.min.js"></script>
 
   

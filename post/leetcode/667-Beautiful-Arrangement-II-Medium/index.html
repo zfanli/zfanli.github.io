@@ -19,7 +19,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"richard.bizcat.xyz","root":"/","images":"/images","scheme":"Mist","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":true,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/config.min.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"richard.bizcat.xyz","root":"/","images":"/images","scheme":"Mist","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/config.min.js"></script>
 <meta name="description" content="给定两个数 n 和 k，你需要构建一个数组包含从 1 到 n 的正整数，并且相邻两个数的差组成的数组必须要有 k 个不重复的元素。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="667. Beautiful Arrangement II （Medium）">
@@ -359,7 +359,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>5.9k</span>
+      <span>5.6k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -390,15 +390,11 @@
 <p>简而言之，我们要根据两个整数参数 <code>n</code> 和 <code>k</code>，来输出一个从 1 开始到 <code>n</code> 的整数数组，并且这个数组中，所有相邻的两个整数之间的差，其绝对值要凑齐 <code>k</code> 个不同的整数。</p>
 <p>来看看例子。</p>
 <p>Example 1:</p>
-<pre class="language-none"><code class="language-none">Input: n &#x3D; 3, k &#x3D; 1
-Output: [1, 2, 3]
-Explanation: The [1, 2, 3] has three different positive integers ranging from 1 to 3, and the [1, 1] has exactly 1 distinct integer: 1.</code></pre>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Input: n = 3, k = 1</span><br><span class="line">Output: [1, 2, 3]</span><br><span class="line">Explanation: The [1, 2, 3] has three different positive integers ranging from 1 to 3, and the [1, 1] has exactly 1 distinct integer: 1.</span><br></pre></td></tr></table></figure>
 
 <p>输出结果为整数 1 ～ 3，相邻整数的差为 [1, 1]，去重后长度为 1，满足 <code>k = 1</code> 的需求。</p>
 <p>Example 2:</p>
-<pre class="language-none"><code class="language-none">Input: n &#x3D; 3, k &#x3D; 2
-Output: [1, 3, 2]
-Explanation: The [1, 3, 2] has three different positive integers ranging from 1 to 3, and the [2, 1] has exactly 2 distinct integers: 1 and 2.</code></pre>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Input: n = 3, k = 2</span><br><span class="line">Output: [1, 3, 2]</span><br><span class="line">Explanation: The [1, 3, 2] has three different positive integers ranging from 1 to 3, and the [2, 1] has exactly 2 distinct integers: 1 and 2.</span><br></pre></td></tr></table></figure>
 
 <p>输出结果为整数 1 ～ 3，相邻整数的差为 [2, 1]，满足 <code>k = 2</code> 的需求。</p>
 <h2 id="Submission"><a href="#Submission" class="headerlink" title="Submission"></a>Submission</h2><p>先贴一下我自己独立完成的结果，防止剧透，具体代码会贴在最后。</p>
@@ -434,20 +430,7 @@ Explanation: The [1, 3, 2] has three different positive integers ranging from 1 
 </ul>
 <p>先硬算几个例子来找找规律。</p>
 <p>(因为懒，这里我直接贴讨论帖中的例子，UAADs 指的是唯一绝对相邻数差，贴主原文全称是 Unique Absolute Adjacent Difference，为了方便理解，后面我们就称之为“相邻数差”。)</p>
-<pre class="language-console" data-language="console"><code class="language-console">For eg.
-1. let n &#x3D; 10, k &#x3D; 4
-permutation &#x3D;&gt; [1, 5, 2, 4, 3, 6, 7, 8, 9, 10]
-UAADs       &#x3D;&gt; [X, 4, 3, 2, 1, 3, 1, 1, 1, 1]
-
-
-2. n &#x3D; 10, k &#x3D; 5
-permutation &#x3D;&gt; [1, 6, 2, 5, 3, 4, 7, 8, 9, 10]
-UAADs       &#x3D;&gt; [X, 5, 4, 3, 2, 1, 3, 1, 1, 1]
-
-
-3. n &#x3D; 9, k &#x3D; 8
-permutation &#x3D;&gt; [1, 9, 2, 8, 3, 7, 4, 6, 5]
-UAADs       &#x3D;&gt; [X, 8, 7, 6, 5, 4, 3, 2, 1]</code></pre>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">For eg.</span><br><span class="line">1. let n = 10, k = 4</span><br><span class="line">permutation =&gt; [1, 5, 2, 4, 3, 6, 7, 8, 9, 10]</span><br><span class="line">UAADs       =&gt; [X, 4, 3, 2, 1, 3, 1, 1, 1, 1]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">2. n = 10, k = 5</span><br><span class="line">permutation =&gt; [1, 6, 2, 5, 3, 4, 7, 8, 9, 10]</span><br><span class="line">UAADs       =&gt; [X, 5, 4, 3, 2, 1, 3, 1, 1, 1]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">3. n = 9, k = 8</span><br><span class="line">permutation =&gt; [1, 9, 2, 8, 3, 7, 4, 6, 5]</span><br><span class="line">UAADs       =&gt; [X, 8, 7, 6, 5, 4, 3, 2, 1]</span><br></pre></td></tr></table></figure>
 
 <p>题目不关注相邻数差的具体数值，所以正确的排列方式不止一种，这里我们只讨论可以相对直观理解的一种。</p>
 <p>观察上面例子可以了解到：</p>
@@ -472,17 +455,7 @@ UAADs       &#x3D;&gt; [X, 8, 7, 6, 5, 4, 3, 2, 1]</code></pre>
 <li>控制循环次数</li>
 <li>不使用非必要的变量</li>
 </ul>
-<h2 id="Solutions"><a href="#Solutions" class="headerlink" title="Solutions"></a>Solutions</h2><h3 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h3><pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def constructArray(self, n: int, k: int) -&gt; List[int]:
-        # 初始化一个数组，由于前两个值是已知的，所以直接写入字面量
-        ans &#x3D; [1, k + 1]
-        # 以 k 为基准进行循环
-        for x in range(1, k):
-            # 取倒数第二个值为计算基数，根据当前 index 决定做递增或递减
-            ans.append(ans[-2] + (1 if x % 2 &#x3D;&#x3D; 1 else -1))
-        # 按自然顺序填充剩下的元素
-        ans +&#x3D; range(k + 2, n + 1)
-        return ans</code></pre>
+<h2 id="Solutions"><a href="#Solutions" class="headerlink" title="Solutions"></a>Solutions</h2><h3 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">constructArray</span>(<span class="params">self, n: <span class="built_in">int</span>, k: <span class="built_in">int</span></span>) -&gt; <span class="type">List</span>[<span class="built_in">int</span>]:</span></span><br><span class="line">        <span class="comment"># 初始化一个数组，由于前两个值是已知的，所以直接写入字面量</span></span><br><span class="line">        ans = [<span class="number">1</span>, k + <span class="number">1</span>]</span><br><span class="line">        <span class="comment"># 以 k 为基准进行循环</span></span><br><span class="line">        <span class="keyword">for</span> x <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, k):</span><br><span class="line">            <span class="comment"># 取倒数第二个值为计算基数，根据当前 index 决定做递增或递减</span></span><br><span class="line">            ans.append(ans[-<span class="number">2</span>] + (<span class="number">1</span> <span class="keyword">if</span> x % <span class="number">2</span> == <span class="number">1</span> <span class="keyword">else</span> -<span class="number">1</span>))</span><br><span class="line">        <span class="comment"># 按自然顺序填充剩下的元素</span></span><br><span class="line">        ans += <span class="built_in">range</span>(k + <span class="number">2</span>, n + <span class="number">1</span>)</span><br><span class="line">        <span class="keyword">return</span> ans</span><br></pre></td></tr></table></figure>
 
 <p>结果如下。</p>
 <table>
@@ -506,23 +479,7 @@ UAADs       &#x3D;&gt; [X, 8, 7, 6, 5, 4, 3, 2, 1]</code></pre>
 </tbody></table>
 <h3 id="Java"><a href="#Java" class="headerlink" title="Java"></a>Java</h3><p>由于先做出了 Python 版本，相同思路转换成 Java 代码结果很糟糕。</p>
 <p>这里根据讨论帖的提示完成了一个较优的方案。</p>
-<pre class="language-java" data-language="java"><code class="language-java">class Solution &#123;
-    public int[] constructArray(int n, int k) &#123;
-        int[] ans &#x3D; new int[n];
-        &#x2F;&#x2F; l 为递增初始值，r 为递减初始值，用 i 来保存 index
-        int l &#x3D; 1, r &#x3D; k + 1, i &#x3D; 0;
-        &#x2F;&#x2F; 执行一个步长为 2 的循环来填充数组直到满足 k 个相邻数差
-        while (i &lt; k) &#123;
-            ans[i++] &#x3D; l++;
-            ans[i++] &#x3D; r--;
-        &#125;
-        &#x2F;&#x2F; 由于数组以1起始，故当 k 为偶数时做 2 步长的循环将漏掉一个数
-        if (l &#x3D;&#x3D; r) ans[i++] &#x3D; r;
-        &#x2F;&#x2F; 依序填充自然递增的数直到填至 n 为止
-        while (i &lt; n) ans[i++] &#x3D; i;
-        return ans;
-    &#125;
-&#125;</code></pre>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span>[] constructArray(<span class="keyword">int</span> n, <span class="keyword">int</span> k) &#123;</span><br><span class="line">        <span class="keyword">int</span>[] ans = <span class="keyword">new</span> <span class="keyword">int</span>[n];</span><br><span class="line">        <span class="comment">// l 为递增初始值，r 为递减初始值，用 i 来保存 index</span></span><br><span class="line">        <span class="keyword">int</span> l = <span class="number">1</span>, r = k + <span class="number">1</span>, i = <span class="number">0</span>;</span><br><span class="line">        <span class="comment">// 执行一个步长为 2 的循环来填充数组直到满足 k 个相邻数差</span></span><br><span class="line">        <span class="keyword">while</span> (i &lt; k) &#123;</span><br><span class="line">            ans[i++] = l++;</span><br><span class="line">            ans[i++] = r--;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 由于数组以1起始，故当 k 为偶数时做 2 步长的循环将漏掉一个数</span></span><br><span class="line">        <span class="keyword">if</span> (l == r) ans[i++] = r;</span><br><span class="line">        <span class="comment">// 依序填充自然递增的数直到填至 n 为止</span></span><br><span class="line">        <span class="keyword">while</span> (i &lt; n) ans[i++] = i;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>结果如下。</p>
 <table>
@@ -546,17 +503,7 @@ UAADs       &#x3D;&gt; [X, 8, 7, 6, 5, 4, 3, 2, 1]</code></pre>
 </tbody></table>
 <blockquote>
 <p>受 Java 版本思路启发，我修改了一下 Python 的算法，在空间复杂度上得到一些提升。</p>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution:
-   def constructArray(self, n: int, k: int) -&gt; List[int]:
-       ans &#x3D; [1, k + 1]
-       # 执行一个步长为 2 的循环来制造不同的相邻数差
-       for x in range(2, k, 2):
-           ans.append(ans[x-2] + 1)
-           ans.append(ans[x-1] - 1)
-       # 补充 k 为偶数时漏掉的数
-       if ans[-1] -2 &#x3D;&#x3D; ans[-2]: ans.append(ans[-1] - 1)
-       ans +&#x3D; range(len(ans) + 1, n + 1)
-       return ans</code></pre>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">   <span class="function"><span class="keyword">def</span> <span class="title">constructArray</span>(<span class="params">self, n: <span class="built_in">int</span>, k: <span class="built_in">int</span></span>) -&gt; <span class="type">List</span>[<span class="built_in">int</span>]:</span></span><br><span class="line">       ans = [<span class="number">1</span>, k + <span class="number">1</span>]</span><br><span class="line">       <span class="comment"># 执行一个步长为 2 的循环来制造不同的相邻数差</span></span><br><span class="line">       <span class="keyword">for</span> x <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>, k, <span class="number">2</span>):</span><br><span class="line">           ans.append(ans[x-<span class="number">2</span>] + <span class="number">1</span>)</span><br><span class="line">           ans.append(ans[x-<span class="number">1</span>] - <span class="number">1</span>)</span><br><span class="line">       <span class="comment"># 补充 k 为偶数时漏掉的数</span></span><br><span class="line">       <span class="keyword">if</span> ans[-<span class="number">1</span>] -<span class="number">2</span> == ans[-<span class="number">2</span>]: ans.append(ans[-<span class="number">1</span>] - <span class="number">1</span>)</span><br><span class="line">       ans += <span class="built_in">range</span>(<span class="built_in">len</span>(ans) + <span class="number">1</span>, n + <span class="number">1</span>)</span><br><span class="line">       <span class="keyword">return</span> ans</span><br></pre></td></tr></table></figure>
 
 <p>结果如下。</p>
 <table>
@@ -582,23 +529,7 @@ UAADs       &#x3D;&gt; [X, 8, 7, 6, 5, 4, 3, 2, 1]</code></pre>
 <h2 id="官方-Solution"><a href="#官方-Solution" class="headerlink" title="官方 Solution"></a>官方 Solution</h2><p>来学习一下官方答案的思路。这个问题官方给出了 2 个方案。</p>
 <h3 id="Approach-1-Brute-Force-Time-Limit-Exceeded"><a href="#Approach-1-Brute-Force-Time-Limit-Exceeded" class="headerlink" title="Approach #1: Brute Force [Time Limit Exceeded]"></a>Approach #1: Brute Force [Time Limit Exceeded]</h3><p>顾名思义，这个方法是暴力枚举所有排列，直到找到合适的排列。具体做法是准备一个检查唯一相邻数差数量的函数，然后对 1 ～ n 的数组排列进行枚举，直到找到该函数返回的唯一相邻数差的数量匹配 k 的值…</p>
 <p>这个方法就不细说了，下面的代码看看就好。</p>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution(object):
-    def constructArray(self, n, k):
-        seen &#x3D; [False] * n
-        def num_uniq_diffs(arr):
-            ans &#x3D; 0
-            for i in range(n):
-                seen[i] &#x3D; False
-            for i in range(len(arr) - 1):
-                delta &#x3D; abs(arr[i] - arr[i+1])
-                if not seen[delta]:
-                    ans +&#x3D; 1
-                    seen[delta] &#x3D; True
-            return ans
-
-        for cand in itertools.permutations(range(1, n+1)):
-            if num_uniq_diffs(cand) &#x3D;&#x3D; k:
-                return cand</code></pre>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>(<span class="params"><span class="built_in">object</span></span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">constructArray</span>(<span class="params">self, n, k</span>):</span></span><br><span class="line">        seen = [<span class="literal">False</span>] * n</span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">num_uniq_diffs</span>(<span class="params">arr</span>):</span></span><br><span class="line">            ans = <span class="number">0</span></span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n):</span><br><span class="line">                seen[i] = <span class="literal">False</span></span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(arr) - <span class="number">1</span>):</span><br><span class="line">                delta = <span class="built_in">abs</span>(arr[i] - arr[i+<span class="number">1</span>])</span><br><span class="line">                <span class="keyword">if</span> <span class="keyword">not</span> seen[delta]:</span><br><span class="line">                    ans += <span class="number">1</span></span><br><span class="line">                    seen[delta] = <span class="literal">True</span></span><br><span class="line">            <span class="keyword">return</span> ans</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> cand <span class="keyword">in</span> itertools.permutations(<span class="built_in">range</span>(<span class="number">1</span>, n+<span class="number">1</span>)):</span><br><span class="line">            <span class="keyword">if</span> num_uniq_diffs(cand) == k:</span><br><span class="line">                <span class="keyword">return</span> cand</span><br></pre></td></tr></table></figure>
 
 <h3 id="Approach-2-Construction-Accepted"><a href="#Approach-2-Construction-Accepted" class="headerlink" title="Approach #2: Construction [Accepted]"></a>Approach #2: Construction [Accepted]</h3><p>先看看官方原文，不过有些 LaTex 表达式不一定能正常显示，可以去 <a target="_blank" rel="noopener" href="https://leetcode.com/problems/beautiful-arrangement-ii/solution/">原地址</a> 查看。看完原文我们来分析和理解一下官方的思路。</p>
 <blockquote>
@@ -630,16 +561,7 @@ UAADs       &#x3D;&gt; [X, 8, 7, 6, 5, 4, 3, 2, 1]</code></pre>
 </li>
 </ul>
 <p>参考代码。</p>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution(object):
-    def constructArray(self, n, k):
-        ans &#x3D; list(range(1, n - k))
-        for i in range(k+1):
-            if i % 2 &#x3D;&#x3D; 0:
-                ans.append(n-k + i&#x2F;&#x2F;2)
-            else:
-                ans.append(n - i&#x2F;&#x2F;2)
-
-        return ans</code></pre>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>(<span class="params"><span class="built_in">object</span></span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">constructArray</span>(<span class="params">self, n, k</span>):</span></span><br><span class="line">        ans = <span class="built_in">list</span>(<span class="built_in">range</span>(<span class="number">1</span>, n - k))</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(k+<span class="number">1</span>):</span><br><span class="line">            <span class="keyword">if</span> i % <span class="number">2</span> == <span class="number">0</span>:</span><br><span class="line">                ans.append(n-k + i//<span class="number">2</span>)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                ans.append(n - i//<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> ans</span><br></pre></td></tr></table></figure>
 
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
 <li>从代码上来看，先取 k = 1 的排序，再取 k = n - 1 的排序确实让代码逻辑更加简洁和易懂；</li>
@@ -716,13 +638,13 @@ UAADs       &#x3D;&gt; [X, 8, 7, 6, 5, 4, 3, 2, 1]</code></pre>
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">101k</span>
+    <span title="站点总字数">96k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:32</span>
+    <span title="站点阅读时长">1:27</span>
   </span>
 </div>
 <div class="busuanzi-count">
@@ -751,8 +673,6 @@ UAADs       &#x3D;&gt; [X, 8, 7, 6, 5, 4, 3, 2, 1]</code></pre>
 
   
   <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.24.1/components/prism-core.min.js" integrity="sha256-dz05jjFU9qYuMvQQlE6iWDtNAnEsmu6uMb1vWhKdkEM=" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.24.1/plugins/autoloader/prism-autoloader.min.js" integrity="sha256-sttoa+EIAvFFfeeIkmPn8ypyOOb6no2sZ2NbxtBXgqU=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/comments.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/utils.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/motion.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/schemes/muse.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/next-boot.min.js"></script>
 
   

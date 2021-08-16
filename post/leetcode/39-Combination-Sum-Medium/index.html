@@ -19,7 +19,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"richard.bizcat.xyz","root":"/","images":"/images","scheme":"Mist","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":true,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/config.min.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"richard.bizcat.xyz","root":"/","images":"/images","scheme":"Mist","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/config.min.js"></script>
 <meta name="description" content="先读题，这种题真是脑细胞的初见杀。  Given an array of distinct integers candidates and a target integer target, return a list of all unique combinations of candidates where the chosen numbers sum to target. You may re">
 <meta property="og:type" content="article">
 <meta property="og:title" content="39. Combination Sum (Medium)">
@@ -386,52 +386,9 @@
 <span id="more"></span>
 
 <h2 id="思路-amp-Solutions"><a href="#思路-amp-Solutions" class="headerlink" title="思路 &amp; Solutions"></a>思路 &amp; Solutions</h2><p>Backtrack</p>
-<pre class="language-javascript" data-language="javascript"><code class="language-javascript">&#x2F;**
- * @param &#123;number[]&#125; candidates
- * @param &#123;number&#125; target
- * @return &#123;number[][]&#125;
- *&#x2F;
-var combinationSum &#x3D; function (candidates, target) &#123;
-  const ans &#x3D; [];
-  const sz &#x3D; candidates.length;
-  candidates.sort((a, b) &#x3D;&gt; a - b);
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param <span class="type">&#123;number[]&#125;</span> <span class="variable">candidates</span></span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param <span class="type">&#123;number&#125;</span> <span class="variable">target</span></span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return <span class="type">&#123;number[][]&#125;</span></span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> combinationSum = <span class="function"><span class="keyword">function</span> (<span class="params">candidates, target</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> ans = [];</span><br><span class="line">  <span class="keyword">const</span> sz = candidates.length;</span><br><span class="line">  candidates.sort(<span class="function">(<span class="params">a, b</span>) =&gt;</span> a - b);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> dfs = <span class="function">(<span class="params">c, tar, comb, begin</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (tar === <span class="number">0</span>) ans.push(comb);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = begin; i &lt; sz; i++) &#123;</span><br><span class="line">      <span class="keyword">if</span> (tar &lt; c[i]) <span class="keyword">break</span>;</span><br><span class="line">      dfs(c, tar - c[i], [...comb, c[i]], i);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  dfs(candidates, target, [], <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> ans;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
-  const dfs &#x3D; (c, tar, comb, begin) &#x3D;&gt; &#123;
-    if (tar &#x3D;&#x3D;&#x3D; 0) ans.push(comb);
-
-    for (let i &#x3D; begin; i &lt; sz; i++) &#123;
-      if (tar &lt; c[i]) break;
-      dfs(c, tar - c[i], [...comb, c[i]], i);
-    &#125;
-  &#125;;
-
-  dfs(candidates, target, [], 0);
-
-  return ans;
-&#125;;</code></pre>
-
-<pre class="language-java" data-language="java"><code class="language-java">class Solution &#123;
-    private List&lt;List&lt;Integer&gt;&gt; ans &#x3D; new ArrayList&lt;&gt;();
-    private int sz;
-
-    public List&lt;List&lt;Integer&gt;&gt; combinationSum(int[] candidates, int target) &#123;
-        sz &#x3D; candidates.length;
-        Arrays.sort(candidates);
-        dfs(candidates, target, new ArrayList&lt;Integer&gt;(), 0);
-        return ans;
-    &#125;
-
-    private void dfs(int[] c, int tar, List&lt;Integer&gt; comb, int begin) &#123;
-        if (tar &#x3D;&#x3D; 0) ans.add(new ArrayList&lt;&gt;(comb));
-
-        for (int i &#x3D; begin; i &lt; sz; i++) &#123;
-            if (tar &lt; c[i]) break;
-            comb.add(c[i]);
-            dfs(c, tar - c[i], comb, i);
-            comb.remove(comb.size() - 1);
-        &#125;
-    &#125;
-&#125;</code></pre>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> List&lt;List&lt;Integer&gt;&gt; ans = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> sz;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> List&lt;List&lt;Integer&gt;&gt; combinationSum(<span class="keyword">int</span>[] candidates, <span class="keyword">int</span> target) &#123;</span><br><span class="line">        sz = candidates.length;</span><br><span class="line">        Arrays.sort(candidates);</span><br><span class="line">        dfs(candidates, target, <span class="keyword">new</span> ArrayList&lt;Integer&gt;(), <span class="number">0</span>);</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span>[] c, <span class="keyword">int</span> tar, List&lt;Integer&gt; comb, <span class="keyword">int</span> begin)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (tar == <span class="number">0</span>) ans.add(<span class="keyword">new</span> ArrayList&lt;&gt;(comb));</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = begin; i &lt; sz; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (tar &lt; c[i]) <span class="keyword">break</span>;</span><br><span class="line">            comb.add(c[i]);</span><br><span class="line">            dfs(c, tar - c[i], comb, i);</span><br><span class="line">            comb.remove(comb.size() - <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
     </div>
 
@@ -503,13 +460,13 @@ var combinationSum &#x3D; function (candidates, target) &#123;
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">101k</span>
+    <span title="站点总字数">96k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:32</span>
+    <span title="站点阅读时长">1:27</span>
   </span>
 </div>
 <div class="busuanzi-count">
@@ -538,8 +495,6 @@ var combinationSum &#x3D; function (candidates, target) &#123;
 
   
   <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.24.1/components/prism-core.min.js" integrity="sha256-dz05jjFU9qYuMvQQlE6iWDtNAnEsmu6uMb1vWhKdkEM=" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.24.1/plugins/autoloader/prism-autoloader.min.js" integrity="sha256-sttoa+EIAvFFfeeIkmPn8ypyOOb6no2sZ2NbxtBXgqU=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/comments.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/utils.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/motion.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/schemes/muse.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/next-boot.min.js"></script>
 
   

@@ -19,7 +19,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"richard.bizcat.xyz","root":"/","images":"/images","scheme":"Mist","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":true,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/config.min.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"richard.bizcat.xyz","root":"/","images":"/images","scheme":"Mist","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/config.min.js"></script>
 <meta name="description" content="将二叉树结构数据扁平化为链表，采用前序遍历（pre-order traversal）顺序。 题目要求修改二叉树结构去构成数组，在这个限制下我们要对前序遍历做一些修改才能解决这道题。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="114. Flatten Binary Tree to Linked List (Medium)">
@@ -362,14 +362,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>2.9k</span>
+      <span>2.6k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>3 分钟</span>
+      <span>2 分钟</span>
     </span>
 </div>
 
@@ -385,118 +385,19 @@
 <span id="more"></span>
 
 <h2 id="思路-1，有序递归"><a href="#思路-1，有序递归" class="headerlink" title="思路 1，有序递归"></a>思路 1，有序递归</h2><p>重复先左后右的递归，用递归方法实现 O(1) 的难点在于将右节点挂在左节点的末尾，这里我们将递归函数的返回值设为递归最后一个元素，来解决这个难题。</p>
-<pre class="language-python" data-language="python"><code class="language-python"># Definition for a binary tree node.
-# class TreeNode:
-#     def __init__(self, val&#x3D;0, left&#x3D;None, right&#x3D;None):
-#         self.val &#x3D; val
-#         self.left &#x3D; left
-#         self.right &#x3D; right
-class Solution:
-    def flatten(self, root: TreeNode) -&gt; None:
-        &quot;&quot;&quot;
-        Do not return anything, modify root in-place instead.
-        &quot;&quot;&quot;
-        if root is None:
-            return root
-        def _flatten(node):
-            left, right &#x3D; node.left, node.right
-            if left:
-                left &#x3D; _flatten(left)
-                left.right &#x3D; node.right
-                node.right &#x3D; node.left
-                node.left &#x3D; None
-            if right:
-                right &#x3D; _flatten(right)
-            else:
-                right &#x3D; left
-            return right if right else node
-
-        _flatten(root)</code></pre>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Definition for a binary tree node.</span></span><br><span class="line"><span class="comment"># class TreeNode:</span></span><br><span class="line"><span class="comment">#     def __init__(self, val=0, left=None, right=None):</span></span><br><span class="line"><span class="comment">#         self.val = val</span></span><br><span class="line"><span class="comment">#         self.left = left</span></span><br><span class="line"><span class="comment">#         self.right = right</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">flatten</span>(<span class="params">self, root: TreeNode</span>) -&gt; <span class="literal">None</span>:</span></span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        Do not return anything, modify root in-place instead.</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">if</span> root <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            <span class="keyword">return</span> root</span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">_flatten</span>(<span class="params">node</span>):</span></span><br><span class="line">            left, right = node.left, node.right</span><br><span class="line">            <span class="keyword">if</span> left:</span><br><span class="line">                left = _flatten(left)</span><br><span class="line">                left.right = node.right</span><br><span class="line">                node.right = node.left</span><br><span class="line">                node.left = <span class="literal">None</span></span><br><span class="line">            <span class="keyword">if</span> right:</span><br><span class="line">                right = _flatten(right)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                right = left</span><br><span class="line">            <span class="keyword">return</span> right <span class="keyword">if</span> right <span class="keyword">else</span> node</span><br><span class="line"></span><br><span class="line">        _flatten(root)</span><br></pre></td></tr></table></figure>
 
 <h2 id="思路-2，学习题解的思路"><a href="#思路-2，学习题解的思路" class="headerlink" title="思路 2，学习题解的思路"></a>思路 2，学习题解的思路</h2><p>如果我们发现有左节点，找到左节点最下端的右节点，将 root 的右节点挂在上面，将左节点替换为 root 的右节点，重置 root 的左节点为空，root 节点向右进一位，检查左节点，如此往复，直到最后一个左节点消失，二分树转链表结束。</p>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def flatten(self, root: TreeNode) -&gt; None:
-        &quot;&quot;&quot;
-        Do not return anything, modify root in-place instead.
-        &quot;&quot;&quot;
-        while root:
-            if root.left:
-                left &#x3D; root.left
-                while left.right:
-                    left &#x3D; left.right
-                left.right &#x3D; root.right
-                root.right &#x3D; root.left
-                root.left &#x3D; None
-            root &#x3D; root.right</code></pre>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">flatten</span>(<span class="params">self, root: TreeNode</span>) -&gt; <span class="literal">None</span>:</span></span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        Do not return anything, modify root in-place instead.</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">while</span> root:</span><br><span class="line">            <span class="keyword">if</span> root.left:</span><br><span class="line">                left = root.left</span><br><span class="line">                <span class="keyword">while</span> left.right:</span><br><span class="line">                    left = left.right</span><br><span class="line">                left.right = root.right</span><br><span class="line">                root.right = root.left</span><br><span class="line">                root.left = <span class="literal">None</span></span><br><span class="line">            root = root.right</span><br></pre></td></tr></table></figure>
 
 <h2 id="思路-3，从下而上"><a href="#思路-3，从下而上" class="headerlink" title="思路 3，从下而上"></a>思路 3，从下而上</h2><p>和之前思路不同之处在于，这次我们从下而上的去将二叉树转化为链表，转化的顺序是 right -&gt; left -&gt; node，因为我们需要先 node，再 left，再 right 的顺序去组成这个链表。我们用递归来帮助完成这个过程，使用一个全局变量 <code>head</code> 来储存当前处理的节点，因为我们已经确保有序递归，所以 <code>head</code> 将从空（链表最后一个节点的子节点）开始，每次指向上一个节点，直到达到 <code>root</code> 节点。</p>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def flatten(self, root: TreeNode) -&gt; None:
-        &quot;&quot;&quot;
-        Do not return anything, modify root in-place instead.
-        &quot;&quot;&quot;
-        self.head &#x3D; None
-
-        def f(node):
-            if node.right:
-                f(node.right)
-            if node.left:
-                f(node.left)
-            node.left, node.right, self.head &#x3D; None, self.head, node
-
-        if root:
-            f(root)</code></pre>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">flatten</span>(<span class="params">self, root: TreeNode</span>) -&gt; <span class="literal">None</span>:</span></span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        Do not return anything, modify root in-place instead.</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        self.head = <span class="literal">None</span></span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">f</span>(<span class="params">node</span>):</span></span><br><span class="line">            <span class="keyword">if</span> node.right:</span><br><span class="line">                f(node.right)</span><br><span class="line">            <span class="keyword">if</span> node.left:</span><br><span class="line">                f(node.left)</span><br><span class="line">            node.left, node.right, self.head = <span class="literal">None</span>, self.head, node</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> root:</span><br><span class="line">            f(root)</span><br></pre></td></tr></table></figure>
 
 <p>相同思路的 Java 代码。</p>
-<pre class="language-java" data-language="java"><code class="language-java">&#x2F;**
- * Definition for a binary tree node.
- * public class TreeNode &#123;
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode() &#123;&#125;
- *     TreeNode(int val) &#123; this.val &#x3D; val; &#125;
- *     TreeNode(int val, TreeNode left, TreeNode right) &#123;
- *         this.val &#x3D; val;
- *         this.left &#x3D; left;
- *         this.right &#x3D; right;
- *     &#125;
- * &#125;
- *&#x2F;
-class Solution &#123;
-    private TreeNode head &#x3D; null;
-    public void flatten(TreeNode root) &#123;
-        if (root !&#x3D; null) f(root);
-    &#125;
-    private void f(TreeNode node) &#123;
-        if (node.right !&#x3D; null) f(node.right);
-        if (node.left !&#x3D; null) f(node.left);
-        node.left &#x3D; null; node.right &#x3D; head; head &#x3D; node;
-    &#125;
-&#125;</code></pre>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for a binary tree node.</span></span><br><span class="line"><span class="comment"> * public class TreeNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     TreeNode left;</span></span><br><span class="line"><span class="comment"> *     TreeNode right;</span></span><br><span class="line"><span class="comment"> *     TreeNode() &#123;&#125;</span></span><br><span class="line"><span class="comment"> *     TreeNode(int val) &#123; this.val = val; &#125;</span></span><br><span class="line"><span class="comment"> *     TreeNode(int val, TreeNode left, TreeNode right) &#123;</span></span><br><span class="line"><span class="comment"> *         this.val = val;</span></span><br><span class="line"><span class="comment"> *         this.left = left;</span></span><br><span class="line"><span class="comment"> *         this.right = right;</span></span><br><span class="line"><span class="comment"> *     &#125;</span></span><br><span class="line"><span class="comment"> * &#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> TreeNode head = <span class="keyword">null</span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">flatten</span><span class="params">(TreeNode root)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (root != <span class="keyword">null</span>) f(root);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">f</span><span class="params">(TreeNode node)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (node.right != <span class="keyword">null</span>) f(node.right);</span><br><span class="line">        <span class="keyword">if</span> (node.left != <span class="keyword">null</span>) f(node.left);</span><br><span class="line">        node.left = <span class="keyword">null</span>; node.right = head; head = node;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>JS 代码。</p>
-<pre class="language-js" data-language="js"><code class="language-js">&#x2F;**
- * Definition for a binary tree node.
- * function TreeNode(val, left, right) &#123;
- *     this.val &#x3D; (val&#x3D;&#x3D;&#x3D;undefined ? 0 : val)
- *     this.left &#x3D; (left&#x3D;&#x3D;&#x3D;undefined ? null : left)
- *     this.right &#x3D; (right&#x3D;&#x3D;&#x3D;undefined ? null : right)
- * &#125;
- *&#x2F;
-&#x2F;**
- * @param &#123;TreeNode&#125; root
- * @return &#123;void&#125; Do not return anything, modify root in-place instead.
- *&#x2F;
-var flatten &#x3D; function (root) &#123;
-  let head &#x3D; null;
-  const f &#x3D; (node) &#x3D;&gt; &#123;
-    if (node.right) f(node.right);
-    if (node.left) f(node.left);
-    (node.left &#x3D; null), (node.right &#x3D; head), (head &#x3D; node);
-  &#125;;
-  if (root) f(root);
-&#125;;</code></pre>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for a binary tree node.</span></span><br><span class="line"><span class="comment"> * function TreeNode(val, left, right) &#123;</span></span><br><span class="line"><span class="comment"> *     this.val = (val===undefined ? 0 : val)</span></span><br><span class="line"><span class="comment"> *     this.left = (left===undefined ? null : left)</span></span><br><span class="line"><span class="comment"> *     this.right = (right===undefined ? null : right)</span></span><br><span class="line"><span class="comment"> * &#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param <span class="type">&#123;TreeNode&#125;</span> <span class="variable">root</span></span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return <span class="type">&#123;void&#125;</span> </span>Do not return anything, modify root in-place instead.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> flatten = <span class="function"><span class="keyword">function</span> (<span class="params">root</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> head = <span class="literal">null</span>;</span><br><span class="line">  <span class="keyword">const</span> f = <span class="function">(<span class="params">node</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (node.right) f(node.right);</span><br><span class="line">    <span class="keyword">if</span> (node.left) f(node.left);</span><br><span class="line">    (node.left = <span class="literal">null</span>), (node.right = head), (head = node);</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="keyword">if</span> (root) f(root);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
     </div>
 
@@ -571,13 +472,13 @@ var flatten &#x3D; function (root) &#123;
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">101k</span>
+    <span title="站点总字数">96k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:32</span>
+    <span title="站点阅读时长">1:27</span>
   </span>
 </div>
 <div class="busuanzi-count">
@@ -606,8 +507,6 @@ var flatten &#x3D; function (root) &#123;
 
   
   <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.24.1/components/prism-core.min.js" integrity="sha256-dz05jjFU9qYuMvQQlE6iWDtNAnEsmu6uMb1vWhKdkEM=" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.24.1/plugins/autoloader/prism-autoloader.min.js" integrity="sha256-sttoa+EIAvFFfeeIkmPn8ypyOOb6no2sZ2NbxtBXgqU=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/comments.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/utils.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/motion.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/schemes/muse.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/next-boot.min.js"></script>
 
   

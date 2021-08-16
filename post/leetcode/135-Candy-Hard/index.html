@@ -19,7 +19,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"richard.bizcat.xyz","root":"/","images":"/images","scheme":"Mist","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":true,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/config.min.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"richard.bizcat.xyz","root":"/","images":"/images","scheme":"Mist","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/config.min.js"></script>
 <meta name="description" content="分糖果 🍬 问题。有 n 个小朋友站成一排，每个人被分配一个分值，现在你要给他们分糖果，有两个要求。  每个小朋友至少要有一个糖果 🍬； 分数高的小朋友要比两边分数低的小朋友糖果 🍬 多。  你需要找到一个分配方案需要最少的糖果 🍬 数量。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="135. Candy (Hard)">
@@ -359,14 +359,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>1.7k</span>
+      <span>1.6k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>2 分钟</span>
+      <span>1 分钟</span>
     </span>
 </div>
 
@@ -392,70 +392,15 @@
 <p>接着我们准备一个递归函数来根据这些依赖，最终去计算糖果数量。</p>
 <p>数据结构上，对于无依赖项，我们直接储存字面量（int），如果存在依赖则存入 list。</p>
 <p>递归时，如果目标是字面量则直接返回，如果存在进一步的依赖则调用递归进一步计算。这样可以在 O(n) 时间内完成递归。</p>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def candy(self, ratings: List[int]) -&gt; int:
-        n &#x3D; len(ratings)
-        c &#x3D; [-1] * n
-        for i in range(n):
-            res &#x3D; []
-            if i &gt; 0 and ratings[i - 1] &lt; ratings[i]:
-                res.append(i - 1)
-            if i &lt; n - 1 and ratings[i + 1] &lt; ratings[i]:
-                res.append(i + 1)
-            c[i] &#x3D; 1 if len(res) &#x3D;&#x3D; 0 else res
-
-        def cal(idx):
-            if type(c[idx]) &#x3D;&#x3D; int:
-                return c[idx]
-            res &#x3D; []
-            for x in c[idx]:
-                res.append(cal(x) + 1)
-            c[idx] &#x3D; max(res)
-            return c[idx]
-
-
-        for i in range(n):
-            cal(i)
-
-        return sum(c)</code></pre>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">candy</span>(<span class="params">self, ratings: <span class="type">List</span>[<span class="built_in">int</span>]</span>) -&gt; <span class="built_in">int</span>:</span></span><br><span class="line">        n = <span class="built_in">len</span>(ratings)</span><br><span class="line">        c = [-<span class="number">1</span>] * n</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n):</span><br><span class="line">            res = []</span><br><span class="line">            <span class="keyword">if</span> i &gt; <span class="number">0</span> <span class="keyword">and</span> ratings[i - <span class="number">1</span>] &lt; ratings[i]:</span><br><span class="line">                res.append(i - <span class="number">1</span>)</span><br><span class="line">            <span class="keyword">if</span> i &lt; n - <span class="number">1</span> <span class="keyword">and</span> ratings[i + <span class="number">1</span>] &lt; ratings[i]:</span><br><span class="line">                res.append(i + <span class="number">1</span>)</span><br><span class="line">            c[i] = <span class="number">1</span> <span class="keyword">if</span> <span class="built_in">len</span>(res) == <span class="number">0</span> <span class="keyword">else</span> res</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">cal</span>(<span class="params">idx</span>):</span></span><br><span class="line">            <span class="keyword">if</span> <span class="built_in">type</span>(c[idx]) == <span class="built_in">int</span>:</span><br><span class="line">                <span class="keyword">return</span> c[idx]</span><br><span class="line">            res = []</span><br><span class="line">            <span class="keyword">for</span> x <span class="keyword">in</span> c[idx]:</span><br><span class="line">                res.append(cal(x) + <span class="number">1</span>)</span><br><span class="line">            c[idx] = <span class="built_in">max</span>(res)</span><br><span class="line">            <span class="keyword">return</span> c[idx]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n):</span><br><span class="line">            cal(i)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">sum</span>(c)</span><br></pre></td></tr></table></figure>
 
 <h2 id="思路-2，双列表。"><a href="#思路-2，双列表。" class="headerlink" title="思路 2，双列表。"></a>思路 2，双列表。</h2><p>换一个角度看下思路一，我们能发现从左到右遍历列表时，我们无法预知右边的值是否会变动，但是我们知道左边的值都是看过的，不会发生变动。于是，我们可以准备另一个列表从右到左的遍历一次列表，这样我们就获得了一个能确保右边值都考虑到了的数据。</p>
 <p>要保证每个位置的糖果都符合题目要求，我们需要对两个列表相同位置的糖果取最大值，结果将是我们的答案。</p>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def candy(self, ratings: List[int]) -&gt; int:
-        n &#x3D; len(ratings)
-        left, right &#x3D; [1] * n, [1] * n
-
-        for i in range(n):
-            if i &gt; 0 and ratings[i - 1] &lt; ratings[i]:
-                left[i] &#x3D; left[i - 1] + 1
-
-        for i in range(n - 1, -1, -1):
-            if i &lt; n - 1 and ratings[i + 1] &lt; ratings[i]:
-                right[i] &#x3D; right[i + 1] + 1
-
-        ans &#x3D; 0
-        for i in range(n):
-            ans +&#x3D; max(left[i], right[i])
-
-        return ans</code></pre>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">candy</span>(<span class="params">self, ratings: <span class="type">List</span>[<span class="built_in">int</span>]</span>) -&gt; <span class="built_in">int</span>:</span></span><br><span class="line">        n = <span class="built_in">len</span>(ratings)</span><br><span class="line">        left, right = [<span class="number">1</span>] * n, [<span class="number">1</span>] * n</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n):</span><br><span class="line">            <span class="keyword">if</span> i &gt; <span class="number">0</span> <span class="keyword">and</span> ratings[i - <span class="number">1</span>] &lt; ratings[i]:</span><br><span class="line">                left[i] = left[i - <span class="number">1</span>] + <span class="number">1</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n - <span class="number">1</span>, -<span class="number">1</span>, -<span class="number">1</span>):</span><br><span class="line">            <span class="keyword">if</span> i &lt; n - <span class="number">1</span> <span class="keyword">and</span> ratings[i + <span class="number">1</span>] &lt; ratings[i]:</span><br><span class="line">                right[i] = right[i + <span class="number">1</span>] + <span class="number">1</span></span><br><span class="line"></span><br><span class="line">        ans = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n):</span><br><span class="line">            ans += <span class="built_in">max</span>(left[i], right[i])</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> ans</span><br></pre></td></tr></table></figure>
 
 <h2 id="思路-3，单列表。"><a href="#思路-3，单列表。" class="headerlink" title="思路 3，单列表。"></a>思路 3，单列表。</h2><p>思路 2 的优化版本，使用双列表时，实际上我们没有同时使用到它们，所以优化的思路就是在第二次遍历时对列表进行更新，而不是重新准备一个列表。</p>
 <p>这样完成第二次遍历之后，列表的和就是答案。</p>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def candy(self, ratings: List[int]) -&gt; int:
-        n &#x3D; len(ratings)
-        c &#x3D; [1] * n
-
-        for i in range(n):
-            if i &gt; 0 and ratings[i - 1] &lt; ratings[i]:
-                c[i] &#x3D; c[i - 1] + 1
-
-        for i in range(n - 1, -1, -1):
-            if i &lt; n - 1 and ratings[i + 1] &lt; ratings[i]:
-                c[i] &#x3D; max(c[i], c[i + 1] + 1)
-
-        return sum(c)</code></pre>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">candy</span>(<span class="params">self, ratings: <span class="type">List</span>[<span class="built_in">int</span>]</span>) -&gt; <span class="built_in">int</span>:</span></span><br><span class="line">        n = <span class="built_in">len</span>(ratings)</span><br><span class="line">        c = [<span class="number">1</span>] * n</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n):</span><br><span class="line">            <span class="keyword">if</span> i &gt; <span class="number">0</span> <span class="keyword">and</span> ratings[i - <span class="number">1</span>] &lt; ratings[i]:</span><br><span class="line">                c[i] = c[i - <span class="number">1</span>] + <span class="number">1</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n - <span class="number">1</span>, -<span class="number">1</span>, -<span class="number">1</span>):</span><br><span class="line">            <span class="keyword">if</span> i &lt; n - <span class="number">1</span> <span class="keyword">and</span> ratings[i + <span class="number">1</span>] &lt; ratings[i]:</span><br><span class="line">                c[i] = <span class="built_in">max</span>(c[i], c[i + <span class="number">1</span>] + <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">sum</span>(c)</span><br></pre></td></tr></table></figure>
 
     </div>
 
@@ -527,13 +472,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">101k</span>
+    <span title="站点总字数">96k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:32</span>
+    <span title="站点阅读时长">1:27</span>
   </span>
 </div>
 <div class="busuanzi-count">
@@ -562,8 +507,6 @@
 
   
   <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.24.1/components/prism-core.min.js" integrity="sha256-dz05jjFU9qYuMvQQlE6iWDtNAnEsmu6uMb1vWhKdkEM=" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.24.1/plugins/autoloader/prism-autoloader.min.js" integrity="sha256-sttoa+EIAvFFfeeIkmPn8ypyOOb6no2sZ2NbxtBXgqU=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/comments.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/utils.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/motion.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/schemes/muse.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/next-boot.min.js"></script>
 
   

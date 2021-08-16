@@ -19,7 +19,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"richard.bizcat.xyz","root":"/","images":"/images","scheme":"Mist","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":true,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/config.min.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"richard.bizcat.xyz","root":"/","images":"/images","scheme":"Mist","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/config.min.js"></script>
 <meta name="description" content="给定一个尺寸为 m x n 的二进制值的矩阵。定义元素的值为 1 表示土地，元素值为 0 表示海水。 陆地由四边邻接的土地组合而成，陆地的面积是接邻的土地的数量。 求矩阵中的陆地的最大面积，如果不存在陆地则返回 0。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="695. Max Area of Island (Medium)">
@@ -362,7 +362,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>1.1k</span>
+      <span>1k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -386,44 +386,10 @@
 <span id="more"></span>
 
 <h2 id="思路-1，递归"><a href="#思路-1，递归" class="headerlink" title="思路 1，递归"></a>思路 1，递归</h2><p>使用 DFS 搜索所有陆地（1），将搜索过的元素标注为 1 以外的数，避免重复计算，每次搜索到一个目标，保持一个最大结果作为答案。</p>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def maxAreaOfIsland(self, grid: List[List[int]]) -&gt; int:
-        m, n, ans &#x3D; len(grid), len(grid[0]), 0
-
-        def search(x, y):
-            if x &lt; 0 or x &#x3D;&#x3D; m or y &lt; 0 or y &#x3D;&#x3D; n or grid[x][y] !&#x3D; 1:
-                return 0
-            grid[x][y]  &#x3D; -1
-            return 1 + search(x, y - 1) + search(x, y + 1) + search(x + 1, y) + search(x - 1, y)
-
-        for i in range(m):
-            for j in range(n):
-                if grid[i][j] &#x3D;&#x3D; 1:
-                    ans &#x3D; max(ans, search(i, j))
-
-        return ans</code></pre>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">maxAreaOfIsland</span>(<span class="params">self, grid: <span class="type">List</span>[<span class="type">List</span>[<span class="built_in">int</span>]]</span>) -&gt; <span class="built_in">int</span>:</span></span><br><span class="line">        m, n, ans = <span class="built_in">len</span>(grid), <span class="built_in">len</span>(grid[<span class="number">0</span>]), <span class="number">0</span></span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">search</span>(<span class="params">x, y</span>):</span></span><br><span class="line">            <span class="keyword">if</span> x &lt; <span class="number">0</span> <span class="keyword">or</span> x == m <span class="keyword">or</span> y &lt; <span class="number">0</span> <span class="keyword">or</span> y == n <span class="keyword">or</span> grid[x][y] != <span class="number">1</span>:</span><br><span class="line">                <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">            grid[x][y]  = -<span class="number">1</span></span><br><span class="line">            <span class="keyword">return</span> <span class="number">1</span> + search(x, y - <span class="number">1</span>) + search(x, y + <span class="number">1</span>) + search(x + <span class="number">1</span>, y) + search(x - <span class="number">1</span>, y)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(m):</span><br><span class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(n):</span><br><span class="line">                <span class="keyword">if</span> grid[i][j] == <span class="number">1</span>:</span><br><span class="line">                    ans = <span class="built_in">max</span>(ans, search(i, j))</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> ans</span><br></pre></td></tr></table></figure>
 
 <h2 id="思路-2，栈"><a href="#思路-2，栈" class="headerlink" title="思路 2，栈"></a>思路 2，栈</h2><p>用一个 set <code>seen</code> 储存遇到过的格子，避免重复计算。每当遇到陆地，新建一个栈，遍历这个栈，取出栈顶的格子，将其上下左右四个方向存在陆地的格子放到栈顶，重复这个过程直到栈清空，维持一个计数最大值作为答案。</p>
-<pre class="language-python" data-language="python"><code class="language-python">class Solution:
-    def maxAreaOfIsland(self, grid: List[List[int]]) -&gt; int:
-        m, n, ans, seen &#x3D; len(grid), len(grid[0]), 0, set()
-        for i in range(m):
-            for j in range(n):
-                if grid[i][j] !&#x3D; 1:
-                    continue
-                count, stack &#x3D; 0, [(i, j)]
-                while len(stack) &gt; 0:
-                    # print(stack)
-                    x, y &#x3D; stack.pop()
-                    seen.add((x, y))
-                    count +&#x3D; 1
-                    for _x, _y in ((x-1, y), (x+1, y), (x, y-1), (x, y+1)):
-                        if _x &gt;&#x3D; 0 and _x &lt; m and _y &gt;&#x3D; 0 and _y &lt; n and (_x, _y) not in seen:
-                            if grid[_x][_y] &#x3D;&#x3D; 1:
-                                stack.append((_x, _y))
-                                seen.add((_x, _y))
-                ans &#x3D; max(ans, count)
-        return ans</code></pre>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">maxAreaOfIsland</span>(<span class="params">self, grid: <span class="type">List</span>[<span class="type">List</span>[<span class="built_in">int</span>]]</span>) -&gt; <span class="built_in">int</span>:</span></span><br><span class="line">        m, n, ans, seen = <span class="built_in">len</span>(grid), <span class="built_in">len</span>(grid[<span class="number">0</span>]), <span class="number">0</span>, <span class="built_in">set</span>()</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(m):</span><br><span class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(n):</span><br><span class="line">                <span class="keyword">if</span> grid[i][j] != <span class="number">1</span>:</span><br><span class="line">                    <span class="keyword">continue</span></span><br><span class="line">                count, stack = <span class="number">0</span>, [(i, j)]</span><br><span class="line">                <span class="keyword">while</span> <span class="built_in">len</span>(stack) &gt; <span class="number">0</span>:</span><br><span class="line">                    <span class="comment"># print(stack)</span></span><br><span class="line">                    x, y = stack.pop()</span><br><span class="line">                    seen.add((x, y))</span><br><span class="line">                    count += <span class="number">1</span></span><br><span class="line">                    <span class="keyword">for</span> _x, _y <span class="keyword">in</span> ((x-<span class="number">1</span>, y), (x+<span class="number">1</span>, y), (x, y-<span class="number">1</span>), (x, y+<span class="number">1</span>)):</span><br><span class="line">                        <span class="keyword">if</span> _x &gt;= <span class="number">0</span> <span class="keyword">and</span> _x &lt; m <span class="keyword">and</span> _y &gt;= <span class="number">0</span> <span class="keyword">and</span> _y &lt; n <span class="keyword">and</span> (_x, _y) <span class="keyword">not</span> <span class="keyword">in</span> seen:</span><br><span class="line">                            <span class="keyword">if</span> grid[_x][_y] == <span class="number">1</span>:</span><br><span class="line">                                stack.append((_x, _y))</span><br><span class="line">                                seen.add((_x, _y))</span><br><span class="line">                ans = <span class="built_in">max</span>(ans, count)</span><br><span class="line">        <span class="keyword">return</span> ans</span><br></pre></td></tr></table></figure>
 
     </div>
 
@@ -498,13 +464,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">101k</span>
+    <span title="站点总字数">96k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:32</span>
+    <span title="站点阅读时长">1:27</span>
   </span>
 </div>
 <div class="busuanzi-count">
@@ -533,8 +499,6 @@
 
   
   <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.24.1/components/prism-core.min.js" integrity="sha256-dz05jjFU9qYuMvQQlE6iWDtNAnEsmu6uMb1vWhKdkEM=" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.24.1/plugins/autoloader/prism-autoloader.min.js" integrity="sha256-sttoa+EIAvFFfeeIkmPn8ypyOOb6no2sZ2NbxtBXgqU=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/comments.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/utils.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/motion.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/schemes/muse.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/next-boot.min.js"></script>
 
   

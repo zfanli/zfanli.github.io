@@ -19,7 +19,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"richard.bizcat.xyz","root":"/","images":"/images","scheme":"Mist","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":true,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/config.min.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"richard.bizcat.xyz","root":"/","images":"/images","scheme":"Mist","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/config.min.js"></script>
 <meta name="description" content="链表问题。链表分区，给你一个链表和整数 x，你需要在保证相对顺序的情况下，将小于 x 的值排在链表前面，大于等于 x 的值排在后面。  Given the head of a linked list and a value x, partition it such that all nodes less than x come before nodes greater than or equal">
 <meta property="og:type" content="article">
 <meta property="og:title" content="86. Partition List (Medium)">
@@ -359,7 +359,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>2.3k</span>
+      <span>2.1k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -388,12 +388,10 @@
 <p>已知参数为一个 linked list 和 x，需要将数组根据 x 的值分区，小于它的放在前面，大于等于它的放在后面，并且分区后要保证原有顺序不变。</p>
 <p>从下面例子可以看出来，我们可以把数组拆成一个前一个后，保持元素相对顺序，然后拼接起来。</p>
 <p>Example 1:</p>
-<pre class="language-console" data-language="console"><code class="language-console">Input: head &#x3D; [1,4,3,2,5,2], x &#x3D; 3
-Output: [1,2,2,4,3,5]</code></pre>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">Input: head = [1,4,3,2,5,2], x = 3</span><br><span class="line">Output: [1,2,2,4,3,5]</span><br></pre></td></tr></table></figure>
 
 <p>Example 2:</p>
-<pre class="language-console" data-language="console"><code class="language-console">Input: head &#x3D; [2,1], x &#x3D; 2
-Output: [1,2]</code></pre>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">Input: head = [2,1], x = 2</span><br><span class="line">Output: [1,2]</span><br></pre></td></tr></table></figure>
 
 <h2 id="Submissions"><a href="#Submissions" class="headerlink" title="Submissions"></a>Submissions</h2><p>我的代码时间复杂度还能看，空间复杂度已经脱离排名，没法看了。</p>
 <p>虽然解题思路和官方一样，但是处理上有些愚蠢，这题就不贴我的结果了。</p>
@@ -404,11 +402,7 @@ Output: [1,2]</code></pre>
 <li>将两个列表连接起来作为结果</li>
 </ul>
 <p>逻辑很简单，但是 linked list 的接口如下。</p>
-<pre class="language-python" data-language="python"><code class="language-python"># Definition for singly-linked list.
- class ListNode:
-     def __init__(self, val&#x3D;0, next&#x3D;None):
-         self.val &#x3D; val
-         self.next &#x3D; next</code></pre>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Definition for singly-linked list.</span></span><br><span class="line"> <span class="class"><span class="keyword">class</span> <span class="title">ListNode</span>:</span></span><br><span class="line">     <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, val=<span class="number">0</span>, <span class="built_in">next</span>=<span class="literal">None</span></span>):</span></span><br><span class="line">         self.val = val</span><br><span class="line">         self.<span class="built_in">next</span> = <span class="built_in">next</span></span><br></pre></td></tr></table></figure>
 
 <p>程序拿到的参数是这个 linked list 的第一个元素，这是一个逻辑上的列表，我们只能向下遍历，无法从下节点反推出上一个节点的值。</p>
 <p>要准备 before 和 after 列表我们首先要知道从哪里开始，以及如何开始。</p>
@@ -418,66 +412,10 @@ Output: [1,2]</code></pre>
 <li>官解的处理是，将 before 和 after 初始化为两个伪节点，规避了初始化问题（是我没想到的思路）。</li>
 </ul>
 <p>看一下 Python 代码理解一下这个处理。</p>
-<pre class="language-python" data-language="python"><code class="language-python"># Definition for singly-linked list.
-# class ListNode:
-#     def __init__(self, val&#x3D;0, next&#x3D;None):
-#         self.val &#x3D; val
-#         self.next &#x3D; next
-class Solution:
-    def partition(self, head: ListNode, x: int) -&gt; ListNode:
-        bef &#x3D; bf_head &#x3D; ListNode(0)
-        aft &#x3D; af_head &#x3D; ListNode(0)
-
-        while head is not None:
-            if head.val &lt; x:
-                bef.next &#x3D; head
-                bef &#x3D; head
-            else:
-                aft.next &#x3D; head
-                aft &#x3D; head
-            head &#x3D; head.next
-
-        aft.next &#x3D; None
-        bef.next &#x3D; af_head.next
-
-        return bf_head.next
-</code></pre>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"># class ListNode:</span></span><br><span class="line"><span class="comment">#     def __init__(self, val=0, next=None):</span></span><br><span class="line"><span class="comment">#         self.val = val</span></span><br><span class="line"><span class="comment">#         self.next = next</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">partition</span>(<span class="params">self, head: ListNode, x: <span class="built_in">int</span></span>) -&gt; ListNode:</span></span><br><span class="line">        bef = bf_head = ListNode(<span class="number">0</span>)</span><br><span class="line">        aft = af_head = ListNode(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> head <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">            <span class="keyword">if</span> head.val &lt; x:</span><br><span class="line">                bef.<span class="built_in">next</span> = head</span><br><span class="line">                bef = head</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                aft.<span class="built_in">next</span> = head</span><br><span class="line">                aft = head</span><br><span class="line">            head = head.<span class="built_in">next</span></span><br><span class="line"></span><br><span class="line">        aft.<span class="built_in">next</span> = <span class="literal">None</span></span><br><span class="line">        bef.<span class="built_in">next</span> = af_head.<span class="built_in">next</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> bf_head.<span class="built_in">next</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p>Java 代码逻辑一样。</p>
-<pre class="language-java" data-language="java"><code class="language-java">&#x2F;**
- * Definition for singly-linked list.
- * public class ListNode &#123;
- *     int val;
- *     ListNode next;
- *     ListNode() &#123;&#125;
- *     ListNode(int val) &#123; this.val &#x3D; val; &#125;
- *     ListNode(int val, ListNode next) &#123; this.val &#x3D; val; this.next &#x3D; next; &#125;
- * &#125;
- *&#x2F;
-class Solution &#123;
-    public ListNode partition(ListNode head, int x) &#123;
-        ListNode before &#x3D; new ListNode();
-        ListNode after &#x3D; new ListNode();
-        ListNode bfHead &#x3D; before;
-        ListNode afHead &#x3D; after;
-
-        while (head !&#x3D; null) &#123;
-            if (head.val &lt; x) &#123;
-                before.next &#x3D; head;
-                before &#x3D; head;
-            &#125; else &#123;
-                after.next &#x3D; head;
-                after &#x3D; head;
-            &#125;
-            head &#x3D; head.next;
-        &#125;
-
-        after.next &#x3D; null;
-        before.next &#x3D; afHead.next;
-
-        return bfHead.next;
-    &#125;
-&#125;</code></pre>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"> * public class ListNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     ListNode next;</span></span><br><span class="line"><span class="comment"> *     ListNode() &#123;&#125;</span></span><br><span class="line"><span class="comment"> *     ListNode(int val) &#123; this.val = val; &#125;</span></span><br><span class="line"><span class="comment"> *     ListNode(int val, ListNode next) &#123; this.val = val; this.next = next; &#125;</span></span><br><span class="line"><span class="comment"> * &#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> ListNode <span class="title">partition</span><span class="params">(ListNode head, <span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">        ListNode before = <span class="keyword">new</span> ListNode();</span><br><span class="line">        ListNode after = <span class="keyword">new</span> ListNode();</span><br><span class="line">        ListNode bfHead = before;</span><br><span class="line">        ListNode afHead = after;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> (head != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (head.val &lt; x) &#123;</span><br><span class="line">                before.next = head;</span><br><span class="line">                before = head;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                after.next = head;</span><br><span class="line">                after = head;</span><br><span class="line">            &#125;</span><br><span class="line">            head = head.next;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        after.next = <span class="keyword">null</span>;</span><br><span class="line">        before.next = afHead.next;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> bfHead.next;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>进行伪初始化的处理很好的规避了初始化判断，对遍历的处理也只是改变了列表的排序，两者使得程序在时间和空间复杂度上有很好的表现。</p>
 <ul>
@@ -555,13 +493,13 @@ class Solution &#123;
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">101k</span>
+    <span title="站点总字数">96k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:32</span>
+    <span title="站点阅读时长">1:27</span>
   </span>
 </div>
 <div class="busuanzi-count">
@@ -590,8 +528,6 @@ class Solution &#123;
 
   
   <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.24.1/components/prism-core.min.js" integrity="sha256-dz05jjFU9qYuMvQQlE6iWDtNAnEsmu6uMb1vWhKdkEM=" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.24.1/plugins/autoloader/prism-autoloader.min.js" integrity="sha256-sttoa+EIAvFFfeeIkmPn8ypyOOb6no2sZ2NbxtBXgqU=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/comments.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/utils.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/motion.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/schemes/muse.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/next-boot.min.js"></script>
 
   

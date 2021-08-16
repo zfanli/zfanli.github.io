@@ -19,7 +19,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"richard.bizcat.xyz","root":"/","images":"/images","scheme":"Mist","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":true,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/config.min.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"richard.bizcat.xyz","root":"/","images":"/images","scheme":"Mist","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/config.min.js"></script>
 <meta name="description" content="你需要实现一个迭代器来扁平化一个嵌套的整数数组。嵌套整数数组中可能存在整数元素和嵌套整数数组两种元素。 如果你选择的语言有生成器机制，那么这题会很简单。我们分别从生成器和 Stack 的应用来解决这道题。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="341. Flatten Nested List Iterator (Medium)">
@@ -363,7 +363,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>2.7k</span>
+      <span>2.6k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -399,14 +399,10 @@
 <p>题目比较明确，需要我们用迭代器接口来扁平化嵌套数组，需要实现 <code>next</code> 和 <code>hasNext</code> 接口。测试 Case 会调用 <code>hasNext</code> 来检查是否还有值没输出，然后调用 <code>next</code> 获取具体的值。</p>
 <p>需求比较明确，例子看看就好。</p>
 <p>Example 1:</p>
-<pre class="language-console" data-language="console"><code class="language-console">Input: nestedList &#x3D; [[1,1],2,[1,1]]
-Output: [1,1,2,1,1]
-Explanation: By calling next repeatedly until hasNext returns false, the order of elements returned by next should be: [1,1,2,1,1].</code></pre>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">Input: nestedList = [[1,1],2,[1,1]]</span><br><span class="line">Output: [1,1,2,1,1]</span><br><span class="line">Explanation: By calling next repeatedly until hasNext returns false, the order of elements returned by next should be: [1,1,2,1,1].</span><br></pre></td></tr></table></figure>
 
 <p>Example 2:</p>
-<pre class="language-console" data-language="console"><code class="language-console">Input: nestedList &#x3D; [1,[4,[6]]]
-Output: [1,4,6]
-Explanation: By calling next repeatedly until hasNext returns false, the order of elements returned by next should be: [1,4,6].</code></pre>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line">Input: nestedList = [1,[4,[6]]]</span><br><span class="line">Output: [1,4,6]</span><br><span class="line">Explanation: By calling next repeatedly until hasNext returns false, the order of elements returned by next should be: [1,4,6].</span><br></pre></td></tr></table></figure>
 
 <h2 id="Submissions"><a href="#Submissions" class="headerlink" title="Submissions"></a>Submissions</h2><p>先贴一下我的结果，防止剧透，具体代码会贴在最后。</p>
 <p><strong>Python</strong></p>
@@ -457,36 +453,7 @@ Explanation: By calling next repeatedly until hasNext returns false, the order o
 </tbody></table>
 <h2 id="思路-amp-Solutions"><a href="#思路-amp-Solutions" class="headerlink" title="思路 &amp; Solutions"></a>思路 &amp; Solutions</h2><h3 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h3><p>先来说说 Python 方案，说到最优的迭代方法，这就不得不说 Python 的生成器机制了。</p>
 <p>下面是我的代码，可以看到逻辑上只是一个简单的递归，但是使用了生成器，让时间复杂度可以控制在 O(n)，同时由于没有使用额外的变量，空间复杂度为 O(1)。</p>
-<pre class="language-python" data-language="python"><code class="language-python">class NestedIterator:
-    _gen &#x3D; None
-    _next &#x3D; None
-
-    def __init__(self, nestedList: [NestedInteger]):
-        def integer_retriever(l):
-            for i in l:
-                if i.isInteger():
-                    yield i.getInteger()
-                else:
-                    for _i in integer_retriever(i.getList()):
-                        yield _i
-
-        self._gen &#x3D; integer_retriever(nestedList)
-        self._retrieve()
-
-    def _retrieve(self):
-        try:
-            self._next &#x3D; next(self._gen)
-        except StopIteration:
-            self._next &#x3D; None
-
-    def next(self) -&gt; int:
-        res &#x3D; self._next
-        self._retrieve()
-        return res
-
-    def hasNext(self) -&gt; bool:
-        return self._next is not None
-</code></pre>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">NestedIterator</span>:</span></span><br><span class="line">    _gen = <span class="literal">None</span></span><br><span class="line">    _<span class="built_in">next</span> = <span class="literal">None</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, nestedList: [NestedInteger]</span>):</span></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">integer_retriever</span>(<span class="params">l</span>):</span></span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> l:</span><br><span class="line">                <span class="keyword">if</span> i.isInteger():</span><br><span class="line">                    <span class="keyword">yield</span> i.getInteger()</span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    <span class="keyword">for</span> _i <span class="keyword">in</span> integer_retriever(i.getList()):</span><br><span class="line">                        <span class="keyword">yield</span> _i</span><br><span class="line"></span><br><span class="line">        self._gen = integer_retriever(nestedList)</span><br><span class="line">        self._retrieve()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_retrieve</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            self._<span class="built_in">next</span> = <span class="built_in">next</span>(self._gen)</span><br><span class="line">        <span class="keyword">except</span> StopIteration:</span><br><span class="line">            self._<span class="built_in">next</span> = <span class="literal">None</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">next</span>(<span class="params">self</span>) -&gt; <span class="built_in">int</span>:</span></span><br><span class="line">        res = self._<span class="built_in">next</span></span><br><span class="line">        self._retrieve()</span><br><span class="line">        <span class="keyword">return</span> res</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">hasNext</span>(<span class="params">self</span>) -&gt; <span class="built_in">bool</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self._<span class="built_in">next</span> <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p>结果如下。</p>
 <table>
@@ -512,39 +479,7 @@ Explanation: By calling next repeatedly until hasNext returns false, the order o
 </tr>
 </tbody></table>
 <h3 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h3><p>再来看看一般思路。在初始化时将嵌套数组解构，然后每次从缓存中取值。</p>
-<pre class="language-javascript" data-language="javascript"><code class="language-javascript">&#x2F;**
- * @constructor
- * @param &#123;NestedInteger[]&#125; nestedList
- *&#x2F;
-var NestedIterator &#x3D; function (nestedList) &#123;
-  this._list &#x3D; [];
-  const denest &#x3D; (nl) &#x3D;&gt; &#123;
-    for (nest of nl) &#123;
-      if (nest.isInteger()) &#123;
-        this._list.push(nest.getInteger());
-      &#125; else &#123;
-        denest(nest.getList());
-      &#125;
-    &#125;
-  &#125;;
-  denest(nestedList);
-&#125;;
-
-&#x2F;**
- * @this NestedIterator
- * @returns &#123;boolean&#125;
- *&#x2F;
-NestedIterator.prototype.hasNext &#x3D; function () &#123;
-  return this._list.length &gt; 0;
-&#125;;
-
-&#x2F;**
- * @this NestedIterator
- * @returns &#123;integer&#125;
- *&#x2F;
-NestedIterator.prototype.next &#x3D; function () &#123;
-  return this._list.shift();
-&#125;;</code></pre>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@constructor</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param <span class="type">&#123;NestedInteger[]&#125;</span> <span class="variable">nestedList</span></span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> NestedIterator = <span class="function"><span class="keyword">function</span> (<span class="params">nestedList</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">this</span>._list = [];</span><br><span class="line">  <span class="keyword">const</span> denest = <span class="function">(<span class="params">nl</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">for</span> (nest <span class="keyword">of</span> nl) &#123;</span><br><span class="line">      <span class="keyword">if</span> (nest.isInteger()) &#123;</span><br><span class="line">        <span class="built_in">this</span>._list.push(nest.getInteger());</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        denest(nest.getList());</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">  denest(nestedList);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@this <span class="variable">NestedIterator</span></span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@returns <span class="type">&#123;boolean&#125;</span></span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">NestedIterator.prototype.hasNext = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">this</span>._list.length &gt; <span class="number">0</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@this <span class="variable">NestedIterator</span></span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@returns <span class="type">&#123;integer&#125;</span></span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">NestedIterator.prototype.next = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">this</span>._list.shift();</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
 <p>结果如下。</p>
 <table>
@@ -644,13 +579,13 @@ NestedIterator.prototype.next &#x3D; function () &#123;
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">101k</span>
+    <span title="站点总字数">96k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:32</span>
+    <span title="站点阅读时长">1:27</span>
   </span>
 </div>
 <div class="busuanzi-count">
@@ -679,8 +614,6 @@ NestedIterator.prototype.next &#x3D; function () &#123;
 
   
   <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.24.1/components/prism-core.min.js" integrity="sha256-dz05jjFU9qYuMvQQlE6iWDtNAnEsmu6uMb1vWhKdkEM=" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.24.1/plugins/autoloader/prism-autoloader.min.js" integrity="sha256-sttoa+EIAvFFfeeIkmPn8ypyOOb6no2sZ2NbxtBXgqU=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/comments.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/utils.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/motion.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/schemes/muse.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/next-boot.min.js"></script>
 
   
