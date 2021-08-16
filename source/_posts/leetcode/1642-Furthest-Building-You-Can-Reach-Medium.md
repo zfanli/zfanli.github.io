@@ -5,6 +5,8 @@ tags:
   - Greedy
   - Heap (Priority Queue)
 title: 1642. Furthest Building You Can Reach (Medium)
+categories:
+  - leetcode
 ---
 
 爬楼游戏。给你一个数组 `heights` 表示你面前的大楼的高度，你从 `0` 出发，你有一些砖块的梯子。当你从当前位置爬到下一个位置时需要满足下面的条件。
