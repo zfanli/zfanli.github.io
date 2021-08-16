@@ -4,8 +4,6 @@ tags:
   - Hash Table
   - Backtracking
 title: 37. Sudoku Solver (Hard)
-categories:
-  - leetcode
 ---
 
 数独问题。你需要实现一个游戏解决数独问题，数独游戏的规则如下：

@@ -6,8 +6,6 @@ tags:
   - Biconnected Component
   - Need Review
 title: 1192. Critical Connections in a Network (Hard)
-categories:
-  - leetcode
 ---
 
 图论问题。一共有 `n` 台服务器，我们将存在于任意 2 台服务器之间链接定义为边，可以构成一张无向图。

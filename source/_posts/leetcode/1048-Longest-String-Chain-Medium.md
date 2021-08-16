@@ -7,8 +7,6 @@ tags:
   - String
   - DP
 title: 1048. Longest String Chain (Medium)
-categories:
-  - leetcode
 ---
 
 给定一个由英文小写字母组成的字符串数组 `words`，你需要从中挑选单词构成满足下面定义的词汇链（word chain），找到能构成的最长词汇链，返回其长度。
