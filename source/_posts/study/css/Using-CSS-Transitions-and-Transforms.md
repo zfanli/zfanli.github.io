@@ -1,14 +1,12 @@
 ---
 title: Using CSS Transitions and Transforms
-date: '2021-08-15T15:07:57.746Z'
+date: "2021-08-15T15:07:57.746Z"
 tags:
   - CSS
 categories:
   - study
   - css
 ---
-
-## 过渡 transitions
 
 CSS 过渡属性提供了一种方式给 CSS 属性变化添加过渡动画，过程中属性值的变化是由浏览器所决定，所以其过程也被叫做`隐式过渡（implicit transitions）`。也因其由浏览器原生实现，所以通常有更好的性能，但是在灵活性上有其局限。
 
@@ -21,13 +19,15 @@ CSS 过渡属性提供了一种方式给 CSS 属性变化添加过渡动画，�
 
 <!-- more -->
 
+## 过渡 transitions
+
 ### 定义过渡属性
 
 CSS 过渡属性可以轻易实现很出效果的动画。
 
 > 避免产生不适，点击 `start` 开始演示动画。
 
-<div class="w-100 p-3 my-3 border shadow-sm rounded d-flex align-items-center justify-content-center position-relative" style="height: 150px">
+<div class="example-container" style="height: 150px">
   <div class="example-def transition radius-hover" style="height: 50px; width: 50px; background-color: rgb(25,135,84)"></div>
   <span class="toggle position-absolute top-0 end-0 m-3 hover-pointer">start</span>
 </div>
@@ -100,7 +100,7 @@ CSS 过渡可以针对不同属性分别设置持续时间、缓动函数和延�
 
 > 避免产生不适，点击 `start` 开始演示动画。
 
-<div class="w-100 p-3 my-3 border shadow-sm rounded d-flex align-items-center justify-content-evenly position-relative" style="height: 150px">
+<div class="example-container justify-content-evenly" style="height: 150px">
   <div id="example-def" class="example-def transition radius-hover text-white text-nowrap fs-6 d-flex align-items-center justify-content-center" style="height: 50px; width: 50px; background-color: rgb(25,135,84)"><small>指定 all</small></div>
   <div id="example-def" class="example-def transition transition-multiple radius-hover text-white text-nowrap fs-6 d-flex align-items-center justify-content-center" style="height: 50px; width: 50px; background-color: rgb(25,135,84)"><small>分别指定</small></div>
   <span class="toggle position-absolute top-0 end-0 m-3 hover-pointer">start</span>
@@ -197,7 +197,7 @@ CSS 过渡可以针对不同属性分别设置持续时间、缓动函数和延�
 
 > 鼠标悬停，或者点击 `start` 开始统计事件数据。
 
-<div class="border shadow-sm rounded my-3">
+<div class="example-container flex-column">
   <div class="w-100 p-3 d-flex align-items-center justify-content-center position-relative" style="height: 150px">
     <div id="transitionTarget" class="example-def transition radius-hover" style="height: 50px; width: 50px; background-color: rgb(25,135,84)"></div>
     <span class="toggle position-absolute top-0 end-0 m-3 hover-pointer">start</span>
@@ -241,61 +241,6 @@ target.addEventListener("transitionstart", (e) => {});
 - [TransitionEvent](https://developer.mozilla.org/en-US/docs/Web/API/TransitionEvent)
 
 <!-- Resources used by only this post -->
-<style>
-:root {
-  --bs-blue: #0d6efd;
-  --bs-indigo: #6610f2;
-  --bs-purple: #6f42c1;
-  --bs-pink: #d63384;
-  --bs-red: #dc3545;
-  --bs-orange: #fd7e14;
-  --bs-yellow: #ffc107;
-  --bs-green: #198754;
-  --bs-teal: #20c997;
-  --bs-cyan: #0dcaf0;
-  --bs-white: #fff;
-  --bs-gray: #6c757d;
-  --bs-gray-dark: #343a40;
-  --bs-gray-100: #f8f9fa;
-  --bs-gray-200: #e9ecef;
-  --bs-gray-300: #dee2e6;
-  --bs-gray-400: #ced4da;
-  --bs-gray-500: #adb5bd;
-  --bs-gray-600: #6c757d;
-  --bs-gray-700: #495057;
-  --bs-gray-800: #343a40;
-  --bs-gray-900: #212529;
-  --bs-primary: #0d6efd;
-  --bs-secondary: #6c757d;
-  --bs-success: #198754;
-  --bs-info: #0dcaf0;
-  --bs-warning: #ffc107;
-  --bs-danger: #dc3545;
-  --bs-light: #f8f9fa;
-  --bs-dark: #212529;
-  --bs-primary-rgb: 13, 110, 253;
-  --bs-secondary-rgb: 108, 117, 125;
-  --bs-success-rgb: 25, 135, 84;
-  --bs-info-rgb: 13, 202, 240;
-  --bs-warning-rgb: 255, 193, 7;
-  --bs-danger-rgb: 220, 53, 69;
-  --bs-light-rgb: 248, 249, 250;
-  --bs-dark-rgb: 33, 37, 41;
-  --bs-white-rgb: 255, 255, 255;
-  --bs-black-rgb: 0, 0, 0;
-  --bs-body-rgb: 33, 37, 41;
-  --bs-font-sans-serif: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  --bs-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-  --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
-  --bs-body-font-family: var(--bs-font-sans-serif);
-  --bs-body-font-size: 1rem;
-  --bs-body-font-weight: 400;
-  --bs-body-line-height: 1.5;
-  --bs-body-color: #212529;
-  --bs-body-bg: #fff;
-}
-</style>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap-utilities.min.css" integrity="sha256-5+ExmMkiaI3keYQRLhNibJ5ZXnNuWRbwrXOAZoTXMFg=" crossorigin="anonymous">
 <style>
 .transition {
   cursor: pointer;
@@ -343,10 +288,10 @@ $(function(){
   $('.toggle').click(function () {
     if ($(this).text() === "stop") {
       clearInterval(timer)
-      $(this).text('start')
+      $('.toggle').text('start')
     } else {
       timer = anime()
-      $(this).text('stop')
+      $('.toggle').text('stop')
     }
   })
   // example-def end
