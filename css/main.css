@@ -89,7 +89,7 @@
   --link-hover-color: #eee;
   --brand-color: #ddd;
   --brand-hover-color: #ddd;
-  --table-row-odd-bg-color: #282828;
+  --table-row-odd-bg-color: #232323;
   --table-row-hover-bg-color: #363636;
   --menu-item-bg-color: #555;
   --btn-default-bg: #222;
@@ -3104,7 +3104,7 @@ hr {
   transition: all 0.2s ease-in-out;
 }
 .links-of-author a::before {
-  background: #63d9ff;
+  background: #ff0149;
   display: inline-block;
   margin-right: 3px;
   transform: translateY(-2px);
@@ -3180,6 +3180,24 @@ hr {
 .light-scheme .tag-cloud-10 {
   border-bottom-color: #111;
   color: #111;
+}
+.light-scheme .table-container {
+  overflow: auto;
+  box-shadow: 0 2px 1px -1px rgba(0,0,0,0.2), 0 1px 1px 0 rgba(0,0,0,0.14), 0 1px 3px 0 rgba(0,0,0,0.12) !important;
+  margin-bottom: 20px;
+}
+.light-scheme table {
+  margin: 0;
+}
+.light-scheme th,
+.light-scheme td {
+  border: none;
+}
+.light-scheme th {
+  border-bottom: 3px solid #ddd;
+}
+.light-scheme blockquote {
+  font-weight: 300;
 }
 .light-scheme .hljs-comment,
 .light-scheme .hljs-quote {
@@ -3302,6 +3320,21 @@ hr {
 .dark-scheme ::selection {
   background: #008080;
 }
+.dark-scheme .table-container {
+  overflow: auto;
+  box-shadow: 0 2px 4px -1px rgba(0,0,0,0.2), 0 4px 5px 0 rgba(0,0,0,0.14), 0 1px 10px 0 rgba(0,0,0,0.12) !important;
+  margin-bottom: 20px;
+}
+.dark-scheme table {
+  margin: 0;
+}
+.dark-scheme th,
+.dark-scheme td {
+  border: none;
+}
+.dark-scheme th {
+  border-bottom: 3px solid #616161;
+}
 .dark-scheme .hljs-comment,
 .dark-scheme .hljs-quote {
   color: #969896;
@@ -3373,6 +3406,10 @@ hr {
   box-shadow: none;
   left: 0;
   font-weight: normal;
+  z-index: auto;
+}
+.sidebar .site-overview {
+  font-weight: 300;
 }
 .sidebar-toggle {
   display: none;
@@ -3405,6 +3442,18 @@ samp {
 figure.highlight {
   box-shadow: 0 7px 8px -4px rgba(0,0,0,0.2), 0 12px 17px 2px rgba(0,0,0,0.14), 0 5px 22px 4px rgba(0,0,0,0.12) !important;
 }
+figure.highlight .table-container {
+  box-shadow: none !important;
+}
+.post-title .post-title-link {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 85%;
+}
+.post-meta {
+  font-weight: 300;
+}
 @media (max-width: 767px) {
   body {
     padding-left: 0;
@@ -3414,6 +3463,11 @@ figure.highlight {
   }
   .sidebar-toggle {
     display: block;
+  }
+  .post-title .post-title-link {
+    white-space: normal;
+    overflow: visible;
+    width: auto;
   }
 }
 @media (min-width: 1200px) {

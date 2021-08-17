@@ -19,7 +19,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"richard.bizcat.xyz","root":"/","images":"/images","scheme":"Mist","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/config.min.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"richard.bizcat.xyz","root":"/","images":"/images","scheme":"Mist","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/config.min.js"></script>
 <meta name="description" content="CSS 过渡属性提供了一种方式给 CSS 属性变化添加过渡动画，过程中属性值的变化是由浏览器所决定，所以其过程也被叫做隐式过渡（implicit transitions）。也因其由浏览器原生实现，所以通常有更好的性能，但是在灵活性上有其局限。 使用场景上，单纯的鼠标悬浮、选中和失去焦点等情况的过渡动画中 CSS 过渡属性是首选；但是当涉及到时间轴动画、稍复杂的补间动画时，应该选择 GSAP 之类的">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Using CSS Transitions and Transforms">
@@ -27,11 +27,13 @@
 <meta property="og:site_name" content="HOME">
 <meta property="og:description" content="CSS 过渡属性提供了一种方式给 CSS 属性变化添加过渡动画，过程中属性值的变化是由浏览器所决定，所以其过程也被叫做隐式过渡（implicit transitions）。也因其由浏览器原生实现，所以通常有更好的性能，但是在灵活性上有其局限。 使用场景上，单纯的鼠标悬浮、选中和失去焦点等情况的过渡动画中 CSS 过渡属性是首选；但是当涉及到时间轴动画、稍复杂的补间动画时，应该选择 GSAP 之类的">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://richard.bizcat.xyz/images/study/css/TimingFunction.png">
 <meta property="article:published_time" content="2021-08-15T07:07:57.746Z">
 <meta property="article:modified_time" content="2021-08-15T07:07:57.746Z">
 <meta property="article:author" content="Richard Zen">
 <meta property="article:tag" content="CSS">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://richard.bizcat.xyz/images/study/css/TimingFunction.png">
 
 
 <link rel="canonical" href="https://richard.bizcat.xyz/post/study/css/Using-CSS-Transitions-and-Transforms/">
@@ -368,14 +370,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>5.9k</span>
+      <span>6.9k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>5 分钟</span>
+      <span>6 分钟</span>
     </span>
 </div>
 
@@ -445,7 +447,8 @@
 <td>时间值，默认为 <code>0s</code></td>
 </tr>
 </tbody></table>
-<h4 id="transition-timing-function"><a href="#transition-timing-function" class="headerlink" title="transition-timing-function"></a><code>transition-timing-function</code></h4><p>指定过度效果的缓动函数，一个描述数值变动速率的数学函数。</p>
+<h4 id="transition-timing-function"><a href="#transition-timing-function" class="headerlink" title="transition-timing-function"></a><code>transition-timing-function</code></h4><p>指定过度效果的缓动函数，一个描述数值变动速率的数学函数，视觉表现为我们熟知的贝塞尔曲线。</p>
+<p><img src="/images/study/css/TimingFunction.png" alt="timing-function"></p>
 <table>
 <thead>
 <tr>
@@ -562,20 +565,20 @@
 <table>
 <thead>
 <tr>
-<th>Event</th>
+<th>Property</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody><tr>
-<td><code>TransitionEvent.propertyName</code></td>
+<td><code>.propertyName</code></td>
 <td>包含过渡动画关联属性名称的 <code>DOMString</code></td>
 </tr>
 <tr>
-<td><code>TransitionEvent.elapsedTime</code></td>
+<td><code>.elapsedTime</code></td>
 <td>一个 <code>float</code> 表达过渡动画执行了多长时间，以秒为单位，不受延迟时间影响</td>
 </tr>
 <tr>
-<td><code>TransitionEvent.pseudoElement</code></td>
+<td><code>.pseudoElement</code></td>
 <td>如果过渡动画执行对象是一个伪类元素，则为 <code>::</code> 开头的伪类元素名称的 <code>DOMString</code>，否则为空字符串</td>
 </tr>
 </tbody></table>
@@ -605,7 +608,30 @@
 
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> target = <span class="built_in">document</span>.querySelector(<span class="string">&quot;#transitionTarget&quot;</span>);</span><br><span class="line">target.addEventListener(<span class="string">&quot;transitioncancel&quot;</span>, <span class="function">(<span class="params">e</span>) =&gt;</span> &#123;&#125;);</span><br><span class="line">target.addEventListener(<span class="string">&quot;transitionend&quot;</span>, <span class="function">(<span class="params">e</span>) =&gt;</span> &#123;&#125;);</span><br><span class="line">target.addEventListener(<span class="string">&quot;transitionrun&quot;</span>, <span class="function">(<span class="params">e</span>) =&gt;</span> &#123;&#125;);</span><br><span class="line">target.addEventListener(<span class="string">&quot;transitionstart&quot;</span>, <span class="function">(<span class="params">e</span>) =&gt;</span> &#123;&#125;);</span><br></pre></td></tr></table></figure>
 
-<h2 id="变换-transforms"><a href="#变换-transforms" class="headerlink" title="变换 transforms"></a>变换 transforms</h2><h3 id="定义变换属性"><a href="#定义变换属性" class="headerlink" title="定义变换属性"></a>定义变换属性</h3><h3 id="3D-变换属性"><a href="#3D-变换属性" class="headerlink" title="3D 变换属性"></a>3D 变换属性</h3><h3 id="定义多个变换属性"><a href="#定义多个变换属性" class="headerlink" title="定义多个变换属性"></a>定义多个变换属性</h3><h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
+<h2 id="变换-transforms"><a href="#变换-transforms" class="headerlink" title="变换 transforms"></a>变换 transforms</h2><p>用下面的 Demo 尝试各种变换的效果，下面的设定可以修改，结果会实时反应到绿色方块上。你可以按 <code>reset</code> 按钮到默认状态。</p>
+<style id="example-transform-style"></style>
+<div class="example-container example-transform flex-wrap" style="min-height: 240px">
+  <div class="control-panel d-flex flex-column highlight css my-3">
+    <pre class="bg-transparent m-0"
+      ><span class="line hover-pointer" contentEditable="true"
+        ><span class="hljs-attribute">transform</span>: <span class="hljs-built_in">translate</span>(<span class="hljs-number">120px</span>, <span class="hljs-number">50px</span>);</span
+      ><span class="line hover-pointer" contentEditable="true"
+        ><span class="hljs-attribute">transform</span>: <span class="hljs-built_in">rotate</span>(<span class="hljs-number">0.5turn</span>);</span
+      ><span class="line hover-pointer" contentEditable="true"
+        ><span class="hljs-attribute">transform</span>: <span class="hljs-built_in">scale</span>(<span class="hljs-number">1.3</span>);</span
+      ><span class="line hover-pointer" contentEditable="true"
+        ><span class="hljs-attribute">transform</span>: <span class="hljs-built_in">skew</span>(<span class="hljs-number">30deg</span>, <span class="hljs-number">20deg</span>);</span
+      ><span class="line hover-pointer" contentEditable="true"
+        ><span class="hljs-attribute">transform</span>: <span class="hljs-built_in">perspective</span>(<span class="hljs-number">500px</span>);</span
+    ></pre>
+  </div>
+  <div class="demo-panel flex-grow-1 d-flex align-items-center justify-content-center mb-3">
+    <div id="demo-transform" class="" style="height: 100px; width: 100px; background-color: rgb(25,135,84)"></div>
+  </div>
+  <span class="reset position-absolute top-0 end-0 m-3 mt-1 hover-pointer">reset</span>
+</div>
+
+<h3 id="定义变换属性"><a href="#定义变换属性" class="headerlink" title="定义变换属性"></a>定义变换属性</h3><h3 id="3D-变换属性"><a href="#3D-变换属性" class="headerlink" title="3D 变换属性"></a>3D 变换属性</h3><h3 id="定义多个变换属性"><a href="#定义多个变换属性" class="headerlink" title="定义多个变换属性"></a>定义多个变换属性</h3><h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
 <li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Transitions/Using_CSS_transitions">Using CSS transitions</a></li>
 <li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Transforms/Using_CSS_transforms">Using CSS transforms</a></li>
 <li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/API/TransitionEvent">TransitionEvent</a></li>
@@ -625,6 +651,24 @@
 }
 .hover-pointer {
   cursor: pointer;
+}
+.example-container .line {
+  display: block;
+  margin: 2px 0;
+  padding: 5px;
+  width: 350px;
+  border-left: 4px transparent solid;
+  border-bottom: 1px transparent solid;
+  overflow: auto;
+}
+.example-container .line.active {
+  border-color: #198754;
+}
+.example-container .line:focus {
+  outline: none;
+}
+#demo-transform {
+  transition: all .25s ease;
 }
 </style>
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
@@ -655,13 +699,14 @@ $(function(){
   }, 1000)
   let timer = null
   // let timer = anime()
-  $('.toggle').click(function () {
+  const toggle = $('.example-container .toggle')
+  toggle.click(function () {
     if ($(this).text() === "stop") {
       clearInterval(timer)
-      $('.toggle').text('start')
+      toggle.text('start')
     } else {
       timer = anime()
-      $('.toggle').text('stop')
+      toggle.text('stop')
     }
   })
   // example-def end
@@ -691,6 +736,26 @@ $(function(){
   target.on('transitionrun', record('Run'))
   target.on('transitionstart', record('Started'))
   // example-event end
+  // example-transform start
+  const lines = $('.example-transform .line')
+    transformStyles = $('#example-transform-style')
+  lines.each(function(){
+    $(this).data('bk', $(this).html())
+  })
+  lines.click(function() {
+    lines.removeClass('active')
+    $(this).addClass('active')
+    transformStyles.html(`#demo-transform {${$(this).text()}}`)
+  })
+  lines.on('input', function() {
+    transformStyles.html(`#demo-transform {${$(this).text()}}`)
+  })
+  $('.example-transform .reset').click(() => lines.each(function() {
+    lines.removeClass('active')
+    $(this).html($(this).data('bk'))
+    transformStyles.html('')
+  }))
+  // example-transform end
 })
 </script>
 
@@ -751,13 +816,13 @@ $(function(){
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">94k</span>
+    <span title="站点总字数">95k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:26</span>
+    <span title="站点阅读时长">1:27</span>
   </span>
 </div>
 <div class="busuanzi-count">
@@ -786,6 +851,7 @@ $(function(){
 
   
   <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/comments.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/utils.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/motion.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/schemes/muse.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/next-boot.min.js"></script>
 
   
