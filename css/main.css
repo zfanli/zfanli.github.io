@@ -3104,7 +3104,7 @@ hr {
   transition: all 0.2s ease-in-out;
 }
 .links-of-author a::before {
-  background: #22c39d;
+  background: #fffffb;
   display: inline-block;
   margin-right: 3px;
   transform: translateY(-2px);
@@ -3460,6 +3460,7 @@ figure.highlight .table-container {
   }
   .sidebar {
     left: -320px;
+    z-index: 1200;
   }
   .sidebar-toggle {
     display: block;
