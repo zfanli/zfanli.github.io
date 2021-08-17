@@ -68,7 +68,9 @@ div {
 
 #### `transition-timing-function`
 
-指定过度效果的缓动函数，一个描述数值变动速率的数学函数。
+指定过度效果的缓动函数，一个描述数值变动速率的数学函数，视觉表现为我们熟知的贝塞尔曲线。
+
+![timing-function](/images/study/css/TimingFunction.png)
 
 | Value                          | Description                                                 |
 | ------------------------------ | ----------------------------------------------------------- |
@@ -189,11 +191,11 @@ CSS 过渡可以针对不同属性分别设置持续时间、缓动函数和延�
 
 同时 `TransitionEvent` 拥有下面属性：
 
-| Event                           | Description                                                                                    |
-| ------------------------------- | ---------------------------------------------------------------------------------------------- |
-| `TransitionEvent.propertyName`  | 包含过渡动画关联属性名称的 `DOMString`                                                         |
-| `TransitionEvent.elapsedTime`   | 一个 `float` 表达过渡动画执行了多长时间，以秒为单位，不受延迟时间影响                          |
-| `TransitionEvent.pseudoElement` | 如果过渡动画执行对象是一个伪类元素，则为 `::` 开头的伪类元素名称的 `DOMString`，否则为空字符串 |
+| Property         | Description                                                                                    |
+| ---------------- | ---------------------------------------------------------------------------------------------- |
+| `.propertyName`  | 包含过渡动画关联属性名称的 `DOMString`                                                         |
+| `.elapsedTime`   | 一个 `float` 表达过渡动画执行了多长时间，以秒为单位，不受延迟时间影响                          |
+| `.pseudoElement` | 如果过渡动画执行对象是一个伪类元素，则为 `::` 开头的伪类元素名称的 `DOMString`，否则为空字符串 |
 
 > 鼠标悬停，或者点击 `start` 开始统计事件数据。
 
@@ -228,6 +230,30 @@ target.addEventListener("transitionstart", (e) => {});
 
 ## 变换 transforms
 
+用下面的 Demo 尝试各种变换的效果，下面的设定可以修改，结果会实时反应到绿色方块上。你可以按 `reset` 按钮到默认状态。
+
+<style id="example-transform-style"></style>
+<div class="example-container example-transform flex-wrap" style="min-height: 240px">
+  <div class="control-panel d-flex flex-column highlight css my-3">
+    <pre class="bg-transparent m-0"
+      ><span class="line hover-pointer" contentEditable="true"
+        ><span class="hljs-attribute">transform</span>: <span class="hljs-built_in">translate</span>(<span class="hljs-number">120px</span>, <span class="hljs-number">50px</span>);</span
+      ><span class="line hover-pointer" contentEditable="true"
+        ><span class="hljs-attribute">transform</span>: <span class="hljs-built_in">rotate</span>(<span class="hljs-number">0.5turn</span>);</span
+      ><span class="line hover-pointer" contentEditable="true"
+        ><span class="hljs-attribute">transform</span>: <span class="hljs-built_in">scale</span>(<span class="hljs-number">1.3</span>);</span
+      ><span class="line hover-pointer" contentEditable="true"
+        ><span class="hljs-attribute">transform</span>: <span class="hljs-built_in">skew</span>(<span class="hljs-number">30deg</span>, <span class="hljs-number">20deg</span>);</span
+      ><span class="line hover-pointer" contentEditable="true"
+        ><span class="hljs-attribute">transform</span>: <span class="hljs-built_in">perspective</span>(<span class="hljs-number">500px</span>);</span
+    ></pre>
+  </div>
+  <div class="demo-panel flex-grow-1 d-flex align-items-center justify-content-center mb-3">
+    <div id="demo-transform" class="" style="height: 100px; width: 100px; background-color: rgb(25,135,84)"></div>
+  </div>
+  <span class="reset position-absolute top-0 end-0 m-3 mt-1 hover-pointer">reset</span>
+</div>
+
 ### 定义变换属性
 
 ### 3D 变换属性
@@ -255,6 +281,24 @@ target.addEventListener("transitionstart", (e) => {});
 }
 .hover-pointer {
   cursor: pointer;
+}
+.example-container .line {
+  display: block;
+  margin: 2px 0;
+  padding: 5px;
+  width: 350px;
+  border-left: 4px transparent solid;
+  border-bottom: 1px transparent solid;
+  overflow: auto;
+}
+.example-container .line.active {
+  border-color: #198754;
+}
+.example-container .line:focus {
+  outline: none;
+}
+#demo-transform {
+  transition: all .25s ease;
 }
 </style>
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
@@ -285,13 +329,14 @@ $(function(){
   }, 1000)
   let timer = null
   // let timer = anime()
-  $('.toggle').click(function () {
+  const toggle = $('.example-container .toggle')
+  toggle.click(function () {
     if ($(this).text() === "stop") {
       clearInterval(timer)
-      $('.toggle').text('start')
+      toggle.text('start')
     } else {
       timer = anime()
-      $('.toggle').text('stop')
+      toggle.text('stop')
     }
   })
   // example-def end
@@ -321,5 +366,25 @@ $(function(){
   target.on('transitionrun', record('Run'))
   target.on('transitionstart', record('Started'))
   // example-event end
+  // example-transform start
+  const lines = $('.example-transform .line')
+    transformStyles = $('#example-transform-style')
+  lines.each(function(){
+    $(this).data('bk', $(this).html())
+  })
+  lines.click(function() {
+    lines.removeClass('active')
+    $(this).addClass('active')
+    transformStyles.html(`#demo-transform {${$(this).text()}}`)
+  })
+  lines.on('input', function() {
+    transformStyles.html(`#demo-transform {${$(this).text()}}`)
+  })
+  $('.example-transform .reset').click(() => lines.each(function() {
+    lines.removeClass('active')
+    $(this).html($(this).data('bk'))
+    transformStyles.html('')
+  }))
+  // example-transform end
 })
 </script>
