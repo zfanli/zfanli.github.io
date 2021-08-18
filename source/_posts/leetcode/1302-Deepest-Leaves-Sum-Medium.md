@@ -6,6 +6,8 @@ tags:
   - BFS
   - Binary Tree
 title: 1302. Deepest Leaves Sum (Medium)
+categories:
+  - leetcode
 ---
 
 求二叉树最深层的所有节点的值之和。二叉树层序遍历的应用场景。
