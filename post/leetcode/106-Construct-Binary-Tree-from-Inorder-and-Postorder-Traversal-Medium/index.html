@@ -20,12 +20,12 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"richard.bizcat.xyz","root":"/","images":"/images","scheme":"Mist","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/config.min.js"></script>
-<meta name="description" content="你需要从一棵树的中序遍历数组和后序遍历数组中尝试重新构建出这棵二叉树。 要从树的遍历结果逆向还原这棵树，扁平的 1D 数组的信息量是不够的，但是如果有两个不同的遍历结果做参考，我们可以根据树的遍历过程进行逆向操作。 这道题是使用已知的中序遍历和后序遍历的结果来尝试逆向遍历树的过程。">
+<meta name="description" content="你需要从一棵树的中序遍历数据和后序遍历数据中尝试重新构建出这棵二叉树。 要从树的遍历结果逆向还原这棵树，扁平的 1D 数组的信息量是不够的，但是如果有两个不同的遍历结果做参考，我们可以根据树的遍历过程进行逆向操作。 这道题是使用已知的中序遍历和后序遍历的结果来尝试逆向遍历树的过程。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="106. Construct Binary Tree from Inorder and Postorder Traversal (Medium)">
 <meta property="og:url" content="https://richard.bizcat.xyz/post/leetcode/106-Construct-Binary-Tree-from-Inorder-and-Postorder-Traversal-Medium/">
 <meta property="og:site_name" content="HOME">
-<meta property="og:description" content="你需要从一棵树的中序遍历数组和后序遍历数组中尝试重新构建出这棵二叉树。 要从树的遍历结果逆向还原这棵树，扁平的 1D 数组的信息量是不够的，但是如果有两个不同的遍历结果做参考，我们可以根据树的遍历过程进行逆向操作。 这道题是使用已知的中序遍历和后序遍历的结果来尝试逆向遍历树的过程。">
+<meta property="og:description" content="你需要从一棵树的中序遍历数据和后序遍历数据中尝试重新构建出这棵二叉树。 要从树的遍历结果逆向还原这棵树，扁平的 1D 数组的信息量是不够的，但是如果有两个不同的遍历结果做参考，我们可以根据树的遍历过程进行逆向操作。 这道题是使用已知的中序遍历和后序遍历的结果来尝试逆向遍历树的过程。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-08-16T01:43:17.725Z">
 <meta property="article:modified_time" content="2021-08-16T01:43:17.725Z">
@@ -263,7 +263,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">76</span>
+          <span class="site-state-item-count">77</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
@@ -388,15 +388,15 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p>你需要从一棵树的中序遍历数组和后序遍历数组中尝试重新构建出这棵二叉树。</p>
+        <p>你需要从一棵树的<code>中序遍历</code>数据和<code>后序遍历</code>数据中尝试重新构建出这棵二叉树。</p>
 <p>要从树的遍历结果逆向还原这棵树，扁平的 1D 数组的信息量是不够的，但是如果有两个不同的遍历结果做参考，我们可以根据树的遍历过程进行逆向操作。</p>
-<p>这道题是使用已知的中序遍历和后序遍历的结果来尝试逆向遍历树的过程。</p>
+<p>这道题是使用已知的<code>中序遍历</code>和<code>后序遍历</code>的结果来尝试逆向遍历树的过程。</p>
 <span id="more"></span>
 
 <h2 id="思路-1，递归"><a href="#思路-1，递归" class="headerlink" title="思路 1，递归"></a>思路 1，递归</h2><p>已知给定的两组数据的排序方式是中序遍历和后序遍历。</p>
 <ul>
-<li>中序遍历：左节点 -&gt; 根节点 -&gt; 右节点</li>
-<li>后序遍历：左节点 -&gt; 右节点 -&gt; 根节点</li>
+<li><code>中序遍历</code>：左节点 -&gt; 根节点 -&gt; 右节点</li>
+<li><code>后序遍历</code>：左节点 -&gt; 右节点 -&gt; 根节点</li>
 </ul>
 <p>在知道根节点的情况比较容易去构建一棵二叉树，所以我们以后序遍历的数据为基础进行树的构建。</p>
 <p>但是后序遍历的数据无法告诉我们下一个节点是根节点的左节点还是右节点，这时我们需要到中序遍历的数据中进行检查，如果下一个节点在中序遍历中出现在根节点的左侧，则它是根节点的左节点，反之则是根节点的右节点。</p>
@@ -471,13 +471,13 @@
   <div class="popular-posts-header">相关文章</div>
   <ul class="popular-posts">
     <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/post/leetcode/105-Construct-Binary-Tree-from-Preorder-and-Inorder-Traversal-Medium/" rel="bookmark">105. Construct Binary Tree from Preorder and Inorder Traversal (Medium)</a></div>
+    </li>
+    <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/post/leetcode/1048-Longest-String-Chain-Medium/" rel="bookmark">1048. Longest String Chain (Medium)</a></div>
     </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/post/leetcode/1074-Number-of-Submatrices-That-Sum-to-Target-Hard/" rel="bookmark">1074. Number of Submatrices That Sum to Target (Hard)</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/post/leetcode/128-Longest-Consecutive-Sequence-Medium/" rel="bookmark">128. Longest Consecutive Sequence (Medium)</a></div>
     </li>
   </ul>
 
@@ -495,6 +495,9 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
+                <a href="/post/leetcode/105-Construct-Binary-Tree-from-Preorder-and-Inorder-Traversal-Medium/" rel="prev" title="105. Construct Binary Tree from Preorder and Inorder Traversal (Medium)">
+                  <i class="fa fa-chevron-left"></i> 105. Construct Binary Tree from Preorder and Inorder Traversal (Medium)
+                </a>
             </div>
             <div class="post-nav-item">
                 <a href="/post/study/css/Using-CSS-Transitions-and-Transforms/" rel="next" title="Using CSS Transitions and Transforms">
@@ -532,13 +535,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">95k</span>
+    <span title="站点总字数">98k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:27</span>
+    <span title="站点阅读时长">1:29</span>
   </span>
 </div>
 <div class="busuanzi-count">

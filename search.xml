@@ -194,17 +194,82 @@
       </tags>
   </entry>
   <entry>
+    <title>105. Construct Binary Tree from Preorder and Inorder Traversal (Medium)</title>
+    <url>/post/leetcode/105-Construct-Binary-Tree-from-Preorder-and-Inorder-Traversal-Medium/</url>
+    <content><![CDATA[<p>No.116 的镜像问题。你需要从一棵树的<code>前序遍历</code>数据和<code>中序遍历</code>数据中尝试重新构建出这棵二叉树。</p>
+<p>之前我们尝试基于<code>中序遍历</code>和<code>后序遍历</code>的数据来还原这棵树，这次是<code>前序遍历</code>和<code>中序遍历</code>。</p>
+<p>其中区别在于遍历结果中根节点是在开始还是在结束，我们可以应用相同的思路来解决这道题，注意处理顺序的细微差别。</p>
+<span id="more"></span>
+
+<h2 id="思路-1，递归-哈希表"><a href="#思路-1，递归-哈希表" class="headerlink" title="思路 1，递归 + 哈希表"></a>思路 1，递归 + 哈希表</h2><p>同样的思路，我们基于前序遍历的数据构建树，用中序遍历的数据确认节点的位置关系。</p>
+<ul>
+<li><code>前序遍历</code>：根节点、左节点、右节点</li>
+<li><code>中序遍历</code>：左节点、根节点、右节点</li>
+</ul>
+<p>将构建树的问题分解为在知道根节点的情况下判断它是否有左右节点的问题。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">buildTree</span>(<span class="params">self, preorder: <span class="type">List</span>[<span class="built_in">int</span>], inorder: <span class="type">List</span>[<span class="built_in">int</span>]</span>) -&gt; TreeNode:</span></span><br><span class="line">        inordermap = &#123;&#125;</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(inorder)):</span><br><span class="line">            inordermap[inorder[i]] = i</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">dfs</span>(<span class="params">start, end</span>):</span></span><br><span class="line">            <span class="keyword">if</span> start &gt; end:</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line">            node = TreeNode(preorder.pop(<span class="number">0</span>))</span><br><span class="line">            middle = inordermap[node.val]</span><br><span class="line">            node.left = dfs(start, middle - <span class="number">1</span>)</span><br><span class="line">            node.right = dfs(middle + <span class="number">1</span>, end)</span><br><span class="line">            <span class="keyword">return</span> node</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> dfs(<span class="number">0</span>, <span class="built_in">len</span>(inorder) - <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="思路-2，递归，无哈希表"><a href="#思路-2，递归，无哈希表" class="headerlink" title="思路 2，递归，无哈希表"></a>思路 2，递归，无哈希表</h2><p>我们可以采取遍历检查的方法，用元素的相对位置来做到思路 1 的判断。</p>
+<p>在思路 1 中，实际起作用的关键代码是 <code>if start &gt; end:</code>，如果下一个节点的值落在这个区间之内则表示其为左节点 or 右节点。</p>
+<p>但实际上我们不关注这个值具体是什么，来换个角度考虑一下：</p>
+<ul>
+<li>我们先从前序遍历结果中取出第一个值，构建一个节点；</li>
+<li>接着我们需要判断前序遍历结果第二个值是否是第一个值的左节点；<ul>
+<li>将前序遍历第二个值与中序遍历的第一个值对比；</li>
+<li>如果两个值不相等，由于中序遍历先左节点在根节点的顺序，据此可以判断出存在左节点；</li>
+<li>而如果两个值相等，那么也就没有左节点存在的空间；</li>
+<li>对于存在左节点的情况，我们继续重复这个递归过程；</li>
+</ul>
+</li>
+<li>这时已经判断完左节点；</li>
+<li>我们要额外的信息来判断右节点是否存在；<ul>
+<li>我们从左到右对中序遍历进行递归遍历；</li>
+<li>要知道有没有右节点，首先我们要知道检查到哪个位置为止；</li>
+<li>这个位置即边界，要确定这个边界，首先要确定当前有没有父节点；</li>
+<li>如果当前没有父节点，这是树的根节点，尝试构建右节点；</li>
+<li>如果存在父节点，判断父节点的值是否和前序遍历下一个值相等；</li>
+<li>如果相等，我们已到达边界，不存在任何右节点；</li>
+<li>如果不相等，还未到达边界，尝试构建右节点；</li>
+<li>这里还有一个重要的细节，如果决定父节点？<ul>
+<li>首先递归入口有两处：构建左节点和构建右节点时；</li>
+<li>构建左节点时：中序遍历当前节点往左都是其左节点，所以当前节点是边界；</li>
+<li>构建右节点时：中序遍历当前节点到父节点为止的区间是右节点，所以父节点是边界；</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>这时遍历完了右节点，当前节点遍历结束；</li>
+<li>返回当前节点。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">buildTree</span>(<span class="params">self, preorder: <span class="type">List</span>[<span class="built_in">int</span>], inorder: <span class="type">List</span>[<span class="built_in">int</span>]</span>) -&gt; TreeNode:</span></span><br><span class="line">        self.indexpre = self.indexin = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">dfs</span>(<span class="params">parent</span>):</span></span><br><span class="line">            <span class="keyword">if</span> self.indexin == <span class="built_in">len</span>(inorder):</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line"></span><br><span class="line">            node = TreeNode(preorder[self.indexpre])</span><br><span class="line">            self.indexpre += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">            <span class="comment"># if current pre value != current in value,</span></span><br><span class="line">            <span class="comment"># the left child exists</span></span><br><span class="line">            <span class="keyword">if</span> node.val != inorder[self.indexin]:</span><br><span class="line">                node.left = dfs(node)</span><br><span class="line"></span><br><span class="line">            self.indexin += <span class="number">1</span></span><br><span class="line">            <span class="comment"># we&#x27;ve come to the right side,</span></span><br><span class="line">            <span class="comment"># if there&#x27;re more nodes exist before the parent node,</span></span><br><span class="line">            <span class="comment"># the right child exists</span></span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">not</span> parent <span class="keyword">or</span> parent.val != inorder[self.indexin]:</span><br><span class="line">                node.right = dfs(parent)</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> node</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> dfs(<span class="literal">None</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="思路-3，迭代"><a href="#思路-3，迭代" class="headerlink" title="思路 3，迭代"></a>思路 3，迭代</h2><p>思路 2 可以从递归逻辑转化成迭代逻辑，由于同样逻辑递归算法存在调用栈，算上其使用的额外空间后，对内存空间的使用要高于迭代算法，所以对递归算法的优化可以考虑能否将其转化为迭代算法。</p>
+<p>和递归方法不同，在迭代版本中我们使用一个 Stack 来管理当前处理的节点。使用 Stack 的目的是管理当前还未遍历完的节点，这一步相当于将递归过程扁平化了。我们在便利根节点的做节点时，发现左节点有自己的左节点，所以我们将其放入栈中，先处理左节点自己的左节点，然后将其丢出栈，继续往后处理。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">buildTree</span>(<span class="params">self, preorder: <span class="type">List</span>[<span class="built_in">int</span>], inorder: <span class="type">List</span>[<span class="built_in">int</span>]</span>) -&gt; TreeNode:</span></span><br><span class="line">        indexpre, indexin = <span class="number">1</span>, <span class="number">0</span></span><br><span class="line">        root = TreeNode(preorder[<span class="number">0</span>])</span><br><span class="line">        stack, parent = [root], <span class="literal">None</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> stack:</span><br><span class="line">            <span class="keyword">while</span> stack <span class="keyword">and</span> stack[-<span class="number">1</span>].val == inorder[indexin]:</span><br><span class="line">                parent = stack.pop()</span><br><span class="line">                indexin += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> indexin == <span class="built_in">len</span>(inorder):</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line">            node = TreeNode(preorder[indexpre])</span><br><span class="line">            indexpre += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> parent:</span><br><span class="line">                parent.right = node</span><br><span class="line">            <span class="keyword">elif</span> stack:</span><br><span class="line">                stack[-<span class="number">1</span>].left = node</span><br><span class="line"></span><br><span class="line">            stack.append(node)</span><br><span class="line">            parent = <span class="literal">None</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> root</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>Array</tag>
+        <tag>Tree</tag>
+        <tag>Binary Tree</tag>
+        <tag>Hash Table</tag>
+        <tag>Divide and Conquer</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>106. Construct Binary Tree from Inorder and Postorder Traversal (Medium)</title>
     <url>/post/leetcode/106-Construct-Binary-Tree-from-Inorder-and-Postorder-Traversal-Medium/</url>
-    <content><![CDATA[<p>你需要从一棵树的中序遍历数组和后序遍历数组中尝试重新构建出这棵二叉树。</p>
+    <content><![CDATA[<p>你需要从一棵树的<code>中序遍历</code>数据和<code>后序遍历</code>数据中尝试重新构建出这棵二叉树。</p>
 <p>要从树的遍历结果逆向还原这棵树，扁平的 1D 数组的信息量是不够的，但是如果有两个不同的遍历结果做参考，我们可以根据树的遍历过程进行逆向操作。</p>
-<p>这道题是使用已知的中序遍历和后序遍历的结果来尝试逆向遍历树的过程。</p>
+<p>这道题是使用已知的<code>中序遍历</code>和<code>后序遍历</code>的结果来尝试逆向遍历树的过程。</p>
 <span id="more"></span>
 
 <h2 id="思路-1，递归"><a href="#思路-1，递归" class="headerlink" title="思路 1，递归"></a>思路 1，递归</h2><p>已知给定的两组数据的排序方式是中序遍历和后序遍历。</p>
 <ul>
-<li>中序遍历：左节点 -&gt; 根节点 -&gt; 右节点</li>
-<li>后序遍历：左节点 -&gt; 右节点 -&gt; 根节点</li>
+<li><code>中序遍历</code>：左节点 -&gt; 根节点 -&gt; 右节点</li>
+<li><code>后序遍历</code>：左节点 -&gt; 右节点 -&gt; 根节点</li>
 </ul>
 <p>在知道根节点的情况比较容易去构建一棵二叉树，所以我们以后序遍历的数据为基础进行树的构建。</p>
 <p>但是后序遍历的数据无法告诉我们下一个节点是根节点的左节点还是右节点，这时我们需要到中序遍历的数据中进行检查，如果下一个节点在中序遍历中出现在根节点的左侧，则它是根节点的左节点，反之则是根节点的右节点。</p>
