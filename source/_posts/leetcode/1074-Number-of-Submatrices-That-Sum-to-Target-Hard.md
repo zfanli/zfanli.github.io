@@ -6,8 +6,6 @@ tags:
   - Matrix
   - Prefix Sum
 title: 1074. Number of Submatrices That Sum to Target (Hard)
-categories:
-  - leetcode
 ---
 
 矩阵求和问题。给定一个矩阵 `matrix` 和一个目标值 `target`，求和为 `target` 的子矩阵的数量。
