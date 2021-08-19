@@ -5,8 +5,6 @@ tags:
   - BFS
   - Binary Tree
 title: 102. Binary Tree Level Order Traversal (Medium)
-categories:
-  - leetcode
 ---
 
 遍历树的方式除了通常的前序遍历、中序遍历和后序遍历之外，还有本题的层序遍历。
