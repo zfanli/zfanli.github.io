@@ -5,6 +5,8 @@ tags:
   - Hash Table
   - String
 title: 609. Find Duplicate File in System (Medium)
+categories:
+  - leetcode
 ---
 
 寻找系统中的重复文件。你会得到下面结构的字符串数组，这表示在 `root/d1/d2/.../dm` 目录下存在 `n` 个文件，分别命名为 `f1, f2, ..., fn`，文件名后括号内为文件的内容。你需要找到所有内容重复的文件，并返回文件的路径。

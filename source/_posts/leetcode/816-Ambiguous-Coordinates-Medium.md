@@ -4,6 +4,8 @@ tags:
   - String
   - Backtracking
 title: 816. Ambiguous Coordinates (Medium)
+categories:
+  - leetcode
 ---
 
 模棱两可的平面坐标。你需要从一个删除了逗号、空格和小数点的平面坐标中还原它的所有可能的坐标值。

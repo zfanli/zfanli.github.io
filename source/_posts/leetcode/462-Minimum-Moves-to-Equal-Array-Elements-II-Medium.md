@@ -5,6 +5,8 @@ tags:
   - Array
   - Sorting
 title: 462. Minimum Moves to Equal Array Elements II (Medium)
+categories:
+  - leetcode
 ---
 
 你有一个数组，允许你每次操作将任意一个元素的值 +1 或 -1，求最少需要多少操作次数让数组中的所有元素相等。
