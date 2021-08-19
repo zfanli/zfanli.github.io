@@ -6,6 +6,8 @@ tags:
   - Recursion
   - Memoization
 title: 509. Fibonacci Number (Easy)
+categories:
+  - leetcode
 ---
 
 生成指定位置的斐波那契数。Hello World 级别的问题，难点是对时间和空间复杂度的控制。

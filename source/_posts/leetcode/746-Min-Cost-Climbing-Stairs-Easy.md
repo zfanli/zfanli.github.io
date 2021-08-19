@@ -4,6 +4,8 @@ tags:
   - Array
   - DP
 title: 746. Min Cost Climbing Stairs (Easy)
+categories:
+  - leetcode
 ---
 
 爬楼梯游戏。你在爬一段楼梯，你会得到一个 `cost` 数组记录爬到每一级台阶的消耗。
