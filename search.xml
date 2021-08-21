@@ -2920,9 +2920,16 @@
 <li>对于变化前，或变化后的属性为 <code>auto</code> 的情况，规格建议不做过渡效果，但是每个浏览器对其采取不同处理，所以为了保证效果一致性，我们应该避免对 <code>auto</code> 添加过渡效果。</li>
 </ol>
 </blockquote>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">div</span> &#123;</span><br><span class="line">  <span class="attribute">transition</span>: all <span class="number">0.25s</span> ease;</span><br><span class="line">  <span class="attribute">transform</span>: <span class="built_in">translate</span>(<span class="number">50px</span>) <span class="built_in">rotate</span>(<span class="number">30deg</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <span id="more"></span>
 
-<h2 id="过渡-transitions"><a href="#过渡-transitions" class="headerlink" title="过渡 transitions"></a>过渡 transitions</h2><h3 id="定义过渡属性"><a href="#定义过渡属性" class="headerlink" title="定义过渡属性"></a>定义过渡属性</h3><p>CSS 过渡属性可以轻易实现很出效果的动画。</p>
+<h2 id="过渡-transitions"><a href="#过渡-transitions" class="headerlink" title="过渡 transitions"></a>过渡 transitions</h2><blockquote>
+<p>对于动画效果需要注意！</p>
+<p>网页上的缩放动画效果是常见的特定偏头痛症状的触发因素，所以如果你希望在网页上加入这样的动画效果，你应该提供一个开关让用户可以选择关闭动画。</p>
+<p>CSS 媒体查询有一个 <code>prefers-reduced-motion</code> 属性表示用户系统偏好设置了减少动画效果，你可以考虑使用这个媒体查询来关闭动画效果。</p>
+</blockquote>
+<h3 id="定义过渡属性"><a href="#定义过渡属性" class="headerlink" title="定义过渡属性"></a>定义过渡属性</h3><p>CSS 过渡属性可以轻易实现很出效果的动画。</p>
 <blockquote>
 <p>避免产生不适，点击 <code>start</code> 开始演示动画。</p>
 </blockquote>
@@ -3154,7 +3161,232 @@
   <span class="reset position-absolute top-0 end-0 m-3 mt-1 hover-pointer">reset</span>
 </div>
 
-<h3 id="定义变换属性"><a href="#定义变换属性" class="headerlink" title="定义变换属性"></a>定义变换属性</h3><h3 id="3D-变换属性"><a href="#3D-变换属性" class="headerlink" title="3D 变换属性"></a>3D 变换属性</h3><h3 id="定义多个变换属性"><a href="#定义多个变换属性" class="headerlink" title="定义多个变换属性"></a>定义多个变换属性</h3><h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
+<h3 id="定义变换属性"><a href="#定义变换属性" class="headerlink" title="定义变换属性"></a>定义变换属性</h3><p>用于定义变换效果的属性主要有 2 个。</p>
+<h4 id="transform-origin"><a href="#transform-origin" class="headerlink" title="transform-origin"></a><code>transform-origin</code></h4><p>指定原点的位置，默认的位置是元素的中心点。这个属性对旋转、缩放和歪曲等变换效果有效果，因为这些效果需要基于一个点作为参数。</p>
+<style id="example-transform-origin-style"></style>
+<div class="example-container example-transform-origin flex-wrap" style="min-height: 240px">
+  <div class="control-panel d-flex flex-column highlight css my-3">
+    <pre class="bg-transparent m-0"
+      ><span class="line hover-pointer" contentEditable="true" data-transform="rotate(30deg)" data-origin="top: 50%; left: 50%;"
+        ><span class="hljs-attribute">transform-origin</span>: center;</span
+      ><span class="line hover-pointer" contentEditable="true" data-transform="rotate(30deg)" data-origin="top: 0; left: 0;"
+        ><span class="hljs-attribute">transform-origin</span>: top left;</span
+      ><span class="line hover-pointer" contentEditable="true" data-transform="rotate(30deg)" data-origin="top: 20px; left: 50px;"
+        ><span class="hljs-attribute">transform-origin</span>: 50px 20px;</span
+      ><span class="line hover-pointer" contentEditable="true" data-transform="rotate3d(1, 2, 0, 60deg)" data-origin="top: 100%; left: 100%;"
+        ><span class="hljs-attribute">transform-origin</span>: bottom right 60px;</span
+      ><span class="line hover-pointer" contentEditable="true" data-transform="rotate(30deg)" data-origin="top: 100%; left: 0;"
+        ><span class="hljs-attribute">transform-origin</span>: bottom left;</span
+    ></pre>
+  </div>
+  <div class="demo-panel flex-grow-1 d-flex align-items-center justify-content-center mb-3">
+    <div id="demo-transform-origin" class="" style=""></div>
+  </div>
+  <span class="reset position-absolute top-0 end-0 m-3 mt-1 hover-pointer">reset</span>
+</div>
+
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="comment">/* One value */</span></span><br><span class="line"><span class="selector-tag">div</span> &#123;</span><br><span class="line">  <span class="attribute">transform-origin</span>: &lt;length&gt;|&lt;percentage&gt;|&lt;keyword&gt;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* Two values */</span></span><br><span class="line"><span class="selector-tag">div</span> &#123;</span><br><span class="line">  <span class="attribute">transform-origin</span>: &lt;length&gt;|&lt;percentage&gt;|&lt;x-offset-keyword&gt;</span><br><span class="line">    &lt;length&gt;|&lt;percentage&gt;|&lt;y-offset-keyword&gt;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* Three values, the third value represents the z offset */</span></span><br><span class="line"><span class="selector-tag">div</span> &#123;</span><br><span class="line">  <span class="attribute">transform-origin</span>: &lt;length&gt;|&lt;percentage&gt;|&lt;x-offset-keyword&gt;</span><br><span class="line">    &lt;length&gt;|&lt;percentage&gt;|&lt;y-offset-keyword&gt; &lt;length&gt;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>Keyword</th>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>left</td>
+<td>0%</td>
+<td>x-offset-keyword</td>
+</tr>
+<tr>
+<td>center</td>
+<td>50%</td>
+<td>x-offset-keyword, y-offset-keyword</td>
+</tr>
+<tr>
+<td>right</td>
+<td>100%</td>
+<td>x-offset-keyword</td>
+</tr>
+<tr>
+<td>top</td>
+<td>0%</td>
+<td>y-offset-keyword</td>
+</tr>
+<tr>
+<td>bottom</td>
+<td>100%</td>
+<td>y-offset-keyword</td>
+</tr>
+</tbody></table>
+<h4 id="transform"><a href="#transform" class="headerlink" title="transform"></a><code>transform</code></h4><p>变换属性让你旋转、缩放、歪曲或平移元素。变换属性只能应用在由 CSS 盒子模型控制的可变换元素。你可以只指定一个变换函数，也可以用空格分隔同时指定多个变换函数。</p>
+<p>当你指定多个变换函数时构成组合变换 <code>Composition Transforms</code>，每个变换效果将根据<strong>从右到左</strong>的顺序依次应用。</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="comment">/* Single function */</span></span><br><span class="line"><span class="selector-tag">div</span> &#123;</span><br><span class="line">  <span class="attribute">transform</span>: &lt;transform-function&gt;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* Multiple functions */</span></span><br><span class="line"><span class="selector-tag">div</span> &#123;</span><br><span class="line">  <span class="attribute">transform</span>: &lt;transform-function&gt; [&lt;transform-function&gt; ...];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="transform-matrix"><a href="#transform-matrix" class="headerlink" title="transform: matrix"></a><code>transform: matrix</code></h4><p>均匀的 2D 变换矩阵。还有一个 3d 版本 <code>matrix3d</code> 在下文介绍。</p>
+<h4 id="transform-translate"><a href="#transform-translate" class="headerlink" title="transform: translate"></a><code>transform: translate</code></h4><p>在 2d 平面平移元素。这个变换函数有几个变种函数。</p>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Parameters</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>translate()</code></td>
+<td><code>&lt;length&gt;[, &lt;length&gt;]</code></td>
+<td>在 2d 平面平移元素，如果纵轴没有给值则使用横轴的值</td>
+</tr>
+<tr>
+<td><code>translate3d()</code></td>
+<td><code>tx, ty, tz</code></td>
+<td>在 3d 空间平移元素，3d 版本具体在下文介绍</td>
+</tr>
+<tr>
+<td><code>translateX()</code></td>
+<td><code>tx</code></td>
+<td>在水平方向平移元素，等同 <code>translate(tx, 0)</code> 或 <code>translate3d(tx, 0, 0)</code></td>
+</tr>
+<tr>
+<td><code>translateY()</code></td>
+<td><code>ty</code></td>
+<td>在垂直方向平移元素，等同 <code>translate(0, ty)</code> 或 <code>translate3d(0, ty, 0)</code></td>
+</tr>
+<tr>
+<td><code>translateZ()</code></td>
+<td><code>tz</code></td>
+<td>围绕 z 轴平移元素，等同 <code>translate3d(0, 0, tz)</code></td>
+</tr>
+</tbody></table>
+<h4 id="transform-scale"><a href="#transform-scale" class="headerlink" title="transform: scale"></a><code>transform: scale</code></h4><p>在 2d 平面缩放元素。这个变换函数有几个变种存在。</p>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Parameters</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>scale()</code></td>
+<td><code>sx[, xy]</code></td>
+<td>在 2d 平面缩放元素，如果纵轴没有给值则使用横轴的值</td>
+</tr>
+<tr>
+<td><code>scale3d()</code></td>
+<td><code>sx, sy, sz</code></td>
+<td>在 3d 空间缩放元素，3d 版本具体在下文介绍</td>
+</tr>
+<tr>
+<td><code>scaleX()</code></td>
+<td><code>s</code></td>
+<td>调整水平方向元素大小，等同 <code>scale(sx, 1)</code> 或 <code>scale3d(sx, 1, 1)</code></td>
+</tr>
+<tr>
+<td><code>scaleY()</code></td>
+<td><code>s</code></td>
+<td>调整垂直方向元素大小，等同 <code>scale(1, sy)</code> 或 <code>scale3d(1, sy, 1)</code></td>
+</tr>
+<tr>
+<td><code>scaleZ()</code></td>
+<td><code>s</code></td>
+<td>围绕 z 轴调整元素大小，等同 <code>scale3d(1, 1, sz)</code></td>
+</tr>
+</tbody></table>
+<h4 id="transform-rotate"><a href="#transform-rotate" class="headerlink" title="transform: rotate"></a><code>transform: rotate</code></h4><p>在 2d 平面围绕一个固定点旋转元素。这个变换函数有几个变种函数。</p>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Parameters</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>rotate()</code></td>
+<td><code>&lt;angle&gt;</code></td>
+<td>在 2d 平面围绕一个<strong>固定点</strong>旋转元素，固定点坐标由 <code>transform-origin</code> 定义</td>
+</tr>
+<tr>
+<td><code>rotate3d()</code></td>
+<td><code>x, y, z, &lt;angle&gt;</code></td>
+<td>在 3d 空间围绕一个<strong>固定轴</strong>旋转元素，3d 版本具体在下文介绍</td>
+</tr>
+<tr>
+<td><code>rotateX()</code></td>
+<td><code>&lt;angle&gt;</code></td>
+<td>围绕水平坐标轴旋转元素，等同 <code>rotate3d(1, 0, 0, a)</code></td>
+</tr>
+<tr>
+<td><code>rotateY()</code></td>
+<td><code>&lt;angle&gt;</code></td>
+<td>围绕垂直坐标轴旋转元素，等同 <code>rotate3d(0, 1, 0, a)</code></td>
+</tr>
+<tr>
+<td><code>rotateZ()</code></td>
+<td><code>&lt;angle&gt;</code></td>
+<td>围绕 z 轴旋转元素，等同 <code>rotate3d(0, 0, 1, a)</code></td>
+</tr>
+</tbody></table>
+<p><code>&lt;angle&gt;</code> 单位定义。</p>
+<table>
+<thead>
+<tr>
+<th>Unit</th>
+<th>Definition</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>deg</code></td>
+<td>单位 <code>度</code>，一整圈为 <code>360deg</code></td>
+</tr>
+<tr>
+<td><code>grad</code></td>
+<td>单位 <code>梯度</code>，一整圈为 <code>400grad</code></td>
+</tr>
+<tr>
+<td><code>rad</code></td>
+<td>单位 <code>弧度</code>，弧度一整圈为 2π，表示接近 <code>6.2832rad</code></td>
+</tr>
+<tr>
+<td><code>turn</code></td>
+<td>单位 <code>转</code>，一整圈为 <code>1turn</code></td>
+</tr>
+</tbody></table>
+<h4 id="transform-skew"><a href="#transform-skew" class="headerlink" title="transform: skew"></a><code>transform: skew</code></h4><p>在 2d 平面歪曲元素。这个变换函数有几个变种存在。歪曲函数的参数使用角度单位，与 <code>rotate</code> 一致。</p>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Parameters</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>skew()</code></td>
+<td><code>ax[, ay]</code></td>
+<td>在 2d 平面缩放元素，如果纵轴没有给值则使用横轴的值</td>
+</tr>
+<tr>
+<td><code>skewX()</code></td>
+<td><code>&lt;angle&gt;</code></td>
+<td>在水平方向歪曲元素，等同 <code>skew(a)</code></td>
+</tr>
+<tr>
+<td><code>skewY()</code></td>
+<td><code>&lt;angle&gt;</code></td>
+<td>在垂直方向歪曲元素</td>
+</tr>
+</tbody></table>
+<h3 id="3D-变换属性"><a href="#3D-变换属性" class="headerlink" title="3D 变换属性"></a>3D 变换属性</h3><h4 id="transform-matrix3d"><a href="#transform-matrix3d" class="headerlink" title="transform: matrix3d"></a><code>transform: matrix3d</code></h4><p>均匀的 <code>4 x 4</code> 的 3d 变换矩阵。</p>
+<h4 id="transform-translate3d"><a href="#transform-translate3d" class="headerlink" title="transform: translate3d"></a><code>transform: translate3d</code></h4><p>在 3d 空间平移元素。</p>
+<h4 id="transform-scale3d"><a href="#transform-scale3d" class="headerlink" title="transform: scale3d"></a><code>transform: scale3d</code></h4><p>在 3d 空间缩放元素。</p>
+<h4 id="transform-rotate3d"><a href="#transform-rotate3d" class="headerlink" title="transform: rotate3d"></a><code>transform: rotate3d</code></h4><p>在 3d 空间围绕一个<strong>固定轴</strong>旋转元素。</p>
+<h4 id="transform-perspective"><a href="#transform-perspective" class="headerlink" title="transform: perspective"></a><code>transform: perspective</code></h4><p>透视变换，设定用户与 <code>z=0</code> 平面的距离。### 定义多个变换属性</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
 <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Transitions/Using_CSS_transitions">Using CSS transitions</a></li>
 <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Transforms/Using_CSS_transforms">Using CSS transforms</a></li>
 <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/TransitionEvent">TransitionEvent</a></li>
@@ -3179,7 +3411,7 @@
   display: block;
   margin: 2px 0;
   padding: 5px;
-  width: 350px;
+  width: 370px;
   border-left: 4px transparent solid;
   border-bottom: 1px transparent solid;
   overflow: auto;
@@ -3192,6 +3424,38 @@
 }
 #demo-transform {
   transition: all .25s ease;
+}
+#demo-transform-origin {
+  position: relative;
+  border: 3px dashed #dc3545;
+  height: 106px;
+  width: 106px;
+  border-radius: 2px;
+}
+#demo-transform-origin::before {
+  transform: rotate(0);
+  content: 'ROTATE ME';
+  color: white;
+  line-height: 100px;
+  text-align: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgb(25, 135, 84);
+  z-index: -1;
+}
+#demo-transform-origin::after {
+  content: ' ';
+  width: 5px;
+  height: 5px;
+  position: absolute;
+  background-color: white;
+  border-radius: 50%;
+  padding: 3px;
+  border: 3px solid #dc3545;
+  transform: translate(-50%, -50%);
 }
 </style>
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
@@ -3260,25 +3524,55 @@ $(function(){
   target.on('transitionstart', record('Started'))
   // example-event end
   // example-transform start
-  const lines = $('.example-transform .line')
-    transformStyles = $('#example-transform-style')
-  lines.each(function(){
-    $(this).data('bk', $(this).html())
-  })
-  lines.click(function() {
-    lines.removeClass('active')
-    $(this).addClass('active')
-    transformStyles.html(`#demo-transform {${$(this).text()}}`)
-  })
-  lines.on('input', function() {
-    transformStyles.html(`#demo-transform {${$(this).text()}}`)
-  })
-  $('.example-transform .reset').click(() => lines.each(function() {
-    lines.removeClass('active')
-    $(this).html($(this).data('bk'))
-    transformStyles.html('')
-  }))
+  ;(function() {
+    const lines = $('.example-transform .line'),
+      transformStyles = $('#example-transform-style')
+    lines.each(function(){
+      $(this).data('bk', $(this).html())
+    })
+    lines.click(function() {
+      lines.removeClass('active')
+      $(this).addClass('active')
+      transformStyles.html(`.example-transform #demo-transform {${$(this).text()}}`)
+    })
+    lines.on('input', function() {
+      transformStyles.html(`.example-transform #demo-transform {${$(this).text()}}`)
+    })
+    $('.example-transform .reset').click(() => lines.each(function() {
+      lines.removeClass('active')
+      $(this).html($(this).data('bk'))
+      transformStyles.html('')
+    }))
+  })()
   // example-transform end
+  // example-transform-origin start
+  ;(function() {
+    const lines = $('.example-transform-origin .line'),
+      transformStyles = $('#example-transform-origin-style')
+    lines.each(function(){
+      $(this).data('bk', $(this).html())
+    })
+    lines.click(function() {
+      lines.removeClass('active')
+      transformStyles.html('')
+      $(this).addClass('active')
+      setTimeout(()=>
+      transformStyles.html(`#demo-transform-origin::before {${$(this).text()}} #demo-transform-origin::after {${$(this).data('origin')}}`)
+      ,10)
+      setTimeout(()=>
+      transformStyles.html(`#demo-transform-origin::before {transition: all .75s ease;${$(this).text()}transform: ${$(this).data('transform')}!important;} #demo-transform-origin::after {${$(this).data('origin')}}`)
+      ,100)
+    })
+    lines.on('input', function() {
+      transformStyles.html(`#demo-transform-origin::before {transition: all .75s ease;${$(this).text()}transform: ${$(this).data('transform')}!important;} #demo-transform-origin::after {${$(this).data('origin')}}`)
+    })
+    $('.example-transform-origin .reset').click(() => lines.each(function() {
+      lines.removeClass('active')
+      $(this).html($(this).data('bk'))
+      transformStyles.html('')
+    }))
+  })()
+  // example-transform-origin end
 })
 </script>
 ]]></content>
