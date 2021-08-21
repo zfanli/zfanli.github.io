@@ -17,9 +17,22 @@ CSS 过渡属性提供了一种方式给 CSS 属性变化添加过渡动画，�
 > 1. 可以使用过渡效果的属性列表会发生变化，因为 transitions 的规格还没有定版；
 > 2. 对于变化前，或变化后的属性为 `auto` 的情况，规格建议不做过渡效果，但是每个浏览器对其采取不同处理，所以为了保证效果一致性，我们应该避免对 `auto` 添加过渡效果。
 
+```css
+div {
+  transition: all 0.25s ease;
+  transform: translate(50px) rotate(30deg);
+}
+```
+
 <!-- more -->
 
 ## 过渡 transitions
+
+> 对于动画效果需要注意！
+>
+> 网页上的缩放动画效果是常见的特定偏头痛症状的触发因素，所以如果你希望在网页上加入这样的动画效果，你应该提供一个开关让用户可以选择关闭动画。
+>
+> CSS 媒体查询有一个 `prefers-reduced-motion` 属性表示用户系统偏好设置了减少动画效果，你可以考虑使用这个媒体查询来关闭动画效果。
 
 ### 定义过渡属性
 
@@ -256,9 +269,159 @@ target.addEventListener("transitionstart", (e) => {});
 
 ### 定义变换属性
 
+用于定义变换效果的属性主要有 2 个。
+
+#### `transform-origin`
+
+指定原点的位置，默认的位置是元素的中心点。这个属性对旋转、缩放和歪曲等变换效果有效果，因为这些效果需要基于一个点作为参数。
+
+<style id="example-transform-origin-style"></style>
+<div class="example-container example-transform-origin flex-wrap" style="min-height: 240px">
+  <div class="control-panel d-flex flex-column highlight css my-3">
+    <pre class="bg-transparent m-0"
+      ><span class="line hover-pointer" contentEditable="true" data-transform="rotate(30deg)" data-origin="top: 50%; left: 50%;"
+        ><span class="hljs-attribute">transform-origin</span>: center;</span
+      ><span class="line hover-pointer" contentEditable="true" data-transform="rotate(30deg)" data-origin="top: 0; left: 0;"
+        ><span class="hljs-attribute">transform-origin</span>: top left;</span
+      ><span class="line hover-pointer" contentEditable="true" data-transform="rotate(30deg)" data-origin="top: 20px; left: 50px;"
+        ><span class="hljs-attribute">transform-origin</span>: 50px 20px;</span
+      ><span class="line hover-pointer" contentEditable="true" data-transform="rotate3d(1, 2, 0, 60deg)" data-origin="top: 100%; left: 100%;"
+        ><span class="hljs-attribute">transform-origin</span>: bottom right 60px;</span
+      ><span class="line hover-pointer" contentEditable="true" data-transform="rotate(30deg)" data-origin="top: 100%; left: 0;"
+        ><span class="hljs-attribute">transform-origin</span>: bottom left;</span
+    ></pre>
+  </div>
+  <div class="demo-panel flex-grow-1 d-flex align-items-center justify-content-center mb-3">
+    <div id="demo-transform-origin" class="" style=""></div>
+  </div>
+  <span class="reset position-absolute top-0 end-0 m-3 mt-1 hover-pointer">reset</span>
+</div>
+
+```css
+/* One value */
+div {
+  transform-origin: <length>|<percentage>|<keyword>;
+}
+
+/* Two values */
+div {
+  transform-origin: <length>|<percentage>|<x-offset-keyword>
+    <length>|<percentage>|<y-offset-keyword>;
+}
+
+/* Three values, the third value represents the z offset */
+div {
+  transform-origin: <length>|<percentage>|<x-offset-keyword>
+    <length>|<percentage>|<y-offset-keyword> <length>;
+}
+```
+
+| Keyword | Value | Description                        |
+| ------- | ----- | ---------------------------------- |
+| left    | 0%    | x-offset-keyword                   |
+| center  | 50%   | x-offset-keyword, y-offset-keyword |
+| right   | 100%  | x-offset-keyword                   |
+| top     | 0%    | y-offset-keyword                   |
+| bottom  | 100%  | y-offset-keyword                   |
+
+#### `transform`
+
+变换属性让你旋转、缩放、歪曲或平移元素。变换属性只能应用在由 CSS 盒子模型控制的可变换元素。你可以只指定一个变换函数，也可以用空格分隔同时指定多个变换函数。
+
+当你指定多个变换函数时构成组合变换 `Composition Transforms`，每个变换效果将根据**从右到左**的顺序依次应用。
+
+```css
+/* Single function */
+div {
+  transform: <transform-function>;
+}
+
+/* Multiple functions */
+div {
+  transform: <transform-function> [<transform-function> ...];
+}
+```
+
+#### `transform: matrix`
+
+均匀的 2D 变换矩阵。还有一个 3d 版本 `matrix3d` 在下文介绍。
+
+#### `transform: translate`
+
+在 2d 平面平移元素。这个变换函数有几个变种函数。
+
+| Function        | Parameters             | Description                                                            |
+| --------------- | ---------------------- | ---------------------------------------------------------------------- |
+| `translate()`   | `<length>[, <length>]` | 在 2d 平面平移元素，如果纵轴没有给值则使用横轴的值                     |
+| `translate3d()` | `tx, ty, tz`           | 在 3d 空间平移元素，3d 版本具体在下文介绍                              |
+| `translateX()`  | `tx`                   | 在水平方向平移元素，等同 `translate(tx, 0)` 或 `translate3d(tx, 0, 0)` |
+| `translateY()`  | `ty`                   | 在垂直方向平移元素，等同 `translate(0, ty)` 或 `translate3d(0, ty, 0)` |
+| `translateZ()`  | `tz`                   | 围绕 z 轴平移元素，等同 `translate3d(0, 0, tz)`                        |
+
+#### `transform: scale`
+
+在 2d 平面缩放元素。这个变换函数有几个变种存在。
+
+| Function    | Parameters   | Description                                                      |
+| ----------- | ------------ | ---------------------------------------------------------------- |
+| `scale()`   | `sx[, xy]`   | 在 2d 平面缩放元素，如果纵轴没有给值则使用横轴的值               |
+| `scale3d()` | `sx, sy, sz` | 在 3d 空间缩放元素，3d 版本具体在下文介绍                        |
+| `scaleX()`  | `s`          | 调整水平方向元素大小，等同 `scale(sx, 1)` 或 `scale3d(sx, 1, 1)` |
+| `scaleY()`  | `s`          | 调整垂直方向元素大小，等同 `scale(1, sy)` 或 `scale3d(1, sy, 1)` |
+| `scaleZ()`  | `s`          | 围绕 z 轴调整元素大小，等同 `scale3d(1, 1, sz)`                  |
+
+#### `transform: rotate`
+
+在 2d 平面围绕一个固定点旋转元素。这个变换函数有几个变种函数。
+
+| Function     | Parameters         | Description                                                                |
+| ------------ | ------------------ | -------------------------------------------------------------------------- |
+| `rotate()`   | `<angle>`          | 在 2d 平面围绕一个**固定点**旋转元素，固定点坐标由 `transform-origin` 定义 |
+| `rotate3d()` | `x, y, z, <angle>` | 在 3d 空间围绕一个**固定轴**旋转元素，3d 版本具体在下文介绍                |
+| `rotateX()`  | `<angle>`          | 围绕水平坐标轴旋转元素，等同 `rotate3d(1, 0, 0, a)`                        |
+| `rotateY()`  | `<angle>`          | 围绕垂直坐标轴旋转元素，等同 `rotate3d(0, 1, 0, a)`                        |
+| `rotateZ()`  | `<angle>`          | 围绕 z 轴旋转元素，等同 `rotate3d(0, 0, 1, a)`                             |
+
+`<angle>` 单位定义。
+
+| Unit   | Definition                                         |
+| ------ | -------------------------------------------------- |
+| `deg`  | 单位 `度`，一整圈为 `360deg`                       |
+| `grad` | 单位 `梯度`，一整圈为 `400grad`                    |
+| `rad`  | 单位 `弧度`，弧度一整圈为 2π，表示接近 `6.2832rad` |
+| `turn` | 单位 `转`，一整圈为 `1turn`                        |
+
+#### `transform: skew`
+
+在 2d 平面歪曲元素。这个变换函数有几个变种存在。歪曲函数的参数使用角度单位，与 `rotate` 一致。
+
+| Function  | Parameters | Description                                        |
+| --------- | ---------- | -------------------------------------------------- |
+| `skew()`  | `ax[, ay]` | 在 2d 平面缩放元素，如果纵轴没有给值则使用横轴的值 |
+| `skewX()` | `<angle>`  | 在水平方向歪曲元素，等同 `skew(a)`                 |
+| `skewY()` | `<angle>`  | 在垂直方向歪曲元素                                 |
+
 ### 3D 变换属性
 
-### 定义多个变换属性
+#### `transform: matrix3d`
+
+均匀的 `4 x 4` 的 3d 变换矩阵。
+
+#### `transform: translate3d`
+
+在 3d 空间平移元素。
+
+#### `transform: scale3d`
+
+在 3d 空间缩放元素。
+
+#### `transform: rotate3d`
+
+在 3d 空间围绕一个**固定轴**旋转元素。
+
+#### `transform: perspective`
+
+透视变换，设定用户与 `z=0` 平面的距离。### 定义多个变换属性
 
 ## References
 
@@ -286,7 +449,7 @@ target.addEventListener("transitionstart", (e) => {});
   display: block;
   margin: 2px 0;
   padding: 5px;
-  width: 350px;
+  width: 370px;
   border-left: 4px transparent solid;
   border-bottom: 1px transparent solid;
   overflow: auto;
@@ -299,6 +462,38 @@ target.addEventListener("transitionstart", (e) => {});
 }
 #demo-transform {
   transition: all .25s ease;
+}
+#demo-transform-origin {
+  position: relative;
+  border: 3px dashed #dc3545;
+  height: 106px;
+  width: 106px;
+  border-radius: 2px;
+}
+#demo-transform-origin::before {
+  transform: rotate(0);
+  content: 'ROTATE ME';
+  color: white;
+  line-height: 100px;
+  text-align: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgb(25, 135, 84);
+  z-index: -1;
+}
+#demo-transform-origin::after {
+  content: ' ';
+  width: 5px;
+  height: 5px;
+  position: absolute;
+  background-color: white;
+  border-radius: 50%;
+  padding: 3px;
+  border: 3px solid #dc3545;
+  transform: translate(-50%, -50%);
 }
 </style>
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
@@ -367,24 +562,54 @@ $(function(){
   target.on('transitionstart', record('Started'))
   // example-event end
   // example-transform start
-  const lines = $('.example-transform .line')
-    transformStyles = $('#example-transform-style')
-  lines.each(function(){
-    $(this).data('bk', $(this).html())
-  })
-  lines.click(function() {
-    lines.removeClass('active')
-    $(this).addClass('active')
-    transformStyles.html(`#demo-transform {${$(this).text()}}`)
-  })
-  lines.on('input', function() {
-    transformStyles.html(`#demo-transform {${$(this).text()}}`)
-  })
-  $('.example-transform .reset').click(() => lines.each(function() {
-    lines.removeClass('active')
-    $(this).html($(this).data('bk'))
-    transformStyles.html('')
-  }))
+  ;(function() {
+    const lines = $('.example-transform .line'),
+      transformStyles = $('#example-transform-style')
+    lines.each(function(){
+      $(this).data('bk', $(this).html())
+    })
+    lines.click(function() {
+      lines.removeClass('active')
+      $(this).addClass('active')
+      transformStyles.html(`.example-transform #demo-transform {${$(this).text()}}`)
+    })
+    lines.on('input', function() {
+      transformStyles.html(`.example-transform #demo-transform {${$(this).text()}}`)
+    })
+    $('.example-transform .reset').click(() => lines.each(function() {
+      lines.removeClass('active')
+      $(this).html($(this).data('bk'))
+      transformStyles.html('')
+    }))
+  })()
   // example-transform end
+  // example-transform-origin start
+  ;(function() {
+    const lines = $('.example-transform-origin .line'),
+      transformStyles = $('#example-transform-origin-style')
+    lines.each(function(){
+      $(this).data('bk', $(this).html())
+    })
+    lines.click(function() {
+      lines.removeClass('active')
+      transformStyles.html('')
+      $(this).addClass('active')
+      setTimeout(()=>
+      transformStyles.html(`#demo-transform-origin::before {${$(this).text()}} #demo-transform-origin::after {${$(this).data('origin')}}`)
+      ,10)
+      setTimeout(()=>
+      transformStyles.html(`#demo-transform-origin::before {transition: all .75s ease;${$(this).text()}transform: ${$(this).data('transform')}!important;} #demo-transform-origin::after {${$(this).data('origin')}}`)
+      ,100)
+    })
+    lines.on('input', function() {
+      transformStyles.html(`#demo-transform-origin::before {transition: all .75s ease;${$(this).text()}transform: ${$(this).data('transform')}!important;} #demo-transform-origin::after {${$(this).data('origin')}}`)
+    })
+    $('.example-transform-origin .reset').click(() => lines.each(function() {
+      lines.removeClass('active')
+      $(this).html($(this).data('bk'))
+      transformStyles.html('')
+    }))
+  })()
+  // example-transform-origin end
 })
 </script>
