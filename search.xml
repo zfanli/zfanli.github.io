@@ -3223,9 +3223,16 @@
 </tbody></table>
 <h4 id="transform"><a href="#transform" class="headerlink" title="transform"></a><code>transform</code></h4><p>变换属性让你旋转、缩放、歪曲或平移元素。变换属性只能应用在由 CSS 盒子模型控制的可变换元素。你可以只指定一个变换函数，也可以用空格分隔同时指定多个变换函数。</p>
 <p>当你指定多个变换函数时构成组合变换 <code>Composition Transforms</code>，每个变换效果将根据<strong>从右到左</strong>的顺序依次应用。</p>
+<p>指定多个变换函数时，你可以重复指定同一种函数，这些函数会按照上述顺序执行。请注意有些函数交换位置后不影响结果，但是其他的函数执行顺序至关重要。</p>
 <figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="comment">/* Single function */</span></span><br><span class="line"><span class="selector-tag">div</span> &#123;</span><br><span class="line">  <span class="attribute">transform</span>: &lt;transform-function&gt;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* Multiple functions */</span></span><br><span class="line"><span class="selector-tag">div</span> &#123;</span><br><span class="line">  <span class="attribute">transform</span>: &lt;transform-function&gt; [&lt;transform-function&gt; ...];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h4 id="transform-matrix"><a href="#transform-matrix" class="headerlink" title="transform: matrix"></a><code>transform: matrix</code></h4><p>均匀的 2D 变换矩阵。还有一个 3d 版本 <code>matrix3d</code> 在下文介绍。</p>
+<blockquote>
+<p><strong>NOTE! 注意！</strong></p>
+<p>演示代码中定义了多个 <code>transform</code> 属性，但是实际使用中最后一个定义的变换效果会覆盖之前的定义，如果需要定义多个变换效果，请定义一个 <code>transform</code> 属性，用<strong>空格分隔变换函数</strong>赋值给它。</p>
+</blockquote>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">div</span> &#123;</span><br><span class="line">  <span class="attribute">transform</span>: <span class="built_in">matrix</span>(a, b, c, d, tx, ty);</span><br><span class="line">  <span class="comment">/* For each parameters the function at the same position will be applied */</span></span><br><span class="line">  <span class="comment">/* matrix(scaleX(), skewY(), skewX(), scaleY(), translateX(), translateY()) */</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">/* Equivalent to the below */</span></span><br><span class="line">  <span class="attribute">transform</span>: <span class="built_in">matrix3d</span>(a, b, <span class="number">0</span>, <span class="number">0</span>, c, d, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, tx, ty, <span class="number">0</span>, <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">/* This line will take effect */</span></span><br><span class="line">  <span class="attribute">transform</span>: <span class="built_in">matrix</span>(<span class="number">1</span>, <span class="number">2</span>, -<span class="number">1</span>, <span class="number">1</span>, <span class="number">80</span>, <span class="number">80</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <h4 id="transform-translate"><a href="#transform-translate" class="headerlink" title="transform: translate"></a><code>transform: translate</code></h4><p>在 2d 平面平移元素。这个变换函数有几个变种函数。</p>
 <table>
 <thead>
@@ -3261,6 +3268,8 @@
 <td>围绕 z 轴平移元素，等同 <code>translate3d(0, 0, tz)</code></td>
 </tr>
 </tbody></table>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">div</span> &#123;</span><br><span class="line">  <span class="attribute">transform</span>: <span class="built_in">translate</span>(<span class="number">50%</span>);</span><br><span class="line">  <span class="comment">/* This line will take effect */</span></span><br><span class="line">  <span class="attribute">transform</span>: <span class="built_in">translate</span>(<span class="number">50px</span>, <span class="number">100px</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <h4 id="transform-scale"><a href="#transform-scale" class="headerlink" title="transform: scale"></a><code>transform: scale</code></h4><p>在 2d 平面缩放元素。这个变换函数有几个变种存在。</p>
 <table>
 <thead>
@@ -3296,6 +3305,8 @@
 <td>围绕 z 轴调整元素大小，等同 <code>scale3d(1, 1, sz)</code></td>
 </tr>
 </tbody></table>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">div</span> &#123;</span><br><span class="line">  <span class="attribute">transform</span>: <span class="built_in">scale</span>(<span class="number">1.5</span>);</span><br><span class="line">  <span class="comment">/* This line will take effect */</span></span><br><span class="line">  <span class="attribute">transform</span>: <span class="built_in">scale</span>(-<span class="number">1</span>, <span class="number">1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <h4 id="transform-rotate"><a href="#transform-rotate" class="headerlink" title="transform: rotate"></a><code>transform: rotate</code></h4><p>在 2d 平面围绕一个固定点旋转元素。这个变换函数有几个变种函数。</p>
 <table>
 <thead>
@@ -3356,6 +3367,8 @@
 <td>单位 <code>转</code>，一整圈为 <code>1turn</code></td>
 </tr>
 </tbody></table>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">div</span> &#123;</span><br><span class="line">  <span class="attribute">transform</span>: <span class="built_in">rotate</span>(<span class="number">30deg</span>);</span><br><span class="line">  <span class="attribute">transform</span>: <span class="built_in">rotate</span>(<span class="number">0.5turn</span>);</span><br><span class="line">  <span class="comment">/* This line will take effect */</span></span><br><span class="line">  <span class="attribute">transform</span>: <span class="built_in">rotate</span>(<span class="number">200grad</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <h4 id="transform-skew"><a href="#transform-skew" class="headerlink" title="transform: skew"></a><code>transform: skew</code></h4><p>在 2d 平面歪曲元素。这个变换函数有几个变种存在。歪曲函数的参数使用角度单位，与 <code>rotate</code> 一致。</p>
 <table>
 <thead>
@@ -3381,14 +3394,38 @@
 <td>在垂直方向歪曲元素</td>
 </tr>
 </tbody></table>
-<h3 id="3D-变换属性"><a href="#3D-变换属性" class="headerlink" title="3D 变换属性"></a>3D 变换属性</h3><h4 id="transform-matrix3d"><a href="#transform-matrix3d" class="headerlink" title="transform: matrix3d"></a><code>transform: matrix3d</code></h4><p>均匀的 <code>4 x 4</code> 的 3d 变换矩阵。</p>
-<h4 id="transform-translate3d"><a href="#transform-translate3d" class="headerlink" title="transform: translate3d"></a><code>transform: translate3d</code></h4><p>在 3d 空间平移元素。</p>
-<h4 id="transform-scale3d"><a href="#transform-scale3d" class="headerlink" title="transform: scale3d"></a><code>transform: scale3d</code></h4><p>在 3d 空间缩放元素。</p>
-<h4 id="transform-rotate3d"><a href="#transform-rotate3d" class="headerlink" title="transform: rotate3d"></a><code>transform: rotate3d</code></h4><p>在 3d 空间围绕一个<strong>固定轴</strong>旋转元素。</p>
-<h4 id="transform-perspective"><a href="#transform-perspective" class="headerlink" title="transform: perspective"></a><code>transform: perspective</code></h4><p>透视变换，设定用户与 <code>z=0</code> 平面的距离。### 定义多个变换属性</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">div</span> &#123;</span><br><span class="line">  <span class="attribute">transform</span>: <span class="built_in">skew</span>(<span class="number">30deg</span>);</span><br><span class="line">  <span class="comment">/* This line will take effect */</span></span><br><span class="line">  <span class="attribute">transform</span>: <span class="built_in">skew</span>(<span class="number">30deg</span>, <span class="number">60deg</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3D-变换属性"><a href="#3D-变换属性" class="headerlink" title="3D 变换属性"></a>3D 变换属性</h3><p>3d 空间的变换效果相对 2d 平面来说参数和概念上复杂很多，并且使用场景差别较大，这一部分我们单独拿出来讨论。</p>
+<h4 id="transform-matrix3d"><a href="#transform-matrix3d" class="headerlink" title="transform: matrix3d"></a><code>transform: matrix3d</code></h4><p>均匀的 <code>4 x 4</code> 的 3d 变换矩阵。矩阵变换是 <code>transform</code> 属性实现的基础，所有其他变换函数都是在计算完结果之后应用矩阵变换实现的。</p>
+<p>换言之，所有变换效果都有一个与之对应的矩阵变换的写法。对于一般效果而言，使用对应的变换函数是最方便的，但是对于组合变换也难以实现的变换效果来说，就需要用到矩阵变换来实现。</p>
+<p>下面是 3d 矩阵变换的参数定义，详细探索以后有机会再具体探讨。</p>
+<!-- prettier-ignore-start -->
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">div</span> &#123;</span><br><span class="line">  <span class="attribute">transform</span>: <span class="built_in">matrix3d</span>(</span><br><span class="line">    a1, b1, c1, d1,</span><br><span class="line">    a2, b2, c2, d2,</span><br><span class="line">    a3, b3, c3, d3,</span><br><span class="line">    a4, b4, c4, d4</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<!-- prettier-ignore-end -->
+
+<h4 id="transform-translate3d"><a href="#transform-translate3d" class="headerlink" title="transform: translate3d"></a><code>transform: translate3d</code></h4><p>在 3d 空间平移元素。3d 的元素平移变换相对 2d 版本并没有复杂多少，接受 3 个向量作为横轴、纵轴和 z 轴方向上的移动量。</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">div</span> &#123;</span><br><span class="line">  <span class="attribute">transform</span>: <span class="built_in">translate3d</span>(<span class="number">0</span>);</span><br><span class="line">  <span class="comment">/* This line will take effect */</span></span><br><span class="line">  <span class="attribute">transform</span>: <span class="built_in">translate3d</span>(<span class="number">42px</span>, -<span class="number">662px</span>, -<span class="number">125px</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="transform-scale3d"><a href="#transform-scale3d" class="headerlink" title="transform: scale3d"></a><code>transform: scale3d</code></h4><p>在 3d 空间缩放元素。这个变换也接收 3 个向量，分别作为横轴、纵轴和 z 轴的缩放量。如果 3 个向量的值相等，则元素将按照等比在 3d 空间缩放。</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">div</span> &#123;</span><br><span class="line">  <span class="comment">/* 这两个定义将等比缩放 */</span></span><br><span class="line">  <span class="attribute">transform</span>: <span class="built_in">scale3d</span>(<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>);</span><br><span class="line">  <span class="attribute">transform</span>: <span class="built_in">scale3d</span>(<span class="number">1.3</span>, <span class="number">1.3</span>, <span class="number">1.3</span>);</span><br><span class="line">  <span class="comment">/* 下面的定义不是等比缩放 */</span></span><br><span class="line">  <span class="attribute">transform</span>: <span class="built_in">scale3d</span>(<span class="number">0.5</span>, <span class="number">1.4</span>, <span class="number">0.8</span>);</span><br><span class="line">  <span class="attribute">transform</span>: <span class="built_in">scale3d</span>(-<span class="number">1.4</span>, <span class="number">0.5</span>, <span class="number">0.7</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="transform-rotate3d"><a href="#transform-rotate3d" class="headerlink" title="transform: rotate3d"></a><code>transform: rotate3d</code></h4><p>在 3d 空间围绕一个<strong>固定轴</strong>旋转元素。3d 空间的旋转相比复杂一点。</p>
+<p>在 3d 空间旋转一个元素存在 3 个方向的自由度，由三个向量组成的 3d 坐标 <code>[x, y, z]</code> 和 <code>transform-origin</code> 原点连成一条直线构成 3d 旋转的转轴。</p>
+<blockquote>
+<p>如果指定的向量未<strong>标准化</strong>（<code>normalized</code>，比如 3 个坐标值的平方和为 <code>1</code>），浏览器会代为进行标准化。但是如果指定的值无法进行标准化，比如指定了 <code>[0, 0, 0]</code>，则旋转会被无视，但是不会导致整个 CSS 属性失效。</p>
+<p>另外，2d 平面上的元素旋转应用的顺序不会影响其效果，但是通常 3d 空间的旋转不同，其会根据应用的顺序不同，从而产生不同的效果。</p>
+</blockquote>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">div</span> &#123;</span><br><span class="line">  <span class="attribute">transform</span>: <span class="built_in">rotate3d</span>(x, y, z, a);</span><br><span class="line">  <span class="comment">/* Examples */</span></span><br><span class="line">  <span class="attribute">transform</span>: <span class="built_in">rotate3d</span>(<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">30deg</span>);</span><br><span class="line">  <span class="attribute">transform</span>: <span class="built_in">rotate3d</span>(<span class="number">2</span>, -<span class="number">1</span>, -<span class="number">1</span>, <span class="number">0.5turn</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="transform-perspective"><a href="#transform-perspective" class="headerlink" title="transform: perspective"></a><code>transform: perspective</code></h4><p>透视变换，设定用户与 <code>z=0</code> 平面的距离。</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">div</span> &#123;</span><br><span class="line">  <span class="comment">/* <span class="doctag">TODO:</span> perspective demo with CSS cube */</span></span><br><span class="line">  <span class="attribute">transform</span>: <span class="built_in">perspective</span>(<span class="number">0</span>);</span><br><span class="line">  <span class="attribute">transform</span>: <span class="built_in">perspective</span>(<span class="number">800px</span>);</span><br><span class="line">  <span class="attribute">transform</span>: <span class="built_in">perspective</span>(<span class="number">23rem</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
 <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Transitions/Using_CSS_transitions">Using CSS transitions</a></li>
 <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Transforms/Using_CSS_transforms">Using CSS transforms</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/transition">transition</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/transform">transform</a></li>
 <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/TransitionEvent">TransitionEvent</a></li>
 </ul>
 <!-- Resources used by only this post -->
@@ -3422,6 +3459,8 @@
 .example-container .line:focus {
   outline: none;
 }
+
+#demo-transform-multiple,
 #demo-transform {
   transition: all .25s ease;
 }
@@ -3573,6 +3612,28 @@ $(function(){
     }))
   })()
   // example-transform-origin end
+  // example-transform-multiple start
+  ;(function() {
+    const lines = $('.example-transform-multiple .line'),
+      transformStyles = $('#example-transform-multiple-style')
+    lines.each(function(){
+      $(this).data('bk', $(this).html())
+    })
+    lines.click(function() {
+      lines.removeClass('active')
+      $(this).addClass('active')
+      transformStyles.html(`.example-transform-multiple #demo-transform-multiple {${$(this).text()}}`)
+    })
+    lines.on('input', function() {
+      transformStyles.html(`.example-transform-multiple #demo-transform-multiple {${$(this).text()}}`)
+    })
+    $('.example-transform-multiple .reset').click(() => lines.each(function() {
+      lines.removeClass('active')
+      $(this).html($(this).data('bk'))
+      transformStyles.html('')
+    }))
+  })()
+  // example-transform-multiple end
 })
 </script>
 ]]></content>
