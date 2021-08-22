@@ -2929,6 +2929,237 @@
       </tags>
   </entry>
   <entry>
+    <title>从需求来看 MongoDB 的最简单用法</title>
+    <url>/post/notes/Simple-Usage-of-MongoDB/</url>
+    <content><![CDATA[<p>从需求来看 MongoDB，了解能满足我们需求的最简用法。</p>
+<p>这篇文章介绍如何在 Python 中操作 MongoDB，面向初学者。我们使用 MongoDB 来储存一个网站的数据，去满足搭建一个博客网站可能会遇到的需求，以此为例来熟悉和了解 MongoDB。</p>
+<p>以下是这篇文章讨论的内容：</p>
+<ul>
+<li>设计符合需求的数据结构</li>
+<li>document 的增删改查</li>
+</ul>
+<span id="more"></span>
+
+<p>这些内容是基础知识。</p>
+<h2 id="设计符合需求的数据结构"><a href="#设计符合需求的数据结构" class="headerlink" title="设计符合需求的数据结构"></a>设计符合需求的数据结构</h2><p>// TODO or delete</p>
+<p>// Or maybe extract this part as a single post.</p>
+<h2 id="document-的增删改查"><a href="#document-的增删改查" class="headerlink" title="document 的增删改查"></a>document 的增删改查</h2><h3 id="连接-MongoDB"><a href="#连接-MongoDB" class="headerlink" title="连接 MongoDB"></a>连接 MongoDB</h3><p>这是一个连接 MongoDB 的示例代码，主要用来定义几个变量方便后面使用。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pymongo <span class="keyword">import</span> MongoClient</span><br><span class="line"><span class="keyword">from</span> bson <span class="keyword">import</span> ObjectId</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">mc = MongoClient() <span class="comment"># connect to default client</span></span><br><span class="line">db = mc[<span class="string">&#x27;test&#x27;</span>] <span class="comment"># use &#x27;test&#x27; database</span></span><br><span class="line">col = db[<span class="string">&#x27;test-collection&#x27;</span>] <span class="comment"># use &#x27;test-collection&#x27; collection</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="find-查询"><a href="#find-查询" class="headerlink" title="find 查询"></a>find 查询</h3><p>查询是使用数据库的基础需求。在 MongoDB 中查询分为两种，查询单个值的 <code>find_one</code> 和查询多个值的 <code>find</code>。使用方法示例如下。</p>
+<h4 id="find-one-amp-find"><a href="#find-one-amp-find" class="headerlink" title="find_one &amp; find"></a>find_one &amp; find</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Query for only one document</span></span><br><span class="line">col.find_one(&#123;</span><br><span class="line">    <span class="string">&#x27;some_fields&#x27;</span>: <span class="string">&#x27;values&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;array_fields&#x27;</span>: [<span class="string">&#x27;value1&#x27;</span>, <span class="string">&#x27;value2&#x27;</span>],</span><br><span class="line">    <span class="string">&#x27;object_fields&#x27;</span>: &#123;<span class="string">&#x27;keys&#x27;</span>: <span class="string">&#x27;values&#x27;</span>&#125;</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment"># Query for one or more than one documents</span></span><br><span class="line">col.find(&#123;</span><br><span class="line">    <span class="string">&#x27;some_fields&#x27;</span>: <span class="string">&#x27;values&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;array_fields&#x27;</span>: [<span class="string">&#x27;value1&#x27;</span>, <span class="string">&#x27;value2&#x27;</span>],</span><br><span class="line">    <span class="string">&#x27;object_fields&#x27;</span>: &#123;<span class="string">&#x27;keys&#x27;</span>: <span class="string">&#x27;values&#x27;</span>&#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>从上面的例子可以知道，查询方法接收一个参数作为查询条件，且这个参数需要是 <code>dict</code> 对象类型。这个例子如果放在 SQL 语句中对应 <code>select * from ... where ...</code> 句式。</p>
+<p>上面的例子查询条件是几个精确值，很多时候我们的查询条件无法准确到一个具体的值，需要限定一个范围查询。MongoDB 使用比较操作符来圈定范围，来看下面这个例子 🌰。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">col.find(</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">&#x27;views&#x27;</span>: &#123;<span class="string">&#x27;$gte&#x27;</span>: <span class="number">1000</span>&#125;,</span><br><span class="line">    &#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>这个例子中，我们可以拿到所有 <code>views</code> 值大于等于 1000 的文章。比较操作符 <code>$gte</code> 表达大于等于的关系，这是 <code>greater than or equal to</code> 的缩写，含义等同于 <code>&gt;=</code>。</p>
+<p>常用的比较操作符有下面这些：</p>
+<ul>
+<li><code>$eq</code> equal to</li>
+<li><code>$gt</code> greater than</li>
+<li><code>$gte</code> greater than or equal to</li>
+<li><code>$lt</code> less than</li>
+<li><code>$lte</code> less than or equal to</li>
+<li><code>$ne</code> not equal to</li>
+<li><code>$in</code> match in an array</li>
+<li><code>$nin</code> not match in an array</li>
+</ul>
+<p>这些操作符中，<code>$in</code> 和 <code>$nin</code> 需要匹配数组，例如 <code>$in</code> 的表达方式如下：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">&#123;<span class="string">&#x27;field_name&#x27;</span>: &#123;<span class="string">&#x27;$in&#x27;</span>: [<span class="string">&#x27;value1&#x27;</span>, <span class="string">&#x27;value2&#x27;</span>...<span class="string">&#x27;values&#x27;</span>]&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>而其他的比较操作符需要匹配单个值，例如 <code>$eq</code> 的表达方式如下：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">&#123;<span class="string">&#x27;field_name&#x27;</span>: &#123;<span class="string">&#x27;$eq&#x27;</span>: <span class="string">&#x27;value&#x27;</span>&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这些操作符可用于所有比较关系，不仅限于 <code>find</code> 查询，还包括更新、删除和 <code>aggregate</code> 聚合等场合。</p>
+<h4 id="project-计划字段"><a href="#project-计划字段" class="headerlink" title="project 计划字段"></a>project 计划字段</h4><p><code>find</code> 默认拉取整个 document 作为输出，类似 SQL 的 <code>select * from table</code>，这意味着即使你只想要这个文档中的一个字段，你也将先得到整个文档，然后从中取得你想要的字段。通常出于带宽的限制以及性能的考虑，这都不是一个好主意，好在有办法只取某几个字段，在 MongoDB 中这个概念被称作 <code>project</code>。</p>
+<p><code>find</code> 方法的第二个参数将被视为 <code>projection</code>，同样也需要是 <code>dict</code> 对象类型。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">col.find(</span><br><span class="line">    &#123;&#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">&#x27;title&#x27;</span>: <span class="number">1</span>,</span><br><span class="line">        <span class="string">&#x27;author&#x27;</span>: <span class="number">1</span>,</span><br><span class="line">        <span class="string">&#x27;content&#x27;</span>: <span class="number">1</span>,</span><br><span class="line">    &#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>这个例子中，我们在第二个参数中列出需要的字段名，并将其值设为 <code>1</code>， 我们就完成了对需要字段的声明。<code>projection</code> 中字段对应的值是一个 flag，当其为 <code>1</code> 的时候，代表<strong>包含关系</strong>，让 MongoDB 可以理解我们的需求，仅取出需要的字段。</p>
+<p>或者，我们也可以声明不要获取哪些字段。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">col.find(</span><br><span class="line">    &#123;&#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">&#x27;comments&#x27;</span>: <span class="number">0</span>,</span><br><span class="line">        <span class="string">&#x27;timestamp&#x27;</span>: <span class="number">0</span>,</span><br><span class="line">        <span class="string">&#x27;reviews&#x27;</span>: <span class="number">0</span>,</span><br><span class="line">    &#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>上面说到 <code>projection</code> 中字段对应的值是 flag，那么 <code>0</code> 就表示<strong>不包含关系</strong>。MongoDB 会知道我们的意思，并且把我们声明不需要的字段以外的数据都取出来，这在一些场景下很有用。</p>
+<p>在使用 <code>projection</code> 时需要注意，<code>_id</code> 字段在 MongoDB 中有特殊的地位，即使没有被声明为需要获取的字段，其依然会被默认抽取出来。但如果你确实不需要它，可以在 <code>projection</code> 中手动设置为 <code>0</code>，它就不会出现了。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">col.find(</span><br><span class="line">    &#123;&#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">&#x27;_id&#x27;</span>: <span class="number">0</span>,</span><br><span class="line">        <span class="string">&#x27;title&#x27;</span>: <span class="number">1</span>,</span><br><span class="line">        <span class="string">&#x27;author&#x27;</span>: <span class="number">1</span>,</span><br><span class="line">        <span class="string">&#x27;content&#x27;</span>: <span class="number">1</span>,</span><br><span class="line">    &#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p><strong>但是注意，除了 <code>_id</code> 以外，包含关系（<code>1</code>）和不包含关系（<code>0</code>）是不能共存的，否则你会得到下面这个错误。</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pymongo.errors.OperationFailure: Projection cannot have a mix of inclusion and exclusion.</span><br></pre></td></tr></table></figure>
+
+<p>所以需要记住，对于 <code>_id</code> 来说，想要不显示它需要手动设置为 <code>0</code>。但对其他字段来说，只能有两个选择，声明所有需要获取的字段，或者声明所有不需要获取的字段。如果你尝试同时要求 MongoDB 理解你需要哪些字段和不需要哪些字段，那么只能得到无情的报错。</p>
+<h4 id="project-进阶"><a href="#project-进阶" class="headerlink" title="project 进阶"></a>project 进阶</h4><p>声明获取和不获取的字段只是 <code>project</code> 的一个功能，除此之外它还有很多很实用的能力。例如当需要查询一个数组对象时，有时我们需要更高精度的操作，比如做评论的分页时，通常一次性取出所有评论是没有必要的，有时甚至是昂贵的，这时我们可以使用 <code>project</code> 来帮我们做一些更进一步的操作。来看看这个例子 🌰。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">col.find(</span><br><span class="line">    &#123;&#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment"># Fetch the 0-3 of comments</span></span><br><span class="line">        <span class="string">&#x27;comments&#x27;</span>: &#123;</span><br><span class="line">            <span class="string">&#x27;$slice&#x27;</span>: <span class="number">3</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment"># Fetch the 2-6 of comments</span></span><br><span class="line">        <span class="string">&#x27;comments&#x27;</span>: &#123;</span><br><span class="line">            <span class="string">&#x27;$slice&#x27;</span>: [<span class="number">2</span>, <span class="number">6</span>]</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment"># Fetch the last comment</span></span><br><span class="line">        <span class="string">&#x27;comments&#x27;</span>: &#123;</span><br><span class="line">            <span class="string">&#x27;$slice&#x27;</span>: -<span class="number">1</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>上面的例子中展示了数组切片操作符的用法，其效果等同于 Python 中数组的切片操作。第一个 comments 取了数组的前 3 条数据，第二个 comments 取得了第 2 条到第 6 条的数据，最后一个 comments 取得了倒数第 1 条数据。</p>
+<p>或者，有时我们仅需要取出符合要求的第一个评论，</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">col.find(</span><br><span class="line">    &#123;&#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment"># Fetch the first deleted comment</span></span><br><span class="line">        <span class="string">&#x27;comments&#x27;</span>: &#123;</span><br><span class="line">            <span class="string">&#x27;$elemMatch&#x27;</span>: &#123;</span><br><span class="line">                <span class="string">&#x27;deleted&#x27;</span>: <span class="literal">True</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">col.find(</span><br><span class="line">    <span class="comment"># Fetch the first element matched the condition</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">&#x27;comments&#x27;</span>: &#123;</span><br><span class="line">            <span class="string">&#x27;deleted&#x27;</span>: <span class="literal">True</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">&#x27;comments.$&#x27;</span>: <span class="number">1</span></span><br><span class="line">    &#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>上面的两个查询的效果一样，都是获取评论数组中满足删除 Flag 为 <code>true</code> 这个条件的第一条评论。不过这个例子的匹配世界上用处有限，因为通常我们需要取出的是满足条件的多条评论，而非最初的某一条。但是 <code>project</code> 虽然有办法实现，却不是在 <code>find</code> 方法中实现，在之后的关于 <code>aggregate</code> 的文章中我们再继续讨论如何满足这个需求吧。</p>
+<p>目前为止涉及的文档：</p>
+<ul>
+<li><a href="https://docs.mongodb.com/manual/tutorial/query-documents/">Query Documents</a></li>
+<li><a href="https://docs.mongodb.com/manual/reference/operator/query-comparison/">Comparison Query Operators</a></li>
+<li><a href="https://docs.mongodb.com/manual/tutorial/project-fields-from-query-results/">Project Fields to Return from Query</a></li>
+<li><a href="http://api.mongodb.com/python/current/api/pymongo/collection.html#pymongo.collection.Collection.find">collection – Collection level operations - find()</a></li>
+<li><a href="http://api.mongodb.com/python/current/api/pymongo/collection.html#pymongo.collection.Collection.find_one">collection – Collection level operations - find_one()</a></li>
+</ul>
+<h3 id="update-更新"><a href="#update-更新" class="headerlink" title="update 更新"></a>update 更新</h3><p>修改已有的数据是普遍的需求。在我们要设计的博客系统中，用户主动以及被动的操作都会触发数据的变更，比如当用户打开一篇文章时，这篇文章的浏览数会得到更新；当用户赞了这篇文章时，这篇文章的点赞数也会得到更新；或者当用户在线修改了一篇文章的内容，这次修改也需要正确地更新到数据源上。</p>
+<h4 id="update-one"><a href="#update-one" class="headerlink" title="update_one"></a>update_one</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Get user inputted content</span></span><br><span class="line">new_content = get_user_input()</span><br><span class="line"></span><br><span class="line"><span class="comment"># Update specified article</span></span><br><span class="line">col.update_one(</span><br><span class="line">    <span class="comment"># Match article by id</span></span><br><span class="line">    &#123;<span class="string">&#x27;_id&#x27;</span>: ObjectId(<span class="string">&#x27;5b432a42f04705565525529d&#x27;</span>)&#125;,</span><br><span class="line">    <span class="comment"># Update content</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">&#x27;$set&#x27;</span>: &#123;<span class="string">&#x27;content&#x27;</span>: new_content&#125;</span><br><span class="line">    &#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>上面这个简单的例子中，我们假设通过 <code>get_user_input()</code> 函数拿到了用户的输入数据。接下来我们对指定的文章做了一次更新。</p>
+<p>在例子中我们给 <code>update_one</code> 方法传递了两个参数，第一个是查询参数，对应 SQL 中的 <code>where</code> 小句。第二个参数是更新参数，<code>$set</code> 是更新操作的操作符，它的值也是一个 <code>dict</code> 对象，描述将什么字段更新成什么值，对应 SQL 中的 <code>update table set ...</code> 句式。</p>
+<p>这是一个简单的更新操作，我们实际上做的是：</p>
+<p>更新 <code>_id</code> 为给定值的文章，更新的字段是 <code>content（内容）</code>，更新的内容是我们之前拿到的用户输入值 <code>new_content</code>。</p>
+<blockquote>
+<p><code>_id</code> 是 MongoDB 中自动生成的一个字段，作为主键来标识数据的唯一性，它是一个对象而非字符串，在 Python 中指定的时候需要用 <code>ObjectId(）</code> 方法来生成一个 ID 对象。</p>
+</blockquote>
+<h4 id="inc-数值增量"><a href="#inc-数值增量" class="headerlink" title="$inc 数值增量"></a>$inc 数值增量</h4><p>回到更新文字阅读数和点赞数的例子 🌰，在这个场景中，我们希望阅读数和点赞数字段更新的结果是在原有的基础上增加 1，而不是设置一个具体的值给他。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">col.update_one(</span><br><span class="line">    <span class="comment"># Match article by id</span></span><br><span class="line">    &#123;<span class="string">&#x27;_id&#x27;</span>: ObjectId(<span class="string">&#x27;5b432a42f04705565525529d&#x27;</span>)&#125;,</span><br><span class="line">    <span class="comment"># Update views</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">&#x27;$inc&#x27;</span>: &#123;<span class="string">&#x27;views&#x27;</span>: <span class="number">1</span>&#125;</span><br><span class="line">    &#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>MongoDB 提供了一个 <code>$inc</code> 操作符来实现给指定的字段做增量操作。所有我们实际的操作是：更新 <code>_id</code> 为给定值的文章，更新的字段是 <code>views（点击量）</code>，更新的内容是在原有的基础上加 1。当然增量的值是根据需要设定的。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">col.update_one(</span><br><span class="line">    <span class="comment"># Match user by username</span></span><br><span class="line">    &#123;<span class="string">&#x27;username&#x27;</span>: <span class="string">&#x27;Richard&#x27;</span>,</span><br><span class="line">    <span class="comment"># Update points</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">&#x27;$inc&#x27;</span>: &#123;<span class="string">&#x27;points&#x27;</span>: <span class="number">100</span>&#125;</span><br><span class="line">    &#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>上面的例子中，我们给名为 Richard 的用户增加了 100 积分来激励他继续使用我们的网站。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">col.update_one(</span><br><span class="line">    <span class="comment"># Match user by username</span></span><br><span class="line">    &#123;<span class="string">&#x27;username&#x27;</span>: <span class="string">&#x27;Richard&#x27;</span>,</span><br><span class="line">    <span class="comment"># Update points</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">&#x27;$inc&#x27;</span>: &#123;<span class="string">&#x27;points&#x27;</span>: -<span class="number">999</span>&#125;</span><br><span class="line">    &#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>负值当然也是允许的，接着因为剧情需要我们发现了 Richard 的违规行为，谨慎考虑后我们决定扣除 999 积分以示惩戒。</p>
+<p>这些操作都可以使用 <code>$inc</code> 完成。不过当然我们的博客也不需要积分系统。</p>
+<p>上面的例子都使用了 <code>update_one</code> 方法，顾名思义其只对一个目标进行更新，当更新多个目标时我们用到另一个方法。</p>
+<h4 id="update-many"><a href="#update-many" class="headerlink" title="update_many"></a>update_many</h4><p>我们对所有点击量超过 1000 的文章进行一次更新，将它们标注为热点文章。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">col.update_many(</span><br><span class="line">    &#123;<span class="string">&#x27;views&#x27;</span>: &#123;<span class="string">&#x27;$gte&#x27;</span>: <span class="number">1000</span>&#125;&#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">&#x27;$set&#x27;</span>: &#123;<span class="string">&#x27;hot_topic&#x27;</span>: <span class="literal">True</span>&#125;</span><br><span class="line">    &#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>使用 <code>update_many</code> 进行批量更新操作时，同样的第一个参数将作为查询参数来负责筛选出我们需要的数据，第二个参数则将指定的字段更新为新的值。</p>
+<p><code>update_many</code> 会返回一个 <code>UpdateResult</code> 对象，里面包含诸如匹配行数和修改行数等信息。</p>
+<p>但是当我们在设计 RESTful API 的时候，一个比较好的实践是，更新操作完成后将更新后的对象作为响应对象交付给客户端，这样可以减少请求数量，并且准确的保持服务端和客户端的数据一致性。</p>
+<p>要满足这个需求，就目前所了解到的信息，我们可以先执行一次更新操作，然后在执行一次查询操作，将更新后的数据再次取出来。但这太繁琐了，没关系，有一个更好的办法可以使用。</p>
+<h4 id="find-one-and-update"><a href="#find-one-and-update" class="headerlink" title="find_one_and_update"></a>find_one_and_update</h4><p>从名称上我们就可以轻松的理解这个方法的含义，就是查找一个对象并且更新它。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> time <span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">from</span> pymongo <span class="keyword">import</span> ReturnDocument</span><br><span class="line"></span><br><span class="line"><span class="comment"># Get user inputted content</span></span><br><span class="line">new_content = get_user_input()</span><br><span class="line"></span><br><span class="line">col.find_one_and_update(</span><br><span class="line">    <span class="comment"># Match article by id</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">&#x27;_id&#x27;</span>: ObjectId(<span class="string">&#x27;5b432a42f04705565525529d&#x27;</span>)</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment"># Update content and timestamp</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">&#x27;$set&#x27;</span>: &#123;</span><br><span class="line">            <span class="string">&#x27;content&#x27;</span>: new_content,</span><br><span class="line">            <span class="string">&#x27;updated_time&#x27;</span>: time()</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment"># Project fields</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">&#x27;title&#x27;</span>: <span class="number">1</span>,</span><br><span class="line">        <span class="string">&#x27;username&#x27;</span>: <span class="number">1</span>,</span><br><span class="line">        <span class="string">&#x27;content&#x27;</span>: <span class="number">1</span>,</span><br><span class="line">        <span class="string">&#x27;reviews&#x27;</span>: <span class="number">1</span>,</span><br><span class="line">        <span class="string">&#x27;comment&#x27;</span>: <span class="number">1</span>,</span><br><span class="line">        <span class="string">&#x27;updated_time&#x27;</span>: <span class="number">1</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment"># Return modified document</span></span><br><span class="line">    return_document=ReturnDocument.AFTER</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>例子 🌰 稍微有点长，首先我们导入了两个工具。和之前一样，假设我们从 <code>get_user_input()</code> 方法拿到了用户的输入内容，这是我们将要更新的数据。接着使用 <code>find_one_and_update</code> 来更新数据。</p>
+<p>第一个参数是作为查询参数，匹配一个唯一的 <code>_id</code>；第二个参数是更新内容，我们将 <code>content</code> 更新为新的用户输入，并且使用 <code>time()</code> 工具更新时间戳；注意，这里出现了<strong>第三个参数</strong>，由于要进行一次查找文档，我们可以利用 <code>project</code> 计划字段来指定需要的字段。关于更新和查找的参数就是这些。</p>
+<p>第四个参数是一个选项，是可以省略的，但是要小心，默认情况下，<code>find_one_and_update</code> 方法就如其名，会先查找出文档，再进行更新操作，这样的话返回的就是<strong>更新前的文档</strong>。</p>
+<p>显然，为了保持数据一致性我们需求的应该是更新后的文档，<code>return_document</code> 选项就是用来指定这个行为的。从 <code>pymongo</code> 包中导入的 <code>ReturnDocument</code> 工具可以提供几个选项，在这里我们将 <code>ReturnDocument.AFTER</code> 设置给 <code>return_document</code> 即可告诉 MongoDB 给我们更新后的文档。</p>
+<p>关于更新，了解这些想必搭建一个 blog 网站是够用了。</p>
+<p>这一部分涉及的文档：</p>
+<ul>
+<li><a href="https://docs.mongodb.com/manual/reference/operator/update-field/">Field Update Operators</a></li>
+<li><a href="http://api.mongodb.com/python/current/api/pymongo/collection.html#pymongo.collection.Collection.update_one">collection – Collection level operations - update_one()</a></li>
+<li><a href="http://api.mongodb.com/python/current/api/pymongo/collection.html#pymongo.collection.Collection.update_many">collection – Collection level operations - update_many()</a></li>
+<li><a href="http://api.mongodb.com/python/current/api/pymongo/collection.html#pymongo.collection.Collection.find_one_and_update">collection – Collection level operations - find_one_and_update()</a></li>
+</ul>
+<h3 id="delete-删除"><a href="#delete-删除" class="headerlink" title="delete 删除"></a>delete 删除</h3><p>一般的删除操作我们仅在逻辑层面上对数据进行删除，具体的操作是设定一个删除 Flag，对需要删除的数据进行更新，将该 Flag 值更新为 <code>True</code>，这样只需要用到上述的更新方法就可以完成了。</p>
+<p>逻辑删除的好处之一是在于留有一些余地，当某些数据被误删除时能够及时得到恢复，毕竟数据是最重要的，而储存空间是便宜的。</p>
+<p>不过当某些数据被最终认定为无用数据时，就是时候进行物理删除了。</p>
+<p><strong>删除操作非常简单，但同时需要非常慎重。</strong></p>
+<h4 id="delete-one"><a href="#delete-one" class="headerlink" title="delete_one"></a>delete_one</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">col.delete_one(</span><br><span class="line">    <span class="comment"># Delete specified article</span></span><br><span class="line">    &#123;<span class="string">&#x27;_id&#x27;</span>: ObjectId(<span class="string">&#x27;5b432a42f04705565525529d&#x27;</span>)&#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>上面的例子将删除 <code>_id</code> 匹配的文章。</p>
+<h4 id="delete-many"><a href="#delete-many" class="headerlink" title="delete_many"></a>delete_many</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">col.delete_many(</span><br><span class="line">    <span class="comment"># Delete articles which deleted flag is True</span></span><br><span class="line">    &#123;<span class="string">&#x27;deleted&#x27;</span>: <span class="literal">True</span>&#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>上面的例子将删除所有被逻辑删除的文章。在这里逻辑删除 Flag 名称是 <code>deleted</code>。</p>
+<p>可以看到，无论是删除一个目标还是删除多个目标，对于删除方法来说只需要一个匹配参数来识别数据。</p>
+<h4 id="find-one-and-delete"><a href="#find-one-and-delete" class="headerlink" title="find_one_and_delete"></a>find_one_and_delete</h4><p>有时我们可能会需要将删除的文档放在 response 中返回给客户端，来看看例子 🌰。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">col.find_one_and_delete(</span><br><span class="line">    <span class="comment"># Match article by id</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">&#x27;_id&#x27;</span>: ObjectId(<span class="string">&#x27;5b432a42f04705565525529d&#x27;</span>)</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment"># Project field_names</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">&#x27;title&#x27;</span>: <span class="number">1</span>,</span><br><span class="line">        <span class="string">&#x27;username&#x27;</span>: <span class="number">1</span>,</span><br><span class="line">        <span class="string">&#x27;content&#x27;</span>: <span class="number">1</span>,</span><br><span class="line">        <span class="string">&#x27;reviews&#x27;</span>: <span class="number">1</span>,</span><br><span class="line">        <span class="string">&#x27;comment&#x27;</span>: <span class="number">1</span>,</span><br><span class="line">        <span class="string">&#x27;updated_time&#x27;</span>: <span class="number">1</span></span><br><span class="line">    &#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>上面这个例子很简单，匹配 <code>_id</code> 对应的文章，删除它，第二个参数作为 <code>project</code> 声明获取的字段，最终我们会得到一个文档，但是在数据库上这个文档已经被删除了。</p>
+<p>删除操作看上去很简单，但是一份数据被删除的后果可能会很严重，对于删除操作我们应该小心慎行，毕竟数据无价。</p>
+<p>这部分内容涉及的文档：</p>
+<ul>
+<li><a href="http://api.mongodb.com/python/current/api/pymongo/collection.html#pymongo.collection.Collection.delete_one">collection – Collection level operations - delete_one()</a></li>
+<li><a href="http://api.mongodb.com/python/current/api/pymongo/collection.html#pymongo.collection.Collection.delete_many">collection – Collection level operations - delete_many()</a></li>
+<li><a href="http://api.mongodb.com/python/current/api/pymongo/collection.html#pymongo.collection.Collection.find_one_and_delete">collection – Collection level operations - find_one_and_delete()</a></li>
+</ul>
+<h3 id="insert-插入"><a href="#insert-插入" class="headerlink" title="insert 插入"></a>insert 插入</h3><p>插入操作是保存数据的核心。了解完查询、更新和删除操作的使用方法，插入操作则显得很简单。</p>
+<h4 id="insert-one"><a href="#insert-one" class="headerlink" title="insert_one"></a>insert_one</h4><p>当用户发表了 1 条评论，我们需要将这条评论保存到正确的文档下面。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">col.insert_one(</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">&#x27;username&#x27;</span>: <span class="string">&#x27;Richard&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;article_id&#x27;</span>: ObjectId(<span class="string">&#x27;5b432a42f04705565525529d&#x27;</span>),</span><br><span class="line">        <span class="string">&#x27;comment&#x27;</span>: <span class="string">&#x27;Awesome!&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;timestamp&#x27;</span>: <span class="number">1531211551.682105</span></span><br><span class="line">    &#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>上面的例子将保存一条来自用户 Richard 的评论，虽然评论内容没什么意义，但是它还是被正常的保存在数据库了。或许我们应该把这条评论的 ID 发回客户端，让我们稍微修改下这个例子。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">result = col.insert_one(</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">&#x27;username&#x27;</span>: <span class="string">&#x27;Richard&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;article_id&#x27;</span>: ObjectId(<span class="string">&#x27;5b432a42f04705565525529d&#x27;</span>),</span><br><span class="line">        <span class="string">&#x27;comment&#x27;</span>: <span class="string">&#x27;Awesome!&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;timestamp&#x27;</span>: <span class="number">1531211551.682105</span></span><br><span class="line">    &#125;</span><br><span class="line">)</span><br><span class="line">comment_id = result.inserted_id</span><br></pre></td></tr></table></figure>
+
+<p>用一个变量接受插入操作的结果对象，里面包含了我们需要的 ID，使用 <code>inserted_id</code> key 可以将其取出来。你或许觉得有些麻烦，为何我们不能手动设置 ID，或者设置我们想要的 ID？</p>
+<p>再修改一下代码。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">col.insert_one(</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">&#x27;_id&#x27;</span>: <span class="string">&#x27;cid007&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;username&#x27;</span>: <span class="string">&#x27;Richard&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;article_id&#x27;</span>: ObjectId(<span class="string">&#x27;5b432a42f04705565525529d&#x27;</span>),</span><br><span class="line">        <span class="string">&#x27;comment&#x27;</span>: <span class="string">&#x27;Awesome!&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;timestamp&#x27;</span>: <span class="number">1531211551.682105</span></span><br><span class="line">    &#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>当我们手动指定了 ID 字段，MongoDB 将不会自动为我们生成新的 ID，有些时候会比较有用，根据你的习惯来决定是否需要手动来设定 ID 吧！</p>
+<h4 id="insert-many"><a href="#insert-many" class="headerlink" title="insert_many"></a>insert_many</h4><p>有时我们可能需要考虑到减少请求数量，仅在收集了一些评论之后才真正到进行更新，当然这里我们关注的重点是如何同时更新多条评论。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">col.insert_many(</span><br><span class="line">    [</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="string">&#x27;username&#x27;</span>: <span class="string">&#x27;Richard&#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;article_id&#x27;</span>: ObjectId(<span class="string">&#x27;5b432a42f04705565525529d&#x27;</span>),</span><br><span class="line">            <span class="string">&#x27;comment&#x27;</span>: <span class="string">&#x27;Awesome!&#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;timestamp&#x27;</span>: <span class="number">1531211551.682105</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="string">&#x27;username&#x27;</span>: <span class="string">&#x27;Richard&#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;article_id&#x27;</span>: ObjectId(<span class="string">&#x27;5b432a42f04705565525529d&#x27;</span>),</span><br><span class="line">            <span class="string">&#x27;comment&#x27;</span>: <span class="string">&#x27;Awesome again!&#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;timestamp&#x27;</span>: <span class="number">1531212418.92356</span></span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>我们又插入了两条没有意义的评论。</p>
+<p>可以看到 <code>insert_many</code> 接收一个文档 list，同样的，如果需要得到 ID，可以用一个变量接收插入操作的结果，使用 <code>inserted_ids</code> 来获得 ID，但是注意，获得的将会是一个 ID 的 list。</p>
+<p>插入操作同样很简单。但是目前为止，我们似乎默认了一个事实，将评论储存在一个单独的 collection 中。</p>
+<p>MongoDB 是一个文档数据库，不应该用传统的关系型数据库的思路来看待它，对于文章和评论这种典型的一对多的关系，内嵌数组会是一种更好的数据结构。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">articles = &#123;</span><br><span class="line">    <span class="comment"># Article ID</span></span><br><span class="line">    <span class="string">&#x27;_id&#x27;</span>: <span class="string">&#x27;5b33af56d2cbe686e00b75c9&#x27;</span>,</span><br><span class="line">    <span class="comment"># Other field_names</span></span><br><span class="line">    <span class="comment"># ...</span></span><br><span class="line">    <span class="comment"># Comments</span></span><br><span class="line">    <span class="string">&#x27;comments&#x27;</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment"># Comment ID</span></span><br><span class="line">            <span class="string">&#x27;cid&#x27;</span>: <span class="string">&#x27;5b3dc242f0470538510b28d7&#x27;</span>,</span><br><span class="line">            <span class="comment"># Username</span></span><br><span class="line">            <span class="string">&#x27;from&#x27;</span>: <span class="string">&#x27;Richard&#x27;</span>,</span><br><span class="line">            <span class="comment"># Comment body</span></span><br><span class="line">            <span class="string">&#x27;body&#x27;</span>: <span class="string">&#x27;Content of comment.&#x27;</span>,</span><br><span class="line">            <span class="comment"># Created or updated timestamp</span></span><br><span class="line">            <span class="string">&#x27;timestamp&#x27;</span>: <span class="number">1529248843.301676</span>,</span><br><span class="line">            <span class="comment"># Deleted flag</span></span><br><span class="line">            <span class="string">&#x27;deleted&#x27;</span>: <span class="literal">False</span></span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="comment"># ...</span></span><br><span class="line">    ],</span><br><span class="line">    <span class="comment"># Created or updated timestamp</span></span><br><span class="line">    <span class="string">&#x27;timestamp&#x27;</span>: <span class="number">1529248869.717813</span>,</span><br><span class="line">    <span class="comment"># ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>评论作为一个 list 内嵌在所属的文章文档里，这时添加一个评论不再是插入操作了，它变成了一个更新操作。</p>
+<h4 id="update-array-use-push"><a href="#update-array-use-push" class="headerlink" title="update array use $push"></a>update array use $push</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">col.update_one(</span><br><span class="line">    &#123;<span class="string">&#x27;_id&#x27;</span>: Object(<span class="string">&#x27;5b33af56d2cbe686e00b75c9&#x27;</span>)&#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">&#x27;$push&#x27;</span>: &#123;</span><br><span class="line">            <span class="string">&#x27;comments&#x27;</span>: &#123;</span><br><span class="line">                <span class="string">&#x27;username&#x27;</span>: <span class="string">&#x27;Richard&#x27;</span>,</span><br><span class="line">                <span class="string">&#x27;cid&#x27;</span>: ObjectId(),</span><br><span class="line">                <span class="string">&#x27;comment&#x27;</span>: <span class="string">&#x27;Awesome!&#x27;</span>,</span><br><span class="line">                <span class="string">&#x27;timestamp&#x27;</span>: <span class="number">1531211551.682105</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>使用 <code>$push</code> 操作符可以将一条评论添加到评论 list 中。而由于评论不再是单独的文档，不再自动生成 ID 属性，如果需要的话我们可以通过调用不带参数的 <code>ObjectId()</code> 来手动生成一个 ID 属性。</p>
+<p>这部分涉及的文档：</p>
+<ul>
+<li><a href="http://api.mongodb.com/python/current/api/pymongo/collection.html#pymongo.collection.Collection.insert_one">collection – Collection level operations - insert_one()</a></li>
+<li><a href="hhttp://api.mongodb.com/python/current/api/pymongo/collection.html#pymongo.collection.Collection.insert_many">collection – Collection level operations - insert_many()</a></li>
+<li><a href="http://api.mongodb.com/python/current/api/pymongo/results.html#pymongo.results.InsertOneResult">results – Result class definitions - InsertOneResult</a></li>
+<li><a href="http://api.mongodb.com/python/current/api/pymongo/results.html#pymongo.results.InsertManyResult">results – Result class definitions - InsertManyResult</a></li>
+<li><a href="https://docs.mongodb.com/manual/reference/operator/update-array/">Array Update Operators</a></li>
+</ul>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>现在我们已经了解了 MongoDB 的增删改查的操作。无论增删改查，都有两种模式，操作单一文档的方法后缀都是 <code>one</code>:</p>
+<ul>
+<li>insert_one</li>
+<li>delete_one</li>
+<li>update_one</li>
+<li>find_one</li>
+</ul>
+<p>而操作多个文件基本都是加后缀 <code>many</code>，只有 <code>find</code> 是特殊的，什么都不加：</p>
+<ul>
+<li>insert_many</li>
+<li>delete_many</li>
+<li>update_many</li>
+<li>find</li>
+</ul>
+<p>对于更新或者删除之后的数据，有时我们需要拿到更新后或者删除前的文档返回给客户端，有两个方法很实用：</p>
+<ul>
+<li>find_one_and_update</li>
+<li>find_one_and_delete</li>
+</ul>
+<p>但是注意，<code>find_one_and_update</code> 默认返回更新前的文档，设定 <code>return_document=ReturnDocument.AFTER</code> 可以变更默认行为，让它返回修改后的文档。</p>
+<p>对于查询来说，我们还了解了 <code>project</code> 的概念，以此来声明我们需要哪些字段。</p>
+<p>对于 <code>project</code> 要注意两点：</p>
+<ul>
+<li><code>_id</code> 是默认会取出的，除非在 <code>project</code> 中显示地声明不包含关系（设为 <code>0</code>）</li>
+<li><code>_id</code> 以外的字段，在 <code>project</code> 中不可以同时声明包含关系（设为 <code>1</code>）和不包含关系（设为 <code>0</code>），否则将会报错</li>
+</ul>
+<p>除此之外，我们还看了看 MongoDB 中的比较操作符，快速扫一眼：</p>
+<ul>
+<li><code>$eq</code> equal to</li>
+<li><code>$gt</code> greater than</li>
+<li><code>$gte</code> greater than or equal to</li>
+<li><code>$lt</code> less than</li>
+<li><code>$lte</code> less than or equal to</li>
+<li><code>$ne</code> not equal to</li>
+<li><code>$in</code> match in an array</li>
+<li><code>$nin</code> not match in an array</li>
+</ul>
+<p>然后，还有更新操作符：</p>
+<ul>
+<li><code>$set</code> 设置更新字段内容</li>
+<li><code>$inc</code> 设置更新字段增量</li>
+<li><code>$push</code> 添加一个对象到内嵌数组</li>
+</ul>
+<p>感觉如何？是不是很简单？</p>
+<p>但是等等！如果你熟悉 SQL 的话可能会想，除了这些基础的功能，在 SQL 中实用的 <code>GROUP BY</code>、<code>MAX</code>、<code>SUM</code> 甚至 <code>PARTITION BY</code> 等分析函数在 MongoDB 中没有对应的实现吗？</p>
+<p>答案当然是有的！并且我们需要的大部分分析函数在 MongoDB 中都有相应的实现。MongoDB 使用 <code>aggregate</code> 来满足各种数据分析的需求，如果有机会在之后的文章中我们再来讨论一下聚合的用法吧。</p>
+<p>切实需要的东西才能在我们的记忆中保留一席之地，过多实际用不到的，或者近期用不到的信息，只会让记忆系统趋于混沌。目前我们已经了解了足够的知识来使 MongoDB 为我们所用了。等到需求或者求知欲继续延伸，就是进一步学习的最好时机。</p>
+]]></content>
+      <categories>
+        <category>notes</category>
+      </categories>
+      <tags>
+        <tag>MongoDB</tag>
+        <tag>Python</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Using CSS Transitions and Transforms</title>
     <url>/post/study/css/Using-CSS-Transitions-and-Transforms/</url>
     <content><![CDATA[<p>CSS 过渡属性提供了一种方式给 CSS 属性变化添加过渡动画，过程中属性值的变化是由浏览器所决定，所以其过程也被叫做<code>隐式过渡（implicit transitions）</code>。也因其由浏览器原生实现，所以通常有更好的性能，但是在灵活性上有其局限。</p>
