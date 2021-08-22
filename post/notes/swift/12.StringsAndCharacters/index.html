@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icon-64.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/icon-16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"richard.bizcat.xyz","root":"/","images":"/images","scheme":"Mist","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/config.min.js"></script>
+<meta name="description" content="字符串相较其他语言没有太多不同点。Swift 有类似 Python 的三引号字符串允许换行。Swift 的字符串是基于 Unicode 驱动，所以虽然字符串可以用索引提取字符，但是由于每个字符字节数不同不能使用整数作为索引，编辑索引的方式稍有特殊。其他的比如拼接、截取、非空判断、前缀后缀等都没有太大区别。看下面的代码示例足够了。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="12.Swift Strings and Characters">
+<meta property="og:url" content="https://richard.bizcat.xyz/post/notes/swift/12.StringsAndCharacters/">
+<meta property="og:site_name" content="HOME">
+<meta property="og:description" content="字符串相较其他语言没有太多不同点。Swift 有类似 Python 的三引号字符串允许换行。Swift 的字符串是基于 Unicode 驱动，所以虽然字符串可以用索引提取字符，但是由于每个字符字节数不同不能使用整数作为索引，编辑索引的方式稍有特殊。其他的比如拼接、截取、非空判断、前缀后缀等都没有太大区别。看下面的代码示例足够了。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-06-27T05:28:35.099Z">
+<meta property="article:modified_time" content="2019-06-27T05:28:35.099Z">
+<meta property="article:author" content="Richard Zen">
+<meta property="article:tag" content="Swift">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://richard.bizcat.xyz/post/notes/swift/12.StringsAndCharacters/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://richard.bizcat.xyz/post/notes/swift/12.StringsAndCharacters/","path":"post/notes/swift/12.StringsAndCharacters/","title":"12.Swift Strings and Characters"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>12.Swift Strings and Characters | HOME</title>
+  
+
+  <script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/third-party/analytics/baidu-analytics.min.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?556c863884b17d03fa0a3035eba585f0"></script>
+
+
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap-utilities.min.css"
+  integrity="sha256-5+ExmMkiaI3keYQRLhNibJ5ZXnNuWRbwrXOAZoTXMFg="
+  crossorigin="anonymous"
+/>
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">HOME</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分组</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+<div id="colorSwitcher" class="animated fadeIn">🌓</div>
+<script>
+  (function () {
+    // define constants
+    const DARK = "dark-scheme",
+      LIGHT = "light-scheme",
+      COLOR_SCHEME = "color-scheme",
+      ROTATE = "switcher-rotate";
+
+    // define targets
+    const switcher = document.querySelector("#colorSwitcher"),
+      body = document.body,
+      isDark = window.matchMedia("(prefers-color-scheme: dark)").matches,
+      stored = window.localStorage.getItem(COLOR_SCHEME),
+      current = stored ? stored : isDark ? DARK : LIGHT;
+
+    body.classList.add(current);
+    if (current === LIGHT) {
+      setTimeout(function setupCommentTheme() {
+        try {
+          const utt = document.querySelector(".utterances-frame");
+          utt.src = utt.src.replace("theme=github-dark", "theme=github-light");
+          // console.log(document.querySelector(".utterances-frame").src);
+        } catch (e) {
+          setTimeout(setupCommentTheme, 100);
+        }
+      }, 100);
+    }
+
+    // setup actions
+    switcher.addEventListener("click", function () {
+      let add = LIGHT;
+      if (body.classList.contains(LIGHT)) {
+        add = DARK;
+      }
+      // apply the new color scheme
+      body.classList.remove(LIGHT, DARK);
+      body.classList.add(add);
+      window.localStorage.setItem(COLOR_SCHEME, add);
+      if (switcher.classList.contains(ROTATE))
+        switcher.classList.remove(ROTATE);
+      else switcher.classList.add(ROTATE);
+      // update the comments' theme
+      const utt = document.querySelector(".utterances-frame");
+      utt &&
+        utt.contentWindow.postMessage(
+          {
+            type: "set-theme",
+            theme: add === DARK ? "github-dark" : "github-light",
+          },
+          "https://utteranc.es"
+        );
+    });
+  })();
+</script>
+<style>
+  #colorSwitcher {
+    cursor: pointer;
+    border-radius: 2px;
+    height: 37px;
+    line-height: 37px;
+    width: 42px;
+    text-align: center;
+    outline: none;
+    font-size: 1.5rem;
+    margin-left: auto;
+    transition: all 0.25s ease-in-out;
+    transform: rotate(0);
+    user-select: none;
+  }
+
+  #colorSwitcher.switcher-rotate {
+    transform: rotate(180deg);
+  }
+
+  @media (max-width: 767px) {
+    #colorSwitcher {
+      height: 37px;
+      line-height: 37px;
+      width: 42px;
+      text-align: center;
+      position: absolute;
+      top: 10px;
+      right: 50px;
+    }
+  }
+</style>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%92%8C%E5%AD%97%E7%AC%A6"><span class="nav-text">字符串和字符</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-text">操作字符串</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C%E5%AD%97%E7%AC%A6"><span class="nav-text">操作字符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%93%BE%E6%8E%A5%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-text">链接字符串</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%8F%92%E5%80%BC"><span class="nav-text">字符串插值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E8%AE%A1%E6%95%B0"><span class="nav-text">字符计数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E8%AE%BF%E9%97%AE%E5%92%8C%E4%BF%AE%E6%94%B9"><span class="nav-text">字符串的访问和修改</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3"><span class="nav-text">相关</span></a></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Richard Zen"
+      src="/images/icon-64.png">
+  <p class="site-author-name" itemprop="name">Richard Zen</p>
+  <div class="site-description" itemprop="description"><small><b>TOPICS</b></small><br>
+前端 ｜ Python ｜ Java<br>
+数据结构 ｜ 算法<br><br>
+用代码替代言语<br>记录创作与学习的脚步<br><br>
+</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">119</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分组</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">53</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/zfanli" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;zfanli" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://richard.bizcat.xyz/post/notes/swift/12.StringsAndCharacters/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon-64.png">
+      <meta itemprop="name" content="Richard Zen">
+      <meta itemprop="description" content="<small><b>TOPICS</b></small><br>
+前端 ｜ Python ｜ Java<br>
+数据结构 ｜ 算法<br><br>
+用代码替代言语<br>记录创作与学习的脚步<br><br>
+">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HOME">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          12.Swift Strings and Characters
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2019-06-27 13:28:35" itemprop="dateModified" datetime="2019-06-27T13:28:35+08:00">2019-06-27</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text"> </span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/notes/" itemprop="url" rel="index"><span itemprop="name">notes</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/notes/swift/" itemprop="url" rel="index"><span itemprop="name">swift</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>6.3k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>6 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>字符串相较其他语言没有太多不同点。Swift 有类似 Python 的三引号字符串允许换行。Swift 的字符串是基于 Unicode 驱动，所以虽然字符串可以用索引提取字符，但是由于每个字符字节数不同不能使用整数作为索引，编辑索引的方式稍有特殊。其他的比如拼接、截取、非空判断、前缀后缀等都没有太大区别。看下面的代码示例足够了。</p>
+<span id="more"></span>
+
+<h2 id="字符串和字符"><a href="#字符串和字符" class="headerlink" title="字符串和字符"></a>字符串和字符</h2><h3 id="操作字符串"><a href="#操作字符串" class="headerlink" title="操作字符串"></a>操作字符串</h3><p>多行字符串使用三引号 <code>&quot;&quot;&quot;</code>。如果只是为了方便阅读换行，实际上字符串不需要换行符时，使用反斜杠换行。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> softWrappedQuotation <span class="operator">=</span> <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">The White Rabbit put on his spectacles.  &quot;Where shall I begin, <span class="subst">\</span></span></span><br><span class="line"><span class="subst"><span class="string"></span>please your Majesty?&quot; he asked.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">&quot;Begin at the beginning,&quot; the King said gravely, &quot;and go on <span class="subst">\</span></span></span><br><span class="line"><span class="subst"><span class="string"></span>till you come to the end; then stop.&quot;</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>这将储存两行字符串。最后的三引号可以缩进，字符串内容可以根据三引号缩进的长度加入缩进，而不会将多余的空格包含在字符串里。如果行前行后需要换行，则在行前行后加空行。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> lineBreaks <span class="operator">=</span> <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">This string starts with a line break.</span></span><br><span class="line"><span class="string">It also ends with a line break.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>缩进的时候。下面这样写不会有多余的空格。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> lineBreaks <span class="operator">=</span> <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    This string starts with a line break.</span></span><br><span class="line"><span class="string">    It also ends with a line break.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>字符串中有下面这些特殊字符。</p>
+<ul>
+<li>转意特殊字符，<code>\0</code> 空字符串，<code>\\</code> 反斜杠，<code>\t</code> tab，<code>\n</code> line feed，<code>\r</code> 回车，<code>\&quot;</code> 双引号，<code>\&#39;</code> 单引号。</li>
+<li>Unicode 字符 <code>\u&#123;n&#125;</code>。n 是 1-8 位的十六进制数字。</li>
+</ul>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> wiseWords <span class="operator">=</span> <span class="string">&quot;<span class="subst">\&quot;</span>Imagination is more important than knowledge<span class="subst">\&quot;</span> - Einstein&quot;</span></span><br><span class="line"><span class="comment">// &quot;Imagination is more important than knowledge&quot; - Einstein</span></span><br><span class="line"><span class="keyword">let</span> dollarSign <span class="operator">=</span> <span class="string">&quot;<span class="subst">\u&#123;24&#125;</span>&quot;</span>        <span class="comment">// $,  Unicode scalar U+0024</span></span><br><span class="line"><span class="keyword">let</span> blackHeart <span class="operator">=</span> <span class="string">&quot;<span class="subst">\u&#123;2665&#125;</span>&quot;</span>      <span class="comment">// ♥,  Unicode scalar U+2665</span></span><br><span class="line"><span class="keyword">let</span> sparklingHeart <span class="operator">=</span> <span class="string">&quot;<span class="subst">\u&#123;1F496&#125;</span>&quot;</span> <span class="comment">// 💖, Unicode scalar U+1F496</span></span><br></pre></td></tr></table></figure>
+
+<p>声明一个空字符串。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> emptyString <span class="operator">=</span> <span class="string">&quot;&quot;</span>               <span class="comment">// empty string literal</span></span><br><span class="line"><span class="keyword">var</span> anotherEmptyString <span class="operator">=</span> <span class="type">String</span>()  <span class="comment">// initializer syntax</span></span><br><span class="line"><span class="comment">// these two strings are both empty, and are equivalent to each other</span></span><br></pre></td></tr></table></figure>
+
+<p>判断一个字符串是否为空。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> emptyString.isEmpty &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Nothing to see here&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// Prints &quot;Nothing to see here&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>修改字符串。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> variableString <span class="operator">=</span> <span class="string">&quot;Horse&quot;</span></span><br><span class="line">variableString <span class="operator">+=</span> <span class="string">&quot; and carriage&quot;</span></span><br><span class="line"><span class="comment">// variableString is now &quot;Horse and carriage&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> constantString <span class="operator">=</span> <span class="string">&quot;Highlander&quot;</span></span><br><span class="line">constantString <span class="operator">+=</span> <span class="string">&quot; and another Highlander&quot;</span></span><br><span class="line"><span class="comment">// this reports a compile-time error - a constant string cannot be modified</span></span><br></pre></td></tr></table></figure>
+
+<p>字符串的传递是复制值。每一个新的拷贝都是独立存在的实例，相互之间没有关联，这意味着你将一个字符串传递给另一个变量之后，你对其做的修改不会影响到其拷贝上。</p>
+<h3 id="操作字符"><a href="#操作字符" class="headerlink" title="操作字符"></a>操作字符</h3><p>可以使用 for-in 对字符串的每一个字符进行遍历。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> character <span class="keyword">in</span> <span class="string">&quot;Dog!🐶&quot;</span> &#123;</span><br><span class="line">    <span class="built_in">print</span>(character)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// D</span></span><br><span class="line"><span class="comment">// o</span></span><br><span class="line"><span class="comment">// g</span></span><br><span class="line"><span class="comment">// !</span></span><br><span class="line"><span class="comment">// 🐶</span></span><br></pre></td></tr></table></figure>
+
+<p>如果要声明一个字符变量需要提供类型。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> exclamationMark: <span class="type">Character</span> <span class="operator">=</span> <span class="string">&quot;!&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>字符数组可以初始化一个字符串。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> catCharacters: [<span class="type">Character</span>] <span class="operator">=</span> [<span class="string">&quot;C&quot;</span>, <span class="string">&quot;a&quot;</span>, <span class="string">&quot;t&quot;</span>, <span class="string">&quot;!&quot;</span>, <span class="string">&quot;🐱&quot;</span>]</span><br><span class="line"><span class="keyword">let</span> catString <span class="operator">=</span> <span class="type">String</span>(catCharacters)</span><br><span class="line"><span class="built_in">print</span>(catString)</span><br><span class="line"><span class="comment">// Prints &quot;Cat!🐱&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="链接字符串"><a href="#链接字符串" class="headerlink" title="链接字符串"></a>链接字符串</h3><p>可以用字符串的 append 方法将一个字符加入到字符串。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> string1 <span class="operator">=</span> <span class="string">&quot;hello&quot;</span></span><br><span class="line"><span class="keyword">let</span> string2 <span class="operator">=</span> <span class="string">&quot; there&quot;</span></span><br><span class="line"><span class="keyword">var</span> welcome <span class="operator">=</span> string1 <span class="operator">+</span> string2</span><br><span class="line"><span class="comment">// welcome now equals &quot;hello there&quot;</span></span><br><span class="line"><span class="keyword">let</span> exclamationMark: <span class="type">Character</span> <span class="operator">=</span> <span class="string">&quot;!&quot;</span></span><br><span class="line">welcome.append(exclamationMark)</span><br><span class="line"><span class="comment">// welcome now equals &quot;hello there!&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>如果你用多行字符串编辑一个列表，希望每一个元素占一行，那么你需要在最后留空一行才会加入一个换行符在字符串的结尾。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> badStart <span class="operator">=</span> <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">one</span></span><br><span class="line"><span class="string">two</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="keyword">let</span> end <span class="operator">=</span> <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">three</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="built_in">print</span>(badStart <span class="operator">+</span> end)</span><br><span class="line"><span class="comment">// Prints two lines:</span></span><br><span class="line"><span class="comment">// one</span></span><br><span class="line"><span class="comment">// twothree</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> goodStart <span class="operator">=</span> <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">one</span></span><br><span class="line"><span class="string">two</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="built_in">print</span>(goodStart <span class="operator">+</span> end)</span><br><span class="line"><span class="comment">// Prints three lines:</span></span><br><span class="line"><span class="comment">// one</span></span><br><span class="line"><span class="comment">// two</span></span><br><span class="line"><span class="comment">// three</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="字符串插值"><a href="#字符串插值" class="headerlink" title="字符串插值"></a>字符串插值</h3><p>模版字符串。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> multiplier <span class="operator">=</span> <span class="number">3</span></span><br><span class="line"><span class="keyword">let</span> message <span class="operator">=</span> <span class="string">&quot;<span class="subst">\(multiplier)</span> times 2.5 is <span class="subst">\(Double(multiplier) <span class="operator">*</span> <span class="number">2.5</span>)</span>&quot;</span></span><br><span class="line"><span class="comment">// message is &quot;3 times 2.5 is 7.5&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="字符计数"><a href="#字符计数" class="headerlink" title="字符计数"></a>字符计数</h3><p>字符串的 <code>.count</code> 可以获得字符的计数。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> unusualMenagerie <span class="operator">=</span> <span class="string">&quot;Koala 🐨, Snail 🐌, Penguin 🐧, Dromedary 🐪&quot;</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;unusualMenagerie has <span class="subst">\(unusualMenagerie.count)</span> characters&quot;</span>)</span><br><span class="line"><span class="comment">// Prints &quot;unusualMenagerie has 40 characters&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>swift 对 character 类型值使用扩展的字位簇（grapheme clusters），这意味着字符串的拼接和修改并不总是会影响字符串的长度。例如给 <code>cafe</code> 这个单词加上法语的重音符号，修改后的字符串仍然是 4 位。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> word <span class="operator">=</span> <span class="string">&quot;cafe&quot;</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;the number of characters in <span class="subst">\(word)</span> is <span class="subst">\(word.count)</span>&quot;</span>)</span><br><span class="line"><span class="comment">// Prints &quot;the number of characters in cafe is 4&quot;</span></span><br><span class="line"></span><br><span class="line">word <span class="operator">+=</span> <span class="string">&quot;<span class="subst">\u&#123;301&#125;</span>&quot;</span>    <span class="comment">// COMBINING ACUTE ACCENT, U+0301</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;the number of characters in <span class="subst">\(word)</span> is <span class="subst">\(word.count)</span>&quot;</span>)</span><br><span class="line"><span class="comment">// Prints &quot;the number of characters in café is 4&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="字符串的访问和修改"><a href="#字符串的访问和修改" class="headerlink" title="字符串的访问和修改"></a>字符串的访问和修改</h3><p>你可以通过它的方法、属性甚至是下标来访问和修改字符串。</p>
+<p>不过通过索引的方式访问字符串比较特殊，因为每个字符可能使用不同量的内存储存，所以想要知道哪个字符在哪个为止，需要对字符串进行遍历才行。Swift 对字符串索引无法用一个整数来表示。</p>
+<p><code>startIndex</code> 属性可以得到字符串索引的开始，<code>endIndex</code> 表示结束，结束的值是不包含的。所以 <code>endIndex</code> 不能作为下标取字符串中的字符。如果字符串为空，则 <code>startIndex</code> 和 <code>endIndex</code> 相等。</p>
+<p>想通过下标拿字符串的字符，可以使用字符串的 <code>.index(before:)</code>、<code>.index(after:)</code> 和 <code>.index(_:offsetBy:)</code> 方法拿到索引值，用索引值去拿字符。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> greeting <span class="operator">=</span> <span class="string">&quot;Guten Tag!&quot;</span></span><br><span class="line">greeting[greeting.startIndex]</span><br><span class="line"><span class="comment">// G</span></span><br><span class="line">greeting[greeting.index(before: greeting.endIndex)]</span><br><span class="line"><span class="comment">// !</span></span><br><span class="line">greeting[greeting.index(after: greeting.startIndex)]</span><br><span class="line"><span class="comment">// u</span></span><br><span class="line"><span class="keyword">let</span> index <span class="operator">=</span> greeting.index(greeting.startIndex, offsetBy: <span class="number">7</span>)</span><br><span class="line">greeting[index]</span><br><span class="line"><span class="comment">// a</span></span><br></pre></td></tr></table></figure>
+
+<p>下标越界会在运行时报错。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line">greeting[greeting.endIndex] <span class="comment">// Error</span></span><br><span class="line">greeting.index(after: greeting.endIndex) <span class="comment">// Error</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> index <span class="keyword">in</span> greeting.indices &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;<span class="subst">\(greeting[index])</span> &quot;</span>, terminator: <span class="string">&quot;&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// Prints &quot;G u t e n   T a g ! &quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>插入和移除字符。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> welcome <span class="operator">=</span> <span class="string">&quot;hello&quot;</span></span><br><span class="line">welcome.insert(<span class="string">&quot;!&quot;</span>, at: welcome.endIndex)</span><br><span class="line"><span class="comment">// welcome now equals &quot;hello!&quot;</span></span><br><span class="line"></span><br><span class="line">welcome.insert(contentsOf: <span class="string">&quot; there&quot;</span>, at: welcome.index(before: welcome.endIndex))</span><br><span class="line"><span class="comment">// welcome now equals &quot;hello there!&quot;</span></span><br><span class="line"></span><br><span class="line">welcome.remove(at: welcome.index(before: welcome.endIndex))</span><br><span class="line"><span class="comment">// welcome now equals &quot;hello there&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> range <span class="operator">=</span> welcome.index(welcome.endIndex, offsetBy: <span class="operator">-</span><span class="number">6</span>)<span class="operator">..&lt;</span>welcome.endIndex</span><br><span class="line">welcome.removeSubrange(range)</span><br><span class="line"><span class="comment">// welcome now equals &quot;hello&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>分隔字符串。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> greeting <span class="operator">=</span> <span class="string">&quot;Hello, world!&quot;</span></span><br><span class="line"><span class="keyword">let</span> index <span class="operator">=</span> greeting.firstIndex(of: <span class="string">&quot;,&quot;</span>) <span class="operator">??</span> greeting.endIndex</span><br><span class="line"><span class="keyword">let</span> beginning <span class="operator">=</span> greeting[<span class="operator">..&lt;</span>index]</span><br><span class="line"><span class="comment">// beginning is &quot;Hello&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Convert the result to a String for long-term storage.</span></span><br><span class="line"><span class="keyword">let</span> newString <span class="operator">=</span> <span class="type">String</span>(beginning)</span><br></pre></td></tr></table></figure>
+
+<p>前缀和后缀。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> romeoAndJuliet <span class="operator">=</span> [</span><br><span class="line">    <span class="string">&quot;Act 1 Scene 1: Verona, A public place&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Act 1 Scene 2: Capulet&#x27;s mansion&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Act 1 Scene 3: A room in Capulet&#x27;s mansion&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Act 1 Scene 4: A street outside Capulet&#x27;s mansion&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Act 1 Scene 5: The Great Hall in Capulet&#x27;s mansion&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Act 2 Scene 1: Outside Capulet&#x27;s mansion&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Act 2 Scene 2: Capulet&#x27;s orchard&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Act 2 Scene 3: Outside Friar Lawrence&#x27;s cell&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Act 2 Scene 4: A street in Verona&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Act 2 Scene 5: Capulet&#x27;s mansion&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Act 2 Scene 6: Friar Lawrence&#x27;s cell&quot;</span></span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> act1SceneCount <span class="operator">=</span> <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> scene <span class="keyword">in</span> romeoAndJuliet &#123;</span><br><span class="line">    <span class="keyword">if</span> scene.hasPrefix(<span class="string">&quot;Act 1 &quot;</span>) &#123;</span><br><span class="line">        act1SceneCount <span class="operator">+=</span> <span class="number">1</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;There are <span class="subst">\(act1SceneCount)</span> scenes in Act 1&quot;</span>)</span><br><span class="line"><span class="comment">// Prints &quot;There are 5 scenes in Act 1&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> mansionCount <span class="operator">=</span> <span class="number">0</span></span><br><span class="line"><span class="keyword">var</span> cellCount <span class="operator">=</span> <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> scene <span class="keyword">in</span> romeoAndJuliet &#123;</span><br><span class="line">    <span class="keyword">if</span> scene.hasSuffix(<span class="string">&quot;Capulet&#x27;s mansion&quot;</span>) &#123;</span><br><span class="line">        mansionCount <span class="operator">+=</span> <span class="number">1</span></span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> scene.hasSuffix(<span class="string">&quot;Friar Lawrence&#x27;s cell&quot;</span>) &#123;</span><br><span class="line">        cellCount <span class="operator">+=</span> <span class="number">1</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;<span class="subst">\(mansionCount)</span> mansion scenes; <span class="subst">\(cellCount)</span> cell scenes&quot;</span>)</span><br><span class="line"><span class="comment">// Prints &quot;6 mansion scenes; 2 cell scenes&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="相关"><a href="#相关" class="headerlink" title="相关"></a>相关</h1><blockquote>
+<p>11.<a target="_blank" rel="noopener" href="https://github.com/zfanli/notes/blob/master/swift/11.BasicOperators.md">Swift Basic Operators</a></p>
+<p>13.<a target="_blank" rel="noopener" href="https://github.com/zfanli/notes/blob/master/swift/13.CollectionTypes.md">Swift Collection Types</a></p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/post/notes/swift/1.SwiftIntroduction/" rel="bookmark">1.Official Documentation - Introducing Swift 5</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/post/notes/swift/10.SyntaxSupplements/" rel="bookmark">10.Swift Syntax Supplements</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/post/notes/swift/11.BasicOperators/" rel="bookmark">11.Swift Basic Operators</a></div>
+    </li>
+  </ul>
+
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Swift/" rel="tag"># Swift</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/post/notes/swift/13.CollectionTypes/" rel="prev" title="13.Swift Collection Types">
+                  <i class="fa fa-chevron-left"></i> 13.Swift Collection Types
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/post/notes/swift/11.BasicOperators/" rel="next" title="11.Swift Basic Operators">
+                  11.Swift Basic Operators <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Richard Zen</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">316k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">4:47</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/comments.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/utils.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/motion.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/schemes/muse.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/next-boot.min.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/third-party/search/local-search.min.js"></script>
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"zfanli/zfanli.github.io","issue_term":"og:title","theme":"preferred-color-scheme"}</script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/third-party/comments/utterances.min.js"></script>
+
+</body>
+</html>

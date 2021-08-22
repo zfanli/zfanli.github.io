@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icon-64.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/icon-16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"richard.bizcat.xyz","root":"/","images":"/images","scheme":"Mist","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/config.min.js"></script>
+<meta name="description" content="Array、Set、Dictionary 是很经典的三个集合类型。流行语言都有对应的实现。本章比较详细的介绍了每种集合类型的各种操作，内容本身就是一个总结，也就不需要小结多说什么了。熟悉完这章内容基本就摸清了 Swift 的集合类型。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="13.Swift Collection Types">
+<meta property="og:url" content="https://richard.bizcat.xyz/post/notes/swift/13.CollectionTypes/">
+<meta property="og:site_name" content="HOME">
+<meta property="og:description" content="Array、Set、Dictionary 是很经典的三个集合类型。流行语言都有对应的实现。本章比较详细的介绍了每种集合类型的各种操作，内容本身就是一个总结，也就不需要小结多说什么了。熟悉完这章内容基本就摸清了 Swift 的集合类型。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-06-29T05:28:35.099Z">
+<meta property="article:modified_time" content="2019-06-29T05:28:35.099Z">
+<meta property="article:author" content="Richard Zen">
+<meta property="article:tag" content="Swift">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://richard.bizcat.xyz/post/notes/swift/13.CollectionTypes/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://richard.bizcat.xyz/post/notes/swift/13.CollectionTypes/","path":"post/notes/swift/13.CollectionTypes/","title":"13.Swift Collection Types"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>13.Swift Collection Types | HOME</title>
+  
+
+  <script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/third-party/analytics/baidu-analytics.min.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?556c863884b17d03fa0a3035eba585f0"></script>
+
+
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap-utilities.min.css"
+  integrity="sha256-5+ExmMkiaI3keYQRLhNibJ5ZXnNuWRbwrXOAZoTXMFg="
+  crossorigin="anonymous"
+/>
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">HOME</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分组</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+<div id="colorSwitcher" class="animated fadeIn">🌓</div>
+<script>
+  (function () {
+    // define constants
+    const DARK = "dark-scheme",
+      LIGHT = "light-scheme",
+      COLOR_SCHEME = "color-scheme",
+      ROTATE = "switcher-rotate";
+
+    // define targets
+    const switcher = document.querySelector("#colorSwitcher"),
+      body = document.body,
+      isDark = window.matchMedia("(prefers-color-scheme: dark)").matches,
+      stored = window.localStorage.getItem(COLOR_SCHEME),
+      current = stored ? stored : isDark ? DARK : LIGHT;
+
+    body.classList.add(current);
+    if (current === LIGHT) {
+      setTimeout(function setupCommentTheme() {
+        try {
+          const utt = document.querySelector(".utterances-frame");
+          utt.src = utt.src.replace("theme=github-dark", "theme=github-light");
+          // console.log(document.querySelector(".utterances-frame").src);
+        } catch (e) {
+          setTimeout(setupCommentTheme, 100);
+        }
+      }, 100);
+    }
+
+    // setup actions
+    switcher.addEventListener("click", function () {
+      let add = LIGHT;
+      if (body.classList.contains(LIGHT)) {
+        add = DARK;
+      }
+      // apply the new color scheme
+      body.classList.remove(LIGHT, DARK);
+      body.classList.add(add);
+      window.localStorage.setItem(COLOR_SCHEME, add);
+      if (switcher.classList.contains(ROTATE))
+        switcher.classList.remove(ROTATE);
+      else switcher.classList.add(ROTATE);
+      // update the comments' theme
+      const utt = document.querySelector(".utterances-frame");
+      utt &&
+        utt.contentWindow.postMessage(
+          {
+            type: "set-theme",
+            theme: add === DARK ? "github-dark" : "github-light",
+          },
+          "https://utteranc.es"
+        );
+    });
+  })();
+</script>
+<style>
+  #colorSwitcher {
+    cursor: pointer;
+    border-radius: 2px;
+    height: 37px;
+    line-height: 37px;
+    width: 42px;
+    text-align: center;
+    outline: none;
+    font-size: 1.5rem;
+    margin-left: auto;
+    transition: all 0.25s ease-in-out;
+    transform: rotate(0);
+    user-select: none;
+  }
+
+  #colorSwitcher.switcher-rotate {
+    transform: rotate(180deg);
+  }
+
+  @media (max-width: 767px) {
+    #colorSwitcher {
+      height: 37px;
+      line-height: 37px;
+      width: 42px;
+      text-align: center;
+      position: absolute;
+      top: 10px;
+      right: 50px;
+    }
+  }
+</style>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9B%86%E5%90%88%E7%B1%BB%E5%9E%8B"><span class="nav-text">集合类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Array"><span class="nav-text">Array</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Set"><span class="nav-text">Set</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Dictionary"><span class="nav-text">Dictionary</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3"><span class="nav-text">相关</span></a></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Richard Zen"
+      src="/images/icon-64.png">
+  <p class="site-author-name" itemprop="name">Richard Zen</p>
+  <div class="site-description" itemprop="description"><small><b>TOPICS</b></small><br>
+前端 ｜ Python ｜ Java<br>
+数据结构 ｜ 算法<br><br>
+用代码替代言语<br>记录创作与学习的脚步<br><br>
+</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">119</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分组</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">53</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/zfanli" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;zfanli" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://richard.bizcat.xyz/post/notes/swift/13.CollectionTypes/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon-64.png">
+      <meta itemprop="name" content="Richard Zen">
+      <meta itemprop="description" content="<small><b>TOPICS</b></small><br>
+前端 ｜ Python ｜ Java<br>
+数据结构 ｜ 算法<br><br>
+用代码替代言语<br>记录创作与学习的脚步<br><br>
+">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HOME">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          13.Swift Collection Types
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2019-06-29 13:28:35" itemprop="dateModified" datetime="2019-06-29T13:28:35+08:00">2019-06-29</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text"> </span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/notes/" itemprop="url" rel="index"><span itemprop="name">notes</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/notes/swift/" itemprop="url" rel="index"><span itemprop="name">swift</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>9.2k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>8 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>Array、Set、Dictionary 是很经典的三个集合类型。流行语言都有对应的实现。本章比较详细的介绍了每种集合类型的各种操作，内容本身就是一个总结，也就不需要小结多说什么了。熟悉完这章内容基本就摸清了 Swift 的集合类型。</p>
+<span id="more"></span>
+
+<h2 id="集合类型"><a href="#集合类型" class="headerlink" title="集合类型"></a>集合类型</h2><p>Swift 的集合类型有 Array、Set 和 Dictionary 三种。它们的值类型都是固定的，你无法插入一个不同类型的值到这些集合类型中。当声明一个变量时，这三种类型的数据是属于可修改是，可以添加和删除元素。但是如果声明一个常量时，将会是不可修改类型，内容无法修改。</p>
+<h3 id="Array"><a href="#Array" class="headerlink" title="Array"></a>Array</h3><p>声明数组使用 <code>Array&lt;Element&gt;</code>，有一个缩写方式是 <code>[Element]</code>。建议使用缩写。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> someInts <span class="operator">=</span> [<span class="type">Int</span>]()</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;someInts is of type [Int] with <span class="subst">\(someInts.count)</span> items.&quot;</span>)</span><br><span class="line"><span class="comment">// Prints &quot;someInts is of type [Int] with 0 items.&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>如果变量类型定义过一次，或者被推测过一次，可以使用 <code>[]</code> 再次将其初始化为空数组而不需要提示类型。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line">someInts.append(<span class="number">3</span>)</span><br><span class="line"><span class="comment">// someInts now contains 1 value of type Int</span></span><br><span class="line">someInts <span class="operator">=</span> []</span><br><span class="line"><span class="comment">// someInts is now an empty array, but is still of type [Int]</span></span><br></pre></td></tr></table></figure>
+
+<p>创建数组时可以提供默认值。例如下面重复 <code>0.0</code> 3 次作为默认值。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> threeDoubles <span class="operator">=</span> <span class="type">Array</span>(repeating: <span class="number">0.0</span>, count: <span class="number">3</span>)</span><br><span class="line"><span class="comment">// threeDoubles is of type [Double], and equals [0.0, 0.0, 0.0]</span></span><br></pre></td></tr></table></figure>
+
+<p><code>+</code> 操作符可以直接合并两个 Array。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> anotherThreeDoubles <span class="operator">=</span> <span class="type">Array</span>(repeating: <span class="number">2.5</span>, count: <span class="number">3</span>)</span><br><span class="line"><span class="comment">// anotherThreeDoubles is of type [Double], and equals [2.5, 2.5, 2.5]</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> sixDoubles <span class="operator">=</span> threeDoubles <span class="operator">+</span> anotherThreeDoubles</span><br><span class="line"><span class="comment">// sixDoubles is inferred as [Double], and equals [0.0, 0.0, 0.0, 2.5, 2.5, 2.5]</span></span><br></pre></td></tr></table></figure>
+
+<p>通过字面量声明数组。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> shoppingList: [<span class="type">String</span>] <span class="operator">=</span> [<span class="string">&quot;Eggs&quot;</span>, <span class="string">&quot;Milk&quot;</span>]</span><br><span class="line"><span class="comment">// shoppingList has been initialized with two initial items</span></span><br></pre></td></tr></table></figure>
+
+<p>可以省略类型声明。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> shoppingList <span class="operator">=</span> [<span class="string">&quot;Eggs&quot;</span>, <span class="string">&quot;Milk&quot;</span>]</span><br></pre></td></tr></table></figure>
+
+<p>数组有只读的 <code>count</code> 属性可以拿到数组长度。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&quot;The shopping list contains <span class="subst">\(shoppingList.count)</span> items.&quot;</span>)</span><br><span class="line"><span class="comment">// Prints &quot;The shopping list contains 2 items.&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p><code>isEmpty</code> 方法判断数组是否为空。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> shoppingList.isEmpty &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;The shopping list is empty.&quot;</span>)</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;The shopping list is not empty.&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// Prints &quot;The shopping list is not empty.&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p><code>append</code> 在数组末尾添加新的元素。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line">shoppingList.append(<span class="string">&quot;Flour&quot;</span>)</span><br><span class="line"><span class="comment">// shoppingList now contains 3 items, and someone is making pancakes</span></span><br></pre></td></tr></table></figure>
+
+<p><code>+=</code> 快速合并另一个数组。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line">shoppingList <span class="operator">+=</span> [<span class="string">&quot;Baking Powder&quot;</span>]</span><br><span class="line"><span class="comment">// shoppingList now contains 4 items</span></span><br><span class="line">shoppingList <span class="operator">+=</span> [<span class="string">&quot;Chocolate Spread&quot;</span>, <span class="string">&quot;Cheese&quot;</span>, <span class="string">&quot;Butter&quot;</span>]</span><br><span class="line"><span class="comment">// shoppingList now contains 7 items</span></span><br></pre></td></tr></table></figure>
+
+<p>可以使用下标语法同时修改一个范围的值。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line">shoppingList[<span class="number">4</span><span class="operator">...</span><span class="number">6</span>] <span class="operator">=</span> [<span class="string">&quot;Bananas&quot;</span>, <span class="string">&quot;Apples&quot;</span>]</span><br><span class="line"><span class="comment">// shoppingList now contains 6 items</span></span><br></pre></td></tr></table></figure>
+
+<p>在指定位置插入元素。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line">shoppingList.insert(<span class="string">&quot;Maple Syrup&quot;</span>, at: <span class="number">0</span>)</span><br><span class="line"><span class="comment">// shoppingList now contains 7 items</span></span><br><span class="line"><span class="comment">// &quot;Maple Syrup&quot; is now the first item in the list</span></span><br></pre></td></tr></table></figure>
+
+<p>或者移除指定位置的值。<code>.remove(_:at)</code> 移除元素同时将值返回，如果你不需要返回值，可以不去接收。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> mapleSyrup <span class="operator">=</span> shoppingList.remove(at: <span class="number">0</span>)</span><br><span class="line"><span class="comment">// the item that was at index 0 has just been removed</span></span><br><span class="line"><span class="comment">// shoppingList now contains 6 items, and no Maple Syrup</span></span><br><span class="line"><span class="comment">// the mapleSyrup constant is now equal to the removed &quot;Maple Syrup&quot; string</span></span><br></pre></td></tr></table></figure>
+
+<p>移除最后一个元素有一个简单的方法。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> apples <span class="operator">=</span> shoppingList.removeLast()</span><br><span class="line"><span class="comment">// the last item in the array has just been removed</span></span><br><span class="line"><span class="comment">// shoppingList now contains 5 items, and no apples</span></span><br><span class="line"><span class="comment">// the apples constant is now equal to the removed &quot;Apples&quot; string</span></span><br></pre></td></tr></table></figure>
+
+<p>for-in 直接遍历 Array。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> item <span class="keyword">in</span> shoppingList &#123;</span><br><span class="line">    <span class="built_in">print</span>(item)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// Six eggs</span></span><br><span class="line"><span class="comment">// Milk</span></span><br><span class="line"><span class="comment">// Flour</span></span><br><span class="line"><span class="comment">// Baking Powder</span></span><br><span class="line"><span class="comment">// Bananas</span></span><br></pre></td></tr></table></figure>
+
+<p>如果遍历时需要拿到索引，使用 <code>.enumerated()</code> 方法。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> (index, value) <span class="keyword">in</span> shoppingList.enumerated() &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Item <span class="subst">\(index <span class="operator">+</span> <span class="number">1</span>)</span>: <span class="subst">\(value)</span>&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// Item 1: Six eggs</span></span><br><span class="line"><span class="comment">// Item 2: Milk</span></span><br><span class="line"><span class="comment">// Item 3: Flour</span></span><br><span class="line"><span class="comment">// Item 4: Baking Powder</span></span><br><span class="line"><span class="comment">// Item 5: Bananas</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Set"><a href="#Set" class="headerlink" title="Set"></a>Set</h3><p>Set 是无序的，同时没有重复值。你可以在不需要排序或者要保证值不重复的时候使用 Set。</p>
+<p>Set 需要 Hash 值用来储存一个值，这要求这个值的类型是可哈希的（hashable），即这个类型能够计算自己的 Hash 值。对象的 Hash 值是一个整数数值，用来比较两个对象是否相同。比如 <code>if a == b</code> 实际上比较的是 <code>if a.hashValue == b.hashValue</code>。</p>
+<p>Swift 的基础类型默认都是 Hashable 的，可以作为 Set 或 Dictionary 的键值类型。枚举类型的 case 在不存在关联值的情况下默认也是要求 Hashable 的类型。</p>
+<blockquote>
+<p>NOTE: 自定义类型作为 Set 或者 Dictionary 的键值类型时必须要实现 Swift 标准库中的 Hashable 协议。这个协议要求一个类型需要有一个可取得的 <code>hashValue</code> 整数数值属性。由于 Hashable 协议继承了 Equatable 协议，所以你还需要实现双等号操作符比较，并且满足三个条件：</p>
+<ul>
+<li>a == a (Reflexivity 自反性)</li>
+<li>a == b implies b == a (Symmetry 对称性)</li>
+<li>a == b &amp;&amp; b == c implies a == c (Transitivity 传递性)</li>
+</ul>
+</blockquote>
+<p>使用 <code>Set&lt;Element&gt;</code> 声明一个 Set。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> letters <span class="operator">=</span> <span class="type">Set</span>&lt;<span class="type">Character</span>&gt;()</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;letters is of type Set&lt;Character&gt; with <span class="subst">\(letters.count)</span> items.&quot;</span>)</span><br><span class="line"><span class="comment">// Prints &quot;letters is of type Set&lt;Character&gt; with 0 items.&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>同样，一旦确定了变量的信息，你对其重新初始化可以省略类型。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line">letters.insert(<span class="string">&quot;a&quot;</span>)</span><br><span class="line"><span class="comment">// letters now contains 1 value of type Character</span></span><br><span class="line">letters <span class="operator">=</span> []</span><br><span class="line"><span class="comment">// letters is now an empty set, but is still of type Set&lt;Character&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>字面量创建一个 Set。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> favoriteGenres: <span class="type">Set</span>&lt;<span class="type">String</span>&gt; <span class="operator">=</span> [<span class="string">&quot;Rock&quot;</span>, <span class="string">&quot;Classical&quot;</span>, <span class="string">&quot;Hip hop&quot;</span>]</span><br><span class="line"><span class="comment">// favoriteGenres has been initialized with three initial items</span></span><br></pre></td></tr></table></figure>
+
+<p>字面量声明一个 Set 和声明一个 Array 的写法是相同的，所以如果不写变量类型，将会是一个 Array。这里 Set 类型是必须提示的，而值类型可以由 Swift 自动推测出来，所以可以省略。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> favoriteGenres: <span class="type">Set</span> <span class="operator">=</span> [<span class="string">&quot;Rock&quot;</span>, <span class="string">&quot;Classical&quot;</span>, <span class="string">&quot;Hip hop&quot;</span>]</span><br></pre></td></tr></table></figure>
+
+<p>拿长度、空 Set 判断、插入元素、移除元素都和 Array 类似。唯一的差异是 Set 是无序的，插入和移除元素的时候寻找的是元素值而不是索引。看看下面的示例。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&quot;I have <span class="subst">\(favoriteGenres.count)</span> favorite music genres.&quot;</span>)</span><br><span class="line"><span class="comment">// Prints &quot;I have 3 favorite music genres.&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> favoriteGenres.isEmpty &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;As far as music goes, I&#x27;m not picky.&quot;</span>)</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;I have particular music preferences.&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// Prints &quot;I have particular music preferences.&quot;</span></span><br><span class="line"></span><br><span class="line">favoriteGenres.insert(<span class="string">&quot;Jazz&quot;</span>)</span><br><span class="line"><span class="comment">// favoriteGenres now contains 4 items</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> <span class="keyword">let</span> removedGenre <span class="operator">=</span> favoriteGenres.remove(<span class="string">&quot;Rock&quot;</span>) &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;<span class="subst">\(removedGenre)</span>? I&#x27;m over it.&quot;</span>)</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;I never much cared for that.&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// Prints &quot;Rock? I&#x27;m over it.&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>此外 Set 可以检测是否包含一个元素。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> favoriteGenres.contains(<span class="string">&quot;Funk&quot;</span>) &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;I get up on the good foot.&quot;</span>)</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;It&#x27;s too funky in here.&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// Prints &quot;It&#x27;s too funky in here.&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>for-in 可以直接遍历 Set。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> genre <span class="keyword">in</span> favoriteGenres &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;<span class="subst">\(genre)</span>&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// Classical</span></span><br><span class="line"><span class="comment">// Jazz</span></span><br><span class="line"><span class="comment">// Hip hop</span></span><br></pre></td></tr></table></figure>
+
+<p>Set 是无序的。需要排序的时候可以使用 <code>.sorted()</code>，其处理是将 Set 转化为 Array 并且用 &lt; 操作符排序。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> genre <span class="keyword">in</span> favoriteGenres.sorted() &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;<span class="subst">\(genre)</span>&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// Classical</span></span><br><span class="line"><span class="comment">// Hip hop</span></span><br><span class="line"><span class="comment">// Jazz</span></span><br></pre></td></tr></table></figure>
+
+<p>集合操作：</p>
+<ul>
+<li>intersection(_:) 取交集</li>
+<li>symmetricDifference(_:) 取反集</li>
+<li>union(_:) 取并集</li>
+<li>subtracting(_:) 取减集</li>
+</ul>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> oddDigits: <span class="type">Set</span> <span class="operator">=</span> [<span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">7</span>, <span class="number">9</span>]</span><br><span class="line"><span class="keyword">let</span> evenDigits: <span class="type">Set</span> <span class="operator">=</span> [<span class="number">0</span>, <span class="number">2</span>, <span class="number">4</span>, <span class="number">6</span>, <span class="number">8</span>]</span><br><span class="line"><span class="keyword">let</span> singleDigitPrimeNumbers: <span class="type">Set</span> <span class="operator">=</span> [<span class="number">2</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">7</span>]</span><br><span class="line"></span><br><span class="line">oddDigits.union(evenDigits).sorted()</span><br><span class="line"><span class="comment">// [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]</span></span><br><span class="line">oddDigits.intersection(evenDigits).sorted()</span><br><span class="line"><span class="comment">// []</span></span><br><span class="line">oddDigits.subtracting(singleDigitPrimeNumbers).sorted()</span><br><span class="line"><span class="comment">// [1, 9]</span></span><br><span class="line">oddDigits.symmetricDifference(singleDigitPrimeNumbers).sorted()</span><br><span class="line"><span class="comment">// [1, 2, 9]</span></span><br></pre></td></tr></table></figure>
+
+<p>集合比较：</p>
+<ul>
+<li>等号（=）比较两个集合是否有完全相同的元素</li>
+<li>isSubset(of:) 判断一个集合是否是另一个的子集</li>
+<li>isSuperset(of:) 判断一个集合是否是另一个的超集</li>
+<li>isStrictSubset(of:) 或 isStrictSuperset(of:) 判断一个集合是否是另一个的超集或者子集，但不包括两个集合相等的情况</li>
+<li>isDisjoint(with:) 判断两个集合是否不包含相同的元素</li>
+</ul>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> houseAnimals: <span class="type">Set</span> <span class="operator">=</span> [<span class="string">&quot;🐶&quot;</span>, <span class="string">&quot;🐱&quot;</span>]</span><br><span class="line"><span class="keyword">let</span> farmAnimals: <span class="type">Set</span> <span class="operator">=</span> [<span class="string">&quot;🐮&quot;</span>, <span class="string">&quot;🐔&quot;</span>, <span class="string">&quot;🐑&quot;</span>, <span class="string">&quot;🐶&quot;</span>, <span class="string">&quot;🐱&quot;</span>]</span><br><span class="line"><span class="keyword">let</span> cityAnimals: <span class="type">Set</span> <span class="operator">=</span> [<span class="string">&quot;🐦&quot;</span>, <span class="string">&quot;🐭&quot;</span>]</span><br><span class="line"></span><br><span class="line">houseAnimals.isSubset(of: farmAnimals)</span><br><span class="line"><span class="comment">// true</span></span><br><span class="line">farmAnimals.isSuperset(of: houseAnimals)</span><br><span class="line"><span class="comment">// true</span></span><br><span class="line">farmAnimals.isDisjoint(with: cityAnimals)</span><br><span class="line"><span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Dictionary"><a href="#Dictionary" class="headerlink" title="Dictionary"></a>Dictionary</h3><p>字典类型储存键值对，字典类型是无序的。每一个值对应一个唯一的键。</p>
+<p>声明一个 Dictionary 使用 <code>Dictionary&lt;Key, Value&gt;</code>。但是可以简写为 <code>[Key: Value]</code> 形式。建议使用简写。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> namesOfIntegers <span class="operator">=</span> [<span class="type">Int</span>: <span class="type">String</span>]()</span><br><span class="line"><span class="comment">// namesOfIntegers is an empty [Int: String] dictionary</span></span><br></pre></td></tr></table></figure>
+
+<p>可以使用 <code>[:]</code> 初始化一个现有的字典类型而不需要提供类型信息。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line">namesOfIntegers[<span class="number">16</span>] <span class="operator">=</span> <span class="string">&quot;sixteen&quot;</span></span><br><span class="line"><span class="comment">// namesOfIntegers now contains 1 key-value pair</span></span><br><span class="line">namesOfIntegers <span class="operator">=</span> [:]</span><br><span class="line"><span class="comment">// namesOfIntegers is once again an empty dictionary of type [Int: String]</span></span><br></pre></td></tr></table></figure>
+
+<p>字面量创建一个字典类型。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> airports: [<span class="type">String</span>: <span class="type">String</span>] <span class="operator">=</span> [<span class="string">&quot;YYZ&quot;</span>: <span class="string">&quot;Toronto Pearson&quot;</span>, <span class="string">&quot;DUB&quot;</span>: <span class="string">&quot;Dublin&quot;</span>]</span><br></pre></td></tr></table></figure>
+
+<p>字面量的信息足够 Swift 推测类型，所以这时类型信息是可以省略的。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> airports <span class="operator">=</span> [<span class="string">&quot;YYZ&quot;</span>: <span class="string">&quot;Toronto Pearson&quot;</span>, <span class="string">&quot;DUB&quot;</span>: <span class="string">&quot;Dublin&quot;</span>]</span><br></pre></td></tr></table></figure>
+
+<p>拿字典信息的长度、判断非空与 Array 和 Set 一致。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&quot;The airports dictionary contains <span class="subst">\(airports.count)</span> items.&quot;</span>)</span><br><span class="line"><span class="comment">// Prints &quot;The airports dictionary contains 2 items.&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> airports.isEmpty &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;The airports dictionary is empty.&quot;</span>)</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;The airports dictionary is not empty.&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// Prints &quot;The airports dictionary is not empty.&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>插入元素和修改元素操作一致，提供一个 key 然后赋值。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line">airports[<span class="string">&quot;LHR&quot;</span>] <span class="operator">=</span> <span class="string">&quot;London&quot;</span></span><br><span class="line"><span class="comment">// the airports dictionary now contains 3 items</span></span><br><span class="line"></span><br><span class="line">airports[<span class="string">&quot;LHR&quot;</span>] <span class="operator">=</span> <span class="string">&quot;London Heathrow&quot;</span></span><br><span class="line"><span class="comment">// the value for &quot;LHR&quot; has been changed to &quot;London Heathrow&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>除了下标操作之外，<code>updateValue(_:forKey:)</code> 方法提供同样的能力，可以用来添加和更新元素，不同之处在于它会返回旧的值，这样可以方便检查一个修改是否发生。它会在存在值的情况下更新新的值并返回旧的值，在不存在值的情况下添加新的值但是返回 <code>nil</code>。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> <span class="keyword">let</span> oldValue <span class="operator">=</span> airports.updateValue(<span class="string">&quot;Dublin Airport&quot;</span>, forKey: <span class="string">&quot;DUB&quot;</span>) &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;The old value for DUB was <span class="subst">\(oldValue)</span>.&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// Prints &quot;The old value for DUB was Dublin.&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>下面的方式可以简单的判断对应一个 key 是否存在值。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> <span class="keyword">let</span> airportName <span class="operator">=</span> airports[<span class="string">&quot;DUB&quot;</span>] &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;The name of the airport is <span class="subst">\(airportName)</span>.&quot;</span>)</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;That airport is not in the airports dictionary.&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// Prints &quot;The name of the airport is Dublin Airport.&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>将 <code>nil</code> 赋值给一个 key 来移除一个值。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line">airports[<span class="string">&quot;APL&quot;</span>] <span class="operator">=</span> <span class="string">&quot;Apple International&quot;</span></span><br><span class="line"><span class="comment">// &quot;Apple International&quot; is not the real airport for APL, so delete it</span></span><br><span class="line">airports[<span class="string">&quot;APL&quot;</span>] <span class="operator">=</span> <span class="literal">nil</span></span><br><span class="line"><span class="comment">// APL has now been removed from the dictionary</span></span><br></pre></td></tr></table></figure>
+
+<p>下面是 OOP 的方式去移除一个字典类型的值。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> <span class="keyword">let</span> removedValue <span class="operator">=</span> airports.removeValue(forKey: <span class="string">&quot;DUB&quot;</span>) &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;The removed airport&#x27;s name is <span class="subst">\(removedValue)</span>.&quot;</span>)</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;The airports dictionary does not contain a value for DUB.&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// Prints &quot;The removed airport&#x27;s name is Dublin Airport.&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>for-in 直接遍历字典类型，注意用两个参数分别接收 key 和 value。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> (airportCode, airportName) <span class="keyword">in</span> airports &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;<span class="subst">\(airportCode)</span>: <span class="subst">\(airportName)</span>&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// YYZ: Toronto Pearson</span></span><br><span class="line"><span class="comment">// LHR: London Heathrow</span></span><br></pre></td></tr></table></figure>
+
+<p>或者你可以仅遍历 key 或 value。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> airportCode <span class="keyword">in</span> airports.keys &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Airport code: <span class="subst">\(airportCode)</span>&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// Airport code: YYZ</span></span><br><span class="line"><span class="comment">// Airport code: LHR</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> airportName <span class="keyword">in</span> airports.values &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Airport name: <span class="subst">\(airportName)</span>&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// Airport name: Toronto Pearson</span></span><br><span class="line"><span class="comment">// Airport name: London Heathrow</span></span><br></pre></td></tr></table></figure>
+
+<p>可以把字典类型的 key 或者 value 单独输出一个 Array。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> airportCodes <span class="operator">=</span> [<span class="type">String</span>](airports.keys)</span><br><span class="line"><span class="comment">// airportCodes is [&quot;YYZ&quot;, &quot;LHR&quot;]</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> airportNames <span class="operator">=</span> [<span class="type">String</span>](airports.values)</span><br><span class="line"><span class="comment">// airportNames is [&quot;Toronto Pearson&quot;, &quot;London Heathrow&quot;]</span></span><br></pre></td></tr></table></figure>
+
+<p>不过由于字典类型是无序的，要保证输出的顺序每次都一致的话，需要执行 <code>.sorted()</code> 方法。</p>
+<h1 id="相关"><a href="#相关" class="headerlink" title="相关"></a>相关</h1><blockquote>
+<p>12.<a target="_blank" rel="noopener" href="https://github.com/zfanli/notes/blob/master/swift/12.StringsAndCharacters.md">Swift Strings and Characters</a></p>
+<p>14.<a target="_blank" rel="noopener" href="https://github.com/zfanli/notes/blob/master/swift/14.ControlFlow.md">Swift Control Flow</a></p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/post/notes/swift/1.SwiftIntroduction/" rel="bookmark">1.Official Documentation - Introducing Swift 5</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/post/notes/swift/10.SyntaxSupplements/" rel="bookmark">10.Swift Syntax Supplements</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/post/notes/swift/11.BasicOperators/" rel="bookmark">11.Swift Basic Operators</a></div>
+    </li>
+  </ul>
+
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Swift/" rel="tag"># Swift</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/post/notes/swift/14.ControlFlow/" rel="prev" title="14.Swift Control Flow">
+                  <i class="fa fa-chevron-left"></i> 14.Swift Control Flow
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/post/notes/swift/12.StringsAndCharacters/" rel="next" title="12.Swift Strings and Characters">
+                  12.Swift Strings and Characters <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Richard Zen</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">316k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">4:47</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/comments.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/utils.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/motion.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/schemes/muse.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/next-boot.min.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/third-party/search/local-search.min.js"></script>
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"zfanli/zfanli.github.io","issue_term":"og:title","theme":"preferred-color-scheme"}</script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/third-party/comments/utterances.min.js"></script>
+
+</body>
+</html>

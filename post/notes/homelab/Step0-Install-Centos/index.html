@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icon-64.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/icon-16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"richard.bizcat.xyz","root":"/","images":"/images","scheme":"Mist","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/config.min.js"></script>
+<meta name="description" content="最近准备搭建一个 Homelab，用来方便生活&amp;方便学习。在考虑购入合适硬件的同时，不妨用手头更新换代闲置的旧 PC 来先做一下尝试。我的旧 PC 当年配置尚可，相信现在还是可以胜任一个入门 Homelab 来耍耍。 首先在闲置 PC 上安装 CentOS 系统，同时移除不再使用的 Windows 系统。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Homelab Step 0 - Install CentOS">
+<meta property="og:url" content="https://richard.bizcat.xyz/post/notes/homelab/Step0-Install-Centos/">
+<meta property="og:site_name" content="HOME">
+<meta property="og:description" content="最近准备搭建一个 Homelab，用来方便生活&amp;方便学习。在考虑购入合适硬件的同时，不妨用手头更新换代闲置的旧 PC 来先做一下尝试。我的旧 PC 当年配置尚可，相信现在还是可以胜任一个入门 Homelab 来耍耍。 首先在闲置 PC 上安装 CentOS 系统，同时移除不再使用的 Windows 系统。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://richard.bizcat.xyz/images/notes/homelab/fedora_media_writer.jpg">
+<meta property="og:image" content="https://richard.bizcat.xyz/images/notes/homelab/write_to_flash_driver.jpg">
+<meta property="article:published_time" content="2020-07-06T05:17:02.732Z">
+<meta property="article:modified_time" content="2020-07-06T05:17:02.732Z">
+<meta property="article:author" content="Richard Zen">
+<meta property="article:tag" content="Homelab">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://richard.bizcat.xyz/images/notes/homelab/fedora_media_writer.jpg">
+
+
+<link rel="canonical" href="https://richard.bizcat.xyz/post/notes/homelab/Step0-Install-Centos/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://richard.bizcat.xyz/post/notes/homelab/Step0-Install-Centos/","path":"post/notes/homelab/Step0-Install-Centos/","title":"Homelab Step 0 - Install CentOS"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Homelab Step 0 - Install CentOS | HOME</title>
+  
+
+  <script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/third-party/analytics/baidu-analytics.min.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?556c863884b17d03fa0a3035eba585f0"></script>
+
+
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap-utilities.min.css"
+  integrity="sha256-5+ExmMkiaI3keYQRLhNibJ5ZXnNuWRbwrXOAZoTXMFg="
+  crossorigin="anonymous"
+/>
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">HOME</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分组</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+<div id="colorSwitcher" class="animated fadeIn">🌓</div>
+<script>
+  (function () {
+    // define constants
+    const DARK = "dark-scheme",
+      LIGHT = "light-scheme",
+      COLOR_SCHEME = "color-scheme",
+      ROTATE = "switcher-rotate";
+
+    // define targets
+    const switcher = document.querySelector("#colorSwitcher"),
+      body = document.body,
+      isDark = window.matchMedia("(prefers-color-scheme: dark)").matches,
+      stored = window.localStorage.getItem(COLOR_SCHEME),
+      current = stored ? stored : isDark ? DARK : LIGHT;
+
+    body.classList.add(current);
+    if (current === LIGHT) {
+      setTimeout(function setupCommentTheme() {
+        try {
+          const utt = document.querySelector(".utterances-frame");
+          utt.src = utt.src.replace("theme=github-dark", "theme=github-light");
+          // console.log(document.querySelector(".utterances-frame").src);
+        } catch (e) {
+          setTimeout(setupCommentTheme, 100);
+        }
+      }, 100);
+    }
+
+    // setup actions
+    switcher.addEventListener("click", function () {
+      let add = LIGHT;
+      if (body.classList.contains(LIGHT)) {
+        add = DARK;
+      }
+      // apply the new color scheme
+      body.classList.remove(LIGHT, DARK);
+      body.classList.add(add);
+      window.localStorage.setItem(COLOR_SCHEME, add);
+      if (switcher.classList.contains(ROTATE))
+        switcher.classList.remove(ROTATE);
+      else switcher.classList.add(ROTATE);
+      // update the comments' theme
+      const utt = document.querySelector(".utterances-frame");
+      utt &&
+        utt.contentWindow.postMessage(
+          {
+            type: "set-theme",
+            theme: add === DARK ? "github-dark" : "github-light",
+          },
+          "https://utteranc.es"
+        );
+    });
+  })();
+</script>
+<style>
+  #colorSwitcher {
+    cursor: pointer;
+    border-radius: 2px;
+    height: 37px;
+    line-height: 37px;
+    width: 42px;
+    text-align: center;
+    outline: none;
+    font-size: 1.5rem;
+    margin-left: auto;
+    transition: all 0.25s ease-in-out;
+    transform: rotate(0);
+    user-select: none;
+  }
+
+  #colorSwitcher.switcher-rotate {
+    transform: rotate(180deg);
+  }
+
+  @media (max-width: 767px) {
+    #colorSwitcher {
+      height: 37px;
+      line-height: 37px;
+      width: 42px;
+      text-align: center;
+      position: absolute;
+      top: 10px;
+      right: 50px;
+    }
+  }
+</style>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Table-of-Contents"><span class="nav-text">Table of Contents</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="nav-text">准备工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BD-CentOS-%E7%B3%BB%E7%BB%9F%E9%95%9C%E5%83%8F"><span class="nav-text">下载 CentOS 系统镜像</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%86%E7%B3%BB%E7%BB%9F%E9%95%9C%E5%83%8F%E5%86%99%E5%85%A5-U-%E7%9B%98"><span class="nav-text">将系统镜像写入 U 盘</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85-CentOS-%E7%B3%BB%E7%BB%9F"><span class="nav-text">安装 CentOS 系统</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%93%BE%E6%8E%A5-WIFI"><span class="nav-text">链接 WIFI</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%8C%E6%AD%A5%E6%97%B6%E9%97%B4"><span class="nav-text">同步时间</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE-SSH-key"><span class="nav-text">配置 SSH key</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Richard Zen"
+      src="/images/icon-64.png">
+  <p class="site-author-name" itemprop="name">Richard Zen</p>
+  <div class="site-description" itemprop="description"><small><b>TOPICS</b></small><br>
+前端 ｜ Python ｜ Java<br>
+数据结构 ｜ 算法<br><br>
+用代码替代言语<br>记录创作与学习的脚步<br><br>
+</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">119</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分组</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">53</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/zfanli" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;zfanli" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://richard.bizcat.xyz/post/notes/homelab/Step0-Install-Centos/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon-64.png">
+      <meta itemprop="name" content="Richard Zen">
+      <meta itemprop="description" content="<small><b>TOPICS</b></small><br>
+前端 ｜ Python ｜ Java<br>
+数据结构 ｜ 算法<br><br>
+用代码替代言语<br>记录创作与学习的脚步<br><br>
+">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HOME">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Homelab Step 0 - Install CentOS
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2020-07-06 13:17:02" itemprop="dateModified" datetime="2020-07-06T13:17:02+08:00">2020-07-06</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text"> </span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/notes/" itemprop="url" rel="index"><span itemprop="name">notes</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/notes/homelab/" itemprop="url" rel="index"><span itemprop="name">homelab</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>3.1k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>最近准备搭建一个 Homelab，用来方便生活&amp;方便学习。在考虑购入合适硬件的同时，不妨用手头更新换代闲置的旧 PC 来先做一下尝试。我的旧 PC 当年配置尚可，相信现在还是可以胜任一个入门 Homelab 来耍耍。</p>
+<p>首先在闲置 PC 上安装 CentOS 系统，同时移除不再使用的 Windows 系统。</p>
+<span id="more"></span>
+
+<h2 id="Table-of-Contents"><a href="#Table-of-Contents" class="headerlink" title="Table of Contents"></a>Table of Contents</h2><ul>
+<li><a href="#table-of-contents">Table of Contents</a></li>
+<li><a href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C">准备工作</a></li>
+<li><a href="#%E4%B8%8B%E8%BD%BD-centos-%E7%B3%BB%E7%BB%9F%E9%95%9C%E5%83%8F">下载 CentOS 系统镜像</a></li>
+<li><a href="#%E5%B0%86%E7%B3%BB%E7%BB%9F%E9%95%9C%E5%83%8F%E5%86%99%E5%85%A5-u-%E7%9B%98">将系统镜像写入 U 盘</a></li>
+<li><a href="#%E5%AE%89%E8%A3%85-centos-%E7%B3%BB%E7%BB%9F">安装 CentOS 系统</a></li>
+<li><a href="#%E9%93%BE%E6%8E%A5-wifi">链接 WIFI</a></li>
+<li><a href="#%E5%90%8C%E6%AD%A5%E6%97%B6%E9%97%B4">同步时间</a></li>
+<li><a href="#%E9%85%8D%E7%BD%AE-ssh-key">配置 SSH key</a></li>
+</ul>
+<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><p>在开始安装 CentOS 到旧 PC 之前，先确保下面这些准备工作已经完成。</p>
+<ul>
+<li>确定旧 PC 可以正常工作</li>
+<li>准备一个 U 盘用来刻录系统镜像</li>
+<li>事先备份好 PC 上到重要数据</li>
+<li>准备一根网线连接你的路由器</li>
+</ul>
+<p>装机的介质我选择了 U 盘，这是为了进行 clean 安装（全盘格式化，删除旧系统）而准备的。除了 U 盘之外，如果你有一个 DVD 光驱，你也可以用光盘来替代。</p>
+<p>同样的，我们将进行全盘格式化清洁安装系统，所以先确保 PC 上的重要数据全都做好了备份。避免数据丢失造成不必要的损失。</p>
+<p>同时我们还需要一根网线用来确保网络。CentOS 8 在装机之后 WIFI 并不能开箱即用，需要联网安装 <code>NetworkManager-wifi</code> 工具启动。</p>
+<h2 id="下载-CentOS-系统镜像"><a href="#下载-CentOS-系统镜像" class="headerlink" title="下载 CentOS 系统镜像"></a>下载 CentOS 系统镜像</h2><p>从 CentOS 官网下载最新的系统镜像文件。</p>
+<p><a target="_blank" rel="noopener" href="https://www.centos.org/download/">https://www.centos.org/download/</a></p>
+<p>选择想安装的系统版本，选择合适的 mirror 链接下载，阿里云的就不错。在下载 ISO 文件时注意选择 DVD1 ISO，这个版本还包括一些方便的 packages 可以顺便安装，建议大部分用户选择。（<a target="_blank" rel="noopener" href="https://docs.centos.org/en-US/8-docs/standard-install/assembly_preparing-for-your-installation/#downloading-beta-installation-images_preparing-for-your-installation">为什么？点我查看</a>）</p>
+<p>这里我选择的是 CentOS-8.2.2004。文件大小 8G，不过 mirror 站网速不错，下载只用了几分钟时间。</p>
+<h2 id="将系统镜像写入-U-盘"><a href="#将系统镜像写入-U-盘" class="headerlink" title="将系统镜像写入 U 盘"></a>将系统镜像写入 U 盘</h2><p>准备一个至少 16G 的 U 盘，将 CentOS 系统 ISO 文件写入其中，制作成一个装机盘。这需要一个刻录工具，如果你没有合适的刻录工具，在 Windows 平台，官方推荐 <a target="_blank" rel="noopener" href="https://github.com/FedoraQt/MediaWriter/releases">Fedora Media Writer</a> 来完成装机 U 盘的制作。</p>
+<p>刚好我没有一个合适的刻录工具 😂，而且 U 盘只能在 Windows 下被识别，所以尝试了一下 Fedora Media Writer。步骤属于傻瓜操作。</p>
+<ul>
+<li>下载 Win 平台 Fedora Media Writer 安装程序并进行安装</li>
+</ul>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://github.com/FedoraQt/MediaWriter/releases">https://github.com/FedoraQt/MediaWriter/releases</a></p>
+</blockquote>
+<ul>
+<li>启动 Fedora Media Writer 选择 [自定义镜像]</li>
+</ul>
+<p><img src="/images/notes/homelab/fedora_media_writer.jpg" alt="fedora_media_writer"></p>
+<ul>
+<li>在弹出框中找到上面下载的 CentOS 系统镜像，我这里是 <code>CentOS-8.2.2004-x86_64-dvd1.iso</code></li>
+<li>在接下来的菜单中选择插入的 U 盘，点击 [写入磁盘] 开始刻录</li>
+</ul>
+<p><img src="/images/notes/homelab/write_to_flash_driver.jpg" alt="write_to_flash_driver"></p>
+<p>等待一会，刻录完成即可开始安装系统。</p>
+<h2 id="安装-CentOS-系统"><a href="#安装-CentOS-系统" class="headerlink" title="安装 CentOS 系统"></a>安装 CentOS 系统</h2><p>将 U 盘插入闲置 PC，开机进入 BIOS，选择 USB Storage Device 启动。不出意外的话，将正常进行 CentOS 系统的安装。</p>
+<p>安装界面是一个 GUI，可以根据需求定制一下安装过程。</p>
+<p><strong>移除旧 Windows 系统</strong></p>
+<p>操作前请先做好数据备份（如果有关键数据的话）。CentOS 选择挂载硬盘时，选择对硬盘进行 reclaim，清除所有数据。这样，旧 Windows 系统将直接被删除。</p>
+<p>由于只是一次尝试，安装过程就基本按照默认设置来了，在 GUI 界面可以设置一下 WIFI 链接，方便后面操作。当然掠过也无所谓，可以使用 <code>nmuti</code> 进行配置。</p>
+<p>Homelab 不需要一个 GUI，所以在安装选项上我选择了不带 GUI 的 server。</p>
+<p>总结一下，主要配置完下面的内容，就可以进入安装阶段了。</p>
+<ul>
+<li>安装内容（server without GUI）</li>
+<li>挂载硬盘（reclaim 所有空间进行 clean 安装）</li>
+<li>语言和时间设置</li>
+</ul>
+<p>安装阶段可以对 root 用户设置密码。然后，稍等片刻，安装很快就会结束。</p>
+<h2 id="链接-WIFI"><a href="#链接-WIFI" class="headerlink" title="链接 WIFI"></a>链接 WIFI</h2><p>先准备一根网线，连接机器和路由器，保证网络。</p>
+<p>对我来说始终连接网线不太方便，我的机器存在无线网卡，所以决定出于方便这台实验性质的 Homelab 就使用 WIFI 联网。</p>
+<p>CentOS 的 WIFI 并非开箱即用，所以我们需要先保证网络。网络畅通的情况下输入下面的命令安装 WIFI 组件。</p>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo yum install NetworkManager-wifi</span></span><br></pre></td></tr></table></figure>
+
+<p>安装完成后 <code>reboot</code> 一次，拔掉网线，WIFI 将会自动连接。</p>
+<blockquote>
+<p>如果 WIFI 不稳定，可以换成有线连接，此时需要手动关闭 WIFI 连接。可以输入下面命令。</p>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> nmcli radio wifi off</span></span><br></pre></td></tr></table></figure>
+</blockquote>
+<h2 id="同步时间"><a href="#同步时间" class="headerlink" title="同步时间"></a>同步时间</h2><p>本地时间与互联网时间不同步会造成部分在线服务无法访问。在 CentOS 8 中与互联网同步时间需要手动设置。</p>
+<p>首先保证时间同步工具 <code>chrony</code> 已经安装。</p>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> dnf install -y chrony</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>CentOS 8 中 dnf 代替 yum 成为默认包管理工具。不过 yum 依旧可以使用。</p>
+</blockquote>
+<p>确保工具安装之后，编辑一下配置文件，将时间同步服务器修改为国内地区服务器来加快访问速度。</p>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> vi /etc/chrony.conf</span></span><br></pre></td></tr></table></figure>
+
+<p>将第一行替换为 <code>pool ntp.ntsc.ac.cn iburst</code>。</p>
+<p>启动自动同步时间。</p>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> systemctl <span class="built_in">enable</span> chronyd</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> systemctl start chronyd</span></span><br></pre></td></tr></table></figure>
+
+<p>稍等片刻，时间将会自动与服务器进行同步。</p>
+<h2 id="配置-SSH-key"><a href="#配置-SSH-key" class="headerlink" title="配置 SSH key"></a>配置 SSH key</h2><p>为了方便常用机连接 Homelab 进行操作，可以将常用机的 SSH key 添加到 Homelab 对应用户的 authorized_keys 中以方便登陆。设置完成之后登陆不再需要密码。</p>
+<blockquote>
+<p>不需要密码就可以登陆 Homelab，意味着任何人使用你的账号都可以访问到你的服务器，请谨慎考虑其中的风险，不建议在公共机器进行这个设定。</p>
+</blockquote>
+<p>首先需要准备一个 SSH key。如果你使用 Github 或者类似的 git 仓库，那么应该存在一个 SSH key 在你的用户文件夹中。所以先检查 SSH key 是否存在。</p>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ls -l ~/.ssh</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> or <span class="keyword">in</span> windows</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> ls c:\users\&lt;username&gt;\.ssh</span></span><br></pre></td></tr></table></figure>
+
+<p>如果你看到一个 <code>id_rsa.pub</code> 或者其他以 <code>.pub</code> 结尾的文件存在，这就是你的 SSH key 了，你可以选择复用它，也可以用下面命令重新生成一个。</p>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ssh-keygen -t rsa -b 2048</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>生成新的 SSH key 时会提示你选择 key 储存的位置和密码，可以根据需求设置。密码可以留空，表示不需要使用密码。</p>
+</blockquote>
+<p>先看看 SSH key 的内容。等下需要使用到，可以考虑临时保存一下。</p>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> cat ~/.ssh/id_rsa.pub</span></span><br></pre></td></tr></table></figure>
+
+<p>SSH key 内容应该是以 <code>ssh-rsa</code> 开始，以你设定到邮箱结尾的一串文本。接下俩我们将其添加到 Homelab 上。</p>
+<p>先使用开发机用密码远程登陆 Homelab。注意 <code>@</code> 后面的主机地址，我这里用 <code>homelab</code> 指代，实际上这里应该填写主机的局域网地址。以后我们也会将 Homelab 绑定到固定到域名上方便我们访问，目前我们还是局域网内访问。</p>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ssh root@homelab</span></span><br></pre></td></tr></table></figure>
+
+<p>在输入密码完成登陆后，我们在希望免密码登陆的用户的目录下面添加 <code>authorized_keys</code> 文件。</p>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> touch ~/.ssh/authorized_keys</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> copy your ssh key and paste it into this file</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> vim ~/.ssh/authorized_keys</span></span><br></pre></td></tr></table></figure>
+
+<p>将开发机的 SSH key 添加到这个文件并保存。</p>
+<p>退出当前登陆，重新尝试一次 SSH 登陆。</p>
+<figure class="highlight console"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">exit</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> ssh root@homelab</span></span><br></pre></td></tr></table></figure>
+
+<p>如果这里不再提示密码，则表示配置成功。</p>
+<blockquote>
+<p>配置 SSH key 还可以方便 VS Code 远程访问 Homelab，以方便编辑配置文件。</p>
+</blockquote>
+<p>到此 CentOS 的安装和配置就完成了。</p>
+
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/post/notes/homelab/Step1-Install-Docker/" rel="bookmark">Homelab Step 1 - Install Docker</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/post/notes/homelab/Step2-Enable-DDNS/" rel="bookmark">Homelab Step 2 - Enable DDNS</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/post/notes/homelab/Step3-Instrall-Nginx/" rel="bookmark">Homelab Step 3 - Install Nginx</a></div>
+    </li>
+  </ul>
+
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Homelab/" rel="tag"># Homelab</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/post/notes/homelab/Step1-Install-Docker/" rel="prev" title="Homelab Step 1 - Install Docker">
+                  <i class="fa fa-chevron-left"></i> Homelab Step 1 - Install Docker
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/post/notes/swift/31.AdvancedOperators/" rel="next" title="31.Swift Advanced Operators">
+                  31.Swift Advanced Operators <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Richard Zen</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">316k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">4:47</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/comments.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/utils.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/motion.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/schemes/muse.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/next-boot.min.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/third-party/search/local-search.min.js"></script>
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"zfanli/zfanli.github.io","issue_term":"og:title","theme":"preferred-color-scheme"}</script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/third-party/comments/utterances.min.js"></script>
+
+</body>
+</html>

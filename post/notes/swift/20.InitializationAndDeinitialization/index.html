@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icon-64.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/icon-16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"richard.bizcat.xyz","root":"/","images":"/images","scheme":"Mist","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/config.min.js"></script>
+<meta name="description" content="干货满满的一篇内容，虽然我记录的可能有点意识流了。 先说说简单的卸载器（deinitializer），只有类有，自动继承，在对象被销毁前执行，和之前 Basics 的内容一般无二，很好理解。 然后是初始化器（initializer），内容多了很多。首先是提到了值类型引用的结构体和枚举类型，它们由于没有继承关系，所以初始化器相对简单。它们可以定义委派初始化器，其意思是一个初始化器中调用另一个初始化器">
+<meta property="og:type" content="article">
+<meta property="og:title" content="20.Swift Initialization and Deinitialization">
+<meta property="og:url" content="https://richard.bizcat.xyz/post/notes/swift/20.InitializationAndDeinitialization/">
+<meta property="og:site_name" content="HOME">
+<meta property="og:description" content="干货满满的一篇内容，虽然我记录的可能有点意识流了。 先说说简单的卸载器（deinitializer），只有类有，自动继承，在对象被销毁前执行，和之前 Basics 的内容一般无二，很好理解。 然后是初始化器（initializer），内容多了很多。首先是提到了值类型引用的结构体和枚举类型，它们由于没有继承关系，所以初始化器相对简单。它们可以定义委派初始化器，其意思是一个初始化器中调用另一个初始化器">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-07-02T06:28:35.099Z">
+<meta property="article:modified_time" content="2019-07-02T06:28:35.099Z">
+<meta property="article:author" content="Richard Zen">
+<meta property="article:tag" content="Swift">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://richard.bizcat.xyz/post/notes/swift/20.InitializationAndDeinitialization/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://richard.bizcat.xyz/post/notes/swift/20.InitializationAndDeinitialization/","path":"post/notes/swift/20.InitializationAndDeinitialization/","title":"20.Swift Initialization and Deinitialization"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>20.Swift Initialization and Deinitialization | HOME</title>
+  
+
+  <script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/third-party/analytics/baidu-analytics.min.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?556c863884b17d03fa0a3035eba585f0"></script>
+
+
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap-utilities.min.css"
+  integrity="sha256-5+ExmMkiaI3keYQRLhNibJ5ZXnNuWRbwrXOAZoTXMFg="
+  crossorigin="anonymous"
+/>
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">HOME</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分组</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+<div id="colorSwitcher" class="animated fadeIn">🌓</div>
+<script>
+  (function () {
+    // define constants
+    const DARK = "dark-scheme",
+      LIGHT = "light-scheme",
+      COLOR_SCHEME = "color-scheme",
+      ROTATE = "switcher-rotate";
+
+    // define targets
+    const switcher = document.querySelector("#colorSwitcher"),
+      body = document.body,
+      isDark = window.matchMedia("(prefers-color-scheme: dark)").matches,
+      stored = window.localStorage.getItem(COLOR_SCHEME),
+      current = stored ? stored : isDark ? DARK : LIGHT;
+
+    body.classList.add(current);
+    if (current === LIGHT) {
+      setTimeout(function setupCommentTheme() {
+        try {
+          const utt = document.querySelector(".utterances-frame");
+          utt.src = utt.src.replace("theme=github-dark", "theme=github-light");
+          // console.log(document.querySelector(".utterances-frame").src);
+        } catch (e) {
+          setTimeout(setupCommentTheme, 100);
+        }
+      }, 100);
+    }
+
+    // setup actions
+    switcher.addEventListener("click", function () {
+      let add = LIGHT;
+      if (body.classList.contains(LIGHT)) {
+        add = DARK;
+      }
+      // apply the new color scheme
+      body.classList.remove(LIGHT, DARK);
+      body.classList.add(add);
+      window.localStorage.setItem(COLOR_SCHEME, add);
+      if (switcher.classList.contains(ROTATE))
+        switcher.classList.remove(ROTATE);
+      else switcher.classList.add(ROTATE);
+      // update the comments' theme
+      const utt = document.querySelector(".utterances-frame");
+      utt &&
+        utt.contentWindow.postMessage(
+          {
+            type: "set-theme",
+            theme: add === DARK ? "github-dark" : "github-light",
+          },
+          "https://utteranc.es"
+        );
+    });
+  })();
+</script>
+<style>
+  #colorSwitcher {
+    cursor: pointer;
+    border-radius: 2px;
+    height: 37px;
+    line-height: 37px;
+    width: 42px;
+    text-align: center;
+    outline: none;
+    font-size: 1.5rem;
+    margin-left: auto;
+    transition: all 0.25s ease-in-out;
+    transform: rotate(0);
+    user-select: none;
+  }
+
+  #colorSwitcher.switcher-rotate {
+    transform: rotate(180deg);
+  }
+
+  @media (max-width: 767px) {
+    #colorSwitcher {
+      height: 37px;
+      line-height: 37px;
+      width: 42px;
+      text-align: center;
+      position: absolute;
+      top: 10px;
+      right: 50px;
+    }
+  }
+</style>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96%E5%99%A8%E5%92%8C%E5%8D%B8%E8%BD%BD%E5%99%A8"><span class="nav-text">初始化器和卸载器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96%E5%99%A8"><span class="nav-text">初始化器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%B8%E8%BD%BD%E5%99%A8%EF%BC%88deinitializer%EF%BC%89"><span class="nav-text">卸载器（deinitializer）</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3"><span class="nav-text">相关</span></a></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Richard Zen"
+      src="/images/icon-64.png">
+  <p class="site-author-name" itemprop="name">Richard Zen</p>
+  <div class="site-description" itemprop="description"><small><b>TOPICS</b></small><br>
+前端 ｜ Python ｜ Java<br>
+数据结构 ｜ 算法<br><br>
+用代码替代言语<br>记录创作与学习的脚步<br><br>
+</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">119</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分组</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">53</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/zfanli" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;zfanli" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://richard.bizcat.xyz/post/notes/swift/20.InitializationAndDeinitialization/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon-64.png">
+      <meta itemprop="name" content="Richard Zen">
+      <meta itemprop="description" content="<small><b>TOPICS</b></small><br>
+前端 ｜ Python ｜ Java<br>
+数据结构 ｜ 算法<br><br>
+用代码替代言语<br>记录创作与学习的脚步<br><br>
+">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HOME">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          20.Swift Initialization and Deinitialization
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2019-07-02 14:28:35" itemprop="dateModified" datetime="2019-07-02T14:28:35+08:00">2019-07-02</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text"> </span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/notes/" itemprop="url" rel="index"><span itemprop="name">notes</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/notes/swift/" itemprop="url" rel="index"><span itemprop="name">swift</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>16k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>15 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>干货满满的一篇内容，虽然我记录的可能有点意识流了。</p>
+<p>先说说简单的卸载器（<code>deinitializer</code>），只有类有，自动继承，在对象被销毁前执行，和之前 Basics 的内容一般无二，很好理解。</p>
+<p>然后是初始化器（<code>initializer</code>），内容多了很多。首先是提到了值类型引用的结构体和枚举类型，它们由于没有继承关系，所以初始化器相对简单。它们可以定义委派初始化器，其意思是一个初始化器中调用另一个初始化器，减少代码重复，让每个初始化器专注自己的功能。委派初始化器没有关键字。</p>
+<p>另一边，类由于存在继承关系，所以相对复杂一些，类有指定初始化器和便利初始化器的定义。</p>
+<ul>
+<li>指定初始化器：初始化类的所有属性，并调用父类的指定初始化器；</li>
+<li>便利初始化器：调用同类的指定初始化器，并对其中一部分值给予默认值。</li>
+</ul>
+<span id="more"></span>
+
+<p>其实看来类的便利初始化器就是结构体和枚举类型的委派初始化器。但是由于类有继承关系，要保证初始化完整执行的复杂度提升了一个维度。</p>
+<p>Swift 为了保证类进行正确的初始化，会执行两个阶段的初始化任务。在第一个阶段类会完成自己的属性的初始化，并且向上完成父类链上所有父类的属性的初始化，此时属性的初始化一步一步攀登到了父类链顶端；第二个阶段，从父类链顶端开始执行顶级父类的自定义操作，执行完成后接力给次级父类，一步一步回归到当前类，最终当前类完成自定义操作。</p>
+<p>官方文档花了很大的篇幅介绍这个过程，但看明白了之后就知道了，实际上就是一个递归，保证属性的初始化是从当前类出发一直到父类链顶层，然后自定义操作从父类顶级一直回归到当前类。当前类先初始化属性，最后完成初始化操作，这在其他语言中应该也是同样的，但是 Swift 可能做了更多的保护措施。</p>
+<p>此外，对于父类的指定初始化器来说，子类的覆写需要 <code>override</code> 关键字，但是对父类的便利初始化器来说子类覆写不需要关键字。理由是，对于父类便利初始化器的覆写，实际上对子类来说父类的便利初始化器不会有机会再被调用了，所以这实际上不是一个覆写操作，而是子类创建了一个新的初始化器。</p>
+<p>子类对于父类初始化器的继承也有一定的限制。默认情况下是不会自动继承父类初始化器的，但是当子类满足下面两个条件时，父类的所有初始化器都会被子类继承。</p>
+<ul>
+<li>子类没有自定义属性也没有自己的初始化器：此时子类完全继承父类的所有初始化器，包括指定初始化器和便利初始化器；</li>
+<li>子类覆写了所有父类的指定初始化器时：此时子类将继承父类的所有便利初始化器。</li>
+</ul>
+<p>一个类中，除了可以定义上面所说的初始化器之外，还可以定义一种允许失败的特殊初始化器。官方称之为“Failable Initializers”，实际上它只是一个附带安全检查的初始化器，它会在初始化对象时进行自定义的检查，如果条件不满足的情况——通常是参数值不符合要求，或者根据某个全局变量进行判断——初始化会立刻失败，并且返回 <code>nil</code>。它其实是可选型变量的高级版，可返回 <code>nil</code> 的初始化器。它的定义方式是在 <code>init</code> 后加上问号，也就是 <code>init?</code>。对于这种类型的初始化器，子类可以继承它，并且根据需要将其变成不允许失败的初始化器，这一操作往往通过提供一个默认值来实现。另一方面，子类是不能将父类的一个非允许失败初始化器改写成允许失败初始化器的。</p>
+<p>另外，这种可以允许失败的初始化器在结构体和枚举类型中也是适用的。</p>
+<blockquote>
+<p>R：内容满满，光小结就将近 1，500 字，全篇内容更是超过了 18，000 字。(˚ ˃̣̣̥ω˂̣̣̥ )</p>
+</blockquote>
+<h2 id="初始化器和卸载器"><a href="#初始化器和卸载器" class="headerlink" title="初始化器和卸载器"></a>初始化器和卸载器</h2><h3 id="初始化器"><a href="#初始化器" class="headerlink" title="初始化器"></a>初始化器</h3><p>初始化器提供一定灵活性，在实例化对象时做一些操作。一般用来接收变量赋值，做一些特殊的初始化操作。先做个复习。</p>
+<blockquote>
+<p>R：就是 Java 的构造函数。</p>
+</blockquote>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Fahrenheit</span> </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> temperature: <span class="type">Double</span></span><br><span class="line">    <span class="function"><span class="keyword">init</span>()</span> &#123;</span><br><span class="line">        temperature <span class="operator">=</span> <span class="number">32.0</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> f <span class="operator">=</span> <span class="type">Fahrenheit</span>()</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;The default temperature is <span class="subst">\(f.temperature)</span>° Fahrenheit&quot;</span>)</span><br><span class="line"><span class="comment">// Prints &quot;The default temperature is 32.0° Fahrenheit&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>可以存在多个初始化器，可以接收参数。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Celsius</span> </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> temperatureInCelsius: <span class="type">Double</span></span><br><span class="line">    <span class="function"><span class="keyword">init</span>(<span class="params">fromFahrenheit</span> <span class="params">fahrenheit</span>: <span class="type">Double</span>)</span> &#123;</span><br><span class="line">        temperatureInCelsius <span class="operator">=</span> (fahrenheit <span class="operator">-</span> <span class="number">32.0</span>) <span class="operator">/</span> <span class="number">1.8</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">init</span>(<span class="params">fromKelvin</span> <span class="params">kelvin</span>: <span class="type">Double</span>)</span> &#123;</span><br><span class="line">        temperatureInCelsius <span class="operator">=</span> kelvin <span class="operator">-</span> <span class="number">273.15</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> boilingPointOfWater <span class="operator">=</span> <span class="type">Celsius</span>(fromFahrenheit: <span class="number">212.0</span>)</span><br><span class="line"><span class="comment">// boilingPointOfWater.temperatureInCelsius is 100.0</span></span><br><span class="line"><span class="keyword">let</span> freezingPointOfWater <span class="operator">=</span> <span class="type">Celsius</span>(fromKelvin: <span class="number">273.15</span>)</span><br><span class="line"><span class="comment">// freezingPointOfWater.temperatureInCelsius is 0.0</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Color</span> </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> red, green, blue: <span class="type">Double</span></span><br><span class="line">    <span class="function"><span class="keyword">init</span>(<span class="params">red</span>: <span class="type">Double</span>, <span class="params">green</span>: <span class="type">Double</span>, <span class="params">blue</span>: <span class="type">Double</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">self</span>.red   <span class="operator">=</span> red</span><br><span class="line">        <span class="keyword">self</span>.green <span class="operator">=</span> green</span><br><span class="line">        <span class="keyword">self</span>.blue  <span class="operator">=</span> blue</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">init</span>(<span class="params">white</span>: <span class="type">Double</span>)</span> &#123;</span><br><span class="line">        red   <span class="operator">=</span> white</span><br><span class="line">        green <span class="operator">=</span> white</span><br><span class="line">        blue  <span class="operator">=</span> white</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> magenta <span class="operator">=</span> <span class="type">Color</span>(red: <span class="number">1.0</span>, green: <span class="number">0.0</span>, blue: <span class="number">1.0</span>)</span><br><span class="line"><span class="keyword">let</span> halfGray <span class="operator">=</span> <span class="type">Color</span>(white: <span class="number">0.5</span>)</span><br></pre></td></tr></table></figure>
+
+<p>也可以不使用标签。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Celsius</span> </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> temperatureInCelsius: <span class="type">Double</span></span><br><span class="line">    <span class="function"><span class="keyword">init</span>(<span class="params">fromFahrenheit</span> <span class="params">fahrenheit</span>: <span class="type">Double</span>)</span> &#123;</span><br><span class="line">        temperatureInCelsius <span class="operator">=</span> (fahrenheit <span class="operator">-</span> <span class="number">32.0</span>) <span class="operator">/</span> <span class="number">1.8</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">init</span>(<span class="params">fromKelvin</span> <span class="params">kelvin</span>: <span class="type">Double</span>)</span> &#123;</span><br><span class="line">        temperatureInCelsius <span class="operator">=</span> kelvin <span class="operator">-</span> <span class="number">273.15</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">init</span>(<span class="keyword">_</span> <span class="params">celsius</span>: <span class="type">Double</span>)</span> &#123;</span><br><span class="line">        temperatureInCelsius <span class="operator">=</span> celsius</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> bodyTemperature <span class="operator">=</span> <span class="type">Celsius</span>(<span class="number">37.0</span>)</span><br><span class="line"><span class="comment">// bodyTemperature.temperatureInCelsius is 37.0</span></span><br></pre></td></tr></table></figure>
+
+<p>可以不初始化可选类型的属性。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SurveyQuestion</span> </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> text: <span class="type">String</span></span><br><span class="line">    <span class="keyword">var</span> response: <span class="type">String</span>?</span><br><span class="line">    <span class="function"><span class="keyword">init</span>(<span class="params">text</span>: <span class="type">String</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">self</span>.text <span class="operator">=</span> text</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">func</span> <span class="title">ask</span>()</span> &#123;</span><br><span class="line">        <span class="built_in">print</span>(text)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> cheeseQuestion <span class="operator">=</span> <span class="type">SurveyQuestion</span>(text: <span class="string">&quot;Do you like cheese?&quot;</span>)</span><br><span class="line">cheeseQuestion.ask()</span><br><span class="line"><span class="comment">// Prints &quot;Do you like cheese?&quot;</span></span><br><span class="line">cheeseQuestion.response <span class="operator">=</span> <span class="string">&quot;Yes, I do like cheese.&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>类有默认的初始化器。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ShoppingListItem</span> </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> name: <span class="type">String</span>?</span><br><span class="line">    <span class="keyword">var</span> quantity <span class="operator">=</span> <span class="number">1</span></span><br><span class="line">    <span class="keyword">var</span> purchased <span class="operator">=</span> <span class="literal">false</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> item <span class="operator">=</span> <span class="type">ShoppingListItem</span>()</span><br></pre></td></tr></table></figure>
+
+<p>结构体也有默认的初始化器，初始化所有属性。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ShoppingListItem</span> </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> name: <span class="type">String</span>?</span><br><span class="line">    <span class="keyword">var</span> quantity <span class="operator">=</span> <span class="number">1</span></span><br><span class="line">    <span class="keyword">var</span> purchased <span class="operator">=</span> <span class="literal">false</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> item <span class="operator">=</span> <span class="type">ShoppingListItem</span>()</span><br></pre></td></tr></table></figure>
+
+<p>值类型的委派初始化器，名字不好理解，但是指的是为了减少重复代码，在一个初始化器中调用另一个初始化器完成一部分工作这一动作。</p>
+<p>委派初始化器对类、结构体&amp;枚举类型采取不同的工作模式和形式。因为枚举类型和结构体不支持继承，所以相对简单，只需要处理它们声明的其他初始化器就足够了。类可以继承其他的类，这导致类需要额外保证它继承的类的所有属性是否正确的初始化。</p>
+<p>另外如果值类型，也就是枚举类型或结构体定义了一个初始化器，那么它本身默认自动生成的初始化器将无法访问。</p>
+<p>下面定义一个四边形结构体，储存一个起点和尺寸信息。四边形结构体有两个初始化器，一个接收起点和尺寸，另一个接收中点和尺寸，后者通过中点计算出起点，并且调用前者进行真正的赋值。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Size</span> </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> width <span class="operator">=</span> <span class="number">0.0</span>, height <span class="operator">=</span> <span class="number">0.0</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Point</span> </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> x <span class="operator">=</span> <span class="number">0.0</span>, y <span class="operator">=</span> <span class="number">0.0</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Rect</span> </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> origin <span class="operator">=</span> <span class="type">Point</span>()</span><br><span class="line">    <span class="keyword">var</span> size <span class="operator">=</span> <span class="type">Size</span>()</span><br><span class="line">    <span class="function"><span class="keyword">init</span>()</span> &#123;&#125;</span><br><span class="line">    <span class="function"><span class="keyword">init</span>(<span class="params">origin</span>: <span class="type">Point</span>, <span class="params">size</span>: <span class="type">Size</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">self</span>.origin <span class="operator">=</span> origin</span><br><span class="line">        <span class="keyword">self</span>.size <span class="operator">=</span> size</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">init</span>(<span class="params">center</span>: <span class="type">Point</span>, <span class="params">size</span>: <span class="type">Size</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">let</span> originX <span class="operator">=</span> center.x <span class="operator">-</span> (size.width <span class="operator">/</span> <span class="number">2</span>)</span><br><span class="line">        <span class="keyword">let</span> originY <span class="operator">=</span> center.y <span class="operator">-</span> (size.height <span class="operator">/</span> <span class="number">2</span>)</span><br><span class="line">        <span class="keyword">self</span>.<span class="keyword">init</span>(origin: <span class="type">Point</span>(x: originX, y: originY), size: size)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>注意由于定义了新的初始化器，默认的初始化器将被失效，为了保证默认初始化方法，需要手动添加空的 <code>init()</code> 初始化器，这能保证下面的实例化能正常执行。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> basicRect <span class="operator">=</span> <span class="type">Rect</span>()</span><br><span class="line"><span class="comment">// basicRect&#x27;s origin is (0.0, 0.0) and its size is (0.0, 0.0)</span></span><br></pre></td></tr></table></figure>
+
+<p>剩余两个初始化器调用实例。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> originRect <span class="operator">=</span> <span class="type">Rect</span>(origin: <span class="type">Point</span>(x: <span class="number">2.0</span>, y: <span class="number">2.0</span>),</span><br><span class="line">                      size: <span class="type">Size</span>(width: <span class="number">5.0</span>, height: <span class="number">5.0</span>))</span><br><span class="line"><span class="comment">// originRect&#x27;s origin is (2.0, 2.0) and its size is (5.0, 5.0)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> centerRect <span class="operator">=</span> <span class="type">Rect</span>(center: <span class="type">Point</span>(x: <span class="number">4.0</span>, y: <span class="number">4.0</span>),</span><br><span class="line">                      size: <span class="type">Size</span>(width: <span class="number">3.0</span>, height: <span class="number">3.0</span>))</span><br><span class="line"><span class="comment">// centerRect&#x27;s origin is (2.5, 2.5) and its size is (3.0, 3.0)</span></span><br></pre></td></tr></table></figure>
+
+<p>类的继承和初始化。</p>
+<p>类的所有属性，包括从父类继承来的属性，在初始化期间都需要进行赋值。Swift 提供两种方式保证类的属性都正确初始化，分别是 <code>designated initializers</code> 指定初始化器和 <code>convenience initializers</code> 便利初始化器。</p>
+<p>指定初始化器是类的主要的初始化器。一个指定的初始化器会初始化所有属性，并且调用父类的初始化器一步步调用继承链上所有父类的初始化器。</p>
+<p>类通常不会有很多指定初始化器，实践来说通常一个类仅有一个指定初始化器。一个类至少需要一个指定初始化器，通常这可能是通过继承父类的初始化器。</p>
+<p>便利初始化器是类支持的次级初始化器。你可以用便利初始化器调用指定初始化器，并对其部分值设定默认值。这可以应对指定场合或输入值类型的情况。但便利初始化器是可选的。便利初始化器需要关键字 <code>convenience</code>。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">init</span>(parameters)</span> &#123;</span><br><span class="line">    statements</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">convenience</span> <span class="function"><span class="keyword">init</span>(parameters)</span> &#123;</span><br><span class="line">    statements</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>为了整清楚指定初始化器和便利初始化器直接的关系，Swift 设定了下面三个规则用于相会委派初始化器。</p>
+<ul>
+<li>Rule 1：指定初始化器必须调用直属父类的指定初始化器。</li>
+<li>Rule 2：一个便利初始化器中必须调用同类下的另一个初始化器。</li>
+<li>Rule 3：一个便利初始化器必须调用一个指定初始化器。</li>
+</ul>
+<p>一个速记方法：</p>
+<ul>
+<li>指定初始化器必须向上委派；</li>
+<li>便利初始化器必须同级委派。</li>
+</ul>
+<p>初始化的两个阶段。第一个阶段初始化每一个字段，第二个阶段对属性做自定义操作，之后实例化完成，对象可以正常访问。以此来保证属性初始化之后才能访问，防止属性赋值顺序导致预料外的覆盖。</p>
+<p>Swift 编译器会做 4 步安全检查保证初始化的安全性。</p>
+<ul>
+<li>安全检查 1: 指定初始化器必须保证所在类的所有属性初始化完成，并且向上委派父类的初始化器。</li>
+<li>安全检查 2: 在对继承的属性进行赋值时指定初始化器必须先委派父类的初始化器初始化该属性，否则在父类初始化的过程中会将新的值覆盖。</li>
+<li>安全检查 3: 便利初始化器在操作属性之前必须调用本身类的指定初始化器，否则新的值会在自身的指定初始化器的初始化过程中被覆盖。</li>
+<li>安全检查 4: 在第一步阶段完成之前初始化器无法操作方法和变量，或访问 <code>self</code> 属性。</li>
+</ul>
+<p>下面是两步初始化的过程。</p>
+<p>第一步：</p>
+<ul>
+<li>类的指定初始化器或者便利初始化器被调用；</li>
+<li>分配内存给类的新实例，内存尚未初始化；</li>
+<li>指定初始化器给类的所有属性初始化，此时这些属性的内存已被初始化；</li>
+<li>指定初始化器调用父类初始化器，接力完成父类的属性初始化；</li>
+<li>父类初始化器持续调用父类链上所有父类的初始化器，直到最后一个父类完成初始化；</li>
+<li>一旦到达父类链顶端，且顶级父类完成初始化，则认为实例内存完全初始化完毕，第一阶段结束。</li>
+</ul>
+<p>第二步：</p>
+<ul>
+<li>从顶级父类向下一步步执行指定初始化器中属性初始化以外的自定义任务，此时已经可以访问 <code>self</code>，可以读写属性，可以调用方法；</li>
+<li>最后，便利初始化器可以定制实例，操作 <code>self</code> 变量。</li>
+</ul>
+<p>初始化器的继承和覆盖（Override）。在 Swift 中子类默认不继承父类的初始化器，这可以防止父类的某个简单的初始化器被一个特化的子类继承并用来实例化而导致子类的属性没有被完全初始化完成的情况。</p>
+<p>如果你想定义一个和父类相同的初始化器，你可以提供一个定制化的实现给父类的初始化器，这实际上是对父类初始化器的覆盖，而覆盖父类的指定初始化器必须写 <code>override</code> 关键字，即使是默认生成的初始化器。反之，便利初始化器可以不用写，因为如果你覆盖了一个父类的便利初始化器，实际上父类的便利初始化器就不会在被调用了，所以这严格来说你并没有覆盖它。</p>
+<blockquote>
+<p>R：你干掉了一个便利初始化器，并提供了一个新的，所以你没有“覆盖”它，所以你不用写 <code>override</code> 关键字。对于指定初始化器来说，你需要调用父类的指定初始化器，所以实际上你“覆盖”了它，或者说扩展了它？</p>
+</blockquote>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Vehicle</span> </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> numberOfWheels <span class="operator">=</span> <span class="number">0</span></span><br><span class="line">    <span class="keyword">var</span> description: <span class="type">String</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;<span class="subst">\(numberOfWheels)</span> wheel(s)&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里 Vehicle 没有定义初始化器，但是它会有一个默认的初始化器。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> vehicle <span class="operator">=</span> <span class="type">Vehicle</span>()</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Vehicle: <span class="subst">\(vehicle.description)</span>&quot;</span>)</span><br><span class="line"><span class="comment">// Vehicle: 0 wheel(s)</span></span><br></pre></td></tr></table></figure>
+
+<p>下面子类继承了 Vehicle，它修改了父类的默认初始化器。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Bicycle</span>: <span class="title">Vehicle</span> </span>&#123;</span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">init</span>()</span> &#123;</span><br><span class="line">        <span class="keyword">super</span>.<span class="keyword">init</span>()</span><br><span class="line">        numberOfWheels <span class="operator">=</span> <span class="number">2</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Bicycle 的初始化器中先执行了 <code>super.init()</code>，保证了父类属性初始化完成后，才对属性进行操作。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Hoverboard</span>: <span class="title">Vehicle</span> </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> color: <span class="type">String</span></span><br><span class="line">    <span class="function"><span class="keyword">init</span>(<span class="params">color</span>: <span class="type">String</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">self</span>.color <span class="operator">=</span> color</span><br><span class="line">        <span class="comment">// super.init() implicitly called here</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">override</span> <span class="keyword">var</span> description: <span class="type">String</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;<span class="subst">\(<span class="keyword">super</span>.description)</span> in a beautiful <span class="subst">\(color)</span>&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Vehicle 另一个子类 Hoverboard 没有覆盖父类的默认初始化器，而且它在初始化器中只初始化了自身的属性，而父类的初始化会隐式地被调用。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> hoverboard <span class="operator">=</span> <span class="type">Hoverboard</span>(color: <span class="string">&quot;silver&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Hoverboard: <span class="subst">\(hoverboard.description)</span>&quot;</span>)</span><br><span class="line"><span class="comment">// Hoverboard: 0 wheel(s) in a beautiful silver</span></span><br></pre></td></tr></table></figure>
+
+<p>初始化器自动继承。初始化器不会默认继承，但是当满足某些条件时，初始化器会自动继承。这意味着在大多场景你不需要覆写初始化器，当父类的初始化器是安全的时候，你可以直接继承它。</p>
+<p>假设你的子类的所有属性都初始化完成了，下面两个规则会被应用：</p>
+<ul>
+<li>如果子类没有指定初始化器，父类的所有初始化器将被继承；</li>
+<li>如果父类的指定初始化器全都得到实现，可以是覆盖，或者根据第一条规则继承，则父类的所有便利初始化器也将被继承。</li>
+</ul>
+<p>例子：</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Food</span> </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> name: <span class="type">String</span></span><br><span class="line">    <span class="function"><span class="keyword">init</span>(<span class="params">name</span>: <span class="type">String</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">self</span>.name <span class="operator">=</span> name</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">convenience</span> <span class="function"><span class="keyword">init</span>()</span> &#123;</span><br><span class="line">        <span class="keyword">self</span>.<span class="keyword">init</span>(name: <span class="string">&quot;[Unnamed]&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> namedMeat <span class="operator">=</span> <span class="type">Food</span>(name: <span class="string">&quot;Bacon&quot;</span>)</span><br><span class="line"><span class="comment">// namedMeat&#x27;s name is &quot;Bacon&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> mysteryMeat <span class="operator">=</span> <span class="type">Food</span>()</span><br><span class="line"><span class="comment">// mysteryMeat&#x27;s name is &quot;[Unnamed]&quot;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">RecipeIngredient</span>: <span class="title">Food</span> </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> quantity: <span class="type">Int</span></span><br><span class="line">    <span class="function"><span class="keyword">init</span>(<span class="params">name</span>: <span class="type">String</span>, <span class="params">quantity</span>: <span class="type">Int</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">self</span>.quantity <span class="operator">=</span> quantity</span><br><span class="line">        <span class="keyword">super</span>.<span class="keyword">init</span>(name: name)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">override</span> <span class="keyword">convenience</span> <span class="function"><span class="keyword">init</span>(<span class="params">name</span>: <span class="type">String</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">self</span>.<span class="keyword">init</span>(name: name, quantity: <span class="number">1</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>R：RecipeIngredient 的 init(name) 前面的 <code>override</code> 是因为它覆盖了父类的指定初始化器，看来需不需要 <code>override</code> 是看是否覆盖了父类的指定初始化器。</p>
+</blockquote>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> oneMysteryItem <span class="operator">=</span> <span class="type">RecipeIngredient</span>()</span><br><span class="line"><span class="keyword">let</span> oneBacon <span class="operator">=</span> <span class="type">RecipeIngredient</span>(name: <span class="string">&quot;Bacon&quot;</span>)</span><br><span class="line"><span class="keyword">let</span> sixEggs <span class="operator">=</span> <span class="type">RecipeIngredient</span>(name: <span class="string">&quot;Eggs&quot;</span>, quantity: <span class="number">6</span>)</span><br></pre></td></tr></table></figure>
+
+<p>RecipeIngredient 实现了父类的所有指定初始化器，所以它继承了父类所有的便利初始化器。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ShoppingListItem</span>: <span class="title">RecipeIngredient</span> </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> purchased <span class="operator">=</span> <span class="literal">false</span></span><br><span class="line">    <span class="keyword">var</span> description: <span class="type">String</span> &#123;</span><br><span class="line">        <span class="keyword">var</span> output <span class="operator">=</span> <span class="string">&quot;<span class="subst">\(quantity)</span> x <span class="subst">\(name)</span>&quot;</span></span><br><span class="line">        output <span class="operator">+=</span> purchased <span class="operator">?</span> <span class="string">&quot; ✔&quot;</span> : <span class="string">&quot; ✘&quot;</span></span><br><span class="line">        <span class="keyword">return</span> output</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里 SHoppingListItem 虽然没有定义任何初始化器，但是它对自身所有属性进行了初始化，所以它自定继承了父类的指定初始化器和便利初始化器。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> breakfastList <span class="operator">=</span> [</span><br><span class="line">    <span class="type">ShoppingListItem</span>(),</span><br><span class="line">    <span class="type">ShoppingListItem</span>(name: <span class="string">&quot;Bacon&quot;</span>),</span><br><span class="line">    <span class="type">ShoppingListItem</span>(name: <span class="string">&quot;Eggs&quot;</span>, quantity: <span class="number">6</span>),</span><br><span class="line">]</span><br><span class="line">breakfastList[<span class="number">0</span>].name <span class="operator">=</span> <span class="string">&quot;Orange juice&quot;</span></span><br><span class="line">breakfastList[<span class="number">0</span>].purchased <span class="operator">=</span> <span class="literal">true</span></span><br><span class="line"><span class="keyword">for</span> item <span class="keyword">in</span> breakfastList &#123;</span><br><span class="line">    <span class="built_in">print</span>(item.description)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 1 x Orange juice ✔</span></span><br><span class="line"><span class="comment">// 1 x Bacon ✘</span></span><br><span class="line"><span class="comment">// 6 x Eggs ✘</span></span><br></pre></td></tr></table></figure>
+
+<p>允许失败的初始化器。由于参数值、外部资源或者其他的条件不被满足等情况可能会造成初始化过程失败，你可以通过 <code>init?</code> 的形式定义允许失败的初始化器。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Animal</span> </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> species: <span class="type">String</span></span><br><span class="line">    <span class="function"><span class="keyword">init?</span>(<span class="params">species</span>: <span class="type">String</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> species.isEmpty &#123; <span class="keyword">return</span> <span class="literal">nil</span> &#125;</span><br><span class="line">        <span class="keyword">self</span>.species <span class="operator">=</span> species</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> someCreature <span class="operator">=</span> <span class="type">Animal</span>(species: <span class="string">&quot;Giraffe&quot;</span>)</span><br><span class="line"><span class="comment">// someCreature is of type Animal?, not Animal</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> <span class="keyword">let</span> giraffe <span class="operator">=</span> someCreature &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;An animal was initialized with a species of <span class="subst">\(giraffe.species)</span>&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// Prints &quot;An animal was initialized with a species of Giraffe&quot;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> anonymousCreature <span class="operator">=</span> <span class="type">Animal</span>(species: <span class="string">&quot;&quot;</span>)</span><br><span class="line"><span class="comment">// anonymousCreature is of type Animal?, not Animal</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> anonymousCreature <span class="operator">==</span> <span class="literal">nil</span> &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;The anonymous creature could not be initialized&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// Prints &quot;The anonymous creature could not be initialized&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>枚举类型的允许失败的初始化器。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">TemperatureUnit</span> </span>&#123;</span><br><span class="line">    <span class="keyword">case</span> kelvin, celsius, fahrenheit</span><br><span class="line">    <span class="function"><span class="keyword">init?</span>(<span class="params">symbol</span>: <span class="type">Character</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">switch</span> symbol &#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&quot;K&quot;</span>:</span><br><span class="line">            <span class="keyword">self</span> <span class="operator">=</span> .kelvin</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&quot;C&quot;</span>:</span><br><span class="line">            <span class="keyword">self</span> <span class="operator">=</span> .celsius</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&quot;F&quot;</span>:</span><br><span class="line">            <span class="keyword">self</span> <span class="operator">=</span> .fahrenheit</span><br><span class="line">        <span class="keyword">default</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> fahrenheitUnit <span class="operator">=</span> <span class="type">TemperatureUnit</span>(symbol: <span class="string">&quot;F&quot;</span>)</span><br><span class="line"><span class="keyword">if</span> fahrenheitUnit <span class="operator">!=</span> <span class="literal">nil</span> &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;This is a defined temperature unit, so initialization succeeded.&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// Prints &quot;This is a defined temperature unit, so initialization succeeded.&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> unknownUnit <span class="operator">=</span> <span class="type">TemperatureUnit</span>(symbol: <span class="string">&quot;X&quot;</span>)</span><br><span class="line"><span class="keyword">if</span> unknownUnit <span class="operator">==</span> <span class="literal">nil</span> &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;This is not a defined temperature unit, so initialization failed.&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// Prints &quot;This is not a defined temperature unit, so initialization failed.&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>关于 rawType 的使用。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">TemperatureUnit</span>: <span class="title">Character</span> </span>&#123;</span><br><span class="line">    <span class="keyword">case</span> kelvin <span class="operator">=</span> <span class="string">&quot;K&quot;</span>, celsius <span class="operator">=</span> <span class="string">&quot;C&quot;</span>, fahrenheit <span class="operator">=</span> <span class="string">&quot;F&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> fahrenheitUnit <span class="operator">=</span> <span class="type">TemperatureUnit</span>(rawValue: <span class="string">&quot;F&quot;</span>)</span><br><span class="line"><span class="keyword">if</span> fahrenheitUnit <span class="operator">!=</span> <span class="literal">nil</span> &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;This is a defined temperature unit, so initialization succeeded.&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// Prints &quot;This is a defined temperature unit, so initialization succeeded.&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> unknownUnit <span class="operator">=</span> <span class="type">TemperatureUnit</span>(rawValue: <span class="string">&quot;X&quot;</span>)</span><br><span class="line"><span class="keyword">if</span> unknownUnit <span class="operator">==</span> <span class="literal">nil</span> &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;This is not a defined temperature unit, so initialization failed.&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// Prints &quot;This is not a defined temperature unit, so initialization failed.&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>初始化失败的传播（Propagation）。一个允许失败的初始化器可能会调用同级的其他初始化器，如果是类的话，还可能调用父类的初始化器。而一个允许失败的初始化器执行过程中失败了，那么整个初始化过程会立即失败，后续的代码不会再被执行。</p>
+<p>下面是一个例子，父类 Product 检查 name 属性为空的情况下初始化失败，而它的子类 CartItem 则检查 quantity 属性至少不能小于 1，否则初始化失败。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Product</span> </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> name: <span class="type">String</span></span><br><span class="line">    <span class="function"><span class="keyword">init?</span>(<span class="params">name</span>: <span class="type">String</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> name.isEmpty &#123; <span class="keyword">return</span> <span class="literal">nil</span> &#125;</span><br><span class="line">        <span class="keyword">self</span>.name <span class="operator">=</span> name</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CartItem</span>: <span class="title">Product</span> </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> quantity: <span class="type">Int</span></span><br><span class="line">    <span class="function"><span class="keyword">init?</span>(<span class="params">name</span>: <span class="type">String</span>, <span class="params">quantity</span>: <span class="type">Int</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> quantity <span class="operator">&lt;</span> <span class="number">1</span> &#123; <span class="keyword">return</span> <span class="literal">nil</span> &#125;</span><br><span class="line">        <span class="keyword">self</span>.quantity <span class="operator">=</span> quantity</span><br><span class="line">        <span class="keyword">super</span>.<span class="keyword">init</span>(name: name)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这样按照顺序，如果 quantity 不符合要求，初始化过程立刻结束，程序不会执行后面的 name 检查。而如果 quantity 没问题，程序会继续检查 name 属性。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> <span class="keyword">let</span> twoSocks <span class="operator">=</span> <span class="type">CartItem</span>(name: <span class="string">&quot;sock&quot;</span>, quantity: <span class="number">2</span>) &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Item: <span class="subst">\(twoSocks.name)</span>, quantity: <span class="subst">\(twoSocks.quantity)</span>&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// Prints &quot;Item: sock, quantity: 2&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> <span class="keyword">let</span> zeroShirts <span class="operator">=</span> <span class="type">CartItem</span>(name: <span class="string">&quot;shirt&quot;</span>, quantity: <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Item: <span class="subst">\(zeroShirts.name)</span>, quantity: <span class="subst">\(zeroShirts.quantity)</span>&quot;</span>)</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Unable to initialize zero shirts&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// Prints &quot;Unable to initialize zero shirts&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> <span class="keyword">let</span> oneUnnamed <span class="operator">=</span> <span class="type">CartItem</span>(name: <span class="string">&quot;&quot;</span>, quantity: <span class="number">1</span>) &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Item: <span class="subst">\(oneUnnamed.name)</span>, quantity: <span class="subst">\(oneUnnamed.quantity)</span>&quot;</span>)</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Unable to initialize one unnamed product&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// Prints &quot;Unable to initialize one unnamed product&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>关于覆写父类的允许失败的初始化器。子类可以复写父类的允许失败的初始化器，有点绕口。子类还可以控制是否让其继续允许失败。但是反之是不行的，你不可以让父类的一般初始化器覆写为允许失败的初始化器。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Document</span> </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> name: <span class="type">String</span>?</span><br><span class="line">    <span class="comment">// this initializer creates a document with a nil name value</span></span><br><span class="line">    <span class="function"><span class="keyword">init</span>()</span> &#123;&#125;</span><br><span class="line">    <span class="comment">// this initializer creates a document with a nonempty name value</span></span><br><span class="line">    <span class="function"><span class="keyword">init?</span>(<span class="params">name</span>: <span class="type">String</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> name.isEmpty &#123; <span class="keyword">return</span> <span class="literal">nil</span> &#125;</span><br><span class="line">        <span class="keyword">self</span>.name <span class="operator">=</span> name</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面定义了一个类 Document，下面定义另一个类继承它，并复写它的允许失败的初始化器，并让其保证不会出现返回 <code>nil</code> 的情况。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AutomaticallyNamedDocument</span>: <span class="title">Document</span> </span>&#123;</span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">init</span>()</span> &#123;</span><br><span class="line">        <span class="keyword">super</span>.<span class="keyword">init</span>()</span><br><span class="line">        <span class="keyword">self</span>.name <span class="operator">=</span> <span class="string">&quot;[Untitled]&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">init</span>(<span class="params">name</span>: <span class="type">String</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">super</span>.<span class="keyword">init</span>()</span><br><span class="line">        <span class="keyword">if</span> name.isEmpty &#123;</span><br><span class="line">            <span class="keyword">self</span>.name <span class="operator">=</span> <span class="string">&quot;[Untitled]&quot;</span></span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">self</span>.name <span class="operator">=</span> name</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>另外你可以用感叹号替代问好，<code>init?</code> = <code>init!</code>。你也可以在正常的初始化器中调用 <code>init!</code>，虽然这样做会在初始化失败时触发一个断言。</p>
+<p>父类可以用 <code>required</code> 关键字定义一个初始化器，这样所有继承它的子类都必须实现这个初始化器。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SomeClass</span> </span>&#123;</span><br><span class="line">    <span class="keyword">required</span> <span class="function"><span class="keyword">init</span>()</span> &#123;</span><br><span class="line">        <span class="comment">// initializer implementation goes here</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>你的子类也需要 <code>required</code> 关键字保证它的子类也要实现这个初始化器，但是这里覆写不需要 <code>override</code> 关键字。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SomeSubclass</span>: <span class="title">SomeClass</span> </span>&#123;</span><br><span class="line">    <span class="keyword">required</span> <span class="function"><span class="keyword">init</span>()</span> &#123;</span><br><span class="line">        <span class="comment">// subclass implementation of the required initializer goes here</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>R：官网文档备注了一点，就是如果子类满足父类的必须初始化器的执行条件的话，可以不用实现这个初始化器，因为父类的初始化器可以被继承来。</p>
+</blockquote>
+<p>用闭包或函数给类的属性设置默认值。</p>
+<p>如果某个属性需要定制或者设定，你可以使用闭包或者某个全局函数来给它提供一个默认的值。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SomeClass</span> </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> someProperty: <span class="type">SomeType</span> <span class="operator">=</span> &#123;</span><br><span class="line">        <span class="comment">// create a default value for someProperty inside this closure</span></span><br><span class="line">        <span class="comment">// someValue must be of the same type as SomeType</span></span><br><span class="line">        <span class="keyword">return</span> someValue</span><br><span class="line">    &#125;()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>注意属性大括号后的小括号，这表示立刻执行闭包，如果没有这个括号，则表示你在将这个闭包赋值给该属性。</p>
+<p>下面的结构体用闭包创建了一个 8x8 的国际象棋棋盘。用布尔值表示黑白。每次新的棋盘被创建时都会执行闭包，初始化创建一个新的棋盘。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Chessboard</span> </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> boardColors: [<span class="type">Bool</span>] <span class="operator">=</span> &#123;</span><br><span class="line">        <span class="keyword">var</span> temporaryBoard <span class="operator">=</span> [<span class="type">Bool</span>]()</span><br><span class="line">        <span class="keyword">var</span> isBlack <span class="operator">=</span> <span class="literal">false</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="number">1</span><span class="operator">...</span><span class="number">8</span> &#123;</span><br><span class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> <span class="number">1</span><span class="operator">...</span><span class="number">8</span> &#123;</span><br><span class="line">                temporaryBoard.append(isBlack)</span><br><span class="line">                isBlack <span class="operator">=</span> <span class="operator">!</span>isBlack</span><br><span class="line">            &#125;</span><br><span class="line">            isBlack <span class="operator">=</span> <span class="operator">!</span>isBlack</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> temporaryBoard</span><br><span class="line">    &#125;()</span><br><span class="line">    <span class="function"><span class="keyword">func</span> <span class="title">squareIsBlackAt</span>(<span class="params">row</span>: <span class="type">Int</span>, <span class="params">column</span>: <span class="type">Int</span>)</span> -&gt; <span class="type">Bool</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> boardColors[(row <span class="operator">*</span> <span class="number">8</span>) <span class="operator">+</span> column]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> board <span class="operator">=</span> <span class="type">Chessboard</span>()</span><br><span class="line"><span class="built_in">print</span>(board.squareIsBlackAt(row: <span class="number">0</span>, column: <span class="number">1</span>))</span><br><span class="line"><span class="comment">// Prints &quot;true&quot;</span></span><br><span class="line"><span class="built_in">print</span>(board.squareIsBlackAt(row: <span class="number">7</span>, column: <span class="number">7</span>))</span><br><span class="line"><span class="comment">// Prints &quot;false&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="卸载器（deinitializer）"><a href="#卸载器（deinitializer）" class="headerlink" title="卸载器（deinitializer）"></a>卸载器（deinitializer）</h3><p>卸载器用来在实例将被释放内存之前做一些操作。只有类才能定义卸载器。</p>
+<p>Swift 会自动在一个实例不再需要的时候回收它来释放资源。内存管理基于自动引用计算（ARC）实现，你不需要手动去释放一个对象。但是当你操作你自己的资源时，有时你需要手动做一些清洁操作。例如你创建一个类打开一个文件写一些数据，你需要在实例被释放之前关闭文件释放资源。</p>
+<p>一个类最多一个卸载器，而且不需要参数，不需要括号。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">deinit</span> &#123;</span><br><span class="line">    <span class="comment">// perform the deinitialization</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>卸载器在实例被释放前自动调用，不允许手动调用。父类的卸载器自动被子类继承，并且在子类的卸载器执行完成之后被执行。父类的卸载器一定会被执行，即使子类没有提供一个卸载器。</p>
+<p>下面是卸载器的一个实例。首先我们定义一局游戏，游戏中有 Bank 和 Player 两个类。</p>
+<p>Bank 储存 coins，并保证市场上最多流通有 1 万枚硬币。它有发布和收集两个方法用来分发个回收硬币。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Bank</span> </span>&#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">var</span> coinsInBank <span class="operator">=</span> <span class="number">10_000</span></span><br><span class="line">    <span class="keyword">static</span> <span class="function"><span class="keyword">func</span> <span class="title">distribute</span>(<span class="params">coins</span> <span class="params">numberOfCoinsRequested</span>: <span class="type">Int</span>)</span> -&gt; <span class="type">Int</span> &#123;</span><br><span class="line">        <span class="keyword">let</span> numberOfCoinsToVend <span class="operator">=</span> <span class="built_in">min</span>(numberOfCoinsRequested, coinsInBank)</span><br><span class="line">        coinsInBank <span class="operator">-=</span> numberOfCoinsToVend</span><br><span class="line">        <span class="keyword">return</span> numberOfCoinsToVend</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">static</span> <span class="function"><span class="keyword">func</span> <span class="title">receive</span>(<span class="params">coins</span>: <span class="type">Int</span>)</span> &#123;</span><br><span class="line">        coinsInBank <span class="operator">+=</span> coins</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>distribute(coins:)</code> 方法最多发行出 1 万枚硬币，如果要求的数量大于银行剩余的量，则会返回银行当前剩余的硬币。<code>receive(coins:)</code> 方法用来回收硬币。</p>
+<p>Player 类描述这局游戏的玩家角色。每个玩家都有一个钱包，储存一定的硬币，使用 <code>coinsInPurse</code> 属性表示。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Player</span> </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> coinsInPurse: <span class="type">Int</span></span><br><span class="line">    <span class="function"><span class="keyword">init</span>(<span class="params">coins</span>: <span class="type">Int</span>)</span> &#123;</span><br><span class="line">        coinsInPurse <span class="operator">=</span> <span class="type">Bank</span>.distribute(coins: coins)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">func</span> <span class="title">win</span>(<span class="params">coins</span>: <span class="type">Int</span>)</span> &#123;</span><br><span class="line">        coinsInPurse <span class="operator">+=</span> <span class="type">Bank</span>.distribute(coins: coins)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">deinit</span> &#123;</span><br><span class="line">        <span class="type">Bank</span>.receive(coins: coinsInPurse)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>每个玩家被实例化时都会收到一份初始资金，当然如果银行硬币余量不够时可能回收到比预期少的资金。玩家有一个 <code>win(coins:)</code> 方法可以从银行那边赢取一定的硬币。Player 类还有一个卸载器，用来在玩家离开游戏后保证资金回转到银行。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> playerOne: <span class="type">Player</span>? <span class="operator">=</span> <span class="type">Player</span>(coins: <span class="number">100</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;A new player has joined the game with <span class="subst">\(playerOne<span class="operator">!</span>.coinsInPurse)</span> coins&quot;</span>)</span><br><span class="line"><span class="comment">// Prints &quot;A new player has joined the game with 100 coins&quot;</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;There are now <span class="subst">\(Bank.coinsInBank)</span> coins left in the bank&quot;</span>)</span><br><span class="line"><span class="comment">// Prints &quot;There are now 9900 coins left in the bank&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>上面的例子中我们用可选型变量创建了一个 Player 对象，因为玩家可能在任何时候退出游戏。而因为使用了可选型类型，每次访问 Player 类的属性和方法时都需要加上感叹号(<code>!</code>) 来断言其一定存在。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line">playerOne<span class="operator">!</span>.win(coins: <span class="number">2_000</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;PlayerOne won 2000 coins &amp; now has <span class="subst">\(playerOne<span class="operator">!</span>.coinsInPurse)</span> coins&quot;</span>)</span><br><span class="line"><span class="comment">// Prints &quot;PlayerOne won 2000 coins &amp; now has 2100 coins&quot;</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;The bank now only has <span class="subst">\(Bank.coinsInBank)</span> coins left&quot;</span>)</span><br><span class="line"><span class="comment">// Prints &quot;The bank now only has 7900 coins left&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>你看，这名玩家又赢得了 2，000 硬币，现在他有 2，100 枚硬币了。而银行还剩下 7，900 枚硬币。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line">playerOne <span class="operator">=</span> <span class="literal">nil</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;PlayerOne has left the game&quot;</span>)</span><br><span class="line"><span class="comment">// Prints &quot;PlayerOne has left the game&quot;</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;The bank now has <span class="subst">\(Bank.coinsInBank)</span> coins&quot;</span>)</span><br><span class="line"><span class="comment">// Prints &quot;The bank now has 10000 coins&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>现在玩家退出游戏，我们可以看到银行回收了这笔资金，余量又恢复到了 1 万枚硬币。</p>
+<h1 id="相关"><a href="#相关" class="headerlink" title="相关"></a>相关</h1><blockquote>
+<p>19.<a target="_blank" rel="noopener" href="https://github.com/zfanli/notes/blob/master/swift/19.SubscriptsAndInheritance.md">Swift Subscripts and Inheritance</a></p>
+<p>21.<a target="_blank" rel="noopener" href="https://github.com/zfanli/notes/blob/master/swift/21.OptionalChaining.md">Swift Optional Chaining</a></p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/post/notes/swift/1.SwiftIntroduction/" rel="bookmark">1.Official Documentation - Introducing Swift 5</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/post/notes/swift/10.SyntaxSupplements/" rel="bookmark">10.Swift Syntax Supplements</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/post/notes/swift/11.BasicOperators/" rel="bookmark">11.Swift Basic Operators</a></div>
+    </li>
+  </ul>
+
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Swift/" rel="tag"># Swift</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/post/notes/swift/21.OptionalChaining/" rel="prev" title="21.Swift Optional Chaining">
+                  <i class="fa fa-chevron-left"></i> 21.Swift Optional Chaining
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/post/notes/What-is-the-Blockchain/" rel="next" title="一个关于区块链概念的简单介绍">
+                  一个关于区块链概念的简单介绍 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Richard Zen</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">316k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">4:47</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/comments.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/utils.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/motion.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/schemes/muse.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/next-boot.min.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/third-party/search/local-search.min.js"></script>
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"zfanli/zfanli.github.io","issue_term":"og:title","theme":"preferred-color-scheme"}</script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/third-party/comments/utterances.min.js"></script>
+
+</body>
+</html>

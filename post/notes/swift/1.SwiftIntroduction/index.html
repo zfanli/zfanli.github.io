@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icon-64.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/icon-16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"richard.bizcat.xyz","root":"/","images":"/images","scheme":"Mist","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/config.min.js"></script>
+<meta name="description" content="阅读官方对于 Swift 5 的介绍，了解它的特性和优势。多数都是摘抄原文或者翻译。 https:&#x2F;&#x2F;developer.apple.com&#x2F;swift&#x2F;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="1.Official Documentation - Introducing Swift 5">
+<meta property="og:url" content="https://richard.bizcat.xyz/post/notes/swift/1.SwiftIntroduction/">
+<meta property="og:site_name" content="HOME">
+<meta property="og:description" content="阅读官方对于 Swift 5 的介绍，了解它的特性和优势。多数都是摘抄原文或者翻译。 https:&#x2F;&#x2F;developer.apple.com&#x2F;swift&#x2F;">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-06-14T05:28:35.099Z">
+<meta property="article:modified_time" content="2019-06-14T05:28:35.099Z">
+<meta property="article:author" content="Richard Zen">
+<meta property="article:tag" content="Swift">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://richard.bizcat.xyz/post/notes/swift/1.SwiftIntroduction/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://richard.bizcat.xyz/post/notes/swift/1.SwiftIntroduction/","path":"post/notes/swift/1.SwiftIntroduction/","title":"1.Official Documentation - Introducing Swift 5"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>1.Official Documentation - Introducing Swift 5 | HOME</title>
+  
+
+  <script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/third-party/analytics/baidu-analytics.min.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?556c863884b17d03fa0a3035eba585f0"></script>
+
+
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap-utilities.min.css"
+  integrity="sha256-5+ExmMkiaI3keYQRLhNibJ5ZXnNuWRbwrXOAZoTXMFg="
+  crossorigin="anonymous"
+/>
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">HOME</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分组</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+<div id="colorSwitcher" class="animated fadeIn">🌓</div>
+<script>
+  (function () {
+    // define constants
+    const DARK = "dark-scheme",
+      LIGHT = "light-scheme",
+      COLOR_SCHEME = "color-scheme",
+      ROTATE = "switcher-rotate";
+
+    // define targets
+    const switcher = document.querySelector("#colorSwitcher"),
+      body = document.body,
+      isDark = window.matchMedia("(prefers-color-scheme: dark)").matches,
+      stored = window.localStorage.getItem(COLOR_SCHEME),
+      current = stored ? stored : isDark ? DARK : LIGHT;
+
+    body.classList.add(current);
+    if (current === LIGHT) {
+      setTimeout(function setupCommentTheme() {
+        try {
+          const utt = document.querySelector(".utterances-frame");
+          utt.src = utt.src.replace("theme=github-dark", "theme=github-light");
+          // console.log(document.querySelector(".utterances-frame").src);
+        } catch (e) {
+          setTimeout(setupCommentTheme, 100);
+        }
+      }, 100);
+    }
+
+    // setup actions
+    switcher.addEventListener("click", function () {
+      let add = LIGHT;
+      if (body.classList.contains(LIGHT)) {
+        add = DARK;
+      }
+      // apply the new color scheme
+      body.classList.remove(LIGHT, DARK);
+      body.classList.add(add);
+      window.localStorage.setItem(COLOR_SCHEME, add);
+      if (switcher.classList.contains(ROTATE))
+        switcher.classList.remove(ROTATE);
+      else switcher.classList.add(ROTATE);
+      // update the comments' theme
+      const utt = document.querySelector(".utterances-frame");
+      utt &&
+        utt.contentWindow.postMessage(
+          {
+            type: "set-theme",
+            theme: add === DARK ? "github-dark" : "github-light",
+          },
+          "https://utteranc.es"
+        );
+    });
+  })();
+</script>
+<style>
+  #colorSwitcher {
+    cursor: pointer;
+    border-radius: 2px;
+    height: 37px;
+    line-height: 37px;
+    width: 42px;
+    text-align: center;
+    outline: none;
+    font-size: 1.5rem;
+    margin-left: auto;
+    transition: all 0.25s ease-in-out;
+    transform: rotate(0);
+    user-select: none;
+  }
+
+  #colorSwitcher.switcher-rotate {
+    transform: rotate(180deg);
+  }
+
+  @media (max-width: 767px) {
+    #colorSwitcher {
+      height: 37px;
+      line-height: 37px;
+      width: 42px;
+      text-align: center;
+      position: absolute;
+      top: 10px;
+      right: 50px;
+    }
+  }
+</style>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#R%EF%BC%9A%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2%E7%9A%84%E5%B0%8F%E7%BB%93"><span class="nav-text">R：写在前面的小结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%89%E9%A1%B5-Swift-5"><span class="nav-text">扉页 Swift 5</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Swift-5-%E7%AE%80%E4%BB%8B"><span class="nav-text">Swift 5 简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8E%B0%E4%BB%A3%E5%8C%96"><span class="nav-text">现代化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E5%AE%89%E5%85%A8%E8%80%8C%E8%AE%BE%E8%AE%A1"><span class="nav-text">为安全而设计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BF%AB%E9%80%9F%E7%9A%84%E3%80%81%E5%8A%9F%E8%83%BD%E5%BC%BA%E5%A4%A7%E7%9A%84"><span class="nav-text">快速的、功能强大的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%82%E5%90%88%E4%BD%9C%E4%B8%BA%E7%AC%AC%E4%B8%80%E9%97%A8%E8%AF%AD%E8%A8%80"><span class="nav-text">适合作为第一门语言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%BA%90%E7%A0%81%E4%B8%8E%E4%BA%8C%E8%BF%9B%E5%88%B6%E7%A0%81%E7%9A%84%E5%85%BC%E5%AE%B9%E6%80%A7"><span class="nav-text">源码与二进制码的兼容性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%80%E6%BA%90"><span class="nav-text">开源</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B7%A8%E5%B9%B3%E5%8F%B0"><span class="nav-text">跨平台</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF"><span class="nav-text">服务器端</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Playgrounds-%E5%92%8C%E4%BA%A4%E4%BA%92%E8%A7%A3%E9%87%8A%E5%99%A8"><span class="nav-text">Playgrounds 和交互解释器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8C%85%E7%AE%A1%E7%90%86"><span class="nav-text">包管理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Objective-C-%E4%BA%92%E9%80%9A%E6%80%A7"><span class="nav-text">Objective-C 互通性</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3"><span class="nav-text">相关</span></a></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Richard Zen"
+      src="/images/icon-64.png">
+  <p class="site-author-name" itemprop="name">Richard Zen</p>
+  <div class="site-description" itemprop="description"><small><b>TOPICS</b></small><br>
+前端 ｜ Python ｜ Java<br>
+数据结构 ｜ 算法<br><br>
+用代码替代言语<br>记录创作与学习的脚步<br><br>
+</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">119</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分组</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">53</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/zfanli" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;zfanli" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://richard.bizcat.xyz/post/notes/swift/1.SwiftIntroduction/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon-64.png">
+      <meta itemprop="name" content="Richard Zen">
+      <meta itemprop="description" content="<small><b>TOPICS</b></small><br>
+前端 ｜ Python ｜ Java<br>
+数据结构 ｜ 算法<br><br>
+用代码替代言语<br>记录创作与学习的脚步<br><br>
+">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HOME">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          1.Official Documentation - Introducing Swift 5
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2019-06-14 13:28:35" itemprop="dateModified" datetime="2019-06-14T13:28:35+08:00">2019-06-14</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text"> </span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/notes/" itemprop="url" rel="index"><span itemprop="name">notes</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/notes/swift/" itemprop="url" rel="index"><span itemprop="name">swift</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>5.7k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>5 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>阅读官方对于 Swift 5 的介绍，了解它的特性和优势。多数都是摘抄原文或者翻译。</p>
+<p><a target="_blank" rel="noopener" href="https://developer.apple.com/swift/">https://developer.apple.com/swift/</a></p>
+<span id="more"></span>
+
+<h2 id="R：写在前面的小结"><a href="#R：写在前面的小结" class="headerlink" title="R：写在前面的小结"></a>R：写在前面的小结</h2><p>Swift 虽然是一个开源项目，但是更多还是用来构建 Apple 自己的平台的应用。但是随着 Swift 的标准库现在在新版本的系统中内置，相信选择使用 Swift 的项目会越来越多。</p>
+<p>从设计上来看 Swift 充分参考了其他流行的语言的优劣，并且针对共通性的问题进行了主观的改善。看上去 Swift 从设计上就避免了很多可能出现的问题，但是安全性和便利性存在着不可调和的矛盾，着重安全性的 Swift 或许在便利性上相较其他语言稍逊一筹。不过我觉得这只是一个习惯问题，牺牲一点便利性来换取更少、更不容易犯错或许是合算的。</p>
+<p>更多细节只能在后续的学习中体会摸索。如果你想在 Apple 平台开发应用，选择 Swift 就没错。</p>
+<h2 id="扉页-Swift-5"><a href="#扉页-Swift-5" class="headerlink" title="扉页 Swift 5"></a>扉页 Swift 5</h2><p>一门功能强大的语言，同时也易于学习。</p>
+<p>Swift 是一门功能强大（powerful）且直观（intuitive）的编程语言，用于 macOS、iOS、watchOS、tvOS 甚至是其他平台。用 Swift 编程是交互式且有趣的，它的语法简洁并且表达力强，它还包含了众多开发者喜爱的特性。Swift 代码从设计上考虑安全性，使用它制作的软件运行起来依旧快如闪电。</p>
+<blockquote>
+<p>R：扉页的牛吹得不错。</p>
+</blockquote>
+<h2 id="Swift-5-简介"><a href="#Swift-5-简介" class="headerlink" title="Swift 5 简介"></a>Swift 5 简介</h2><p>Swift 5 使你发布自己的 App 变得异常简单。因为 Swift 5 的运行环境如今已经内置于 macOS、iOS、watchOS、tvOS 的系统中，你的 App 在这些平台的最新系统上不再需要绑定它的运行环境包了。从 Apple Store 中下载 Swift 的 App 将会比以往体积更小、下载速度更快。</p>
+<p>下面是它的附加特性。</p>
+<ul>
+<li>字符串使用 UTF-8 编码</li>
+<li>Debug 和 release builds 下默认强制对内存独占访问</li>
+<li>SIMD Vector and Result types in Standard Library</li>
+<li>Dictionary 和 Set 的性能改善</li>
+<li>支持动态可调用类型（dynamically callable types）以改善与动态语言（Python、JavaScript、Ruby 等）的交互性</li>
+</ul>
+<blockquote>
+<p>R：不明觉厉。</p>
+</blockquote>
+<h2 id="现代化"><a href="#现代化" class="headerlink" title="现代化"></a>现代化</h2><p>Swift 是结合几十年构建 Apple 平台的经验，对编程语言研究的最新成果。以清晰的语法表达命名参数（Named parameters），可以使 Swift 的 API 更加容易阅读和维护。你甚至不需要输入分号。类型推测让代码更加清晰、更不易出错，而 modules 的存在摆脱了 headers 并且提供命名空间。字符串 Unicode-correct，基于 UTF-8 编码并对各种使用场景进行性能优化以更好的支持国际化语言和 emoji。自动内存管理基于严格确定性的变量引用计算，保持最低内存使用率的同时，没有垃圾回收的开销。</p>
+<p>下面的例子展示现代化直观的语法声明一个类型。为实例属性添加默认值，并且自定义初始化器。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Player</span> </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> name: <span class="type">String</span></span><br><span class="line">    <span class="keyword">var</span> highScore: <span class="type">Int</span> <span class="operator">=</span> <span class="number">0</span></span><br><span class="line">    <span class="keyword">var</span> history: [<span class="type">Int</span>] <span class="operator">=</span> []</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">init</span>(<span class="keyword">_</span> <span class="params">name</span>: <span class="type">String</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">self</span>.name <span class="operator">=</span> name</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> player <span class="operator">=</span> <span class="type">Player</span>(<span class="string">&quot;Tomas&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>使用 <code>extension</code> 对现有的类型进行功能扩展，使用字符串插值模版减少重复代码。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">extension</span> <span class="title">Player</span> </span>&#123;</span><br><span class="line">    <span class="keyword">mutating</span> <span class="function"><span class="keyword">func</span> <span class="title">updateScore</span>(<span class="keyword">_</span> <span class="params">newScore</span>: <span class="type">Int</span>)</span> &#123;</span><br><span class="line">        history.append(newScore)</span><br><span class="line">        <span class="keyword">if</span> highScore <span class="operator">&lt;</span> newScore &#123;</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;<span class="subst">\(newScore)</span>! A new high score for <span class="subst">\(name)</span>! 🎉&quot;</span>)</span><br><span class="line">            highScore <span class="operator">=</span> newScore</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">player.updateScore(<span class="number">50</span>)</span><br><span class="line"><span class="comment">// Prints &quot;50! A new high score for Tomas! 🎉&quot;</span></span><br><span class="line"><span class="comment">// player.highScore == 50</span></span><br></pre></td></tr></table></figure>
+
+<p>利用功能强大的语言特性快速扩展你的自定义类型，比如自动编码·解码 JSON 格式数据。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">extension</span> <span class="title">Player</span>: <span class="title">Codable</span>, <span class="title">Equatable</span> </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> Foundation</span><br><span class="line"><span class="keyword">let</span> encoder <span class="operator">=</span> <span class="type">JSONEncoder</span>()</span><br><span class="line"><span class="keyword">try</span> encoder.encode(player)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(player)</span><br><span class="line"><span class="comment">// Prints &quot;Tomas, games played: 1, high score: 50”</span></span><br></pre></td></tr></table></figure>
+
+<p>使用最新简化的闭包函数执行功能强大的自定义变换。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> players <span class="operator">=</span> getPlayers()</span><br><span class="line"></span><br><span class="line"><span class="comment">// Sort players, with best high scores first</span></span><br><span class="line"><span class="keyword">let</span> ranked <span class="operator">=</span> players.sorted(by: &#123; player1, player2 <span class="keyword">in</span></span><br><span class="line">    player1.highScore <span class="operator">&gt;</span> player2.highScore</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// Create an array with only the players’ names</span></span><br><span class="line"><span class="keyword">let</span> rankedNames <span class="operator">=</span> ranked.map &#123; <span class="variable">$0</span>.name &#125;</span><br><span class="line"><span class="comment">// [&quot;Erin&quot;, &quot;Rosana&quot;, &quot;Tomas&quot;]</span></span><br></pre></td></tr></table></figure>
+
+<p>这些前瞻的概念反映到编程语言中是十分有趣的，还容易使用。</p>
+<p>Swift 还有很多其他的特性可以使你的代码更有表达力。</p>
+<ul>
+<li>功能强大、简单易用的泛型（Generics）</li>
+<li>协议扩展（Protocol extensions）让同样代码编写更加容易</li>
+<li>第一类函数（First class functions）和轻量级的闭包（closure）语法</li>
+<li>对范围（range）和集合（collection）的迭代快速而简洁</li>
+<li>元组（Tuple）和多返回值</li>
+<li>支持方法、扩展、协议的结构（Structs）</li>
+<li>枚举（Enums）可以有负载（payloads）且支持模式匹配</li>
+<li>函数化编程，比如 map 和 filter</li>
+<li>使用 <code>try</code>、<code>catch</code>、<code>throw</code> 处理原生错误（Native error）</li>
+</ul>
+<blockquote>
+<p>R：偏向函数化的，集大成的语法。</p>
+</blockquote>
+<h2 id="为安全而设计"><a href="#为安全而设计" class="headerlink" title="为安全而设计"></a>为安全而设计</h2><p>Swift 移除了全部类型的不安全代码（entire classes of unsafe code）。变量在使用之前必须初始化，数组和整型会检查益处，内存自动管理，并且强制的独占内存访问可以防止很多编程错误。语法经过调整，可以轻松定义你的意图，比如简单的 3 字符关键字定义一个变量（<code>var</code>）或者常量（<code>let</code>）。并且 Swift 大量利用了值类型（value types），尤其是经常使用的数据类型，比如数组和字典。这意味着当你对这些数据类型的数据进行一次复制，你知道这些值不会在其他任何地方被修改。</p>
+<blockquote>
+<p>R：Value Types，对数据复制的时候复制其值，所以每个复制都是完全独立的实例，修改不会相互影响。与之相对的是 Reference Types，每次复制都仅复制引用，每个复制都共享同一份数据，数据的修改将影响所有复制的实例。</p>
+</blockquote>
+<p>另一个安全方面的特性是，Swift 对象永远不会是 <code>nil</code>。Swift 的编译器会在编译时报错来阻止你创建或使用一个 <code>nil</code> 对象。这会让代码更加清晰和安全，而且可以一下子避免好几个目录的足以让 App 崩溃的问题。当然，在某些情况下 <code>nil</code> 是有效且被允许的。Swift 有一个被称作可选值（optional）的创新特性针对这些场景。一个可选值允许 <code>nil</code>，但是 Swift 的语法会强制你使用 <code>?</code> 语法来告诉编译器你明白你在做什么并会安全处理它。</p>
+<blockquote>
+<p>R: 类似 TypeScript 里面关于类型定义的 <code>?</code> 语法，表示允许 <code>null</code> 或者 <code>undefined</code>。另外在 Swift 中，其他语言中熟知的 <code>null</code> 被称为 <code>nil</code>。</p>
+</blockquote>
+<p>当一个函数可能返回一个实例，也可能什么都不返回的时候，使用可选值。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">extension</span> <span class="title">Collection</span> <span class="title">where</span> <span class="title">Element</span> == <span class="title">Player</span> </span>&#123;</span><br><span class="line">    <span class="comment">// Returns the highest score of all the players,</span></span><br><span class="line">    <span class="comment">// or `nil` if the collection is empty.</span></span><br><span class="line">    <span class="function"><span class="keyword">func</span> <span class="title">highestScoringPlayer</span>()</span> -&gt; <span class="type">Player</span>? &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">self</span>.max(by: &#123; <span class="variable">$0</span>.highScore <span class="operator">&lt;</span> <span class="variable">$1</span>.highScore &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可选值绑定（optional binding），可选值链（optional chaining）和 Nil 联合运算符（nil coalescing）等特性可以让你安全并有效率的处理可选值。</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> <span class="keyword">let</span> bestPlayer <span class="operator">=</span> players.highestScoringPlayer() &#123;</span><br><span class="line">    recordHolder <span class="operator">=</span> <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        The record holder is <span class="subst">\(bestPlayer.name)</span>,<span class="subst">\</span></span></span><br><span class="line"><span class="subst"><span class="string"></span>        with a high score of <span class="subst">\(bestPlayer.highScore)</span>!</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    recordHolder <span class="operator">=</span> <span class="string">&quot;No games have been played yet.&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">print</span>(recordHolder)</span><br><span class="line"><span class="comment">// The record holder is Erin, with a high score of 271!</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> highestScore <span class="operator">=</span> players.highestScoringPlayer()<span class="operator">?</span>.highScore <span class="operator">??</span> <span class="number">0</span></span><br><span class="line"><span class="comment">// highestScore == 271</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>R：Nil Coalescing 类似三元表达式，简化版的。</p>
+</blockquote>
+<h2 id="快速的、功能强大的"><a href="#快速的、功能强大的" class="headerlink" title="快速的、功能强大的"></a>快速的、功能强大的</h2><p>Swift 从最初的设计上就是为了“快速”而生的。Swift 代码使用性能牛批的 LLVM 编译器技术，编译成优化过的原生代码，充分利用现代硬件的性能。它的语法和标准库同样经过调整，可以让你以最一目了然的方式写出来的代码同样可以获得最好的性能，无论其是运行在你的手表上或者是一组服务器中。</p>
+<p>Swift 是 C 和 Objective-C 两者的继承者。它包含底层的原型，比如基本类型、流程控制和操作符。它也提供面向对象的特性，比如 class、协议和泛型，给 Cocoa 和 Cocoa Touch 开发者们要求的性能和功能。</p>
+<h2 id="适合作为第一门语言"><a href="#适合作为第一门语言" class="headerlink" title="适合作为第一门语言"></a>适合作为第一门语言</h2><p>Swift 可以帮你打开编程世界的大门。它被设计成人们的第一门编程语言，无论你还是学生或是准备探索新的职业生涯。对教育工作者来说，Apple 制作了免费的课程以方便课堂内外的 Swift 教学。初次接触的人可以下载 Swift Playgrounds，一个 iPad 应用，让你在有趣的互动中熟悉 Swift 编程。</p>
+<p>感兴趣的开发者可以访问免费的课程来学习如何使用 Xcode 构建他们的第一个 app。全球各地的 Apple Store 会主办 Today at Apple Coding &amp; Apps 活动，让你可以动手体验 Swift 编程。</p>
+<blockquote>
+<p>R：看了看资源大部分都是青少年教育内容…</p>
+</blockquote>
+<h2 id="源码与二进制码的兼容性"><a href="#源码与二进制码的兼容性" class="headerlink" title="源码与二进制码的兼容性"></a>源码与二进制码的兼容性</h2><p>在 Swift 5 中，你可以使用新的编译器编译 Swift 4 的代码，不需要任何修改。相反，你可以使用新的编译器来充分利用 Swift 5 的新特性，并且根据自己的节奏一个模块一个模块的进行迁移。</p>
+<p>或者你可以仅使用新的编译器，按照你自己的节奏迁移到 Swift 5。现在 Swift 5 为应用引进了二进制兼容。这意味着针对当前的 OS 和未来发布的 OS，你不需要在你的应用中引入 Swift 库了，因为新的 OS 中将会内置 Swift 库。你的应用将会使用 OS 上最新的库，你的代码可以持续运行而不需要重新编译。这不仅可以让开发 App 变得更加简单，还可以减少 App 的体积和启动时间。</p>
+<blockquote>
+<p>R：当然仅限 Apple 生态。下面还有些碎碎念（？）。</p>
+</blockquote>
+<h3 id="开源"><a href="#开源" class="headerlink" title="开源"></a>开源</h3><p>Swift 是开源的，Apple 和外部数以百计的贡献者共同努力让 Swift 更好。</p>
+<h3 id="跨平台"><a href="#跨平台" class="headerlink" title="跨平台"></a>跨平台</h3><p>Swift 已经在所有 Apple 平台和 Linux 上得到支持，并且社区在努力让更多平台支持 Swift。SourceKit-LSP 社区同时在致力于将 Swift 支持整合到各种开发工具中。</p>
+<h3 id="服务器端"><a href="#服务器端" class="headerlink" title="服务器端"></a>服务器端</h3><p>Swift 可以加强 Apple 平台的各种应用，同时它也可以用来制作新型现代服务器应用。Swift 可以完美支持追求运行时安全性、编译性能和小内存占用率的服务器端应用。</p>
+<h2 id="Playgrounds-和交互解释器"><a href="#Playgrounds-和交互解释器" class="headerlink" title="Playgrounds 和交互解释器"></a>Playgrounds 和交互解释器</h2><p>诸如 iPad 的 Swift Playgrounds 和 Xcode 的 playgrounds 可以让写 Swift 代码轻松有趣。输入一行代码，立马就能得到结果。你可以从侧边栏快速查看结果，也可以固定在代码下面显示。结果可以以图片、结果集或随时更新的图表形式显示。你可以打开 Timeline Assistant 观察复杂的演算和动画，可以很方便的试验新的 UI 代码，或者调试你的 SpriteKit 代码。当你完成了代码的调整，只需要将 playground 中的代码移到你的项目中即可。Swift 在你使用命令行或者 Xcode 的 LLDB Debug 控制台时可以进行交互解释。使用 Swift 和正在运行的应用进行交互和计算，或者写一段新的代码来看看它是如何像脚本语言一样工作。</p>
+<h2 id="包管理"><a href="#包管理" class="headerlink" title="包管理"></a>包管理</h2><p>Swift Package Manager 是一个独立的跨平台工具，提供构建、运行、测试和打包功能。Swift 包是发布你的库和代码的最好方式。包的配置用 Swift 编写，可以简单的配置对象，声明产品和管理依赖。在 Swift 5 中，run 命令可以在 REPL 导入库，而不需要构建一个可执行文件。Swift Package Manager 本身作为 Swift 开源项目的一个包，使用 Swift 编写。</p>
+<h2 id="Objective-C-互通性"><a href="#Objective-C-互通性" class="headerlink" title="Objective-C 互通性"></a>Objective-C 互通性</h2><p>如今你可以使用 Swift 构建一个完整的应用，或者使用 Swift 为你的应用开发新的功能。Swift 可以和你现有的 Objective-C 文件共存，并且可以完整的访问 Objective-C 的 API，适配更加简单。</p>
+<h1 id="相关"><a href="#相关" class="headerlink" title="相关"></a>相关</h1><blockquote>
+<p>2.<a target="_blank" rel="noopener" href="https://github.com/zfanli/notes/blob/master/swift/2.SyntaxBasics(Strings&Variables).md">Swift Syntax Basics (字符串和变量)</a></p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/post/notes/swift/10.SyntaxSupplements/" rel="bookmark">10.Swift Syntax Supplements</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/post/notes/swift/11.BasicOperators/" rel="bookmark">11.Swift Basic Operators</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/post/notes/swift/12.StringsAndCharacters/" rel="bookmark">12.Swift Strings and Characters</a></div>
+    </li>
+  </ul>
+
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Swift/" rel="tag"># Swift</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/post/notes/swift/2.SyntaxBasics(Strings&Variables)/" rel="prev" title="2.Swift Syntax Basics (字符串和变量)">
+                  <i class="fa fa-chevron-left"></i> 2.Swift Syntax Basics (字符串和变量)
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/post/notes/Simple-Usage-of-MongoDB/" rel="next" title="从需求来看 MongoDB 的最简单用法">
+                  从需求来看 MongoDB 的最简单用法 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Richard Zen</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">316k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">4:47</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/comments.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/utils.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/motion.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/schemes/muse.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/next-boot.min.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/third-party/search/local-search.min.js"></script>
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"zfanli/zfanli.github.io","issue_term":"og:title","theme":"preferred-color-scheme"}</script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/third-party/comments/utterances.min.js"></script>
+
+</body>
+</html>

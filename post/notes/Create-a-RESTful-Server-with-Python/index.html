@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icon-64.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/icon-16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"richard.bizcat.xyz","root":"/","images":"/images","scheme":"Mist","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/config.min.js"></script>
+<meta name="description" content="REST 是表现层状态转移的缩写，虽然名称不好理解，但这是一个简单并且实用的概念。 REST : REpresentational State Transfer  RESTful API 关注下面三点：  URL 定义资源位置 HTML 动词定义对资源的操作 返回状态码定义操作的结果">
+<meta property="og:type" content="article">
+<meta property="og:title" content="用 Python 实现一个简单的 RESTful API 服务器">
+<meta property="og:url" content="https://richard.bizcat.xyz/post/notes/Create-a-RESTful-Server-with-Python/">
+<meta property="og:site_name" content="HOME">
+<meta property="og:description" content="REST 是表现层状态转移的缩写，虽然名称不好理解，但这是一个简单并且实用的概念。 REST : REpresentational State Transfer  RESTful API 关注下面三点：  URL 定义资源位置 HTML 动词定义对资源的操作 返回状态码定义操作的结果">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2018-07-14T04:17:37.000Z">
+<meta property="article:modified_time" content="2018-07-14T04:17:37.000Z">
+<meta property="article:author" content="Richard Zen">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="REST">
+<meta property="article:tag" content="Flask">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://richard.bizcat.xyz/post/notes/Create-a-RESTful-Server-with-Python/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://richard.bizcat.xyz/post/notes/Create-a-RESTful-Server-with-Python/","path":"post/notes/Create-a-RESTful-Server-with-Python/","title":"用 Python 实现一个简单的 RESTful API 服务器"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>用 Python 实现一个简单的 RESTful API 服务器 | HOME</title>
+  
+
+  <script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/third-party/analytics/baidu-analytics.min.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?556c863884b17d03fa0a3035eba585f0"></script>
+
+
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap-utilities.min.css"
+  integrity="sha256-5+ExmMkiaI3keYQRLhNibJ5ZXnNuWRbwrXOAZoTXMFg="
+  crossorigin="anonymous"
+/>
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">HOME</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分组</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+<div id="colorSwitcher" class="animated fadeIn">🌓</div>
+<script>
+  (function () {
+    // define constants
+    const DARK = "dark-scheme",
+      LIGHT = "light-scheme",
+      COLOR_SCHEME = "color-scheme",
+      ROTATE = "switcher-rotate";
+
+    // define targets
+    const switcher = document.querySelector("#colorSwitcher"),
+      body = document.body,
+      isDark = window.matchMedia("(prefers-color-scheme: dark)").matches,
+      stored = window.localStorage.getItem(COLOR_SCHEME),
+      current = stored ? stored : isDark ? DARK : LIGHT;
+
+    body.classList.add(current);
+    if (current === LIGHT) {
+      setTimeout(function setupCommentTheme() {
+        try {
+          const utt = document.querySelector(".utterances-frame");
+          utt.src = utt.src.replace("theme=github-dark", "theme=github-light");
+          // console.log(document.querySelector(".utterances-frame").src);
+        } catch (e) {
+          setTimeout(setupCommentTheme, 100);
+        }
+      }, 100);
+    }
+
+    // setup actions
+    switcher.addEventListener("click", function () {
+      let add = LIGHT;
+      if (body.classList.contains(LIGHT)) {
+        add = DARK;
+      }
+      // apply the new color scheme
+      body.classList.remove(LIGHT, DARK);
+      body.classList.add(add);
+      window.localStorage.setItem(COLOR_SCHEME, add);
+      if (switcher.classList.contains(ROTATE))
+        switcher.classList.remove(ROTATE);
+      else switcher.classList.add(ROTATE);
+      // update the comments' theme
+      const utt = document.querySelector(".utterances-frame");
+      utt &&
+        utt.contentWindow.postMessage(
+          {
+            type: "set-theme",
+            theme: add === DARK ? "github-dark" : "github-light",
+          },
+          "https://utteranc.es"
+        );
+    });
+  })();
+</script>
+<style>
+  #colorSwitcher {
+    cursor: pointer;
+    border-radius: 2px;
+    height: 37px;
+    line-height: 37px;
+    width: 42px;
+    text-align: center;
+    outline: none;
+    font-size: 1.5rem;
+    margin-left: auto;
+    transition: all 0.25s ease-in-out;
+    transform: rotate(0);
+    user-select: none;
+  }
+
+  #colorSwitcher.switcher-rotate {
+    transform: rotate(180deg);
+  }
+
+  @media (max-width: 767px) {
+    #colorSwitcher {
+      height: 37px;
+      line-height: 37px;
+      width: 42px;
+      text-align: center;
+      position: absolute;
+      top: 10px;
+      right: 50px;
+    }
+  }
+</style>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Hello"><span class="nav-text">Hello?</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93"><span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%95%AA%E5%A4%96"><span class="nav-text">番外</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E9%97%AE%E9%A2%98"><span class="nav-text">设计模式问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#logging-%E9%97%AE%E9%A2%98"><span class="nav-text">logging 问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%84%E7%90%86%E5%BC%82%E5%B8%B8-Code"><span class="nav-text">处理异常 Code</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Richard Zen"
+      src="/images/icon-64.png">
+  <p class="site-author-name" itemprop="name">Richard Zen</p>
+  <div class="site-description" itemprop="description"><small><b>TOPICS</b></small><br>
+前端 ｜ Python ｜ Java<br>
+数据结构 ｜ 算法<br><br>
+用代码替代言语<br>记录创作与学习的脚步<br><br>
+</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">119</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分组</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">53</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/zfanli" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;zfanli" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://richard.bizcat.xyz/post/notes/Create-a-RESTful-Server-with-Python/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon-64.png">
+      <meta itemprop="name" content="Richard Zen">
+      <meta itemprop="description" content="<small><b>TOPICS</b></small><br>
+前端 ｜ Python ｜ Java<br>
+数据结构 ｜ 算法<br><br>
+用代码替代言语<br>记录创作与学习的脚步<br><br>
+">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HOME">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          用 Python 实现一个简单的 RESTful API 服务器
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2018-07-14 12:17:37" itemprop="dateModified" datetime="2018-07-14T12:17:37+08:00">2018-07-14</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text"> </span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/notes/" itemprop="url" rel="index"><span itemprop="name">notes</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>6.4k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>6 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>REST 是表现层状态转移的缩写，虽然名称不好理解，但这是一个简单并且实用的概念。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">REST : REpresentational State Transfer</span><br></pre></td></tr></table></figure>
+
+<p>RESTful API 关注下面三点：</p>
+<ol>
+<li>URL 定义资源位置</li>
+<li>HTML 动词定义对资源的操作</li>
+<li>返回状态码定义操作的结果</li>
+</ol>
+<span id="more"></span>
+
+<p>REST 的概念翻译成通俗易懂的人类语言大概是这样的：</p>
+<ul>
+<li>第一步，告诉你我要的资源（URL），</li>
+<li>第二步，告诉你我要对这个资源做什么（GET、POST、UPDATE、DELETE），</li>
+<li>最后，你告诉我结果（状态码和响应内容）。</li>
+</ul>
+<p>是不是感觉对要做的事情描述得很清晰？这就是 REST 要达到的效果。接下来我们来实现一个 RESTful API 的服务器，我给它命名为 <code>MaruCat</code>，这是我家猫的名字。</p>
+<p>这个服务器将基于 Python 的 <code>Flask</code> 框架来实现，我们将一步一步详细的记录每一个步骤，同时记录遇到的所有问题和这些问题的解决方法。让我们开始吧。</p>
+<h2 id="Hello"><a href="#Hello" class="headerlink" title="Hello?"></a>Hello?</h2><p>我们先尝试一下 Flask 框架的威力。</p>
+<p>我们先创建如下的目录结构：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">root</span><br><span class="line">├── marucat_app</span><br><span class="line">│   └── __init__.py</span><br><span class="line">└── run.py</span><br></pre></td></tr></table></figure>
+
+<p>可以看到项目中有一个 <code>marucat_app</code> 包，主要的代码都放在这里。这个包之外还有一个 <code>run.py</code> 文件，我们将其定义其为程序的入口，启动的位置。并且为了方便调试，<code>run.py</code> 文件将以 DEBUG 模式启动开发服务器。</p>
+<p>这是这个文件的所有内容：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> marucat_app <span class="keyword">import</span> app</span><br><span class="line"></span><br><span class="line">app.run(debug=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+
+<p>我们从 <code>marucat_app</code> 包导入 app 实例（这个实例将在稍后说明），以 DEBUG 模式运行它。</p>
+<p>先不急着运行，为了尝试 Flask 的威力，我们先准备一个 Hello 场景。</p>
+<p>假设一个场景，我们要实现这个需求：</p>
+<p><strong>访问（GET）根目录（’/‘）时，得到一个问候信息，这个信息需要是 JSON 格式的，并且指定返回类型为 JSON。</strong></p>
+<p>这其实是一个最简单的 REST API，我们可以想象 request 头第一行会是这样的：</p>
+<figure class="highlight http"><table><tr><td class="code"><pre><span class="line"><span class="keyword">GET</span> <span class="string">/</span> <span class="meta">HTTP/1.1</span></span><br></pre></td></tr></table></figure>
+
+<p>解释一下：我们将对位于 <code>/</code> 的资源进行 HTML 动词的 <code>GET</code> 操作，即我们想获得根目录所代表的资源。</p>
+<p>所以在服务器这边，我们其实要做这些事：</p>
+<ul>
+<li>给根路径（’/‘）绑定一个路由</li>
+<li>这个路由需要返回一个 JSON 对象</li>
+<li>并且 Response 对象需要声明自己是 JSON 类型的（即 <code>Content-Type</code> 声明）</li>
+</ul>
+<blockquote>
+<p>Response 对象声明 <code>Content-Type</code> 是为了向请求资源的人描述 Response Body 的格式。</p>
+</blockquote>
+<p>在 Flask 中要做这些事情是很简单的。回到我们的文件结构，在 <code>marucat_app</code> 包中有一个 <code>__init__.py</code> 文件，我们就把这个 Hello 场景放在这里吧。</p>
+<p>使用 Flask 框架，首先需要一个实例化的 Flask 对象，其后的所有操作都将通过这个对象来进行。我们要对这个对象绑定路由，来决定什么情况下返回什么，而除此之外的细节都由框架帮我们处理了。</p>
+<p>这是一个最简单的例子：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask, jsonify</span><br><span class="line"></span><br><span class="line">app = Flask(<span class="string">&#x27;marucat_app&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/&#x27;</span></span>)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">hello</span>():</span></span><br><span class="line">    <span class="keyword">return</span> jsonify(&#123;<span class="string">&#x27;message&#x27;</span>: <span class="string">&#x27;Hello&#x27;</span>&#125;)</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>我们从 flask 包中导入 <code>Flask</code> 类和 <code>jsonify</code> 函数。先创建一个 Flask 对象，因为之后的操作都将围绕这个对象进行。实例化 Flask 对象时需要提供一个参数作为识别符，通常情况下我们把 <code>__name__</code> 作为识别符。</p>
+<p>不过，官方文档提示第一个参数的设置分两种情况：</p>
+<blockquote>
+<p>1）使用单独 module 时通常将 <code>__name__</code> 作为第一个参数；2）使用 package 时通常将 package 名硬编码作为第一个参数。究其原因，一部分 Flask 扩展将根据这个识别符来追踪 DEBUG 信息，设置不当的话会造成丢失 DEBUG 信息。</p>
+</blockquote>
+<p>我们的文件结构 app 存在于 <code>marucat_app</code> 包里，我们直接将 ‘marucat_app’ 作为第一个参数。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">app = Flask(<span class="string">&#x27;marucat_app&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>接下来创建一个 <code>Hello</code> 函数，直接返回问候信息。问候信息是一个字典对象，使用 <code>jsonify</code> 函数将其转成 JSON 字符串再返回。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">hello</span>():</span></span><br><span class="line">    <span class="keyword">return</span> jsonify(&#123;<span class="string">&#x27;message&#x27;</span>: <span class="string">&#x27;Hello&#x27;</span>&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>最后，将 <code>Hello</code> 函数绑定在根路径（’/‘）上，Flask 让我们可以使用装饰器的方式简单的绑定路由。在 <code>Hello</code> 函数上插入装饰器 <code>@app.route(&#39;/&#39;)</code> 。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/&#x27;</span></span>)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">hello</span>():</span></span><br><span class="line">    <span class="keyword">return</span> jsonify(&#123;<span class="string">&#x27;message&#x27;</span>: <span class="string">&#x27;Hello&#x27;</span>&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>现在，这个简单的例子已经可以运行了，来试试看！</p>
+<p>我们可以在 IDE 中配置执行脚本，直接执行 <code>run.py</code> 就可以把这个 app 跑起来。或者使用命令行，输入下面的命令，效果是一样的。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> python run.py</span></span><br></pre></td></tr></table></figure>
+
+<p>键入上面的命令后，我们会看到类似下面的输出。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">* Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)</span><br><span class="line">* Restarting with stat</span><br><span class="line">* Debugger is active!</span><br><span class="line">* Debugger PIN: 274-620-182</span><br></pre></td></tr></table></figure>
+
+<p>现在 app 已经在 DEBUG 模式下运行了，可以通过 <code>http://127.0.0.1:5000/</code> 访问，我们来试试看。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> curl http://127.0.0.1:5000/</span></span><br><span class="line">&#123;</span><br><span class="line">  &quot;message&quot;: &quot;Hello&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们打开一个新的命令行界面，使用 curl 访问服务器跟路径，接着我们就得到了预设的问候信息。同时在运行服务器的命令行界面上我们看到如下反馈。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">127.0.0.1 - - [31/May/2018 16:12:03] &quot;GET / HTTP/1.1&quot; 200 -</span><br></pre></td></tr></table></figure>
+
+<p>同样我们也可以直接打开浏览器访问。在浏览器中访问根路径，JSON 格式的问候信息将直接显示在页面上。</p>
+<p>我们在浏览器中打开开发者工具，切换到 Network 标签（Chrome 浏览器下），在这里可以看到我们访问根路径时得到的 Response 信息（如果你没看到，那就在打开开发者工具的情况下再访问一次根路径）。</p>
+<p>这是我得到的一个 Response 头信息。</p>
+<figure class="highlight http"><table><tr><td class="code"><pre><span class="line"><span class="meta">HTTP/1.0</span> <span class="number">200</span> OK</span><br><span class="line"><span class="attribute">Content-Type</span><span class="punctuation">: </span>application/json</span><br><span class="line"><span class="attribute">Content-Length</span><span class="punctuation">: </span>20</span><br><span class="line"><span class="attribute">Server</span><span class="punctuation">: </span>Werkzeug/0.14.1 Python/3.6.4</span><br><span class="line"><span class="attribute">Date</span><span class="punctuation">: </span>Thu, 31 May 2018 08:24:04 GMT</span><br></pre></td></tr></table></figure>
+
+<p>可以看到我们简单的达到了目标。需要注意的是 <code>jsonify</code> 自动帮我们把 <code>Content-Type</code> 设定成了 JSON。</p>
+<p>我们也可以手动做这一步，下面是一个例子，在没有使用 flask 的 <code>jsonify</code> 函数的情况下我们怎么设置 response 的头信息。</p>
+<p>在这里我设置了 <code>Content-Type</code>，这只是一个例子，用这个方法我们可以设置任何想要的头信息。Flask 为我们提供了一个定制 Response 对象的方法，<code>make_response</code>。</p>
+<p>先看看修改后的代码。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask, make_response</span><br><span class="line"><span class="keyword">from</span> json <span class="keyword">import</span> dumps</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">CONTENT_TYPE = <span class="string">&#x27;Content-Type&#x27;</span></span><br><span class="line">JSON_TYPE = <span class="string">&#x27;application/json&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">app = Flask(<span class="string">&#x27;marucat_app&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/&#x27;</span></span>)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">hello</span>():</span></span><br><span class="line">    resp = make_response(dumps(&#123;<span class="string">&#x27;message&#x27;</span>: <span class="string">&#x27;Hello&#x27;</span>&#125;), <span class="number">201</span>)</span><br><span class="line">    resp.headers[CONTENT_TYPE] = JSON_TYPE</span><br><span class="line">    <span class="keyword">return</span> resp</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>与之前不同，这次我们返回一个定制过的 response 对象。从 flask 包中导入 <code>make_response</code> 函数，这个函数可以生成一个 response 对象。它接受几个参数，一般我们传递两个参数给它，第一个是 response 的数据，第二个是返回状态码。</p>
+<p>之前我们并没有显式的设置过状态码，因为默认将发送 <code>200</code> 状态码。这次我们将状态码设置成 <code>201</code>，等会看看效果。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">resp = make_response(dumps(&#123;<span class="string">&#x27;message&#x27;</span>: <span class="string">&#x27;Hello&#x27;</span>&#125;), <span class="number">201</span>)</span><br></pre></td></tr></table></figure>
+
+<p>我们拿到 <code>resp</code> 这个对象后，就可以给它设置 header 了。</p>
+<p>为了方便使用，我们先将 <code>Content-Type</code> 设置为常量。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">CONTENT_TYPE = <span class="string">&#x27;Content-Type&#x27;</span></span><br><span class="line">JSON_TYPE = <span class="string">&#x27;application/json&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>接着，给 <code>resp</code> 设置 header。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">resp.headers[CONTENT_TYPE] = JSON_TYPE</span><br></pre></td></tr></table></figure>
+
+<p>到此基本搞定，我们再来跑跑看。重新打开服务器，如果你没有关闭的话，等服务器 reload 完成。在浏览器中打开开发者工具，访问 app 的地址根路径。</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123; <span class="attr">&quot;message&quot;</span>: <span class="string">&quot;Hello&quot;</span> &#125;</span><br></pre></td></tr></table></figure>
+
+<p>页面上显示了我们设定的结果，再看看 Response 头信息。</p>
+<figure class="highlight http"><table><tr><td class="code"><pre><span class="line"><span class="meta">HTTP/1.0</span> <span class="number">201</span> CREATED</span><br><span class="line"><span class="attribute">Content-Type</span><span class="punctuation">: </span>application/json</span><br><span class="line"><span class="attribute">Content-Length</span><span class="punctuation">: </span>20</span><br><span class="line"><span class="attribute">Server</span><span class="punctuation">: </span>Werkzeug/0.14.1 Python/3.6.4</span><br><span class="line"><span class="attribute">Date</span><span class="punctuation">: </span>Thu, 31 May 2018 09:02:34 GMT</span><br></pre></td></tr></table></figure>
+
+<p>注意我们通过自定义 response 的头信息实现了下面两点：</p>
+<ol>
+<li>状态码返回了 201</li>
+<li><code>Content-Type</code> 声明了 JSON 类型</li>
+</ol>
+<p>我们完成了 Hello 的需求。虽然上面碎碎念了这么多，但其实我们仅使用了 10 行代码就完成了一个 app 的构建。</p>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>到目前为止，我们先做一个小结。</p>
+<p>我们实现了一个 Hello 场景，创建了一个最简单的问候语 API。依此来了解了 Flask 框架的基本用法，以及 REST API 的概念。</p>
+<p>这些内容可以总结如下：</p>
+<ul>
+<li>Flask 框架的使用从实例化 <code>Flask</code> 对象开始</li>
+<li>使用装饰器 <code>@app.route(path)</code> 来绑定路由</li>
+<li>路由可以是一个函数，返回一个字符串或者 response 对象</li>
+<li>如果路由函数返回一个字符串，response 头信息的 <code>Content-Type</code> 默认为 <code>text/html</code></li>
+<li>如果不设定返回的状态码，路由函数默认返回 <code>200</code> 状态码</li>
+<li>Flask 提供 <code>make_response</code> 函数来定制 response 对象</li>
+<li>response 对象定制可以设定响应内容、状态码和响应头信息</li>
+</ul>
+<h2 id="番外"><a href="#番外" class="headerlink" title="番外"></a>番外</h2><p>插播几个番外。</p>
+<h3 id="设计模式问题"><a href="#设计模式问题" class="headerlink" title="设计模式问题"></a>设计模式问题</h3><p>数据库目前选择的是 MongoDB，但是也要确保以后更换数据库的情况不产生影响，所以数据库相关的部分单独提出来，放在一个子 package 里。对外部来说仅导入这个包，使用里面的 <code>factory</code> 方法获得需要的数据库访问 <code>Helper</code> 就足够了。</p>
+<p>假定 <code>Helper</code> 一定会返回正确的数据，外部不需要关注 <code>Helper</code> 的实现。这样就能不产生负面影响的情况下更换数据库。这个模式有很多种实现，在 Java 中这叫面向接口编程。</p>
+<p>大致概念如下：</p>
+<ul>
+<li>定义接口</li>
+<li>外部和内部并行开发</li>
+<li>外部只需调用接口不关注具体实例对象</li>
+<li>内部只需实现接口不限制技术细节</li>
+</ul>
+<p>不过在 Python 中没有类似的设计模式。</p>
+<p>我在一番搜索之下找到一个很棒的库，介绍 Python 的各种设计模式。</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/faif/python-patterns">https://github.com/faif/python-patterns</a></p>
+<p>在其中我找到了一个合适的设计模式，<code>Bridge Pattern</code>。</p>
+<p>概念总结一下，对外和对内的处理基本稍有些差异。大致如下：</p>
+<ul>
+<li>用一个类 A 作为桥梁</li>
+<li>实例化 A 时将具体的实现类对象 B 作为参数传进去</li>
+<li>A 的内部定义类所有接口方法，在这些方法中调用 B 相对应的方法并返回结果</li>
+<li>指定一个实现类对象 B 来实例化一个 A 的对象，这个 A 的对象作为 Helper 暴露出去</li>
+<li>A 不关注 B 的细节，只要 B 拥有 A 所定义的所有对应的方法</li>
+</ul>
+<p>没有大差，但是 Python 下稍有点麻烦。不过路算是疏通路。</p>
+<h3 id="logging-问题"><a href="#logging-问题" class="headerlink" title="logging 问题"></a>logging 问题</h3><p>路由的绑定根据路径分成几个文件定义。在分割文件的过程中，每个文件都需要实例化一个 <code>blueprint</code> 对象，由此来完成路由绑定操作。</p>
+<p>这些 <code>blueprint</code> 对象最终会注册在应用实例化的 Flask 对象上。由此就有一个问题，logger 对象只能从 Flask 的实例对象上访问。</p>
+<p>这玩意传递都不好搞，flask 有一个 <code>current_app</code> 功能对象可以获得当前的实例化 app 对象。但是 <code>current_app</code> 使用的前提是 Flask 实例化的 app 对象调用了 <code>app_context</code> 方法创建了上下文，并且把 logger 传到上下文里去。</p>
+<p>目前的几次尝试都没有成功，对 flask 的 logging 理解还不深入。但是失败几次转换思路后，我开始重新思考需求。</p>
+<ul>
+<li><code>blueprint</code> 中记录跟踪信息和错误信息，并且为了保持 log 的连贯性，要将其和 flask 内部 logger 输出到同一个地方。</li>
+</ul>
+<p>一开始的思路是拿同一个 logger 输出就能把 log 打到同一个地方。仔细想想，并非如此，flask 内部 logger 默认情况下会把所有 log 输出到 console。所以我的目的应该是将 <code>blueprint</code> 的 log 信息同样输出到 console 就可以了。</p>
+<p>结论：普通的 logger 就足够了。</p>
+<p>所以最后还是直接从 logging 包拿到一个 logger 直接输出 log 信息了。</p>
+<p>中途疏通花了挺长时间，或许再坚持一下一开始的思路说不定也是可以走通的，但是方向却是一开始就走偏了。不过这个过程也更深入的了解到了 flask 的 logging 机制，其实默认的 logger 就是普通的 logging 包拿到的 logger 对象。</p>
+<p>我们在实例化之前对 logging 包设定 <code>baseConfig</code> 或者 <code>dictConfig</code>，这也会对 log 产生影响。到此这条路也是被疏通了。</p>
+<h3 id="处理异常-Code"><a href="#处理异常-Code" class="headerlink" title="处理异常 Code"></a>处理异常 Code</h3><p>客户端请求的一个路径可能不存在，或者请求一个路径使用的 method 可能是不被允许的。总有各种各种错误会在服务的中间出现，我们要处理这些错误。</p>
+<p>flask 使用 Werkzeug 发布应用，这个库默认帮我们处理了这些错误。但是如果你尝试一下就会发现，当错误发生时 response 会得到一个描述错误信息的页面。</p>
+<p>通常这没什么问题，用户看到这些信息后就知道发生什么了。但是 MaruCat 只是一个 REST API 提供者，用户不是人类而是消费这些 API 的前端服务器。仅需要一个 code 就足以让服务器明白发生了什么，我们需要自定义这些错误处理。而在 flask 中做到这一切非常容易。</p>
+<p>下面是一个处理 404 的例子，我们仅需要返回一个 code 就足够了。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> werkzeug.exceptions <span class="keyword">import</span> NotFound</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.errorhandler(<span class="params">NotFound</span>)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">not_found</span>(<span class="params">error</span>):</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;&#x27;</span>, <span class="number">404</span></span><br></pre></td></tr></table></figure>
+
+<p>也没什么好解释的，注意这个方法需要接受一个 <code>exception</code> 的参数，如果不接受参数在运行时会抛错误的。这个 <code>exception</code> 有几个可访问的属性，在特定时候需要用到。以上面函数接受的参数名 <code>error</code> 为例。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 错误状态码 e.g. 400</span></span><br><span class="line">error.code</span><br><span class="line"><span class="comment"># 错误名 e.g. NOT FOUND</span></span><br><span class="line">error.name</span><br><span class="line"><span class="comment"># 错误信息</span></span><br><span class="line">error.description</span><br></pre></td></tr></table></figure>
+
+<p>处理其他 code 的套路是一样的。这条路被疏通了。</p>
+
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/post/notes/First-time-using-Python/" rel="bookmark">关于 Python 的初体验感受</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/post/notes/Simple-Usage-of-MongoDB/" rel="bookmark">从需求来看 MongoDB 的最简单用法</a></div>
+    </li>
+  </ul>
+
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Python/" rel="tag"># Python</a>
+              <a href="/tags/REST/" rel="tag"># REST</a>
+              <a href="/tags/Flask/" rel="tag"># Flask</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/post/notes/Simple-Usage-of-MongoDB/" rel="prev" title="从需求来看 MongoDB 的最简单用法">
+                  <i class="fa fa-chevron-left"></i> 从需求来看 MongoDB 的最简单用法
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/post/notes/First-time-using-Python/" rel="next" title="关于 Python 的初体验感受">
+                  关于 Python 的初体验感受 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Richard Zen</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">316k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">4:47</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/comments.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/utils.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/motion.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/schemes/muse.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/next-boot.min.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/third-party/search/local-search.min.js"></script>
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"zfanli/zfanli.github.io","issue_term":"og:title","theme":"preferred-color-scheme"}</script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/third-party/comments/utterances.min.js"></script>
+
+</body>
+</html>
