@@ -5,9 +5,7 @@ tags:
   - Binary Tree
   - DFS
   - BFS
-date: '2021-08-19T09:58:41.739Z'
-categories:
-  - leetcode
+date: "2021-08-19T09:58:41.739Z"
 ---
 
 在 `No.116` 中我们解决了在完全二叉树的情况下将每一层的节点向右关联的需求，这道题需要解决同样的需求，但是 `input` 不再确保是完全二叉树了。也就是说，当前节点可能不存在左节点、右节点或者左右节点都不存在，它的相邻节点也是一样，甚至所谓“相邻”其实也隔了好几个分支。
@@ -63,5 +61,53 @@ class Solution:
             curr = head
             head = prev = None
 
+        return root
+```
+
+## 思路 2，DFS
+
+等等，题目提示递归是 OK 的， 对这道题我们可以不考虑调用栈的内存占用，“找下一个”的方法是可以实现的，何不试试这个方法？
+
+对于每个跟节点我们需要处理：
+
+- 如果左节点存在：
+  - 如果右节点存在，连接它们；
+  - 如果右节点不存在，连接左节点和下一个存在的节点；
+- 接着接触如果右节点存在：
+  - 将右节点和下一个存在的节点连接；
+- 对右节点递归，顺序很重要：
+  - 从上至下、从右往左遍历才能保证 `next` 被引用时指向正确的节点；
+- 对左节点递归。
+
+```python
+class Solution:
+    def connect(self, root: 'Node') -> 'Node':
+
+        def find(node):
+            if not node:
+                return None
+            if node.left:
+                return node.left
+            if node.right:
+                return node.right
+            return find(node.next)
+
+        def dfs(node):
+            if not node:
+                return
+
+            if node.left:
+                if node.right:
+                    node.left.next = node.right
+                else:
+                    node.left.next = find(node.next)
+
+            if node.right:
+                node.right.next = find(node.next)
+
+            dfs(node.right)
+            dfs(node.left)
+
+        dfs(root)
         return root
 ```

@@ -5,8 +5,6 @@ tags:
   - Math
   - Matrix
 title: 48. Rotate Image (Medium)
-categories:
-  - leetcode
 ---
 
 矩阵问题。旋转图片 90 度。
