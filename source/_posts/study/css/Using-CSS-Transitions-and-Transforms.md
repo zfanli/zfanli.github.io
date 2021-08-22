@@ -330,6 +330,8 @@ div {
 
 当你指定多个变换函数时构成组合变换 `Composition Transforms`，每个变换效果将根据**从右到左**的顺序依次应用。
 
+指定多个变换函数时，你可以重复指定同一种函数，这些函数会按照上述顺序执行。请注意有些函数交换位置后不影响结果，但是其他的函数执行顺序至关重要。
+
 ```css
 /* Single function */
 div {
@@ -346,6 +348,24 @@ div {
 
 均匀的 2D 变换矩阵。还有一个 3d 版本 `matrix3d` 在下文介绍。
 
+> **NOTE! 注意！**
+>
+> 演示代码中定义了多个 `transform` 属性，但是实际使用中最后一个定义的变换效果会覆盖之前的定义，如果需要定义多个变换效果，请定义一个 `transform` 属性，用**空格分隔变换函数**赋值给它。
+
+```css
+div {
+  transform: matrix(a, b, c, d, tx, ty);
+  /* For each parameters the function at the same position will be applied */
+  /* matrix(scaleX(), skewY(), skewX(), scaleY(), translateX(), translateY()) */
+
+  /* Equivalent to the below */
+  transform: matrix3d(a, b, 0, 0, c, d, 0, 0, 0, 0, 1, 0, tx, ty, 0, 1);
+
+  /* This line will take effect */
+  transform: matrix(1, 2, -1, 1, 80, 80);
+}
+```
+
 #### `transform: translate`
 
 在 2d 平面平移元素。这个变换函数有几个变种函数。
@@ -358,6 +378,14 @@ div {
 | `translateY()`  | `ty`                   | 在垂直方向平移元素，等同 `translate(0, ty)` 或 `translate3d(0, ty, 0)` |
 | `translateZ()`  | `tz`                   | 围绕 z 轴平移元素，等同 `translate3d(0, 0, tz)`                        |
 
+```css
+div {
+  transform: translate(50%);
+  /* This line will take effect */
+  transform: translate(50px, 100px);
+}
+```
+
 #### `transform: scale`
 
 在 2d 平面缩放元素。这个变换函数有几个变种存在。
@@ -369,6 +397,14 @@ div {
 | `scaleX()`  | `s`          | 调整水平方向元素大小，等同 `scale(sx, 1)` 或 `scale3d(sx, 1, 1)` |
 | `scaleY()`  | `s`          | 调整垂直方向元素大小，等同 `scale(1, sy)` 或 `scale3d(1, sy, 1)` |
 | `scaleZ()`  | `s`          | 围绕 z 轴调整元素大小，等同 `scale3d(1, 1, sz)`                  |
+
+```css
+div {
+  transform: scale(1.5);
+  /* This line will take effect */
+  transform: scale(-1, 1);
+}
+```
 
 #### `transform: rotate`
 
@@ -391,6 +427,15 @@ div {
 | `rad`  | 单位 `弧度`，弧度一整圈为 2π，表示接近 `6.2832rad` |
 | `turn` | 单位 `转`，一整圈为 `1turn`                        |
 
+```css
+div {
+  transform: rotate(30deg);
+  transform: rotate(0.5turn);
+  /* This line will take effect */
+  transform: rotate(200grad);
+}
+```
+
 #### `transform: skew`
 
 在 2d 平面歪曲元素。这个变换函数有几个变种存在。歪曲函数的参数使用角度单位，与 `rotate` 一致。
@@ -401,32 +446,104 @@ div {
 | `skewX()` | `<angle>`  | 在水平方向歪曲元素，等同 `skew(a)`                 |
 | `skewY()` | `<angle>`  | 在垂直方向歪曲元素                                 |
 
+```css
+div {
+  transform: skew(30deg);
+  /* This line will take effect */
+  transform: skew(30deg, 60deg);
+}
+```
+
 ### 3D 变换属性
+
+3d 空间的变换效果相对 2d 平面来说参数和概念上复杂很多，并且使用场景差别较大，这一部分我们单独拿出来讨论。
 
 #### `transform: matrix3d`
 
-均匀的 `4 x 4` 的 3d 变换矩阵。
+均匀的 `4 x 4` 的 3d 变换矩阵。矩阵变换是 `transform` 属性实现的基础，所有其他变换函数都是在计算完结果之后应用矩阵变换实现的。
+
+换言之，所有变换效果都有一个与之对应的矩阵变换的写法。对于一般效果而言，使用对应的变换函数是最方便的，但是对于组合变换也难以实现的变换效果来说，就需要用到矩阵变换来实现。
+
+下面是 3d 矩阵变换的参数定义，详细探索以后有机会再具体探讨。
+
+<!-- prettier-ignore-start -->
+```css
+div {
+  transform: matrix3d(
+    a1, b1, c1, d1,
+    a2, b2, c2, d2,
+    a3, b3, c3, d3,
+    a4, b4, c4, d4
+  );
+}
+```
+<!-- prettier-ignore-end -->
 
 #### `transform: translate3d`
 
-在 3d 空间平移元素。
+在 3d 空间平移元素。3d 的元素平移变换相对 2d 版本并没有复杂多少，接受 3 个向量作为横轴、纵轴和 z 轴方向上的移动量。
+
+```css
+div {
+  transform: translate3d(0);
+  /* This line will take effect */
+  transform: translate3d(42px, -662px, -125px);
+}
+```
 
 #### `transform: scale3d`
 
-在 3d 空间缩放元素。
+在 3d 空间缩放元素。这个变换也接收 3 个向量，分别作为横轴、纵轴和 z 轴的缩放量。如果 3 个向量的值相等，则元素将按照等比在 3d 空间缩放。
+
+```css
+div {
+  /* 这两个定义将等比缩放 */
+  transform: scale3d(1, 1, 1);
+  transform: scale3d(1.3, 1.3, 1.3);
+  /* 下面的定义不是等比缩放 */
+  transform: scale3d(0.5, 1.4, 0.8);
+  transform: scale3d(-1.4, 0.5, 0.7);
+}
+```
 
 #### `transform: rotate3d`
 
-在 3d 空间围绕一个**固定轴**旋转元素。
+在 3d 空间围绕一个**固定轴**旋转元素。3d 空间的旋转相比复杂一点。
+
+在 3d 空间旋转一个元素存在 3 个方向的自由度，由三个向量组成的 3d 坐标 `[x, y, z]` 和 `transform-origin` 原点连成一条直线构成 3d 旋转的转轴。
+
+> 如果指定的向量未**标准化**（`normalized`，比如 3 个坐标值的平方和为 `1`），浏览器会代为进行标准化。但是如果指定的值无法进行标准化，比如指定了 `[0, 0, 0]`，则旋转会被无视，但是不会导致整个 CSS 属性失效。
+>
+> 另外，2d 平面上的元素旋转应用的顺序不会影响其效果，但是通常 3d 空间的旋转不同，其会根据应用的顺序不同，从而产生不同的效果。
+
+```css
+div {
+  transform: rotate3d(x, y, z, a);
+  /* Examples */
+  transform: rotate3d(1, 1, 1, 30deg);
+  transform: rotate3d(2, -1, -1, 0.5turn);
+}
+```
 
 #### `transform: perspective`
 
-透视变换，设定用户与 `z=0` 平面的距离。### 定义多个变换属性
+透视变换，设定用户与 `z=0` 平面的距离。
+
+```css
+div {
+  /* TODO: perspective demo with CSS cube */
+  transform: perspective(0);
+  transform: perspective(800px);
+  transform: perspective(23rem);
+}
+```
 
 ## References
 
 - [Using CSS transitions](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Transitions/Using_CSS_transitions)
 - [Using CSS transforms](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Transforms/Using_CSS_transforms)
+- [transition](https://developer.mozilla.org/en-US/docs/Web/CSS/transition)
+- [transform](https://developer.mozilla.org/en-US/docs/Web/CSS/transform)
 - [TransitionEvent](https://developer.mozilla.org/en-US/docs/Web/API/TransitionEvent)
 
 <!-- Resources used by only this post -->
@@ -460,6 +577,8 @@ div {
 .example-container .line:focus {
   outline: none;
 }
+
+#demo-transform-multiple,
 #demo-transform {
   transition: all .25s ease;
 }
@@ -611,5 +730,27 @@ $(function(){
     }))
   })()
   // example-transform-origin end
+  // example-transform-multiple start
+  ;(function() {
+    const lines = $('.example-transform-multiple .line'),
+      transformStyles = $('#example-transform-multiple-style')
+    lines.each(function(){
+      $(this).data('bk', $(this).html())
+    })
+    lines.click(function() {
+      lines.removeClass('active')
+      $(this).addClass('active')
+      transformStyles.html(`.example-transform-multiple #demo-transform-multiple {${$(this).text()}}`)
+    })
+    lines.on('input', function() {
+      transformStyles.html(`.example-transform-multiple #demo-transform-multiple {${$(this).text()}}`)
+    })
+    $('.example-transform-multiple .reset').click(() => lines.each(function() {
+      lines.removeClass('active')
+      $(this).html($(this).data('bk'))
+      transformStyles.html('')
+    }))
+  })()
+  // example-transform-multiple end
 })
 </script>
