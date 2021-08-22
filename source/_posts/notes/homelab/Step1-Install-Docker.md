@@ -2,7 +2,10 @@
 title: Homelab Step 1 - Install Docker
 tags:
   - Homelab
-date: "2020-07-07T13:17:02.732Z"
+date: '2020-07-07T13:17:02.732Z'
+categories:
+  - notes
+  - homelab
 ---
 
 在 CentOS 8 上安装 Docker。参考官网文档。

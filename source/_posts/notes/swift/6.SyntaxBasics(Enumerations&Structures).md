@@ -2,7 +2,10 @@
 title: 6.Swift Syntax Basics (枚举类型和结构体)
 tags:
   - Swift
-date: "2019-06-19T14:28:35.099Z"
+date: '2019-06-19T14:28:35.099Z'
+categories:
+  - notes
+  - swift
 ---
 
 Swift 中的枚举类型看上去颇为强大。有点让我对枚举类型产生类改观。

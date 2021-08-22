@@ -1,10 +1,12 @@
 ---
 title: 用 Python 实现一个简单的 RESTful API 服务器
-date: "2018-07-14T12:17:37Z"
+date: '2018-07-14T12:17:37Z'
 tags:
   - Python
   - REST
   - Flask
+categories:
+  - notes
 ---
 
 REST 是表现层状态转移的缩写，虽然名称不好理解，但这是一个简单并且实用的概念。
