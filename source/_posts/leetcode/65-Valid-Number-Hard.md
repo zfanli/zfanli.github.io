@@ -3,8 +3,6 @@ date: '2021-04-08T15:36:05.463Z'
 tags:
   - String
 title: 65. Valid Number (Hard)
-categories:
-  - leetcode
 ---
 
 字符串问题。一个字符串数字，你需要判断这个数字是否有效。需要满足一堆条件。

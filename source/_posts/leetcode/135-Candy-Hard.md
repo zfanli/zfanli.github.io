@@ -4,8 +4,6 @@ tags:
   - Array
   - Greedy
 title: 135. Candy (Hard)
-categories:
-  - leetcode
 ---
 
 分糖果 🍬 问题。有 `n` 个小朋友站成一排，每个人被分配一个分值，现在你要给他们分糖果，有两个要求。

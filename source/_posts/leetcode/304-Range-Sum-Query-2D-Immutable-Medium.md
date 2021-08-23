@@ -6,8 +6,6 @@ tags:
   - Matrix
   - Prefix Sum
 title: 304. Range Sum Query 2D - Immutable (Medium)
-categories:
-  - leetcode
 ---
 
 你有一个 2D 矩阵 `matrix`，你需要实现一个程序处理多次子矩阵求和的查询。

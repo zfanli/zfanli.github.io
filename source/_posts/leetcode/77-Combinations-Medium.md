@@ -4,8 +4,6 @@ tags:
   - Array
   - Backtracking
 title: 77. Combinations (Medium)
-categories:
-  - leetcode
 ---
 
 组合问题。给定两个整数 `n` 和 `k`，返回从 `1 ~ n` 中选取 `k` 个数能构成的所有组合。
