@@ -20,15 +20,15 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"richard.bizcat.xyz","root":"/","images":"/images","scheme":"Mist","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/config.min.js"></script>
-<meta name="description" content="二叉树问题。求是否存在和目标值一致的路径和。 路径和指的是从根节点到叶子节点的路径的值相加的结果。 看上去这道题适合 DFS 一条路径一条路径的遍历解决。">
+<meta name="description" content="你有一棵二叉树，给你 2 个节点，让你寻找它们的最近公共祖先节点。根据 Wiki 描述最近公共祖先的定义如下。  在图论和计算机科学中，最近公共祖先（英語：lowest common ancestor）是指在一个树或者有向无环图中同时拥有 v 和 w 作为后代的最深的节点。在这里，我们定义一个节点也是其自己的后代，因此如果 v 是 w 的后代，那么 w 就是 v 和 w 的最近公共祖先。 最近公共">
 <meta property="og:type" content="article">
-<meta property="og:title" content="112. Path Sum (Easy)">
-<meta property="og:url" content="https://richard.bizcat.xyz/post/leetcode/112-Path-Sum-Easy/">
+<meta property="og:title" content="236. Lowest Common Ancestor of a Binary Tree (Medium)">
+<meta property="og:url" content="https://richard.bizcat.xyz/post/leetcode/236-Lowest-Common-Ancestor-of-a-Binary-Tree-Medium/">
 <meta property="og:site_name" content="HOME">
-<meta property="og:description" content="二叉树问题。求是否存在和目标值一致的路径和。 路径和指的是从根节点到叶子节点的路径的值相加的结果。 看上去这道题适合 DFS 一条路径一条路径的遍历解决。">
+<meta property="og:description" content="你有一棵二叉树，给你 2 个节点，让你寻找它们的最近公共祖先节点。根据 Wiki 描述最近公共祖先的定义如下。  在图论和计算机科学中，最近公共祖先（英語：lowest common ancestor）是指在一个树或者有向无环图中同时拥有 v 和 w 作为后代的最深的节点。在这里，我们定义一个节点也是其自己的后代，因此如果 v 是 w 的后代，那么 w 就是 v 和 w 的最近公共祖先。 最近公共">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-08-12T04:51:38.367Z">
-<meta property="article:modified_time" content="2021-08-12T04:51:38.367Z">
+<meta property="article:published_time" content="2021-08-22T22:42:28.499Z">
+<meta property="article:modified_time" content="2021-08-22T22:42:28.499Z">
 <meta property="article:author" content="Richard Zen">
 <meta property="article:tag" content="Tree">
 <meta property="article:tag" content="DFS">
@@ -36,14 +36,14 @@
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="https://richard.bizcat.xyz/post/leetcode/112-Path-Sum-Easy/">
+<link rel="canonical" href="https://richard.bizcat.xyz/post/leetcode/236-Lowest-Common-Ancestor-of-a-Binary-Tree-Medium/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://richard.bizcat.xyz/post/leetcode/112-Path-Sum-Easy/","path":"post/leetcode/112-Path-Sum-Easy/","title":"112. Path Sum (Easy)"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://richard.bizcat.xyz/post/leetcode/236-Lowest-Common-Ancestor-of-a-Binary-Tree-Medium/","path":"post/leetcode/236-Lowest-Common-Ancestor-of-a-Binary-Tree-Medium/","title":"236. Lowest Common Ancestor of a Binary Tree (Medium)"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>112. Path Sum (Easy) | HOME</title>
+<title>236. Lowest Common Ancestor of a Binary Tree (Medium) | HOME</title>
   
 
   <script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/third-party/analytics/baidu-analytics.min.js"></script>
@@ -241,7 +241,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF-1%EF%BC%8C%E9%80%92%E5%BD%92%EF%BC%8C%E5%89%8D%E5%BA%8F%E9%81%8D%E5%8E%86"><span class="nav-text">思路 1，递归，前序遍历</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF-2%EF%BC%8C%E5%8F%A6%E4%B8%80%E7%A7%8D%E5%89%8D%E5%BA%8F%E9%81%8D%E5%8E%86%E5%86%99%E6%B3%95"><span class="nav-text">思路 2，另一种前序遍历写法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF-3%EF%BC%8C%E8%BF%AD%E4%BB%A3"><span class="nav-text">思路 3，迭代</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF-1%EF%BC%8CDFS"><span class="nav-text">思路 1，DFS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF-2%EF%BC%8C%E8%BF%AD%E4%BB%A3-%E7%88%B6%E8%8A%82%E7%82%B9%E6%8C%87%E9%92%88"><span class="nav-text">思路 2，迭代 + 父节点指针</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF-3%EF%BC%8C%E8%BF%AD%E4%BB%A3-%E6%97%A0%E7%88%B6%E8%8A%82%E7%82%B9%E6%8C%87%E9%92%88"><span class="nav-text">思路 3，迭代 + 无父节点指针</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -316,7 +316,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://richard.bizcat.xyz/post/leetcode/112-Path-Sum-Easy/">
+    <link itemprop="mainEntityOfPage" href="https://richard.bizcat.xyz/post/leetcode/236-Lowest-Common-Ancestor-of-a-Binary-Tree-Medium/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/icon-64.png">
@@ -333,7 +333,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          112. Path Sum (Easy)
+          236. Lowest Common Ancestor of a Binary Tree (Medium)
         </h1>
 
         <div class="post-meta-container">
@@ -343,7 +343,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-08-12 12:51:38" itemprop="dateModified" datetime="2021-08-12T12:51:38+08:00">2021-08-12</time>
+        <time title="修改时间：2021-08-23 06:42:28" itemprop="dateModified" datetime="2021-08-23T06:42:28+08:00">2021-08-23</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -368,14 +368,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>1.2k</span>
+      <span>3k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
+      <span>3 分钟</span>
     </span>
 </div>
 
@@ -386,22 +386,76 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p>二叉树问题。求是否存在和目标值一致的路径和。</p>
-<p>路径和指的是从根节点到叶子节点的路径的值相加的结果。</p>
-<p>看上去这道题适合 DFS 一条路径一条路径的遍历解决。</p>
+        <p>你有一棵二叉树，给你 2 个节点，让你寻找它们的最近公共祖先节点。根据 Wiki 描述最近公共祖先的定义如下。</p>
+<blockquote>
+<p>在图论和计算机科学中，最近公共祖先（英語：lowest common ancestor）是指在一个树或者有向无环图中同时拥有 v 和 w 作为后代的最深的节点。在这里，我们定义一个节点也是其自己的后代，因此如果 v 是 w 的后代，那么 w 就是 v 和 w 的最近公共祖先。</p>
+<p>最近公共祖先是两个节点所有公共祖先中离根节点最远的，计算最近公共祖先和根节点的长度往往是有用的。比如为了计算树中两个节点 v 和 w 之间的距离，可以使用以下方法：分别计算由 v 到根节点和 w 到根节点的距离，两者之和减去最近公共祖先到根节点的距离的两倍即可得到 v 到 w 的距离。</p>
+</blockquote>
+<p>节点本身可以是自己的后代，也就是说对于要寻找的节点 A 和 B，如果节点 B 是节点 A 的子节点，那么它们的最近公共祖先节点是节点 A。</p>
 <span id="more"></span>
 
-<h2 id="思路-1，递归，前序遍历"><a href="#思路-1，递归，前序遍历" class="headerlink" title="思路 1，递归，前序遍历"></a>思路 1，递归，前序遍历</h2><p>一层一层求和直到叶子节点，判断是否和目标一致。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">hasPathSum</span>(<span class="params">self, root: <span class="type">Optional</span>[TreeNode], targetSum: <span class="built_in">int</span></span>) -&gt; <span class="built_in">bool</span>:</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> root:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">dfs</span>(<span class="params">node, curr</span>):</span></span><br><span class="line">            curr += node.val</span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">not</span> node.left <span class="keyword">and</span> <span class="keyword">not</span> node.right:</span><br><span class="line">                <span class="keyword">return</span> curr == targetSum</span><br><span class="line">            <span class="keyword">if</span> node.left <span class="keyword">and</span> dfs(node.left, curr):</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">            <span class="keyword">if</span> node.right <span class="keyword">and</span> dfs(node.right, curr):</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">            <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> dfs(root, <span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="思路-1，DFS"><a href="#思路-1，DFS" class="headerlink" title="思路 1，DFS"></a>思路 1，DFS</h2><p>这道题用 DFS 的思路比较直观。</p>
+<ul>
+<li>我们设计一个 DFS 算法遍历搜索节点的后代是否存在目标节点；</li>
+<li>这个算法返回一个 <code>flag</code>；</li>
+<li>当有节点第一次集齐了 2 个 <code>flag</code>，我们就找到了答案。</li>
+</ul>
+<p>将这个思路详细化，就可以得到我们的代码了。其中我们要考虑 2 个<code>flag</code>，出于方便考虑，我们使用整数值来做这个 <code>flag</code>，一旦这个值变成 2，就表示在当前的节点集齐了两个目标。</p>
+<ul>
+<li>DFS 的不执行的条件是节点不存在，或已找到答案（剪枝）；</li>
+<li>这是一个从下而上的算法，我们首先搜索左右子节点，将结果汇集起来（<code>res</code>）；</li>
+<li>然后判断当前节点是否符合要求，更新结果（<code>res</code>）；</li>
+<li>接着是我们的 base case，如果结果等于 2，更新答案并结束递归；</li>
+<li>如果没找到答案，返回结果，继续递归。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">lowestCommonAncestor</span>(<span class="params">self, root: <span class="string">&#x27;TreeNode&#x27;</span>, p: <span class="string">&#x27;TreeNode&#x27;</span>, q: <span class="string">&#x27;TreeNode&#x27;</span></span>) -&gt; &#x27;TreeNode&#x27;:</span></span><br><span class="line">        self.ans = <span class="literal">None</span></span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">dfs</span>(<span class="params">node</span>):</span></span><br><span class="line">            <span class="comment"># pruning</span></span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">not</span> node <span class="keyword">or</span> self.ans:</span><br><span class="line">                <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line"></span><br><span class="line">            res = dfs(node.left) + dfs(node.right)</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> node == p <span class="keyword">or</span> node == q:</span><br><span class="line">                res += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> res == <span class="number">2</span>:</span><br><span class="line">                self.ans = node</span><br><span class="line">                <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> res</span><br><span class="line"></span><br><span class="line">        dfs(root)</span><br><span class="line">        <span class="keyword">return</span> self.ans</span><br></pre></td></tr></table></figure>
 
-<h2 id="思路-2，另一种前序遍历写法"><a href="#思路-2，另一种前序遍历写法" class="headerlink" title="思路 2，另一种前序遍历写法"></a>思路 2，另一种前序遍历写法</h2><p>相同思路，另一种写法。这次我们用解题函数自身作为 DFS 函数，也不再进行求和判断，相反我们每次遍历从目标值中减去遇到的值。</p>
-<p>这两种方法没有本质区别。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">hasPathSum</span>(<span class="params">self, root: <span class="type">Optional</span>[TreeNode], targetSum: <span class="built_in">int</span></span>) -&gt; <span class="built_in">bool</span>:</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> root:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> root.left <span class="keyword">and</span> <span class="keyword">not</span> root.right <span class="keyword">and</span> root.val == targetSum:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">        <span class="keyword">if</span> self.hasPathSum(root.left, targetSum - root.val):</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">        <span class="keyword">if</span> self.hasPathSum(root.right, targetSum - root.val):</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span></span><br></pre></td></tr></table></figure>
+<h2 id="思路-2，迭代-父节点指针"><a href="#思路-2，迭代-父节点指针" class="headerlink" title="思路 2，迭代 + 父节点指针"></a>思路 2，迭代 + 父节点指针</h2><p>使用迭代思路可以优化递归的调用栈的额外空间使用。</p>
+<p>迭代过程中，</p>
+<ul>
+<li>我们先做一个简单的前序遍历拿到所有需要的子节点和与其对应的父节点的指针；</li>
+<li>然后将其中一个目标节点包括其所有父节点存入一个集合中；</li>
+<li>用另一个目标节点一层一层匹配其本身或其父节点是否存在集合中；</li>
+<li>当找到存在集合中的父节点（包含其本身），作为答案返回。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">lowestCommonAncestor</span>(<span class="params">self, root: <span class="string">&#x27;TreeNode&#x27;</span>, p: <span class="string">&#x27;TreeNode&#x27;</span>, q: <span class="string">&#x27;TreeNode&#x27;</span></span>) -&gt; &#x27;TreeNode&#x27;:</span></span><br><span class="line">        stack, parents = [root], &#123;root: <span class="literal">None</span>&#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment"># create the parent pointer table until we find both the target nodes</span></span><br><span class="line">        <span class="keyword">while</span> p <span class="keyword">not</span> <span class="keyword">in</span> parents <span class="keyword">or</span> q <span class="keyword">not</span> <span class="keyword">in</span> parents:</span><br><span class="line">            node = stack.pop()</span><br><span class="line">            <span class="keyword">if</span> node.right:</span><br><span class="line">                stack.append(node.right)</span><br><span class="line">                parents[node.right] = node</span><br><span class="line">            <span class="keyword">if</span> node.left:</span><br><span class="line">                stack.append(node.left)</span><br><span class="line">                parents[node.left] = node</span><br><span class="line"></span><br><span class="line">        ancestors = <span class="built_in">set</span>()</span><br><span class="line"></span><br><span class="line">        <span class="comment"># make the ancestors set using one of the target nodes</span></span><br><span class="line">        <span class="keyword">while</span> p:</span><br><span class="line">            ancestors.add(p)</span><br><span class="line">            p = parents[p]</span><br><span class="line">        <span class="comment"># check the parents using the another node</span></span><br><span class="line">        <span class="keyword">while</span> q <span class="keyword">not</span> <span class="keyword">in</span> ancestors:</span><br><span class="line">            q = parents[q]</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> q</span><br></pre></td></tr></table></figure>
 
-<h2 id="思路-3，迭代"><a href="#思路-3，迭代" class="headerlink" title="思路 3，迭代"></a>思路 3，迭代</h2><p>有递归的地方就有 Stack，来试试用迭代的方式实现这个过程。</p>
-<p>迭代的方式注意点在于我们需要同时保存节点和累积值。</p>
-<p>这个思路的逻辑看上去要更简洁。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">hasPathSum</span>(<span class="params">self, root: <span class="type">Optional</span>[TreeNode], targetSum: <span class="built_in">int</span></span>) -&gt; <span class="built_in">bool</span>:</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> root:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line"></span><br><span class="line">        stack = [(root, root.val)]</span><br><span class="line">        <span class="keyword">while</span> stack:</span><br><span class="line">            node, val = stack.pop()</span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">not</span> node.left <span class="keyword">and</span> <span class="keyword">not</span> node.right <span class="keyword">and</span> val == targetSum:</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">            <span class="keyword">if</span> node.left:</span><br><span class="line">                stack.append((node.left, node.left.val + val))</span><br><span class="line">            <span class="keyword">if</span> node.right:</span><br><span class="line">                stack.append((node.right, node.right.val + val))</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span></span><br></pre></td></tr></table></figure>
+<h2 id="思路-3，迭代-无父节点指针"><a href="#思路-3，迭代-无父节点指针" class="headerlink" title="思路 3，迭代 + 无父节点指针"></a>思路 3，迭代 + 无父节点指针</h2><p>思路 2 的父节点指针可以用另一个思路来避免使用。</p>
+<p>这个方法中我们尝试维护每一个节点的状态：</p>
+<ul>
+<li>还未访问：<code>PENDING = 2</code></li>
+<li>访问了一个节点：<code>HALF_DONE = 1</code>（实际上这个状态未显式使用）</li>
+<li>访问了所有节点：<code>DONE = 0</code></li>
+</ul>
+<p>然后针对当前节点处于某个状态，进行不同的处理：</p>
+<ul>
+<li>如果当前节点还没访问所有节点：<code>!= DONE</code>；<ul>
+<li>如果当前节点第一次进入循环：<code>== PENDING</code>；<ul>
+<li>检查当前节点是否是目标节点：如果是的；<ul>
+<li>检查是否已经找到上一个：<code>one_node_found</code>；<ul>
+<li>返回父节点指针的节点，这是这个算法的 base case；</li>
+</ul>
+</li>
+<li>如果这是找到的第一个节点：<ul>
+<li>更新 flag，设置当前节点为父节点指针的对象；</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>将左节点作为下一个目标；</li>
+</ul>
+</li>
+<li>如果并非第一次进入循环，说明左节点已经遍历过了，将右节点作为下一个目标；</li>
+</ul>
+</li>
+<li>如果当前节点已经被完全访问；<ul>
+<li>如果父节点指针指向当前节点，将指针指向父节点；</li>
+<li>删除栈顶的节点；</li>
+</ul>
+</li>
+<li>failed case：直接返回 None。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">PENDING = <span class="number">2</span></span><br><span class="line">DONE = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">lowestCommonAncestor</span>(<span class="params">self, root: <span class="string">&#x27;TreeNode&#x27;</span>, p: <span class="string">&#x27;TreeNode&#x27;</span>, q: <span class="string">&#x27;TreeNode&#x27;</span></span>) -&gt; &#x27;TreeNode&#x27;:</span></span><br><span class="line">        stack = [[root, PENDING]]</span><br><span class="line">        one_node_found, parent_index = <span class="literal">False</span>, -<span class="number">1</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> stack:</span><br><span class="line">            node, state = stack[-<span class="number">1</span>]</span><br><span class="line">            <span class="comment"># if iteration not done for this node</span></span><br><span class="line">            <span class="keyword">if</span> state != DONE:</span><br><span class="line">                <span class="comment"># if not visiting yet</span></span><br><span class="line">                <span class="keyword">if</span> state == PENDING:</span><br><span class="line">                    <span class="comment"># check if current node is the target</span></span><br><span class="line">                    <span class="keyword">if</span> node == p <span class="keyword">or</span> node == q:</span><br><span class="line">                        <span class="keyword">if</span> one_node_found:</span><br><span class="line">                            <span class="comment"># if one is already found then return the result</span></span><br><span class="line">                            <span class="keyword">return</span> stack[parent_index][<span class="number">0</span>]</span><br><span class="line">                        <span class="keyword">else</span>:</span><br><span class="line">                            <span class="comment"># else update the parent index</span></span><br><span class="line">                            one_node_found = <span class="literal">True</span></span><br><span class="line">                            parent_index = <span class="built_in">len</span>(stack) - <span class="number">1</span></span><br><span class="line">                    <span class="comment"># next visits the left child if not visited yet</span></span><br><span class="line">                    child_node = node.left</span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    <span class="comment"># next visits the right child if the left is visited</span></span><br><span class="line">                    child_node = node.right</span><br><span class="line"></span><br><span class="line">                <span class="comment"># update the state of the parent node</span></span><br><span class="line">                stack[-<span class="number">1</span>][<span class="number">1</span>] -= <span class="number">1</span></span><br><span class="line">                <span class="comment"># set the next node to visit</span></span><br><span class="line">                <span class="keyword">if</span> child_node:</span><br><span class="line">                    stack.append([child_node, PENDING])</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="comment"># update the index if current one node is found</span></span><br><span class="line">                <span class="keyword">if</span> parent == <span class="built_in">len</span>(stack) - <span class="number">1</span>:</span><br><span class="line">                    parent -= <span class="number">1</span></span><br><span class="line">                <span class="comment"># move to parent node</span></span><br><span class="line">                stack.pop()</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">None</span></span><br></pre></td></tr></table></figure>
 
     </div>
 
@@ -434,13 +488,10 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/post/study/css/Using-CSS-Transitions-and-Transforms/" rel="prev" title="Using CSS Transitions and Transforms">
-                  <i class="fa fa-chevron-left"></i> Using CSS Transitions and Transforms
-                </a>
             </div>
             <div class="post-nav-item">
-                <a href="/post/leetcode/101-Symmetric-Tree-Easy/" rel="next" title="101. Symmetric Tree (Easy)">
-                  101. Symmetric Tree (Easy) <i class="fa fa-chevron-right"></i>
+                <a href="/post/leetcode/117-Populating-Next-Right-Pointers-in-Each-Node-II-Medium/" rel="next" title="117. Populating Next Right Pointers in Each Node II (Medium)">
+                  117. Populating Next Right Pointers in Each Node II (Medium) <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
           </div>

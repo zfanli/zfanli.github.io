@@ -1312,6 +1312,89 @@
       </tags>
   </entry>
   <entry>
+    <title>236. Lowest Common Ancestor of a Binary Tree (Medium)</title>
+    <url>/post/leetcode/236-Lowest-Common-Ancestor-of-a-Binary-Tree-Medium/</url>
+    <content><![CDATA[<p>你有一棵二叉树，给你 2 个节点，让你寻找它们的最近公共祖先节点。根据 Wiki 描述最近公共祖先的定义如下。</p>
+<blockquote>
+<p>在图论和计算机科学中，最近公共祖先（英語：lowest common ancestor）是指在一个树或者有向无环图中同时拥有 v 和 w 作为后代的最深的节点。在这里，我们定义一个节点也是其自己的后代，因此如果 v 是 w 的后代，那么 w 就是 v 和 w 的最近公共祖先。</p>
+<p>最近公共祖先是两个节点所有公共祖先中离根节点最远的，计算最近公共祖先和根节点的长度往往是有用的。比如为了计算树中两个节点 v 和 w 之间的距离，可以使用以下方法：分别计算由 v 到根节点和 w 到根节点的距离，两者之和减去最近公共祖先到根节点的距离的两倍即可得到 v 到 w 的距离。</p>
+</blockquote>
+<p>节点本身可以是自己的后代，也就是说对于要寻找的节点 A 和 B，如果节点 B 是节点 A 的子节点，那么它们的最近公共祖先节点是节点 A。</p>
+<span id="more"></span>
+
+<h2 id="思路-1，DFS"><a href="#思路-1，DFS" class="headerlink" title="思路 1，DFS"></a>思路 1，DFS</h2><p>这道题用 DFS 的思路比较直观。</p>
+<ul>
+<li>我们设计一个 DFS 算法遍历搜索节点的后代是否存在目标节点；</li>
+<li>这个算法返回一个 <code>flag</code>；</li>
+<li>当有节点第一次集齐了 2 个 <code>flag</code>，我们就找到了答案。</li>
+</ul>
+<p>将这个思路详细化，就可以得到我们的代码了。其中我们要考虑 2 个<code>flag</code>，出于方便考虑，我们使用整数值来做这个 <code>flag</code>，一旦这个值变成 2，就表示在当前的节点集齐了两个目标。</p>
+<ul>
+<li>DFS 的不执行的条件是节点不存在，或已找到答案（剪枝）；</li>
+<li>这是一个从下而上的算法，我们首先搜索左右子节点，将结果汇集起来（<code>res</code>）；</li>
+<li>然后判断当前节点是否符合要求，更新结果（<code>res</code>）；</li>
+<li>接着是我们的 base case，如果结果等于 2，更新答案并结束递归；</li>
+<li>如果没找到答案，返回结果，继续递归。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">lowestCommonAncestor</span>(<span class="params">self, root: <span class="string">&#x27;TreeNode&#x27;</span>, p: <span class="string">&#x27;TreeNode&#x27;</span>, q: <span class="string">&#x27;TreeNode&#x27;</span></span>) -&gt; &#x27;TreeNode&#x27;:</span></span><br><span class="line">        self.ans = <span class="literal">None</span></span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">dfs</span>(<span class="params">node</span>):</span></span><br><span class="line">            <span class="comment"># pruning</span></span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">not</span> node <span class="keyword">or</span> self.ans:</span><br><span class="line">                <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line"></span><br><span class="line">            res = dfs(node.left) + dfs(node.right)</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> node == p <span class="keyword">or</span> node == q:</span><br><span class="line">                res += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> res == <span class="number">2</span>:</span><br><span class="line">                self.ans = node</span><br><span class="line">                <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> res</span><br><span class="line"></span><br><span class="line">        dfs(root)</span><br><span class="line">        <span class="keyword">return</span> self.ans</span><br></pre></td></tr></table></figure>
+
+<h2 id="思路-2，迭代-父节点指针"><a href="#思路-2，迭代-父节点指针" class="headerlink" title="思路 2，迭代 + 父节点指针"></a>思路 2，迭代 + 父节点指针</h2><p>使用迭代思路可以优化递归的调用栈的额外空间使用。</p>
+<p>迭代过程中，</p>
+<ul>
+<li>我们先做一个简单的前序遍历拿到所有需要的子节点和与其对应的父节点的指针；</li>
+<li>然后将其中一个目标节点包括其所有父节点存入一个集合中；</li>
+<li>用另一个目标节点一层一层匹配其本身或其父节点是否存在集合中；</li>
+<li>当找到存在集合中的父节点（包含其本身），作为答案返回。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">lowestCommonAncestor</span>(<span class="params">self, root: <span class="string">&#x27;TreeNode&#x27;</span>, p: <span class="string">&#x27;TreeNode&#x27;</span>, q: <span class="string">&#x27;TreeNode&#x27;</span></span>) -&gt; &#x27;TreeNode&#x27;:</span></span><br><span class="line">        stack, parents = [root], &#123;root: <span class="literal">None</span>&#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment"># create the parent pointer table until we find both the target nodes</span></span><br><span class="line">        <span class="keyword">while</span> p <span class="keyword">not</span> <span class="keyword">in</span> parents <span class="keyword">or</span> q <span class="keyword">not</span> <span class="keyword">in</span> parents:</span><br><span class="line">            node = stack.pop()</span><br><span class="line">            <span class="keyword">if</span> node.right:</span><br><span class="line">                stack.append(node.right)</span><br><span class="line">                parents[node.right] = node</span><br><span class="line">            <span class="keyword">if</span> node.left:</span><br><span class="line">                stack.append(node.left)</span><br><span class="line">                parents[node.left] = node</span><br><span class="line"></span><br><span class="line">        ancestors = <span class="built_in">set</span>()</span><br><span class="line"></span><br><span class="line">        <span class="comment"># make the ancestors set using one of the target nodes</span></span><br><span class="line">        <span class="keyword">while</span> p:</span><br><span class="line">            ancestors.add(p)</span><br><span class="line">            p = parents[p]</span><br><span class="line">        <span class="comment"># check the parents using the another node</span></span><br><span class="line">        <span class="keyword">while</span> q <span class="keyword">not</span> <span class="keyword">in</span> ancestors:</span><br><span class="line">            q = parents[q]</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> q</span><br></pre></td></tr></table></figure>
+
+<h2 id="思路-3，迭代-无父节点指针"><a href="#思路-3，迭代-无父节点指针" class="headerlink" title="思路 3，迭代 + 无父节点指针"></a>思路 3，迭代 + 无父节点指针</h2><p>思路 2 的父节点指针可以用另一个思路来避免使用。</p>
+<p>这个方法中我们尝试维护每一个节点的状态：</p>
+<ul>
+<li>还未访问：<code>PENDING = 2</code></li>
+<li>访问了一个节点：<code>HALF_DONE = 1</code>（实际上这个状态未显式使用）</li>
+<li>访问了所有节点：<code>DONE = 0</code></li>
+</ul>
+<p>然后针对当前节点处于某个状态，进行不同的处理：</p>
+<ul>
+<li>如果当前节点还没访问所有节点：<code>!= DONE</code>；<ul>
+<li>如果当前节点第一次进入循环：<code>== PENDING</code>；<ul>
+<li>检查当前节点是否是目标节点：如果是的；<ul>
+<li>检查是否已经找到上一个：<code>one_node_found</code>；<ul>
+<li>返回父节点指针的节点，这是这个算法的 base case；</li>
+</ul>
+</li>
+<li>如果这是找到的第一个节点：<ul>
+<li>更新 flag，设置当前节点为父节点指针的对象；</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>将左节点作为下一个目标；</li>
+</ul>
+</li>
+<li>如果并非第一次进入循环，说明左节点已经遍历过了，将右节点作为下一个目标；</li>
+</ul>
+</li>
+<li>如果当前节点已经被完全访问；<ul>
+<li>如果父节点指针指向当前节点，将指针指向父节点；</li>
+<li>删除栈顶的节点；</li>
+</ul>
+</li>
+<li>failed case：直接返回 None。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">PENDING = <span class="number">2</span></span><br><span class="line">DONE = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">lowestCommonAncestor</span>(<span class="params">self, root: <span class="string">&#x27;TreeNode&#x27;</span>, p: <span class="string">&#x27;TreeNode&#x27;</span>, q: <span class="string">&#x27;TreeNode&#x27;</span></span>) -&gt; &#x27;TreeNode&#x27;:</span></span><br><span class="line">        stack = [[root, PENDING]]</span><br><span class="line">        one_node_found, parent_index = <span class="literal">False</span>, -<span class="number">1</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> stack:</span><br><span class="line">            node, state = stack[-<span class="number">1</span>]</span><br><span class="line">            <span class="comment"># if iteration not done for this node</span></span><br><span class="line">            <span class="keyword">if</span> state != DONE:</span><br><span class="line">                <span class="comment"># if not visiting yet</span></span><br><span class="line">                <span class="keyword">if</span> state == PENDING:</span><br><span class="line">                    <span class="comment"># check if current node is the target</span></span><br><span class="line">                    <span class="keyword">if</span> node == p <span class="keyword">or</span> node == q:</span><br><span class="line">                        <span class="keyword">if</span> one_node_found:</span><br><span class="line">                            <span class="comment"># if one is already found then return the result</span></span><br><span class="line">                            <span class="keyword">return</span> stack[parent_index][<span class="number">0</span>]</span><br><span class="line">                        <span class="keyword">else</span>:</span><br><span class="line">                            <span class="comment"># else update the parent index</span></span><br><span class="line">                            one_node_found = <span class="literal">True</span></span><br><span class="line">                            parent_index = <span class="built_in">len</span>(stack) - <span class="number">1</span></span><br><span class="line">                    <span class="comment"># next visits the left child if not visited yet</span></span><br><span class="line">                    child_node = node.left</span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    <span class="comment"># next visits the right child if the left is visited</span></span><br><span class="line">                    child_node = node.right</span><br><span class="line"></span><br><span class="line">                <span class="comment"># update the state of the parent node</span></span><br><span class="line">                stack[-<span class="number">1</span>][<span class="number">1</span>] -= <span class="number">1</span></span><br><span class="line">                <span class="comment"># set the next node to visit</span></span><br><span class="line">                <span class="keyword">if</span> child_node:</span><br><span class="line">                    stack.append([child_node, PENDING])</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="comment"># update the index if current one node is found</span></span><br><span class="line">                <span class="keyword">if</span> parent == <span class="built_in">len</span>(stack) - <span class="number">1</span>:</span><br><span class="line">                    parent -= <span class="number">1</span></span><br><span class="line">                <span class="comment"># move to parent node</span></span><br><span class="line">                stack.pop()</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">None</span></span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>Tree</tag>
+        <tag>DFS</tag>
+        <tag>Binary Tree</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>303. Range Sum Query - Immutable (Easy)</title>
     <url>/post/leetcode/303-Range-Sum-Query-Immutable-Easy/</url>
     <content><![CDATA[<p>你有一个整数数组 <code>nums</code>，你需要实现一个程序处理范围求和的查询</p>
