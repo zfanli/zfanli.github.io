@@ -4,6 +4,8 @@ tags:
   - Array
   - DP
 title: 120. Triangle (Medium)
+categories:
+  - leetcode
 ---
 
 你有一个三角形形状的 2D 数组，你需要找到从最顶层走到最底层的最短路径。
