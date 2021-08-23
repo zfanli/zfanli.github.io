@@ -1,11 +1,9 @@
 ---
 title: 从需求来看 MongoDB 的最简单用法
-date: '2018-12-22T15:51:37Z'
+date: "2018-12-22T15:51:37Z"
 tags:
   - MongoDB
   - Python
-categories:
-  - notes
 ---
 
 从需求来看 MongoDB，了解能满足我们需求的最简用法。
