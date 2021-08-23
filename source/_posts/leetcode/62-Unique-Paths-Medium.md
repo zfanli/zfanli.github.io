@@ -5,6 +5,8 @@ tags:
   - DP
   - Combinatorics
 title: 62. Unique Paths (Medium)
+categories:
+  - leetcode
 ---
 
 组合问题。机器人在矩阵的左上角需要去矩阵的右下角，且机器人只能向下和向右行动。

@@ -4,6 +4,8 @@ tags:
   - Array
   - Greedy
 title: 45. Jump Game II (Medium)
+categories:
+  - leetcode
 ---
 
 跳跃游戏。你有一个非负整数数组，最开始你在 0 的位置，数组每个数字意味你接下来能跳多远。

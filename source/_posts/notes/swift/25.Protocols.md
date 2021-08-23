@@ -2,7 +2,10 @@
 title: 25.Swift Protocols
 tags:
   - Swift
-date: "2019-07-07T14:28:35.099Z"
+date: '2019-07-07T14:28:35.099Z'
+categories:
+  - notes
+  - swift
 ---
 
 关于协议的篇幅还是很足的。协议在其他语言中能找到对应的机制，比如 Java 中的接口。相应的，一些与之相关的设计模式也很类似，Java 中的面向接口编程，Swift 中也有被戏称为面向协议编程的模式。

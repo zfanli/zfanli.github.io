@@ -2,7 +2,10 @@
 title: 4.Swift Syntax Basics (函数和闭包)
 tags:
   - Swift
-date: "2019-06-18T13:28:35.099Z"
+date: '2019-06-18T13:28:35.099Z'
+categories:
+  - notes
+  - swift
 ---
 
 函数都明白，但是闭包是什么？其实就是匿名函数。

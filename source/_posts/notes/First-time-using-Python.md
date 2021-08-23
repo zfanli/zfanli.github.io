@@ -1,8 +1,10 @@
 ---
 title: 关于 Python 的初体验感受
-date: "2018-01-28T20:54:03Z"
+date: '2018-01-28T20:54:03Z'
 tags:
   - Python
+categories:
+  - notes
 ---
 
 > 人生苦短，我用 Python。
