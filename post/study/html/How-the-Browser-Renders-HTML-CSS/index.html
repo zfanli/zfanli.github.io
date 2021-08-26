@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icon-64.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/icon-16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css?family=Noto+Serif+SC:300,300italic,400,400italic,700,700italic%7CRoboto:300,300italic,400,400italic,700,700italic%7CNoto+Sans+SC:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"richard.bizcat.xyz","root":"/","images":"/images","scheme":"Mist","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/config.min.js"></script>
+<meta name="description" content="资源下载速度缓慢？首屏等待没必要的文件下载和初始化？未应用 CSS 的内容一闪而过（flash of unstyled content，FOUC）？ 浏览器会阻塞网页的渲染进程直到某些资源被加载，而另一些资源会被异步加载。在前端开发过程中你总会遇到上面的问题，要避免它们，开发一个用户体验优秀的网站，你需要理解浏览器渲染网页的逻辑与顺序。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="浏览器如何渲染网页？">
+<meta property="og:url" content="https://richard.bizcat.xyz/post/study/html/How-the-Browser-Renders-HTML-CSS/">
+<meta property="og:site_name" content="HOME">
+<meta property="og:description" content="资源下载速度缓慢？首屏等待没必要的文件下载和初始化？未应用 CSS 的内容一闪而过（flash of unstyled content，FOUC）？ 浏览器会阻塞网页的渲染进程直到某些资源被加载，而另一些资源会被异步加载。在前端开发过程中你总会遇到上面的问题，要避免它们，开发一个用户体验优秀的网站，你需要理解浏览器渲染网页的逻辑与顺序。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-08-26T06:17:44.900Z">
+<meta property="article:modified_time" content="2021-08-26T06:17:44.900Z">
+<meta property="article:author" content="Richard Zen">
+<meta property="article:tag" content="Browser">
+<meta property="article:tag" content="HTML">
+<meta property="article:tag" content="CSS">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://richard.bizcat.xyz/post/study/html/How-the-Browser-Renders-HTML-CSS/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://richard.bizcat.xyz/post/study/html/How-the-Browser-Renders-HTML-CSS/","path":"post/study/html/How-the-Browser-Renders-HTML-CSS/","title":"浏览器如何渲染网页？"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>浏览器如何渲染网页？ | HOME</title>
+  
+
+  <script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/third-party/analytics/baidu-analytics.min.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?556c863884b17d03fa0a3035eba585f0"></script>
+
+
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap-utilities.min.css"
+  integrity="sha256-5+ExmMkiaI3keYQRLhNibJ5ZXnNuWRbwrXOAZoTXMFg="
+  crossorigin="anonymous"
+/>
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">HOME</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分组</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+<div id="colorSwitcher" class="animated fadeIn">🌓</div>
+<script>
+  (function () {
+    // define constants
+    const DARK = "dark-scheme",
+      LIGHT = "light-scheme",
+      COLOR_SCHEME = "color-scheme",
+      ROTATE = "switcher-rotate";
+
+    // define targets
+    const switcher = document.querySelector("#colorSwitcher"),
+      body = document.body,
+      isDark = window.matchMedia("(prefers-color-scheme: dark)").matches,
+      stored = window.localStorage.getItem(COLOR_SCHEME),
+      current = stored ? stored : isDark ? DARK : LIGHT;
+
+    body.classList.add(current);
+    if (current === LIGHT) {
+      setTimeout(function setupCommentTheme() {
+        try {
+          const utt = document.querySelector(".utterances-frame");
+          utt.src = utt.src.replace("theme=github-dark", "theme=github-light");
+          // console.log(document.querySelector(".utterances-frame").src);
+        } catch (e) {
+          setTimeout(setupCommentTheme, 100);
+        }
+      }, 100);
+    }
+
+    // setup actions
+    switcher.addEventListener("click", function () {
+      let add = LIGHT;
+      if (body.classList.contains(LIGHT)) {
+        add = DARK;
+      }
+      // apply the new color scheme
+      body.classList.remove(LIGHT, DARK);
+      body.classList.add(add);
+      window.localStorage.setItem(COLOR_SCHEME, add);
+      if (switcher.classList.contains(ROTATE))
+        switcher.classList.remove(ROTATE);
+      else switcher.classList.add(ROTATE);
+      // update the comments' theme
+      const utt = document.querySelector(".utterances-frame");
+      utt &&
+        utt.contentWindow.postMessage(
+          {
+            type: "set-theme",
+            theme: add === DARK ? "github-dark" : "github-light",
+          },
+          "https://utteranc.es"
+        );
+    });
+  })();
+</script>
+<style>
+  #colorSwitcher {
+    cursor: pointer;
+    border-radius: 2px;
+    height: 37px;
+    line-height: 37px;
+    width: 42px;
+    text-align: center;
+    outline: none;
+    font-size: 1.5rem;
+    margin-left: auto;
+    transition: all 0.25s ease-in-out;
+    transform: rotate(0);
+    user-select: none;
+  }
+
+  #colorSwitcher.switcher-rotate {
+    transform: rotate(180deg);
+  }
+
+  @media (max-width: 767px) {
+    #colorSwitcher {
+      height: 37px;
+      line-height: 37px;
+      width: 42px;
+      text-align: center;
+      position: absolute;
+      top: 10px;
+      right: 50px;
+    }
+  }
+</style>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Document-Object-Model-DOM"><span class="nav-text">Document Object Model (DOM)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CSS-Object-Model-CSSOM"><span class="nav-text">CSS Object Model (CSSOM)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Render-Tree"><span class="nav-text">Render Tree</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Rendering-Sequence"><span class="nav-text">Rendering Sequence</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Layout-operation"><span class="nav-text">Layout operation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Paint-operation"><span class="nav-text">Paint operation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Compositing-operation"><span class="nav-text">Compositing operation</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Browser-engines"><span class="nav-text">Browser engines</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Rendering-Process-in-browsers"><span class="nav-text">Rendering Process in browsers</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Parsing-and-External-Resources"><span class="nav-text">Parsing and External Resources</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Parser-Blocking-Scripts"><span class="nav-text">Parser-Blocking Scripts</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-text">Reference</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Richard Zen"
+      src="/images/icon-64.png">
+  <p class="site-author-name" itemprop="name">Richard Zen</p>
+  <div class="site-description" itemprop="description"><small><b>TOPICS</b></small><br>
+前端 ｜ Python ｜ Java<br>
+数据结构 ｜ 算法<br><br>
+用代码替代言语<br>记录创作与学习的脚步<br><br>
+</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">121</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分组</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/zfanli" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;zfanli" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://richard.bizcat.xyz/post/study/html/How-the-Browser-Renders-HTML-CSS/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon-64.png">
+      <meta itemprop="name" content="Richard Zen">
+      <meta itemprop="description" content="<small><b>TOPICS</b></small><br>
+前端 ｜ Python ｜ Java<br>
+数据结构 ｜ 算法<br><br>
+用代码替代言语<br>记录创作与学习的脚步<br><br>
+">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HOME">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          浏览器如何渲染网页？
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-08-26 14:17:44" itemprop="dateModified" datetime="2021-08-26T14:17:44+08:00">2021-08-26</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text"> </span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/study/" itemprop="url" rel="index"><span itemprop="name">study</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/study/html/" itemprop="url" rel="index"><span itemprop="name">html</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>3k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>资源下载速度<strong>缓慢</strong>？首屏等待<strong>没必要的文件</strong>下载和初始化？未应用 CSS 的内容<strong>一闪而过</strong>（flash of unstyled content，<code>FOUC</code>）？</p>
+<p>浏览器会阻塞网页的渲染进程直到某些资源被加载，而另一些资源会被异步加载。在前端开发过程中你总会遇到上面的问题，要避免它们，开发一个用户体验优秀的网站，你需要理解浏览器渲染网页的逻辑与顺序。</p>
+<span id="more"></span>
+
+<p>首先我们要理解什么是 <strong>DOM</strong>。当浏览器发送请求到服务器获取 HTML，服务器会用<strong>二进制流（<code>binary stream</code>）形式</strong>返回 HTML 的文本内容，并将 header 的 <code>Content-Type</code> 设置为 <code>text/html; charset=UTF-8</code>。</p>
+<p><code>text/html</code> 告诉浏览器这是一个 HTML 文本，<code>charset=UTF-8</code> 告诉浏览器内容使用的字符集。有了这些信息，浏览器就可以正常的解析 HTML 标签渲染我们的网页了。如果服务器的响应中缺少了这个 header，浏览器会不知道该如何处理响应内容，转而将 HTML 当作纯文本输出。</p>
+<p>一个网页主体由 HTML 文本构成，通常有额外的 CSS 文件提供样式，JS 文件提供脚本操作。所以，问题是浏览器到底如何从一个纯文本信息的文件中知道如何渲染一个网页？要解释这件事，我们还需要理解什么是 <strong>DOM</strong>、<strong>CSSOM</strong> 和 <strong>Render Tree</strong>。</p>
+<h2 id="Document-Object-Model-DOM"><a href="#Document-Object-Model-DOM" class="headerlink" title="Document Object Model (DOM)"></a>Document Object Model (DOM)</h2><p>浏览器会将所有 HTML 元素转换为 JavaScript 的 Node 对象。因为 HTML 元素存在不同的标签和不同的属性，浏览器在转换过程中会将它们变成不同的 Node 子类。</p>
+<blockquote>
+<p>比如 div 元素会被转换为继承 Node 的子类 <code>HTMLDivElement</code>。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> div = <span class="built_in">document</span>.querySelector(<span class="string">&quot;div&quot;</span>);</span><br><span class="line"><span class="comment">// undefined</span></span><br><span class="line">div <span class="keyword">instanceof</span> HTMLDivElement;</span><br><span class="line"><span class="comment">// true</span></span><br><span class="line">div <span class="keyword">instanceof</span> Node;</span><br><span class="line"><span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+</blockquote>
+<p>浏览器根据 HTML 代码创建了 Node 对象之后，会使用它们创建一个叫做 DOM 树的树形结构。因为 HTML 中的元素是相互嵌套的，浏览器会使用元素相对应的 Node 对象复现这个结构。这个结构将帮助浏览器在网页的生命周期内有效率的渲染和管理网页元素。</p>
+<p>DOM 树从最上面的根节点 html 标签开始分支，按照元素出现和嵌套的关系，浏览器每找到一个元素，就会创建其对应的 Node 子类的对象。</p>
+<blockquote>
+<p>DOM 树节点类型不仅包括 HTML 元素，还包括注释、属性和纯文本内容。但是方便起见，本文中我们仅考虑 DOM 树中的 HTML 元素，这些元素也叫做 DOM 元素。</p>
+</blockquote>
+<p>在浏览器中，打开开发者控制台，找到 Elements 标签，这里你可以看到当前 DOM 树的层级和属性。DOM 并非 JavaScript 的规格的一部分，而是浏览器提供的高级 Web API，目的是为了高效渲染网页，同时方便开发者根据需求动态操作网页元素。</p>
+<blockquote>
+<p>通过 DOM API，开发者可以对 HTML 元素进行添加和删除操作，可以改变其外观，以及绑定事件监听器；还可以在不影响已经渲染过的 DOM 树的情况下，在内存中对 HTML 元素进行创建和复制等操作。这带给开发者高自由度，基于此开发用户体验丰富的网页。</p>
+</blockquote>
+<h2 id="CSS-Object-Model-CSSOM"><a href="#CSS-Object-Model-CSSOM" class="headerlink" title="CSS Object Model (CSSOM)"></a>CSS Object Model (CSSOM)</h2><p>我们可以通过 CSS 给指定的 HTML 元素提供样式。这些 CSS 的定义可以用外部文件导入到当前页面中；可以使用 style 标签将 CSS 定义嵌入到当前页面中；或者在 HTML 标签上使用 inline 属性来针对单个元素的 CSS 属性。此外，通过 JavaScript 也可以动态的设定元素的 CSS 属性。</p>
+<p>最终，浏览器会负责这里最困难的工作，将这些所有的 CSS 属性的定义整合到一块，并应用到对应的 DOM 元素上。</p>
+<p>在构筑完 DOM 树之后，浏览器会读取各种来源的 CSS 属性定义，诸如外部的、内嵌的、行内的还有用户代理（User Agent，即浏览器）定义的所有 CSS 属性，将其构建成 CSSOM 树，就像 DOM 树一样。</p>
+<p>CSSOM 树的每一个节点包含需要应用到选择器目标的 DOM 元素上的 CSS 样式，但是不包含不会显示在页面上的元素，比如 meta、style 等。</p>
+<p>之前有提到用户代理样式，大部分浏览器会提供一套自己的默认样式，即 User Agent Stylesheet。浏览器通过将开发者指定的 CSS 属性覆盖默认式样来计算最终的属性值，然后创建 CSSOM 的节点。</p>
+<p>但是如果浏览器的用户代理样式和开发者指定的 CSS 属性都没有对某个属性设定，那么浏览器会根据 W3C 的 CSS 标准将其设定为指定的默认值。</p>
+<p>当使用 CSS 标准指定的默认值时，如果在 W3C 文档中有提到某属性的值是可继承的，那么它就会根据一定的继承规则来设定自己的值。例如 color 和 font-size 属性在未指定具体值的时候，会从其父元素继承。所以当你给某个 HTML 元素设定了这两个属性，它的子元素会全部继承这个值。这个规则就是层重叠（cascading），这也是为什么 CSS 被称作层重叠样式表（cascading style sheets），同样这也是为什么浏览器要将 CSSOM 构建成一个树形结构的原因，浏览器可以根据其父节点的样式和继承规则来计算每个元素的最终的 CSS 样式属性。</p>
+<blockquote>
+<p>浏览器的开发者控制台中，在 Elements 标签中有一个 Computed 面板中会显示元素所有最终计算出来的属性值。## Render Tree</p>
+</blockquote>
+<h2 id="Render-Tree"><a href="#Render-Tree" class="headerlink" title="Render Tree"></a>Render Tree</h2><p>Render Tree 同样是一个树形结构，通过将 DOM 树和 CSSOM 树组合来创建。浏览器通过 Render Tree 计算每个可见元素的图层并将其绘制到屏幕上。因此网页内容只会在浏览器将 Render Tree 创建完成后才会显示，而要创建 Render Tree，还需要先创建 DOM 树和 CSSOM 树。</p>
+<p>Render Tree 是网页内容输出到屏幕上的过程中的底层表达，其不包含不显示的内容。比如 dispaly：none；的元素，他们在平面上占据 0px x 0px 面积，所以不会出现在 Render Tree 中。然而根据这个规则，opacity 和 visibility 虽然也会让元素不可见，但是元素占据的空间没有消失，所以还是会出现在 Render Tree 中。</p>
+<h2 id="Rendering-Sequence"><a href="#Rendering-Sequence" class="headerlink" title="Rendering Sequence"></a>Rendering Sequence</h2><h3 id="Layout-operation"><a href="#Layout-operation" class="headerlink" title="Layout operation"></a>Layout operation</h3><h3 id="Paint-operation"><a href="#Paint-operation" class="headerlink" title="Paint operation"></a>Paint operation</h3><h3 id="Compositing-operation"><a href="#Compositing-operation" class="headerlink" title="Compositing operation"></a>Compositing operation</h3><h2 id="Browser-engines"><a href="#Browser-engines" class="headerlink" title="Browser engines"></a>Browser engines</h2><ul>
+<li><p>IE</p>
+<ul>
+<li>Engine: Trident</li>
+<li>CSS-prefix: <code>-ms</code></li>
+</ul>
+</li>
+<li><p>Edge</p>
+<ul>
+<li>Engine: <del>EdgeHTML</del> → Blink</li>
+<li>CSS-prefix: <code>-ms</code></li>
+</ul>
+</li>
+<li><p>Firefox</p>
+<ul>
+<li>Engine: Gecko</li>
+<li>CSS-prefix: <code>-moz</code></li>
+</ul>
+</li>
+<li><p>Opera</p>
+<ul>
+<li>Engine: <del>Presto</del> → Blink</li>
+<li>CSS-prefix: <code>-o</code> (Presto) and <code>-webkit</code> (Blink)</li>
+</ul>
+</li>
+<li><p>Safari</p>
+<ul>
+<li>Engine: WebKit</li>
+<li>CSS-prefix: <code>-webkit</code></li>
+</ul>
+</li>
+<li><p>Chrome</p>
+<ul>
+<li>Engine: <del>WebKit</del> → Blink</li>
+<li>CSS-prefix: <code>-webkit</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="Rendering-Process-in-browsers"><a href="#Rendering-Process-in-browsers" class="headerlink" title="Rendering Process in browsers"></a>Rendering Process in browsers</h2><h3 id="Parsing-and-External-Resources"><a href="#Parsing-and-External-Resources" class="headerlink" title="Parsing and External Resources"></a>Parsing and External Resources</h3><h3 id="Parser-Blocking-Scripts"><a href="#Parser-Blocking-Scripts" class="headerlink" title="Parser-Blocking Scripts"></a>Parser-Blocking Scripts</h3><h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://medium.com/@mustafa.abdelmogoud/how-the-browser-renders-html-css-27920d8ccaa6">How the browser renders HTM &amp; CSS</a></li>
+<li><a target="_blank" rel="noopener" href="https://medium.com/jspoint/how-the-browser-renders-a-web-page-dom-cssom-and-rendering-df10531c9969">How the browser renders a web page? — DOM, CSSOM, and Rendering</a></li>
+<li><a target="_blank" rel="noopener" href="https://css-tricks.com/an-introduction-and-guide-to-the-css-object-model-cssom/">An Introduction and Guide to the CSS Object Model (CSSOM)</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/post/study/css/Using-CSS-Transitions-and-Transforms/" rel="bookmark">Using CSS Transitions and Transforms</a></div>
+    </li>
+  </ul>
+
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Browser/" rel="tag"># Browser</a>
+              <a href="/tags/HTML/" rel="tag"># HTML</a>
+              <a href="/tags/CSS/" rel="tag"># CSS</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+            </div>
+            <div class="post-nav-item">
+                <a href="/post/leetcode/236-Lowest-Common-Ancestor-of-a-Binary-Tree-Medium/" rel="next" title="236. Lowest Common Ancestor of a Binary Tree (Medium)">
+                  236. Lowest Common Ancestor of a Binary Tree (Medium) <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2018 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Richard Zen</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">322k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">4:53</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/comments.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/utils.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/motion.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/schemes/muse.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/next-boot.min.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/third-party/search/local-search.min.js"></script>
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"zfanli/zfanli.github.io","issue_term":"og:title","theme":"preferred-color-scheme"}</script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/third-party/comments/utterances.min.js"></script>
+
+</body>
+</html>
