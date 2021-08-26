@@ -20,12 +20,12 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"richard.bizcat.xyz","root":"/","images":"/images","scheme":"Mist","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/config.min.js"></script>
-<meta name="description" content="资源下载速度缓慢？首屏等待没必要的文件下载和初始化？未应用 CSS 的内容一闪而过（flash of unstyled content，FOUC）？ 浏览器会阻塞网页的渲染进程直到某些资源被加载，而另一些资源会被异步加载。在前端开发过程中你总会遇到上面的问题，要避免它们，开发一个用户体验优秀的网站，你需要理解浏览器渲染网页的逻辑与顺序。">
+<meta name="description" content="使用浏览器打开一个网页，一部分网页资源在加载完之前会阻塞浏览器的渲染进程，一部分网页资源可以被异步加载。你总会遇到这些问题：资源下载速度缓慢？首屏等待多余的文件下载和初始化？未应用 CSS 的内容一闪而过（flash of unstyled content，FOUC）？要避免它们，开发一个用户体验优秀的网站，你需要的是理解浏览器渲染网页的逻辑与顺序。 这要以理解什么是 DOM 开始。当浏览器发送请">
 <meta property="og:type" content="article">
-<meta property="og:title" content="浏览器如何渲染网页？">
+<meta property="og:title" content="浏览器如何渲染网页？- DOM，CSSOM &amp; Render Tree">
 <meta property="og:url" content="https://richard.bizcat.xyz/post/study/html/How-the-Browser-Renders-HTML-CSS/">
 <meta property="og:site_name" content="HOME">
-<meta property="og:description" content="资源下载速度缓慢？首屏等待没必要的文件下载和初始化？未应用 CSS 的内容一闪而过（flash of unstyled content，FOUC）？ 浏览器会阻塞网页的渲染进程直到某些资源被加载，而另一些资源会被异步加载。在前端开发过程中你总会遇到上面的问题，要避免它们，开发一个用户体验优秀的网站，你需要理解浏览器渲染网页的逻辑与顺序。">
+<meta property="og:description" content="使用浏览器打开一个网页，一部分网页资源在加载完之前会阻塞浏览器的渲染进程，一部分网页资源可以被异步加载。你总会遇到这些问题：资源下载速度缓慢？首屏等待多余的文件下载和初始化？未应用 CSS 的内容一闪而过（flash of unstyled content，FOUC）？要避免它们，开发一个用户体验优秀的网站，你需要的是理解浏览器渲染网页的逻辑与顺序。 这要以理解什么是 DOM 开始。当浏览器发送请">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-08-26T06:17:44.900Z">
 <meta property="article:modified_time" content="2021-08-26T06:17:44.900Z">
@@ -40,10 +40,10 @@
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://richard.bizcat.xyz/post/study/html/How-the-Browser-Renders-HTML-CSS/","path":"post/study/html/How-the-Browser-Renders-HTML-CSS/","title":"浏览器如何渲染网页？"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://richard.bizcat.xyz/post/study/html/How-the-Browser-Renders-HTML-CSS/","path":"post/study/html/How-the-Browser-Renders-HTML-CSS/","title":"浏览器如何渲染网页？- DOM，CSSOM & Render Tree"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>浏览器如何渲染网页？ | HOME</title>
+<title>浏览器如何渲染网页？- DOM，CSSOM & Render Tree | HOME</title>
   
 
   <script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.0/source/js/third-party/analytics/baidu-analytics.min.js"></script>
@@ -333,7 +333,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          浏览器如何渲染网页？
+          浏览器如何渲染网页？- DOM，CSSOM & Render Tree
         </h1>
 
         <div class="post-meta-container">
@@ -372,7 +372,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>3k</span>
+      <span>3.1k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -390,19 +390,18 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p>资源下载速度<strong>缓慢</strong>？首屏等待<strong>没必要的文件</strong>下载和初始化？未应用 CSS 的内容<strong>一闪而过</strong>（flash of unstyled content，<code>FOUC</code>）？</p>
-<p>浏览器会阻塞网页的渲染进程直到某些资源被加载，而另一些资源会被异步加载。在前端开发过程中你总会遇到上面的问题，要避免它们，开发一个用户体验优秀的网站，你需要理解浏览器渲染网页的逻辑与顺序。</p>
+        <p>使用浏览器打开一个网页，一部分网页资源在加载完之前会阻塞浏览器的渲染进程，一部分网页资源可以被异步加载。你总会遇到这些问题：资源下载速度<strong>缓慢</strong>？首屏等待<strong>多余的文件</strong>下载和初始化？未应用 CSS 的内容<strong>一闪而过</strong>（flash of unstyled content，<code>FOUC</code>）？要避免它们，开发一个用户体验优秀的网站，你需要的是理解浏览器渲染网页的逻辑与顺序。</p>
+<p>这要以理解什么是 <strong>DOM</strong> 开始。当浏览器发送请求到服务器以获取 HTML，服务器用<strong>二进制流（<code>binary stream</code>）形式</strong>返回 HTML 的文本内容，在响应中，服务器将 header 部分的 <code>Content-Type</code> 属性的值设置为 <code>text/html; charset=UTF-8</code>。</p>
+<p>其中 <code>text/html</code> 部分告诉浏览器响应数据是一份 HTML 文本；<code>charset=UTF-8</code> 部分告诉浏览器响应数据使用的字符集。有了这些信息，浏览器就可以正常的解析 HTML 标签并对网页进行渲染了。相反，如果响应的 header 部分中缺少了 <code>Content-Type</code> 属性，浏览器会因为缺少对响应数据的描述信息而将其数据以纯文本的方式展现给用户。</p>
+<p>浏览器要渲染的网页主体由 HTML 文本构成，通常有额外的 CSS 文件提供样式，有 JS 文件提供脚本操作。不过浏览器到底是如何从一堆文本信息中知道如何渲染一个网页？讨论这件事情之前，我们需要理解什么是 <strong>DOM</strong>、<strong>CSSOM</strong> 和 <strong>Render Tree</strong>。</p>
 <span id="more"></span>
 
-<p>首先我们要理解什么是 <strong>DOM</strong>。当浏览器发送请求到服务器获取 HTML，服务器会用<strong>二进制流（<code>binary stream</code>）形式</strong>返回 HTML 的文本内容，并将 header 的 <code>Content-Type</code> 设置为 <code>text/html; charset=UTF-8</code>。</p>
-<p><code>text/html</code> 告诉浏览器这是一个 HTML 文本，<code>charset=UTF-8</code> 告诉浏览器内容使用的字符集。有了这些信息，浏览器就可以正常的解析 HTML 标签渲染我们的网页了。如果服务器的响应中缺少了这个 header，浏览器会不知道该如何处理响应内容，转而将 HTML 当作纯文本输出。</p>
-<p>一个网页主体由 HTML 文本构成，通常有额外的 CSS 文件提供样式，JS 文件提供脚本操作。所以，问题是浏览器到底如何从一个纯文本信息的文件中知道如何渲染一个网页？要解释这件事，我们还需要理解什么是 <strong>DOM</strong>、<strong>CSSOM</strong> 和 <strong>Render Tree</strong>。</p>
 <h2 id="Document-Object-Model-DOM"><a href="#Document-Object-Model-DOM" class="headerlink" title="Document Object Model (DOM)"></a>Document Object Model (DOM)</h2><p>浏览器会将所有 HTML 元素转换为 JavaScript 的 Node 对象。因为 HTML 元素存在不同的标签和不同的属性，浏览器在转换过程中会将它们变成不同的 Node 子类。</p>
 <blockquote>
 <p>比如 div 元素会被转换为继承 Node 的子类 <code>HTMLDivElement</code>。</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> div = <span class="built_in">document</span>.querySelector(<span class="string">&quot;div&quot;</span>);</span><br><span class="line"><span class="comment">// undefined</span></span><br><span class="line">div <span class="keyword">instanceof</span> HTMLDivElement;</span><br><span class="line"><span class="comment">// true</span></span><br><span class="line">div <span class="keyword">instanceof</span> Node;</span><br><span class="line"><span class="comment">// true</span></span><br></pre></td></tr></table></figure>
 </blockquote>
-<p>浏览器根据 HTML 代码创建了 Node 对象之后，会使用它们创建一个叫做 DOM 树的树形结构。因为 HTML 中的元素是相互嵌套的，浏览器会使用元素相对应的 Node 对象复现这个结构。这个结构将帮助浏览器在网页的生命周期内有效率的渲染和管理网页元素。</p>
+<p>浏览器根据 HTML 代码创建了 Node 对象，并以此创建出 DOM 的树形结构。因为 HTML 代码中的元素是相互嵌套的，浏览器使用每个元素对应的 Node 对象来复现这个嵌套结构。这个结构将帮助浏览器在网页的生命周期内有效率的渲染和管理网页元素。</p>
 <p>DOM 树从最上面的根节点 html 标签开始分支，按照元素出现和嵌套的关系，浏览器每找到一个元素，就会创建其对应的 Node 子类的对象。</p>
 <blockquote>
 <p>DOM 树节点类型不仅包括 HTML 元素，还包括注释、属性和纯文本内容。但是方便起见，本文中我们仅考虑 DOM 树中的 HTML 元素，这些元素也叫做 DOM 元素。</p>
