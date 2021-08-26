@@ -4,7 +4,10 @@ tags:
   - Browser
   - HTML
   - CSS
-date: "2021-08-26T14:17:44.900Z"
+date: '2021-08-26T14:17:44.900Z'
+categories:
+  - study
+  - html
 ---
 
 资源下载速度**缓慢**？首屏等待**没必要的文件**下载和初始化？未应用 CSS 的内容**一闪而过**（flash of unstyled content，`FOUC`）？
