@@ -3104,7 +3104,7 @@ hr {
   transition: all 0.2s ease-in-out;
 }
 .links-of-author a::before {
-  background: #c8858c;
+  background: #cd3dff;
   display: inline-block;
   margin-right: 3px;
   transform: translateY(-2px);
@@ -3453,6 +3453,10 @@ figure.highlight .table-container {
 }
 .post-meta {
   font-weight: 300;
+}
+b,
+strong {
+  font-weight: 900;
 }
 @media (max-width: 767px) {
   body {
