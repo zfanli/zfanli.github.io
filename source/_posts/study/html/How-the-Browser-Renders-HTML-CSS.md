@@ -393,12 +393,51 @@ parser.parseFromString("<p>Hello World!</p>", "text/html");
 
 所以 CSS 是渲染阻塞资源。一旦浏览器请求了外部样式表，**Render-Tree** 的构建就会被停止。这会导致**关键渲染路径**卡住，屏幕上不会渲染任何内容。但是 DOM 树的构建不受影响，在 CSS 文件下载过程中会继续构建过程。
 
-在 HTML 增量式解析到足够开始渲染屏幕时，浏览器可以使用 CSSOM 树的某个时间点的状态来生成 Render-Tree。但这有一个巨大的弊端，这种情况一旦 CSS 下载完并解析后，CSSOM 就会被更新，这会让 Render-Tree 同步更新造成重绘，可能会导致未设置样式的元素闪烁，这会带来很糟糕的用户体验。
+浏览器如果在 HTML 增量式解析到足够开始向屏幕渲染东西时就使用 CSSOM 树的某个时间点的状态来生成 Render-Tree 的话，会有一个巨大的弊端，这种情况一旦 CSS 下载完并解析后，CSSOM 就会被更新，这会让 Render-Tree 同步更新造成重绘，最终导致无样式的元素闪烁，带来很糟糕的用户体验。
+
+因此浏览器在 CSS 文件下载和解析结束之前会一直等待。一旦样式解析了，CSSOM 得到更新，Render-Tree 同步更新，然后关键渲染路径解锁，让 Render-Tree 在屏幕上开始绘制元素。也正因如此，外部 CSS 越早加载越好，通常在 `head` 标签内加载最好。
+
+让我们来设想这样一个场景。浏览器开始解析 HTML 了，它遇到一个外部 CSS 文件。浏览器阻塞关键渲染路径，开始在后台下载这个文件，然后继续 DOM 解析。但是当浏览器遇到 `<script>` 标签，它阻塞 DOM 解析，开始下载外部脚本文件。现在浏览器主线程空闲，等待 CSS 文件和 JS 文件的下载。
+
+这时，外部 JS 文件下载结束了，但是 CSS 文件仍然在后台继续下载。浏览器应该开始执行这个脚本文件吗？继续执行的话会造成什么弊端？
+
+浏览器通过在 DOM 元素上暴露 `style` 对象提供一套操作 CSSOM 的高级 API 让 JavaScript 可以对其进行操作。比如你可以读取和修改 `elem.style.backgroundColor` 属性来获取和修改元素的背景色。
+
+如果 CSS 仍然在后台下载，但 JavaScript 不受影响可以在主线程开始执行的话，这时我们通过 JavaScript 访问 DOM 元素的 CSS 属性，将会得到 CSSOM 当前状态下的值。一旦 CSS 下载解析结束，造成 CSSOM 更新，我们之前拿到的值就已经不是最新的值了。基于这个原因，在 CSS 还在下载时开始执行 JavaScript 脚本是不安全的。
+
+根据 HTML5 规格，浏览器可以下载脚本文件，但是在之前出现的所有 CSS 文件解析结束之前都不应该开始执行脚本。而 CSS 文件阻塞脚本的执行时，这个文件就变成了**脚本阻塞 CSS** 了。
+
+> 💡 `<script>` 标签有 `async` 和 `defer` 属性告诉浏览器**不要阻塞解析**，外部 CSS 文件也可以使用 `media` 属性告诉浏览器**不要阻塞渲染**。浏览器会根据 `media` 属性的值来智能的决定何时加载这个 CSS。
+
+### document 的 `DOMContentLoaded` 事件
+
+`DOMContentLoaded` （**DCL**）事件表示浏览器读取完了 HTML，并且完成了 DOM 树的创建。不过有很多因素会改变 `DCL` 事件发生的时间点。
+
+假如我们的 HTML 不存在任何脚本，DOM 解析过程就不会被阻塞，`DCL` 事件会在浏览器解析完整个 HTML 后立即发生。不过如果 HTML 中存在任何解析阻塞的脚本，`DCL` 会在所有这些脚本下载执行结束之后发生。
+
+当把 CSS 文件纳入考虑的范围时，事情就更加复杂了。就算 HTML 没有任何外部脚本，`DCL` 仍然会等到 CSS 加载结束才会发生。原因在于 `DCL` 表示 DOM 树准备好了，但是如果 CSSOM 没有构建完成，任何对 DOM 元素的 CSS 信息的访问都是不安全的。因此大部分浏览器会等待所有外部 CSS 文件的加载和解析。
+
+结果就是脚本阻塞的 CSS 显然会推迟 `DCL` 事件。DOM 树在 CSS 加载完成之前不会构建结束。
+
+`DCL` 是网站性能指标之一，对其的优化目标是越早出现越好。最佳实践其一是尽可能给 `<script>` 设定 `defer` 或 `async` 属性让其不要阻塞 HTML 的解析，其二是优化**脚本阻塞**和**渲染阻塞**的 CSS。
+
+### window 的 `load` 事件
+
+JavaScript 会阻塞 DOM 树的生成，而 CSS 和图片、视频等外部文件不会阻塞。`DOMContentLoaded` 事件标记 DOM 树完全创建完成并且可以安全访问的时间点，`window.onload` 则标记外部 CSS 和文件都下载完成，应用结束所有下载的时间点。
+
+> ✏️ 这里本来应该还有一个例子，准备一个网页加载几个 JS、CSS 和一些图片，然后看看 Performance 下 `FP`，`FCP`，`DCL` 以及 `load` 事件发生的顺序和时机。然后观察 3 个 JS 分别需要 3 秒、6 秒和 9 秒下载，按照浏览器读取 HTML 的顺序一共需要 **18 秒**来完成下载，但是又发现浏览器采用了**推测解析**的方法提前下载了 JS 文件，最终下载脚本的时间只用了 **9 秒**。然后第 **9.1** 秒 `DCL` 发生了。这时还有一些图片文件还在下载，到了第 10 秒它们都下载结束了，第 **10.2 秒** window 上 `load` 事件发生了。到此为止页面加载结束了。
+
+后来又觉得没有必要了，你现在看的网页就是一个很好的例子，你可以打开开发者控制台，切到性能标签页，点击标签页左上角的刷新图标，等页面加载结束，再观察一下各种事件发生的情况吧！
 
 ## Reference
 
-- [How the browser renders HTM & CSS](https://medium.com/@mustafa.abdelmogoud/how-the-browser-renders-html-css-27920d8ccaa6)
+这篇文章主要对下面资料进行了整理和翻译。
+
 - [How the browser renders a web page? — DOM, CSSOM, and Rendering](https://medium.com/jspoint/how-the-browser-renders-a-web-page-dom-cssom-and-rendering-df10531c9969)
+
+下面是一些拓展资料。
+
+- [How the browser renders HTM & CSS](https://medium.com/@mustafa.abdelmogoud/how-the-browser-renders-html-css-27920d8ccaa6)
 - [HTML DOM nodeType Property](https://www.w3schools.com/jsref/prop_node_nodetype.asp)
 - [An Introduction and Guide to the CSS Object Model (CSSOM)](https://css-tricks.com/an-introduction-and-guide-to-the-css-object-model-cssom/)
 - [Working with the new CSS Typed Object Model](https://developers.google.com/web/updates/2018/03/cssom)
