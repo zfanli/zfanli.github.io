@@ -7,8 +7,6 @@ tags:
   - Tree
   - Binary Tree
 date: '2021-08-16T09:43:17.725Z'
-categories:
-  - leetcode
 ---
 
 你需要从一棵树的`中序遍历`数据和`后序遍历`数据中尝试重新构建出这棵二叉树。

@@ -7,8 +7,6 @@ tags:
   - Tree
   - Binary Tree
 title: 114. Flatten Binary Tree to Linked List (Medium)
-categories:
-  - leetcode
 ---
 
 将二叉树结构数据扁平化为链表，采用前序遍历（pre-order traversal）顺序。
