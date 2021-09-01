@@ -2,7 +2,10 @@
 title: 19.Swift Subscripts and Inheritance
 tags:
   - Swift
-date: "2019-07-01T14:28:35.099Z"
+date: '2019-07-01T14:28:35.099Z'
+categories:
+  - notes
+  - swift
 ---
 
 在枚举类型、结构体、类中定义 `subscript` 方法可以让对象实现下标操作。然后继承又一个 `final` 关键字可以阻止复写。

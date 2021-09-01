@@ -2,7 +2,10 @@
 title: 26.Swift Generics
 tags:
   - Swift
-date: "2019-07-12T14:28:35.099Z"
+date: '2019-07-12T14:28:35.099Z'
+categories:
+  - notes
+  - swift
 ---
 
 看完这篇主题只觉得：

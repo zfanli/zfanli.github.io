@@ -2,7 +2,10 @@
 title: 9.Swift Syntax Basics (范型)
 tags:
   - Swift
-date: "2019-06-20T16:28:35.099Z"
+date: '2019-06-20T16:28:35.099Z'
+categories:
+  - notes
+  - swift
 ---
 
 泛型也是一个灵活而实用的机制（虽然 Java 系的泛型用的也不是很多）。教程用了很少的篇幅讲泛型，到这里我们也只能获得泛型大概的印象。其实和 Java 中的没两样。
