@@ -2174,7 +2174,8 @@ pre code {
   margin-left: 4px;
 }
 .post-body .image-caption,
-.post-body .figure .caption {
+.post-body img + figcaption,
+.post-body .fancybox + figcaption {
   color: #999;
   font-size: 0.875em;
   font-weight: bold;
@@ -3104,7 +3105,7 @@ hr {
   transition: all 0.2s ease-in-out;
 }
 .links-of-author a::before {
-  background: #c39991;
+  background: #e2a8ff;
   display: inline-block;
   margin-right: 3px;
   transform: translateY(-2px);
