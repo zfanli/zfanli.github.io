@@ -2,7 +2,10 @@
 title: 20.Swift Initialization and Deinitialization
 tags:
   - Swift
-date: "2019-07-02T14:28:35.099Z"
+date: '2019-07-02T14:28:35.099Z'
+categories:
+  - notes
+  - swift
 ---
 
 干货满满的一篇内容，虽然我记录的可能有点意识流了。

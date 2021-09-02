@@ -2,7 +2,10 @@
 title: Homelab Step 2 - Enable DDNS
 tags:
   - Homelab
-date: "2020-07-08T13:17:02.732Z"
+date: '2020-07-08T13:17:02.732Z'
+categories:
+  - notes
+  - homelab
 ---
 
 国内宽带环境个人用户很难拿到固定公网 IP。不过如果你没有公网 IP，通过联系电信运营商的客服，还是可以拿到公网动态 IP 的。

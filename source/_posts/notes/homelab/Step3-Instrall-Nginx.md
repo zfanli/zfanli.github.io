@@ -2,7 +2,10 @@
 title: Homelab Step 3 - Install Nginx
 tags:
   - Homelab
-date: "2020-07-09T13:17:02.732Z"
+date: '2020-07-09T13:17:02.732Z'
+categories:
+  - notes
+  - homelab
 ---
 
 安装 nginx 进行反向代理和端口转发。在进行之前确保 Docker 已经安装。

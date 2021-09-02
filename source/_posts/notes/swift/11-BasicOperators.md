@@ -2,7 +2,10 @@
 title: 11.Swift Basic Operators
 tags:
   - Swift
-date: "2019-06-26T13:28:35.099Z"
+date: '2019-06-26T13:28:35.099Z'
+categories:
+  - notes
+  - swift
 ---
 
 操作符的定义：一个特殊符号或者语句用来检查、改变或者组合值。

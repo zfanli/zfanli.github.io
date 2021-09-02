@@ -2,7 +2,10 @@
 title: 18.Swift Properties and Methods
 tags:
   - Swift
-date: "2019-07-01T13:28:35.099Z"
+date: '2019-07-01T13:28:35.099Z'
+categories:
+  - notes
+  - swift
 ---
 
 复习内容。lazy 属性。
