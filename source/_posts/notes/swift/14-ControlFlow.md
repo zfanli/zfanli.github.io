@@ -2,10 +2,7 @@
 title: 14.Swift Control Flow
 tags:
   - Swift
-date: '2019-06-29T14:28:35.099Z'
-categories:
-  - notes
-  - swift
+date: "2019-06-29T14:28:35.099Z"
 ---
 
 流程控制语句：

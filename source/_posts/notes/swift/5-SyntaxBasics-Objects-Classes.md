@@ -2,10 +2,7 @@
 title: 5.Swift Syntax Basics (对象和类)
 tags:
   - Swift
-date: '2019-06-18T14:28:35.099Z'
-categories:
-  - notes
-  - swift
+date: "2019-06-18T14:28:35.099Z"
 ---
 
 Swift 中创建一个类、创建一个对象、访问对象的属性等操作和一般的 OOP 语言并无两样。

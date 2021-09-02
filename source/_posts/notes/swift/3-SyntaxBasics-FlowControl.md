@@ -2,10 +2,7 @@
 title: 3.Swift Syntax Basics (流程控制)
 tags:
   - Swift
-date: '2019-06-17T13:28:35.099Z'
-categories:
-  - notes
-  - swift
+date: "2019-06-17T13:28:35.099Z"
 ---
 
 不同于其他语言，条件判断部分不需要括号。代码块依然需要大括号包围。
