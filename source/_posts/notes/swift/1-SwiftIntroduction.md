@@ -2,10 +2,7 @@
 title: 1.Official Documentation - Introducing Swift 5
 tags:
   - Swift
-date: '2019-06-14T13:28:35.099Z'
-categories:
-  - notes
-  - swift
+date: "2019-06-14T13:28:35.099Z"
 ---
 
 阅读官方对于 Swift 5 的介绍，了解它的特性和优势。多数都是摘抄原文或者翻译。

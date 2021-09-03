@@ -2,10 +2,7 @@
 title: 24.Swift Extensions
 tags:
   - Swift
-date: '2019-07-06T14:28:35.099Z'
-categories:
-  - notes
-  - swift
+date: "2019-07-06T14:28:35.099Z"
 ---
 
 这部分内容也是复习。扩展可以给任何类型添加新的属性、方法、初始化器，虽然它有以下的限制：
