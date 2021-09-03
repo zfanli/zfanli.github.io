@@ -2,7 +2,10 @@
 title: 15.Swift Functions
 tags:
   - Swift
-date: "2019-06-29T15:28:35.099Z"
+date: '2019-06-29T15:28:35.099Z'
+categories:
+  - notes
+  - swift
 ---
 
 基本就是复习。没新内容。
