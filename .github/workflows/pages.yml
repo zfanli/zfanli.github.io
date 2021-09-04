@@ -30,6 +30,9 @@ jobs:
         run: npm install
       - name: Build
         run: |
+          echo "Apply prod configs"
+          mv _config.prod.yml _config.yml
+          mv _config.next.prod.yml _config.next.yml
           echo "posts will be modified while the first time building"
           npm run build
           echo "make sure run the second time build for the final result"
@@ -37,7 +40,7 @@ jobs:
           git config --global user.email "zfanli@outlook.com"
           git config --global user.name "Richard"
           if [ -n "$(git diff --exit-code)" ]; then
-            git add .
+            git add source
             git commit -m "ACTION: APPLY PLUGINS"
             git push origin hexo-source
           fi
