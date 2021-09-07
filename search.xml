@@ -1979,6 +1979,59 @@
       </tags>
   </entry>
   <entry>
+    <title>622. Design Circular Queue (Medium)</title>
+    <url>/post/leetcode/622-Design-Circular-Queue-Medium/</url>
+    <content><![CDATA[<p>设计并实现一个循环队列。循环队列是一个线性数据结构，遵循先进先出原则，队列头尾相互连接形成一个环，也叫做环形缓冲区（Ring Buffer）。</p>
+<p>在常规队列中，一旦队列满了也就无法再添加元素入列，就算队列头前面存在空位。但是使用循环队列，无论空位在队列头的前面还是后面，只要存在空位就可以被利用上。</p>
+<p>这道题要求实现的循环队列要有下面的方法：</p>
+<ul>
+<li><code>MyCircularQueue(k)</code> 以指定值 <code>k</code> 初始化队列大小</li>
+<li><code>int Front()</code> 返回队列头的元素，如果队列为空则返回 <code>-1</code></li>
+<li><code>int Rear()</code> 返回队列尾的元素，如果队列为空则返回 <code>-1</code></li>
+<li><code>boolean enQueue(int value)</code> 添加新的元素入列，如果成功则返回 <code>true</code></li>
+<li><code>boolean deQueue()</code> 让队列头元素出列，如果成功则返回 <code>true</code></li>
+<li><code>boolean isEmpty()</code> 检查队列是否为空</li>
+<li><code>boolean isFull()</code> 检查队列是否已满</li>
+</ul>
+<span id="more"></span>
+
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>按照每个方法分别讨论一下思路，这道题的注意点在于索引是循环的，我们通过取模来保证索引不会超过数组长度。</p>
+<h3 id="MyCircularQueue-k"><a href="#MyCircularQueue-k" class="headerlink" title="MyCircularQueue(k)"></a><code>MyCircularQueue(k)</code></h3><p>初始化时只需要准备一个指定长度的数组，初始化队列头尾的指针即可。将 <code>k</code> 的值保留，后续需要使用它来取模。</p>
+<h3 id="int-Front"><a href="#int-Front" class="headerlink" title="int Front()"></a><code>int Front()</code></h3><p>对于返回队列头的逻辑，我们只需要判断当前队列是否为空：为空时返回 <code>-1</code>；否则返回队列头指针对应的元素。</p>
+<h3 id="int-Rear"><a href="#int-Rear" class="headerlink" title="int Rear()"></a><code>int Rear()</code></h3><p>对于返回队列尾的逻辑，我们只需要判断当前队列是否为空：为空时返回 <code>-1</code>；否则返回队列尾指针对应的元素。</p>
+<h3 id="boolean-enQueue-int-value"><a href="#boolean-enQueue-int-value" class="headerlink" title="boolean enQueue(int value)"></a><code>boolean enQueue(int value)</code></h3><p>入列逻辑需要考虑几个条件。</p>
+<ul>
+<li>如果当前队列已满直接返回 <code>False</code>；</li>
+<li>继续判断如果队列为空则将值放在 <code>0</code> 位置，将队列头尾指针都置为 <code>0</code>；</li>
+<li>否则给队列尾指针右移一个位置，将新的值放在对应位置。<ul>
+<li>指针向右移动时给尾指针的值 <code>+1</code>，这可能会造成指针的值超过数组长度，所以还需将其与 <code>k</code> 取模。</li>
+</ul>
+</li>
+</ul>
+<h3 id="boolean-deQueue"><a href="#boolean-deQueue" class="headerlink" title="boolean deQueue()"></a><code>boolean deQueue()</code></h3><p>出列逻辑相似。</p>
+<ul>
+<li>如果当前队列为空直接返回 <code>False</code>；</li>
+<li>继续判断如果当前头尾指针指向同一个元素，则将 2 个指针都置为 <code>-1</code>；</li>
+<li>否则将头指针向右移一个位置。<ul>
+<li>指针向右移动时给头指针的值 <code>+1</code>，这可能会造成指针的值超过数组长度，所以还需将其与 <code>k</code> 取模。</li>
+</ul>
+</li>
+</ul>
+<h3 id="boolean-isEmpty"><a href="#boolean-isEmpty" class="headerlink" title="boolean isEmpty()"></a><code>boolean isEmpty()</code></h3><p>检查队列是否为空我们只需要检查 2 个指针是否为 <code>-1</code>。实际上如果一个指针为 <code>-1</code> 时，另一个同样也必须为 <code>-1</code>，所以实际上我们只需要判断头指针是否为 <code>-1</code>。</p>
+<h3 id="boolean-isFull"><a href="#boolean-isFull" class="headerlink" title="boolean isFull()"></a><code>boolean isFull()</code></h3><p>检查队列是否已满我们可以判断尾指针与头指针是否相差 1 个单位。可以手动计算尾指针加 1 后的值是够等于头指针，需要注意指针的值增加可能会导致超过长度 <code>k</code>，所以在对比头指针之前还需要做取模操作。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyCircularQueue</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, k: <span class="built_in">int</span></span>):</span></span><br><span class="line">        self.queue = [<span class="literal">None</span>] * k</span><br><span class="line">        self.front = self.rear = -<span class="number">1</span></span><br><span class="line">        self.k = k</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">enQueue</span>(<span class="params">self, value: <span class="built_in">int</span></span>) -&gt; <span class="built_in">bool</span>:</span></span><br><span class="line">        <span class="keyword">if</span> self.isFull():</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> self.isEmpty():</span><br><span class="line">            self.front = self.rear = <span class="number">0</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            self.rear += <span class="number">1</span></span><br><span class="line">            self.rear %= self.k</span><br><span class="line"></span><br><span class="line">        self.queue[self.rear] = value</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">deQueue</span>(<span class="params">self</span>) -&gt; <span class="built_in">bool</span>:</span></span><br><span class="line">        <span class="keyword">if</span> self.isEmpty():</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">        self.queue[self.front] = <span class="literal">None</span></span><br><span class="line">        <span class="keyword">if</span> self.front == self.rear:</span><br><span class="line">            self.front = self.rear = -<span class="number">1</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            self.front += <span class="number">1</span></span><br><span class="line">            self.front %= self.k</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">Front</span>(<span class="params">self</span>) -&gt; <span class="built_in">int</span>:</span></span><br><span class="line">        <span class="keyword">if</span> self.front == -<span class="number">1</span>:</span><br><span class="line">            <span class="keyword">return</span> -<span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> self.queue[self.front]</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">Rear</span>(<span class="params">self</span>) -&gt; <span class="built_in">int</span>:</span></span><br><span class="line">        <span class="keyword">if</span> self.rear == -<span class="number">1</span>:</span><br><span class="line">            <span class="keyword">return</span> -<span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> self.queue[self.rear]</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">isEmpty</span>(<span class="params">self</span>) -&gt; <span class="built_in">bool</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.front == -<span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">isFull</span>(<span class="params">self</span>) -&gt; <span class="built_in">bool</span>:</span></span><br><span class="line">        <span class="keyword">return</span> (self.rear + <span class="number">1</span>) % self.k == self.front</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>Array</tag>
+        <tag>Linked List</tag>
+        <tag>Queue</tag>
+        <tag>Design</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>63. Unique Paths II (Medium)</title>
     <url>/post/leetcode/63-Unique-Paths-II-Medium/</url>
     <content><![CDATA[<p>路径问题。一个机器人在 <code>m x n</code> 矩阵的左上角 (0, 0) 位置，矩阵中存在诺干障碍物，机器人只能向下或者向右移动，你需要实现一个程序计算机器人有多少条路径可以到达右下角的 (m, n) 位置。</p>
