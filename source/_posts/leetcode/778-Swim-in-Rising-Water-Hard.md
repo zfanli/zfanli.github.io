@@ -9,6 +9,8 @@ tags:
   - Union Fold
   - Matrix
 title: 778. Swim in Rising Water (Hard)
+categories:
+  - leetcode
 ---
 
 这是一道求最合适路径的题目，根据提示可以应用图论中的 Dijkstra 算法。

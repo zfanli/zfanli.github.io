@@ -4,7 +4,11 @@ tags:
   - Array
   - Greedy
   - Sorting
-title: 1465. Maximum Area of a Piece of Cake After Horizontal and Vertical Cuts (Medium)
+title: >-
+  1465. Maximum Area of a Piece of Cake After Horizontal and Vertical Cuts
+  (Medium)
+categories:
+  - leetcode
 ---
 
 切蛋糕问题。给你一个尺寸为 `h` x `w` 的矩形蛋糕，还有两个数组 `horizontalCuts` 和 `verticalCuts` 分别表示水平方式切的位置和垂直方向切的位置。
