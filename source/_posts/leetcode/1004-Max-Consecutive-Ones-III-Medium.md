@@ -6,8 +6,6 @@ tags:
   - Sliding Window
   - Prefix Sum
 title: 1004. Max Consecutive Ones III (Medium)
-categories:
-  - leetcode
 ---
 
 给定一个二进制数组 `nums`（元素的值为 `0` 或 `1`），求最长的连续的 `1` 的长度。

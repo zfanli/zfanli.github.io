@@ -5,8 +5,6 @@ tags:
   - DP
   - Matrix
 title: 63. Unique Paths II (Medium)
-categories:
-  - leetcode
 ---
 
 路径问题。一个机器人在 `m x n` 矩阵的左上角 (0, 0) 位置，矩阵中存在诺干障碍物，机器人只能向下或者向右移动，你需要实现一个程序计算机器人有多少条路径可以到达右下角的 (m, n) 位置。
