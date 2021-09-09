@@ -1250,8 +1250,7 @@
   <entry>
     <title>200. Number of Islands (Medium)</title>
     <url>/post/leetcode/200-Number-of-Islands-Medium/</url>
-    <content><![CDATA[<p>有一个 <code>m x n</code> 的 2D 数组 <code>grid</code>，其中每个元素的值为 <code>&#39;1&#39;</code> 时表示土地，为 <code>&#39;0&#39;</code> 时表示海水。你需要找到一共存在多少个小岛。</p>
-<p>小岛的定义：小岛由相邻的土地构成，四面环海。土地相邻表示相互共有一条边。</p>
+    <content><![CDATA[<p>有一个 <code>m x n</code> 的 2D 数组 <code>grid</code>，其中每个元素的值为 <code>&#39;1&#39;</code> 时表示土地，为 <code>&#39;0&#39;</code> 时表示海水。你需要找到一共存在多少个小岛。小岛的定义：小岛由相邻的土地构成，四面环海。土地相邻表示相互共有一条边。</p>
 <span id="more"></span>
 
 <h2 id="思路-BFS-追踪已访问元素"><a href="#思路-BFS-追踪已访问元素" class="headerlink" title="思路 BFS + 追踪已访问元素"></a>思路 BFS + 追踪已访问元素</h2><p>这个思路偏重不去修改输入数据，所以我们需要准备一个 <code>visited</code> 2D 数组来追踪遍历的状态，来避免重复遍历相同的元素。</p>
