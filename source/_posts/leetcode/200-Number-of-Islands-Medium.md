@@ -6,7 +6,9 @@ tags:
   - BFS
   - Union Find
   - Matrix
-date: "2021-09-09T13:17:38.415Z"
+date: '2021-09-09T13:17:38.415Z'
+categories:
+  - leetcode
 ---
 
 有一个 `m x n` 的 2D 数组 `grid`，其中每个元素的值为 `'1'` 时表示土地，为 `'0'` 时表示海水。你需要找到一共存在多少个小岛。
