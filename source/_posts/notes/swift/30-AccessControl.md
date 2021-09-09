@@ -2,10 +2,7 @@
 title: 30.Swift Access Control
 tags:
   - Swift
-date: '2019-07-14T16:28:35.099Z'
-categories:
-  - notes
-  - swift
+date: "2019-07-14T16:28:35.099Z"
 ---
 
 乍一看，好高级的话题。仔细一看，无非就是外部能访问的限制程度而已，功能和 Java 的 `public`、`private` 修饰符一样，无非细化程度更多。总结如下：

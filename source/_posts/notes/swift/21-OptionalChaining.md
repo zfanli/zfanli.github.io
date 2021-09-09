@@ -2,10 +2,7 @@
 title: 21.Swift Optional Chaining
 tags:
   - Swift
-date: '2019-07-03T14:28:35.099Z'
-categories:
-  - notes
-  - swift
+date: "2019-07-03T14:28:35.099Z"
 ---
 
 可选型操作链（Optional Chaining）是为了应对查询或调用当前可能是 `nil` 的变量的属性、方法和下标时的一个处理。当这个变量有值时操作会成功，否则会返回 `nil`。多个查询或调用操作可以链接在一起。链上的每个操作返回 `nil` 时，操作就会结束并返回 `nil`。

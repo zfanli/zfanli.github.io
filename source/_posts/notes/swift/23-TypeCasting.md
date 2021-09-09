@@ -2,10 +2,7 @@
 title: 23.Swift Type Casting
 tags:
   - Swift
-date: '2019-07-05T14:28:35.099Z'
-categories:
-  - notes
-  - swift
+date: "2019-07-05T14:28:35.099Z"
 ---
 
 操作符 `is` 和 `as`，一个负责检查，一个负责转换。`as?` 优雅转换，失败可以返回 `nil`，`as!` 强制转换，失败就失败，失败就报错！

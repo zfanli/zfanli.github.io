@@ -2,10 +2,7 @@
 title: 17.Swift Enumerates & Structs & Classes
 tags:
   - Swift
-date: '2019-06-30T16:28:35.099Z'
-categories:
-  - notes
-  - swift
+date: "2019-06-30T16:28:35.099Z"
 ---
 
 依旧是复习。新点只有一个递归枚举和关键字 `indirect`。
