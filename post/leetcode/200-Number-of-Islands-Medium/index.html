@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icon-64.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/icon-16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css?family=Noto+Serif+SC:300,300italic,400,400italic,700,700italic%7CRoboto:300,300italic,400,400italic,700,700italic%7CNoto+Sans+SC:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"richard.bizcat.xyz","root":"/","images":"/images","scheme":"Mist","version":"8.7.1","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.1/source/js/config.min.js"></script>
+<meta name="description" content="有一个 m x n 的 2D 数组 grid，其中每个元素的值为 &#39;1&#39; 时表示土地，为 &#39;0&#39; 时表示海水。你需要找到一共存在多少个小岛。 小岛的定义：小岛由相邻的土地构成，四面环海。土地相邻表示相互共有一条边。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="200. Number of Islands (Medium)">
+<meta property="og:url" content="https://richard.bizcat.xyz/post/leetcode/200-Number-of-Islands-Medium/">
+<meta property="og:site_name" content="HOME">
+<meta property="og:description" content="有一个 m x n 的 2D 数组 grid，其中每个元素的值为 &#39;1&#39; 时表示土地，为 &#39;0&#39; 时表示海水。你需要找到一共存在多少个小岛。 小岛的定义：小岛由相邻的土地构成，四面环海。土地相邻表示相互共有一条边。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-09-09T05:17:38.415Z">
+<meta property="article:modified_time" content="2021-09-09T05:17:38.415Z">
+<meta property="article:author" content="Richard Zen">
+<meta property="article:tag" content="Array">
+<meta property="article:tag" content="BFS">
+<meta property="article:tag" content="DFS">
+<meta property="article:tag" content="Matrix">
+<meta property="article:tag" content="Union Find">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://richard.bizcat.xyz/post/leetcode/200-Number-of-Islands-Medium/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://richard.bizcat.xyz/post/leetcode/200-Number-of-Islands-Medium/","path":"post/leetcode/200-Number-of-Islands-Medium/","title":"200. Number of Islands (Medium)"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>200. Number of Islands (Medium) | HOME</title>
+  
+
+  <script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.1/source/js/third-party/analytics/baidu-analytics.min.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?556c863884b17d03fa0a3035eba585f0"></script>
+
+
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap-utilities.min.css"
+  integrity="sha256-5+ExmMkiaI3keYQRLhNibJ5ZXnNuWRbwrXOAZoTXMFg="
+  crossorigin="anonymous"
+/>
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">HOME</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分组</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+<div id="colorSwitcher" class="animated fadeIn">🌓</div>
+<script>
+  (function () {
+    // define constants
+    const DARK = "dark-scheme",
+      LIGHT = "light-scheme",
+      COLOR_SCHEME = "color-scheme",
+      ROTATE = "switcher-rotate";
+
+    // define targets
+    const switcher = document.querySelector("#colorSwitcher"),
+      body = document.body,
+      isDark = window.matchMedia("(prefers-color-scheme: dark)").matches,
+      stored = window.localStorage.getItem(COLOR_SCHEME),
+      current = stored ? stored : isDark ? DARK : LIGHT;
+
+    body.classList.add(current);
+    if (current === LIGHT) {
+      setTimeout(function setupCommentTheme() {
+        try {
+          const utt = document.querySelector(".utterances-frame");
+          utt.src = utt.src.replace("theme=github-dark", "theme=github-light");
+          // console.log(document.querySelector(".utterances-frame").src);
+        } catch (e) {
+          setTimeout(setupCommentTheme, 100);
+        }
+      }, 100);
+    }
+
+    // setup actions
+    switcher.addEventListener("click", function () {
+      let add = LIGHT;
+      if (body.classList.contains(LIGHT)) {
+        add = DARK;
+      }
+      // apply the new color scheme
+      body.classList.remove(LIGHT, DARK);
+      body.classList.add(add);
+      window.localStorage.setItem(COLOR_SCHEME, add);
+      if (switcher.classList.contains(ROTATE))
+        switcher.classList.remove(ROTATE);
+      else switcher.classList.add(ROTATE);
+      // update the comments' theme
+      const utt = document.querySelector(".utterances-frame");
+      utt &&
+        utt.contentWindow.postMessage(
+          {
+            type: "set-theme",
+            theme: add === DARK ? "github-dark" : "github-light",
+          },
+          "https://utteranc.es"
+        );
+    });
+  })();
+</script>
+<style>
+  #colorSwitcher {
+    cursor: pointer;
+    border-radius: 2px;
+    height: 37px;
+    line-height: 37px;
+    width: 42px;
+    text-align: center;
+    outline: none;
+    font-size: 1.5rem;
+    margin-left: auto;
+    transition: all 0.25s ease-in-out;
+    transform: rotate(0);
+    user-select: none;
+  }
+
+  #colorSwitcher.switcher-rotate {
+    transform: rotate(180deg);
+  }
+
+  @media (max-width: 767px) {
+    #colorSwitcher {
+      height: 37px;
+      line-height: 37px;
+      width: 42px;
+      text-align: center;
+      position: absolute;
+      top: 10px;
+      right: 50px;
+    }
+  }
+</style>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF-BFS-%E8%BF%BD%E8%B8%AA%E5%B7%B2%E8%AE%BF%E9%97%AE%E5%85%83%E7%B4%A0"><span class="nav-text">思路 BFS + 追踪已访问元素</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF-BFS-%E4%BC%98%E5%8C%96%E7%A9%BA%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6"><span class="nav-text">思路 BFS + 优化空间复杂度</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF-DFS"><span class="nav-text">思路 DFS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF-Union-Find"><span class="nav-text">思路 Union-Find</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-text">总结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Richard Zen"
+      src="/images/icon-64.png">
+  <p class="site-author-name" itemprop="name">Richard Zen</p>
+  <div class="site-description" itemprop="description"><small><b>TOPICS</b></small><br>
+前端 ｜ Python ｜ Java<br>
+数据结构 ｜ 算法<br><br>
+用代码替代言语<br>记录创作与学习的脚步<br><br>
+</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">125</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分组</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">56</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/zfanli" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;zfanli" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://richard.bizcat.xyz/post/leetcode/200-Number-of-Islands-Medium/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon-64.png">
+      <meta itemprop="name" content="Richard Zen">
+      <meta itemprop="description" content="<small><b>TOPICS</b></small><br>
+前端 ｜ Python ｜ Java<br>
+数据结构 ｜ 算法<br><br>
+用代码替代言语<br>记录创作与学习的脚步<br><br>
+">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HOME">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          200. Number of Islands (Medium)
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-09-09 13:17:38" itemprop="dateModified" datetime="2021-09-09T13:17:38+08:00">2021-09-09</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text"> </span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/leetcode/" itemprop="url" rel="index"><span itemprop="name">leetcode</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>4k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>4 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>有一个 <code>m x n</code> 的 2D 数组 <code>grid</code>，其中每个元素的值为 <code>&#39;1&#39;</code> 时表示土地，为 <code>&#39;0&#39;</code> 时表示海水。你需要找到一共存在多少个小岛。</p>
+<p>小岛的定义：小岛由相邻的土地构成，四面环海。土地相邻表示相互共有一条边。</p>
+<span id="more"></span>
+
+<h2 id="思路-BFS-追踪已访问元素"><a href="#思路-BFS-追踪已访问元素" class="headerlink" title="思路 BFS + 追踪已访问元素"></a>思路 BFS + 追踪已访问元素</h2><p>这个思路偏重不去修改输入数据，所以我们需要准备一个 <code>visited</code> 2D 数组来追踪遍历的状态，来避免重复遍历相同的元素。</p>
+<p>主要的计算过程在于我们依次遍历 2D 输入数据，使用一个 <code>search</code> 辅助方法来搜索并标记所有已经遍历过的元素。<code>search</code> 做的事情实际上是使用 BFS 算法每次将所有相邻的土地放入队列，重复直到不存在相邻的陆地为止，细节可以参考代码注释。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">numIslands</span>(<span class="params">self, grid: <span class="type">List</span>[<span class="type">List</span>[<span class="built_in">str</span>]]</span>) -&gt; <span class="built_in">int</span>:</span></span><br><span class="line">        q, ans = deque(), <span class="number">0</span></span><br><span class="line">        m, n = <span class="built_in">len</span>(grid), <span class="built_in">len</span>(grid[<span class="number">0</span>])</span><br><span class="line">        visited = [[<span class="literal">False</span>] * n <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(m)]</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">search</span>(<span class="params">i, j</span>):</span></span><br><span class="line">            visited[i][j] = <span class="literal">True</span></span><br><span class="line"></span><br><span class="line">            <span class="comment"># 如果目标并非陆地则直接返回找到 0 个小岛</span></span><br><span class="line">            <span class="keyword">if</span> grid[i][j] != <span class="string">&quot;1&quot;</span>:</span><br><span class="line">                <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line"></span><br><span class="line">            <span class="comment"># 初始化队列准备开始 BFS</span></span><br><span class="line">            q.append([i, j])</span><br><span class="line"></span><br><span class="line">            <span class="keyword">while</span> q:</span><br><span class="line">                <span class="comment"># 拿到下一个坐标</span></span><br><span class="line">                x, y = q.popleft()</span><br><span class="line">                <span class="comment"># 遍历 4 个方向的坐标</span></span><br><span class="line">                <span class="keyword">for</span> dx, dy <span class="keyword">in</span> [(<span class="number">1</span>, <span class="number">0</span>), (<span class="number">0</span>, <span class="number">1</span>), (-<span class="number">1</span>, <span class="number">0</span>), (<span class="number">0</span>, -<span class="number">1</span>)]:</span><br><span class="line">                    <span class="comment"># 计算相邻坐标</span></span><br><span class="line">                    x1, y1 = x + dx, y + dy</span><br><span class="line">                    <span class="comment"># 如果相邻坐标不存在或已经遍历过则跳过</span></span><br><span class="line">                    <span class="keyword">if</span> x1 &lt; <span class="number">0</span> <span class="keyword">or</span> x1 == m <span class="keyword">or</span> y1 &lt; <span class="number">0</span> <span class="keyword">or</span> y1 == n <span class="keyword">or</span> visited[x1][y1]:</span><br><span class="line">                        <span class="keyword">continue</span></span><br><span class="line">                    <span class="comment"># 检查是否存在相邻的陆地</span></span><br><span class="line">                    <span class="keyword">if</span> grid[x1][y1] == <span class="string">&quot;1&quot;</span>:</span><br><span class="line">                        q.append([x1, y1])</span><br><span class="line">                    <span class="comment"># 标记已遍历</span></span><br><span class="line">                    visited[x1][y1] = <span class="literal">True</span></span><br><span class="line"></span><br><span class="line">            <span class="comment"># 所有小岛范围的陆地遍历结束，返回找到 1 个小岛</span></span><br><span class="line">            <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(m):</span><br><span class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(n):</span><br><span class="line">                <span class="keyword">if</span> <span class="keyword">not</span> visited[i][j]:</span><br><span class="line">                    ans += search(i, j)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> ans</span><br></pre></td></tr></table></figure>
+
+<h2 id="思路-BFS-优化空间复杂度"><a href="#思路-BFS-优化空间复杂度" class="headerlink" title="思路 BFS + 优化空间复杂度"></a>思路 BFS + 优化空间复杂度</h2><p>这个版本在上一个思路上直接修改输入数据来优化额外的空间使用。具体看代码注释。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">numIslands</span>(<span class="params">self, grid: <span class="type">List</span>[<span class="type">List</span>[<span class="built_in">str</span>]]</span>) -&gt; <span class="built_in">int</span>:</span></span><br><span class="line">        q, ans = deque(), <span class="number">0</span></span><br><span class="line">        m, n = <span class="built_in">len</span>(grid), <span class="built_in">len</span>(grid[<span class="number">0</span>])</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">search</span>(<span class="params">i, j</span>):</span></span><br><span class="line">            <span class="comment"># 标记已遍历</span></span><br><span class="line">            grid[i][j] = <span class="string">&quot;&quot;</span></span><br><span class="line">            <span class="comment"># 初始化 BFS 队列</span></span><br><span class="line">            q.append([i, j])</span><br><span class="line">            <span class="keyword">while</span> q:</span><br><span class="line">                <span class="comment"># 拿到下一个坐标</span></span><br><span class="line">                x, y = q.popleft()</span><br><span class="line">                <span class="comment"># 遍历 4 个方向的坐标</span></span><br><span class="line">                <span class="keyword">for</span> dx, dy <span class="keyword">in</span> [(<span class="number">1</span>, <span class="number">0</span>), (<span class="number">0</span>, <span class="number">1</span>), (-<span class="number">1</span>, <span class="number">0</span>), (<span class="number">0</span>, -<span class="number">1</span>)]:</span><br><span class="line">                    <span class="comment"># 计算相邻坐标</span></span><br><span class="line">                    x1, y1 = x + dx, y + dy</span><br><span class="line">                    <span class="comment"># 如果相邻坐标不存在或不为陆地则跳过</span></span><br><span class="line">                    <span class="keyword">if</span> x1 &lt; <span class="number">0</span> <span class="keyword">or</span> x1 == m <span class="keyword">or</span> y1 &lt; <span class="number">0</span> <span class="keyword">or</span> y1 == n <span class="keyword">or</span> grid[x1][y1] != <span class="string">&quot;1&quot;</span>:</span><br><span class="line">                        <span class="keyword">continue</span></span><br><span class="line">                    <span class="comment"># 保存坐标进行下一轮搜索</span></span><br><span class="line">                    q.append([x1, y1])</span><br><span class="line">                    <span class="comment"># 标记已遍历</span></span><br><span class="line">                    grid[x1][y1] = <span class="string">&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(m):</span><br><span class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(n):</span><br><span class="line">                <span class="keyword">if</span> grid[i][j] == <span class="string">&quot;1&quot;</span>:</span><br><span class="line">                    ans += <span class="number">1</span></span><br><span class="line">                    search(i, j)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> ans</span><br></pre></td></tr></table></figure>
+
+<p>Python 的成绩不是很理想，尝试用 Java 实现这个算法。结果还是很糟糕。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span>[][] MATRIX = <span class="keyword">new</span> <span class="keyword">int</span>[][] &#123;</span><br><span class="line">        <span class="keyword">new</span> <span class="keyword">int</span>[] &#123;<span class="number">1</span>, <span class="number">0</span>&#125;, <span class="keyword">new</span> <span class="keyword">int</span>[] &#123;<span class="number">0</span>, <span class="number">1</span>&#125;,</span><br><span class="line">        <span class="keyword">new</span> <span class="keyword">int</span>[] &#123;-<span class="number">1</span>, <span class="number">0</span>&#125;, <span class="keyword">new</span> <span class="keyword">int</span>[] &#123;<span class="number">0</span>, -<span class="number">1</span>&#125;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">numIslands</span><span class="params">(<span class="keyword">char</span>[][] grid)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> ans = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; grid.length; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; grid[<span class="number">0</span>].length; j++) &#123;</span><br><span class="line">                <span class="keyword">if</span> (grid[i][j] == <span class="string">&#x27;1&#x27;</span>) &#123;</span><br><span class="line">                    ans++;</span><br><span class="line">                    search(grid, i, j);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">search</span><span class="params">(<span class="keyword">char</span>[][] grid, <span class="keyword">int</span> i, <span class="keyword">int</span> j)</span> </span>&#123;</span><br><span class="line">        grid[i][j] = <span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">        Queue&lt;<span class="keyword">int</span>[]&gt; q = <span class="keyword">new</span> LinkedList&lt;&gt;();</span><br><span class="line">        q.offer(<span class="keyword">new</span> <span class="keyword">int</span>[] &#123;i, j&#125;);</span><br><span class="line">        <span class="keyword">while</span> (q.size() &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">int</span>[] idx = q.poll();</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span>[] delta : MATRIX) &#123;</span><br><span class="line">                <span class="keyword">int</span> x = idx[<span class="number">0</span>] + delta[<span class="number">0</span>];</span><br><span class="line">                <span class="keyword">int</span> y = idx[<span class="number">1</span>] + delta[<span class="number">1</span>];</span><br><span class="line">                <span class="keyword">if</span> (x &lt; <span class="number">0</span> || y &lt; <span class="number">0</span> || x == grid.length || y == grid[<span class="number">0</span>].length) &#123;</span><br><span class="line">                    <span class="keyword">continue</span>;</span><br><span class="line">                &#125; <span class="keyword">else</span> <span class="keyword">if</span> (grid[x][y] == <span class="string">&#x27;1&#x27;</span>) &#123;</span><br><span class="line">                    grid[x][y] = <span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">                    q.offer(<span class="keyword">new</span> <span class="keyword">int</span>[] &#123;x, y&#125;);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="思路-DFS"><a href="#思路-DFS" class="headerlink" title="思路 DFS"></a>思路 DFS</h2><p>DFS 思路比较简洁明了，<code>search</code> 中如果发现当前坐标是陆地，则继续向四个方向搜索。从结果上来看这道题的 DFS 的效率与 BFS 相差无几。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">numIslands</span>(<span class="params">self, grid: <span class="type">List</span>[<span class="type">List</span>[<span class="built_in">str</span>]]</span>) -&gt; <span class="built_in">int</span>:</span></span><br><span class="line">        m, n, ans = <span class="built_in">len</span>(grid), <span class="built_in">len</span>(grid[<span class="number">0</span>]), <span class="number">0</span></span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">search</span>(<span class="params">i, j</span>):</span></span><br><span class="line">            <span class="keyword">if</span> i &lt; <span class="number">0</span> <span class="keyword">or</span> j &lt; <span class="number">0</span> <span class="keyword">or</span> i == m <span class="keyword">or</span> j == n <span class="keyword">or</span> grid[i][j] != <span class="string">&quot;1&quot;</span>:</span><br><span class="line">                <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">            grid[i][j] = <span class="string">&quot;&quot;</span></span><br><span class="line">            search(i + <span class="number">1</span>, j)</span><br><span class="line">            search(i - <span class="number">1</span>, j)</span><br><span class="line">            search(i, j + <span class="number">1</span>)</span><br><span class="line">            search(i, j - <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(m):</span><br><span class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(n):</span><br><span class="line">                <span class="keyword">if</span> grid[i][j] == <span class="string">&quot;1&quot;</span>:</span><br><span class="line">                    ans += <span class="number">1</span></span><br><span class="line">                    search(i, j)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> ans</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> m;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> n;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">numIslands</span><span class="params">(<span class="keyword">char</span>[][] grid)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> ans = <span class="number">0</span>;</span><br><span class="line">        m = grid.length;</span><br><span class="line">        n = grid[<span class="number">0</span>].length;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; n; j++) &#123;</span><br><span class="line">                ans += search(grid, i, j);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">search</span><span class="params">(<span class="keyword">char</span>[][] grid, <span class="keyword">int</span> i, <span class="keyword">int</span> j)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (i &lt; <span class="number">0</span> || j &lt; <span class="number">0</span> || i == m || j == n || grid[i][j] != <span class="string">&#x27;1&#x27;</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">        grid[i][j] = <span class="string">&#x27;0&#x27;</span>;</span><br><span class="line"></span><br><span class="line">        search(grid, i + <span class="number">1</span>, j);</span><br><span class="line">        search(grid, i - <span class="number">1</span>, j);</span><br><span class="line">        search(grid, i, j + <span class="number">1</span>);</span><br><span class="line">        search(grid, i, j - <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="思路-Union-Find"><a href="#思路-Union-Find" class="headerlink" title="思路 Union-Find"></a>思路 Union-Find</h2><p>并查集的思路在于准备一个 1D 数组，每次查找到一个陆地则将其索引对应的位置设为陆地的起始值，这样连成一个小岛的陆地对应的数据都指向同一个值。这样当我们搜索完 2D 数组之后，对这个 1D 数组计算不重复的元素数量即为答案。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">numIslands</span>(<span class="params">self, grid: <span class="type">List</span>[<span class="type">List</span>[<span class="built_in">str</span>]]</span>) -&gt; <span class="built_in">int</span>:</span></span><br><span class="line">        m, n = <span class="built_in">len</span>(grid), <span class="built_in">len</span>(grid[<span class="number">0</span>])</span><br><span class="line">        par = [-<span class="number">1</span>] * (m * n)</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">find</span>(<span class="params">x</span>):</span></span><br><span class="line">            <span class="string">&quot;&quot;&quot;查找并更新起始位置&quot;&quot;&quot;</span></span><br><span class="line">            <span class="keyword">if</span> par[x] == x:</span><br><span class="line">                <span class="keyword">return</span> x</span><br><span class="line">            par[x] = find(par[x])</span><br><span class="line">            <span class="keyword">return</span> par[x]</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">union</span>(<span class="params">x, y</span>):</span></span><br><span class="line">            <span class="string">&quot;&quot;&quot;合并2个集合&quot;&quot;&quot;</span></span><br><span class="line">            f1, f2 = find(x), find(y)</span><br><span class="line">            <span class="keyword">if</span> f1 != f2:</span><br><span class="line">                par[f1] = par[f2]</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(m):</span><br><span class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(n):</span><br><span class="line">                <span class="keyword">if</span> grid[i][j] == <span class="string">&quot;1&quot;</span>:</span><br><span class="line">                    par[i * n + j] = i * n + j</span><br><span class="line">                    <span class="keyword">if</span> i - <span class="number">1</span> &gt;= <span class="number">0</span> <span class="keyword">and</span> grid[i - <span class="number">1</span>][j] == <span class="string">&quot;1&quot;</span>:</span><br><span class="line">                        union(i * n + j, (i - <span class="number">1</span>) * n + j)</span><br><span class="line">                    <span class="keyword">if</span> j - <span class="number">1</span> &gt;= <span class="number">0</span> <span class="keyword">and</span> grid[i][j - <span class="number">1</span>] == <span class="string">&quot;1&quot;</span>:</span><br><span class="line">                        union(i * n + j, i * n + j - <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">        res = <span class="built_in">set</span>()</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(par)):</span><br><span class="line">            <span class="keyword">if</span> par[i] != -<span class="number">1</span>:</span><br><span class="line">                res.add(find(i))</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">len</span>(res)</span><br></pre></td></tr></table></figure>
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>或许这道题是经典题目，上面几个思路的算法结果来看效率相差不大，但是成绩不是很理想。猜测是同样算法提交了很多次，根据解题机器的负载情况对成绩有一定影响，或许多跑几次会得到一个好成绩吧。</p>
+
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/post/leetcode/695-Max-Area-of-Island-Medium/" rel="bookmark">695. Max Area of Island (Medium)</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/post/leetcode/778-Swim-in-Rising-Water-Hard/" rel="bookmark">778. Swim in Rising Water (Hard)</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/post/leetcode/1074-Number-of-Submatrices-That-Sum-to-Target-Hard/" rel="bookmark">1074. Number of Submatrices That Sum to Target (Hard)</a></div>
+    </li>
+  </ul>
+
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Array/" rel="tag"># Array</a>
+              <a href="/tags/BFS/" rel="tag"># BFS</a>
+              <a href="/tags/DFS/" rel="tag"># DFS</a>
+              <a href="/tags/Matrix/" rel="tag"># Matrix</a>
+              <a href="/tags/Union-Find/" rel="tag"># Union Find</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+            </div>
+            <div class="post-nav-item">
+                <a href="/post/leetcode/622-Design-Circular-Queue-Medium/" rel="next" title="622. Design Circular Queue (Medium)">
+                  622. Design Circular Queue (Medium) <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2018 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Richard Zen</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">353k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">5:20</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.1/source/js/comments.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.1/source/js/utils.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.1/source/js/motion.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.1/source/js/schemes/muse.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.1/source/js/next-boot.min.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.1/source/js/third-party/search/local-search.min.js"></script>
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"zfanli/zfanli.github.io","issue_term":"og:title","theme":"preferred-color-scheme"}</script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.7.1/source/js/third-party/comments/utterances.min.js"></script>
+
+</body>
+</html>

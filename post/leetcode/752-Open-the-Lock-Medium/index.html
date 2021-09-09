@@ -242,7 +242,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF"><span class="nav-text">思路</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF-BFS"><span class="nav-text">思路 BFS</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -262,7 +262,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">124</span>
+          <span class="site-state-item-count">125</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
@@ -369,7 +369,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>1.1k</span>
+      <span>1.5k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -392,7 +392,7 @@
 <p>你会得到一个死锁列表 <code>deadends</code>，表示当你转动圆盘锁到这个值的时候游戏结束。你还会得到目标值 <code>target</code>，你需要在避免遇到死锁的情况下解开圆盘锁，返回操作圆盘锁的最少步骤数，或者返回 -1 表示在已知条件下无法解锁。</p>
 <span id="more"></span>
 
-<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>换个角度我们需要求出一个 10000 个节点的图中从 <code>0000</code> 出发到目标节点的最短路径，并且要避开给定的死路。总结一下已知的情报。</p>
+<h2 id="思路-BFS"><a href="#思路-BFS" class="headerlink" title="思路 BFS"></a>思路 BFS</h2><p>换个角度我们需要求出一个 10000 个节点的图中从 <code>0000</code> 出发到目标节点的最短路径，并且要避开给定的死路。总结一下已知的情报。</p>
 <ul>
 <li>每个转轮每次操作可以 +1 or -1；</li>
 <li>当前状态的下一步操作有 4 * 2 = 8 中选择；</li>
@@ -410,6 +410,9 @@
 <li>开始实现算法。</li>
 </ul>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">openLock</span>(<span class="params">self, deadends: <span class="type">List</span>[<span class="built_in">str</span>], target: <span class="built_in">str</span></span>) -&gt; <span class="built_in">int</span>:</span></span><br><span class="line">        <span class="keyword">if</span> target == <span class="string">&#x27;0000&#x27;</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line"></span><br><span class="line">        depth, queue, seen, target = <span class="number">0</span>, [<span class="number">0</span>], [<span class="number">0</span>] * <span class="number">10000</span>, <span class="built_in">int</span>(target)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> d <span class="keyword">in</span> deadends:</span><br><span class="line">            seen[<span class="built_in">int</span>(d)] = <span class="number">1</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> seen[<span class="number">0</span>]:</span><br><span class="line">            <span class="keyword">return</span> -<span class="number">1</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> <span class="built_in">len</span>(queue) &gt; <span class="number">0</span>:</span><br><span class="line">            n, depth = <span class="built_in">len</span>(queue), depth + <span class="number">1</span></span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n):</span><br><span class="line">                first = queue.pop(<span class="number">0</span>)</span><br><span class="line">                <span class="keyword">for</span> k <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">4</span>):</span><br><span class="line">                    base = first // <span class="number">10</span> ** k % <span class="number">10</span></span><br><span class="line">                    <span class="keyword">for</span> d <span class="keyword">in</span> (-<span class="number">1</span>, <span class="number">1</span>):</span><br><span class="line">                        <span class="comment"># first - base * 10 ** k -&gt; get the base number with target digit reset to 0.</span></span><br><span class="line">                        <span class="comment"># ~ + (base + d) % 10 * 10 ** k -&gt; add back the caculated target digit.</span></span><br><span class="line">                        nxt = first - base * <span class="number">10</span> ** k + (base + d) % <span class="number">10</span> * <span class="number">10</span> ** k</span><br><span class="line">                        <span class="keyword">if</span> nxt == target:</span><br><span class="line">                            <span class="keyword">return</span> depth</span><br><span class="line">                        <span class="keyword">if</span> seen[<span class="built_in">int</span>(nxt)]:</span><br><span class="line">                            <span class="keyword">continue</span></span><br><span class="line">                        seen[<span class="built_in">int</span>(nxt)] = <span class="number">1</span></span><br><span class="line">                        queue.append(nxt)</span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<p>将字符串转成数值然后再做各个位置的加减处理总是有点费脑筋，下面是字符串处理版本的算法。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">openLock</span>(<span class="params">self, deadends: <span class="type">List</span>[<span class="built_in">str</span>], target: <span class="built_in">str</span></span>) -&gt; <span class="built_in">int</span>:</span></span><br><span class="line">        visited = <span class="built_in">set</span>(deadends)</span><br><span class="line">        <span class="keyword">if</span> <span class="string">&quot;0000&quot;</span> <span class="keyword">in</span> visited:</span><br><span class="line">            <span class="keyword">return</span> -<span class="number">1</span></span><br><span class="line"></span><br><span class="line">        q, step = deque([<span class="string">&quot;0000&quot;</span>]), -<span class="number">1</span></span><br><span class="line">        <span class="keyword">while</span> q:</span><br><span class="line">            step += <span class="number">1</span></span><br><span class="line">            <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(q)):</span><br><span class="line">                curr = q.popleft()</span><br><span class="line">                <span class="keyword">if</span> curr == target:</span><br><span class="line">                    <span class="keyword">return</span> step</span><br><span class="line">                <span class="keyword">if</span> curr <span class="keyword">in</span> visited:</span><br><span class="line">                    <span class="keyword">continue</span></span><br><span class="line">                visited.add(curr)</span><br><span class="line">                <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">4</span>):</span><br><span class="line">                    <span class="keyword">for</span> nxt <span class="keyword">in</span> [curr[:i] + <span class="built_in">str</span>((<span class="built_in">int</span>(curr[i]) + x) % <span class="number">10</span>) + curr[i + <span class="number">1</span>:] <span class="keyword">for</span> x <span class="keyword">in</span> (<span class="number">1</span>, -<span class="number">1</span>)]:</span><br><span class="line">                        <span class="keyword">if</span> nxt <span class="keyword">not</span> <span class="keyword">in</span> visited:</span><br><span class="line">                            q.append(nxt)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span></span><br></pre></td></tr></table></figure>
 
     </div>
 
@@ -483,13 +486,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">348k</span>
+    <span title="站点总字数">353k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">5:16</span>
+    <span title="站点阅读时长">5:20</span>
   </span>
 </div>
 <div class="busuanzi-count">

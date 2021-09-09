@@ -3105,7 +3105,7 @@ hr {
   transition: all 0.2s ease-in-out;
 }
 .links-of-author a::before {
-  background: #737886;
+  background: #ffe34e;
   display: inline-block;
   margin-right: 3px;
   transform: translateY(-2px);
@@ -3184,7 +3184,7 @@ hr {
 }
 .light-scheme .table-container {
   overflow: auto;
-  box-shadow: 0 2px 1px -1px rgba(0,0,0,0.2), 0 1px 1px 0 rgba(0,0,0,0.14), 0 1px 3px 0 rgba(0,0,0,0.12) !important;
+  box-shadow: 0 2px 20px -1px rgba(0,0,0,0.1), 0 1px 1px 0 rgba(0,0,0,0.07), 0 1px 3px 0 rgba(0,0,0,0.04) !important;
   margin-bottom: 20px;
 }
 .light-scheme table {
