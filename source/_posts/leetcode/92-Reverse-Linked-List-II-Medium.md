@@ -3,8 +3,6 @@ date: '2021-04-14T15:36:05.469Z'
 tags:
   - Linked List
 title: 92. Reverse Linked List II (Medium)
-categories:
-  - leetcode
 ---
 
 链表问题。实现一个程序根据 2 个下标位置对链表对于位置的元素进行翻转。

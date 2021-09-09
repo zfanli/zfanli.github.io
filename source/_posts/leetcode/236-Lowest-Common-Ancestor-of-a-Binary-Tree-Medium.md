@@ -4,9 +4,7 @@ tags:
   - Tree
   - DFS
   - Binary Tree
-date: '2021-08-23T06:42:28.499Z'
-categories:
-  - leetcode
+date: "2021-08-23T06:42:28.499Z"
 ---
 
 你有一棵二叉树，给你 2 个节点，让你寻找它们的最近公共祖先节点。根据 Wiki 描述最近公共祖先的定义如下。

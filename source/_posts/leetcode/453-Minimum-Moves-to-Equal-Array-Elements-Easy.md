@@ -3,8 +3,6 @@ date: '2021-05-26T15:36:05.518Z'
 tags:
   - Math
 title: 453. Minimum Moves to Equal Array Elements (Easy)
-categories:
-  - leetcode
 ---
 
 你有一个长度为 `n` 的数组，允许你每次操作将 `n - 1` 个元素的值 +1，求最少需要多少操作次数让数组中的所有元素相等。

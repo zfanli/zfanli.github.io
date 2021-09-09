@@ -3,8 +3,6 @@ date: '2021-06-09T15:36:05.537Z'
 tags:
   - Array
 title: 665. Non-decreasing Array (Medium)
-categories:
-  - leetcode
 ---
 
 数组问题。你有一个整数数组，你有一次机会修改其中的一个值，你需要检查这个数组是否能构成一个非递减数组。
