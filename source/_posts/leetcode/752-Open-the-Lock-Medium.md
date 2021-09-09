@@ -1,13 +1,11 @@
 ---
-date: '2021-06-21T15:36:05.550Z'
+date: "2021-06-21T15:36:05.550Z"
 tags:
   - Array
   - Hash Table
   - String
   - BFS
 title: 752. Open the Lock (Medium)
-categories:
-  - leetcode
 ---
 
 开锁游戏。你有一个圆盘锁，锁有 4 个转轮，每个转轮上有 0 ～ 9 共十个数字。
@@ -18,7 +16,7 @@ categories:
 
 <!-- more -->
 
-## 思路
+## 思路 BFS
 
 换个角度我们需要求出一个 10000 个节点的图中从 `0000` 出发到目标节点的最短路径，并且要避开给定的死路。总结一下已知的情报。
 
@@ -63,5 +61,32 @@ class Solution:
                             continue
                         seen[int(nxt)] = 1
                         queue.append(nxt)
+        return -1
+```
+
+将字符串转成数值然后再做各个位置的加减处理总是有点费脑筋，下面是字符串处理版本的算法。
+
+```python
+class Solution:
+    def openLock(self, deadends: List[str], target: str) -> int:
+        visited = set(deadends)
+        if "0000" in visited:
+            return -1
+
+        q, step = deque(["0000"]), -1
+        while q:
+            step += 1
+            for _ in range(len(q)):
+                curr = q.popleft()
+                if curr == target:
+                    return step
+                if curr in visited:
+                    continue
+                visited.add(curr)
+                for i in range(4):
+                    for nxt in [curr[:i] + str((int(curr[i]) + x) % 10) + curr[i + 1:] for x in (1, -1)]:
+                        if nxt not in visited:
+                            q.append(nxt)
+
         return -1
 ```

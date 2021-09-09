@@ -5,8 +5,6 @@ tags:
   - Array
   - Hash Table
 title: 890. Find and Replace Pattern (Medium)
-categories:
-  - leetcode
 ---
 
 给定一组字符串和一个模式（pattern），返回字符串中所有匹配这个模式的对象。

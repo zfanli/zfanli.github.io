@@ -4,8 +4,6 @@ tags:
   - Array
   - Backtracking
 title: 39. Combination Sum (Medium)
-categories:
-  - leetcode
 ---
 
 先读题，这种题真是脑细胞的初见杀。
