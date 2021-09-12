@@ -7751,6 +7751,351 @@ $(function(){
       </tags>
   </entry>
   <entry>
+    <title>JavaScript 语法标准整理 - ES6 及以后版本</title>
+    <url>/post/study/js/JavaScript-Specifications-ES6-and-beyond/</url>
+    <content><![CDATA[<p>我们通常说的 JavaScript 其实指的是 ECMAScript 的子集。JavaScript 遵从 ECMAScript 定义的语言标准提供接口，但是内部实现则完全取决于运行环境。根据 ECMAScript 规格实现的语言还有 ActionScript、JScript 等等。这些实现了同一个规范的语言可以类比做使用了同一种引擎的不同汽车，每辆车的外观都不尽相同，而每种语言都有其独特的风格。</p>
+<p>ECMAScript 是 Netscape 的 Brendan Eich 所开发的一个脚本语言的标准化规格，这个脚本语言最初叫 Mocha，随后改名为 LiveScript，最后改名为我们熟知的 JavaScript。可以说 ECMAScript 就是当时的 “JavaScript”，但是因为种种原因这个名称没能保留下来，我们现在经常使用的 JavaScript 主要是各浏览器实现的版本。</p>
+<p>ECMAScript 的作用在于定义 JavaScript 语言的核心标准和 API，经过多个版本的迭代之后，ECMAScript 如今稳定每一年会发布一个新版本，给 JavaScript 添加一些新的语言特性以及改善。这篇文章将主要讨论 ECMAScript 第 6 个版本（即 ES6）及往后版本中推出的新特性和推出这些特性的缘由。</p>
+<blockquote>
+<p>内容包括<strong>更新时间截止</strong>的所有已添加的特性。</p>
+</blockquote>
+<span id="more"></span>
+
+<h2 id="ECMAScript"><a href="#ECMAScript" class="headerlink" title="ECMAScript"></a>ECMAScript</h2><p>ECMAScript 也叫 ECMA-262，是 JavaScript 的语言规范。下面是截止本文更新时间 ECMAScript 的版本列表。整体上来说，ECMAScript 在 ES3 为止都是对初版的修补，但到了第 4 版（ES4）时，由于提案的很多特性的引入会导致与先前版本的不兼容，被 Netscape、Mozilla 和微软等方面指责为“breaking the web”。随后雅虎、微软和谷歌牵头构成了工作小组在 ES3 的基础上做了一些安全方面、库的更新方面的工作，并且着重强调了兼容性。这两个小组并行工作了一段时间后做出了妥协，ES4 的版本被废止，后来的这个版本作为 ES5 发布。ES4 中的部分特性在 ES6 以后得到引入。并且从 ES6 开始，ECMAScript 每一年会发布一个新版本，添加一些新特性和做出一些改善。</p>
+<table>
+<thead>
+<tr>
+<th>Edition</th>
+<th>Date Published</th>
+<th>Name</th>
+<th>Changes</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>1997 年 6 月</td>
+<td></td>
+<td>初版</td>
+</tr>
+<tr>
+<td>2</td>
+<td>1998 年 6 月</td>
+<td></td>
+<td>修改以符合 ISO/IEC 16262 国际标准</td>
+</tr>
+<tr>
+<td>3</td>
+<td>1999 年 12 月</td>
+<td></td>
+<td>加入正则表达式、更好的字符串处理、新的流程控制语句、Try Catch 异常处理、更细致的 Errors 定义、数值输出以及其他改善。</td>
+</tr>
+<tr>
+<td>4</td>
+<td>（废弃）2003 年 6 月</td>
+<td></td>
+<td>由于语言复杂度上的策略分歧而被分歧，其中的部分提案被完全抛弃，另一部分在第 6 版中发布。</td>
+</tr>
+<tr>
+<td>5</td>
+<td>2009 年 12 月</td>
+<td>ECMAScript 2015 (ES2015)</td>
+<td>加入严格（<code>strict</code>）模式；解决了第 3 版中的很多模糊定义，并且包容与规格有所不同的实际语言实现；添加了 setter 和 getter、JSON 支持以及更加完整的对象属性的反射。</td>
+</tr>
+<tr>
+<td>5.1</td>
+<td>2011 年 6 月</td>
+<td></td>
+<td>修改以符合 ISO/IEC 16262:2011 国际标准</td>
+</tr>
+<tr>
+<td>6</td>
+<td>2015 年 6 月</td>
+<td>ECMAScript 2016 (ES2016)</td>
+<td>*见下文</td>
+</tr>
+<tr>
+<td>7</td>
+<td>2016 年 6 月</td>
+<td>ECMAScript 2016 (ES2016)</td>
+<td>*见下文</td>
+</tr>
+<tr>
+<td>8</td>
+<td>2017 年 6 月</td>
+<td>ECMAScript 2017 (ES2017)</td>
+<td>*见下文</td>
+</tr>
+<tr>
+<td>9</td>
+<td>2018 年 6 月</td>
+<td>ECMAScript 2018 (ES2018)</td>
+<td>*见下文</td>
+</tr>
+<tr>
+<td>10</td>
+<td>2019 年 6 月</td>
+<td>ECMAScript 2019 (ES2019)</td>
+<td>*见下文</td>
+</tr>
+<tr>
+<td>11</td>
+<td>2020 年 6 月</td>
+<td>ECMAScript 2020 (ES2020)</td>
+<td>*见下文</td>
+</tr>
+<tr>
+<td>12</td>
+<td>2021 年 6 月</td>
+<td>ECMAScript 2021 (ES2021)</td>
+<td>*见下文</td>
+</tr>
+</tbody></table>
+<h3 id="脚本引擎的支持情况"><a href="#脚本引擎的支持情况" class="headerlink" title="脚本引擎的支持情况"></a>脚本引擎的支持情况</h3><p>ECMA 国际标准化组织为 ECMAScript 语言规格开发了一套测试代码集 Test262，用来检验每一种 JavaScript 实现遵守语言标准的程度。下面是目前为止各个主流的脚本引擎对新语言特性的支持情况。可见对于主流浏览器来说，就算是最新推出的语言标准也能得到快速适配。</p>
+<blockquote>
+<p>数据来自<a href="https://en.wikipedia.org/wiki/ECMAScript#Conformance">维基百科</a>。</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>Scripting engine</th>
+<th>Reference application(s)</th>
+<th>ES5</th>
+<th>ES6 (2015)</th>
+<th>ES7 (2016)</th>
+<th>Newer (2017+)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Chakra</td>
+<td>Microsoft Edge 18</td>
+<td>100%</td>
+<td>96%</td>
+<td>100%</td>
+<td>33%</td>
+</tr>
+<tr>
+<td>SpiderMonkey</td>
+<td>Firefox 79</td>
+<td>100%</td>
+<td>98%</td>
+<td>100%</td>
+<td>100%</td>
+</tr>
+<tr>
+<td>V8</td>
+<td>Google Chrome 84, Microsoft Edge 84, Opera 70</td>
+<td>100%</td>
+<td>98%</td>
+<td>100%</td>
+<td>100%</td>
+</tr>
+<tr>
+<td>JavaScriptCore</td>
+<td>Safari 13.1</td>
+<td>99%</td>
+<td>99%</td>
+<td>100%</td>
+<td>84%</td>
+</tr>
+</tbody></table>
+<h3 id="ES12（ES2021）"><a href="#ES12（ES2021）" class="headerlink" title="ES12（ES2021）"></a>ES12（ES2021）</h3><h4 id="字符串实例：-replaceAll"><a href="#字符串实例：-replaceAll" class="headerlink" title="字符串实例：.replaceAll()"></a>字符串实例：<code>.replaceAll()</code></h4><p>或许你注意到 JavaScript 中的字符串实例上的置换方法一次只能替换一个值。现在可以一次置换所有匹配值了。方便。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> str =</span><br><span class="line">  <span class="string">&quot;ES2021 was published in June 2021, and ES2020 was published in June 2020&quot;</span>;</span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line">str.replace(<span class="string">&quot;2020&quot;</span>, <span class="string">&quot;11&quot;</span>);</span><br><span class="line"><span class="comment">// &quot;ES2021 was published in June 2021, and ES11 was published in June 2020&quot;</span></span><br><span class="line">str.replaceAll(<span class="string">&quot;2021&quot;</span>, <span class="string">&quot;2019&quot;</span>);</span><br><span class="line"><span class="comment">// &quot;ES2019 was published in June 2019, and ES2020 was published in June 2020&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="Promise-any"><a href="#Promise-any" class="headerlink" title="Promise .any()"></a>Promise <code>.any()</code></h4><p>Promise 机制中有几个 API 用来处理一系列 Promise 的结果，ES2021 添加了 <code>.any()</code> 方法，有些类似于 <code>.race()</code>，但是不会再发生错误时立刻中止。基本覆盖了所有使用场景。</p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>promise.all([p1, p2, p3])</code></td>
+<td>等待所有 promise 完成，在发生错误时中止</td>
+</tr>
+<tr>
+<td><code>promise.race([p1, p2, p3])</code></td>
+<td>等待直到第一个 promise 完成或发生错误</td>
+</tr>
+<tr>
+<td><code>promise.allSettled([p1, p2, p3])</code></td>
+<td>等待所有 promise 完成</td>
+</tr>
+<tr>
+<td><code>promise.any([p1, p2, p3])</code></td>
+<td>等待直到第一个 promise 完成，无视发生的错误</td>
+</tr>
+</tbody></table>
+<h4 id="逻辑赋值运算符-Logical-Assignment-Operator"><a href="#逻辑赋值运算符-Logical-Assignment-Operator" class="headerlink" title="逻辑赋值运算符 Logical Assignment Operator"></a>逻辑赋值运算符 Logical Assignment Operator</h4><p>逻辑赋值运算符让以往的写法更加简洁易读。参考下面的代码例子。算是语法糖。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 以往的写法</span></span><br><span class="line">a || (a = <span class="string">&quot;default&quot;</span>);</span><br><span class="line"><span class="comment">// 使用逻辑赋值运算符</span></span><br><span class="line">a ||= <span class="string">&quot;default&quot;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>可以做逻辑赋值的运算符如下。</p>
+<table>
+<thead>
+<tr>
+<th>运算符</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>||=</code></td>
+<td>左边为 <code>falsy</code> 时赋值，<code>false</code>、<code>0</code>、<code>&quot;&quot;</code> 都属于 <code>falsy</code></td>
+</tr>
+<tr>
+<td><code>&amp;&amp;=</code></td>
+<td>左边为 <code>truthy</code> 时赋值，非 <code>falsy</code> 的值都属于 <code>truthy</code></td>
+</tr>
+<tr>
+<td><code>??=</code></td>
+<td>左边为 <code>nullish</code> 时赋值，<code>null</code> 和 <code>undefined</code> 属于 <code>nullish</code></td>
+</tr>
+</tbody></table>
+<h4 id="数值分隔符-Numerical-Separator"><a href="#数值分隔符-Numerical-Separator" class="headerlink" title="数值分隔符 Numerical Separator"></a>数值分隔符 Numerical Separator</h4><p>数值中添加下划线进行分隔，提高数值的可读性。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> billion = <span class="number">1_000_000_000</span>;</span><br></pre></td></tr></table></figure>
+
+<h4 id="WeakRef-amp-Finalization-Registry"><a href="#WeakRef-amp-Finalization-Registry" class="headerlink" title="WeakRef &amp; Finalization Registry"></a>WeakRef &amp; Finalization Registry</h4><p><code>WeakRef</code> 会创建一个对象的弱引用，这种引用不会影响对象被垃圾回收（GC），如果目标对象不存在弱引用以外的引用的话，在脚本引擎执行垃圾回收时会销毁该对象。</p>
+<p>弱引用在处理大文件缓存和映射的场景时比较有用，比如有一组图片文件，你想给每个图片进行命名但又不希望名称的映射让其无法被垃圾回收机制销毁，这时使用弱引用可以满足这个需求。用弱引用将字符串与图片一一绑定，而图片在不再被使用时会随时被 GC。</p>
+<blockquote>
+<p>不过也因为弱引用的目标对象可能随时被 GC，使用时需要慎重考虑。</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// An object to reference weakly</span></span><br><span class="line"><span class="keyword">const</span> obj = &#123; <span class="attr">name</span>: <span class="string">&quot;John&quot;</span>, <span class="attr">age</span>: <span class="number">18</span>, <span class="attr">favColor</span>: <span class="string">&quot;pink&quot;</span> &#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// creating a WeakRef of this object</span></span><br><span class="line"><span class="keyword">const</span> weakRefObj = <span class="keyword">new</span> WeakRef(obj);</span><br><span class="line"></span><br><span class="line"><span class="comment">// To read the weak ref object</span></span><br><span class="line"><span class="keyword">const</span> weakRefInstance = weakRefObj.deref();</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(weakRefInstance.age);</span><br><span class="line"><span class="comment">// Output: 18</span></span><br></pre></td></tr></table></figure>
+
+<p>Finalization Registry 是配合 <code>WeakRef</code> 使用的一个机制。<strong>Finalization</strong> 指的是一个对象不再使用后执行清除操作的过程。而 Finalization Registry 本质上就是一个对象被 GC 之后的回调函数。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// create a registry</span></span><br><span class="line"><span class="keyword">const</span> registry = <span class="keyword">new</span> FinalizationRegistry(<span class="function">(<span class="params">heldValue</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// Do something here</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">//register any objects you want a cleanup callback for</span></span><br><span class="line">registry.register(theObject, <span class="string">&quot;some value&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<h3 id="ES11（ES2020）"><a href="#ES11（ES2020）" class="headerlink" title="ES11（ES2020）"></a>ES11（ES2020）</h3><h4 id="全局对象-globalThis"><a href="#全局对象-globalThis" class="headerlink" title="全局对象 globalThis"></a>全局对象 <code>globalThis</code></h4><p>在浏览器中 <code>globalThis</code> 实际指向 <code>window</code> 对象，但是 Worker 中我们无法直接使用全局对象，而是需要通过 <code>self</code> 访问，这造成在对不同程序进行开发时全局对象的名称不同。为了解决这个问题，ES2020 引入了 <code>globalThis</code> 统一了每个环境下的全局对象名称。</p>
+<h4 id="新数据类型：BigInt"><a href="#新数据类型：BigInt" class="headerlink" title="新数据类型：BigInt"></a>新数据类型：<code>BigInt</code></h4><p>JavaScript 中的 <code>Number</code> 类型数据以双精度 64 位浮点数（float64）表示，这表示其对整数值来说只保证能正确显示 -2^53 ～ 2^53 的值。</p>
+<blockquote>
+<p>From Wikipedia</p>
+<ul>
+<li>Integers from −253 to 253 (−9,007,199,254,740,992 to 9,007,199,254,740,992) can be exactly represented</li>
+<li>Integers between 253 and 254 = 18,014,398,509,481,984 round to a multiple of 2 (even number)</li>
+<li>Integers between 254 and 255 = 36,028,797,018,963,968 round to a multiple of 4</li>
+</ul>
+</blockquote>
+<p>看下面的例子，我们先拿到能保证安全操作的最大数字，然后尝试对比这个值加 1 和加 2 的结果，你会发现结果是 <code>true</code>。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> num = <span class="built_in">Number</span>.MAX_SAFE_INTEGER;</span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line">num;</span><br><span class="line"><span class="comment">// 9007199254740991</span></span><br><span class="line">num + <span class="number">1</span> === num + <span class="number">2</span>;</span><br><span class="line"><span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+
+<p>ES2020 中引入了 <code>BigInt</code> 数据类型来处理任意长度的数字，你可以使用其构造函数声明，也可以在数字后添加后缀 <code>n</code> 实现。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> num = <span class="built_in">BigInt</span>(<span class="built_in">Number</span>.MAX_SAFE_INTEGER);</span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line">num;</span><br><span class="line"><span class="comment">// 9007199254740991n</span></span><br><span class="line">num + <span class="number">1n</span> === num + <span class="number">2n</span>;</span><br><span class="line"><span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+
+<p><code>BigInt</code> 使用时需要注意下面限制：</p>
+<ul>
+<li><code>BigInt</code> 不能直接与 <code>Number</code> 进行运算；</li>
+<li><code>BigInt</code> 可以与 <code>Number</code> 进行比较，但严格比较（<code>===</code>）就算字面量相等也会返回 <code>false</code>；</li>
+<li>由于一元加号运算符（<code>+</code>）在 JavaScript 中存在隐式数值转换，<code>BigInt</code> 使用 <code>+1n</code> 的形式表达时会报类型转换错误；</li>
+<li><code>BigInt</code> 与 <code>Number</code> 之间换算会损失精度，使用时需要避免频繁换算；</li>
+<li><code>BigInt</code> 的运算非常量时间，不适合用于密码学计算。</li>
+</ul>
+<h4 id="Promise-allSettled"><a href="#Promise-allSettled" class="headerlink" title="Promise .allSettled()"></a>Promise <code>.allSettled()</code></h4><p>新的 Promise 方法。等待到所有 Promise 都结束后触发。适合等待所有依赖都完成后立即执行的场景。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> p1 = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve</span>) =&gt;</span> resolve());</span><br><span class="line"><span class="keyword">const</span> p2 = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> <span class="built_in">setTimeout</span>(reject, <span class="number">200</span>));</span><br><span class="line"></span><br><span class="line"><span class="built_in">Promise</span>.allSettled([p1, p2]).then(<span class="function">(<span class="params">res</span>) =&gt;</span></span><br><span class="line">  <span class="built_in">console</span>.log(res.map(<span class="function">(<span class="params">a</span>) =&gt;</span> a.status))</span><br><span class="line">);</span><br><span class="line"><span class="comment">// (2) [&quot;fulfilled&quot;, &quot;rejected&quot;]</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="空值结合运算符-Nullish-Coalescing-Operator"><a href="#空值结合运算符-Nullish-Coalescing-Operator" class="headerlink" title="空值结合运算符 Nullish Coalescing Operator"></a>空值结合运算符 Nullish Coalescing Operator</h4><p>首先要解释 <strong>Nullish</strong>，在 JavaScript 中 <code>undefined</code> 和 <code>null</code> 属于 <strong>Nullish</strong>，空值结合运算符的意义在于判断变量是否是空值（Nullish），如果是的话则返回右边的值，通常用来做默认值赋值。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 对比 `||` 运算符，只要左边是 falsy 就返回右边的的结果</span></span><br><span class="line"><span class="literal">undefined</span> || <span class="string">&quot;some string&quot;</span>;</span><br><span class="line"><span class="comment">// &quot;some string&quot;</span></span><br><span class="line"><span class="literal">null</span> || <span class="string">&quot;some string&quot;</span>;</span><br><span class="line"><span class="comment">// &quot;some string&quot;</span></span><br><span class="line"><span class="literal">false</span> || <span class="string">&quot;some string&quot;</span>;</span><br><span class="line"><span class="comment">// &quot;some string&quot;</span></span><br><span class="line"><span class="number">0</span> || <span class="string">&quot;some string&quot;</span>;</span><br><span class="line"><span class="comment">// &quot;some string&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 空值结合运算符 `??`，仅在 nullish 时返回右边的的结果</span></span><br><span class="line"><span class="literal">undefined</span> ?? <span class="string">&quot;some string&quot;</span>;</span><br><span class="line"><span class="comment">// &quot;some string&quot;</span></span><br><span class="line"><span class="literal">null</span> ?? <span class="string">&quot;some string&quot;</span>;</span><br><span class="line"><span class="comment">// &quot;some string&quot;</span></span><br><span class="line"><span class="literal">false</span> ?? <span class="string">&quot;some string&quot;</span>;</span><br><span class="line"><span class="comment">// false</span></span><br><span class="line"><span class="number">0</span> ?? <span class="string">&quot;some string&quot;</span>;</span><br><span class="line"><span class="comment">// 0</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="可选链运算符-Optional-Chaining-Operator"><a href="#可选链运算符-Optional-Chaining-Operator" class="headerlink" title="可选链运算符 Optional Chaining Operator"></a>可选链运算符 Optional Chaining Operator</h4><p>可选链运算符在链式调用中处理空值非常有用，可以完美避免空指针问题。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> obj = &#123; <span class="attr">info</span>: &#123; <span class="attr">name</span>: <span class="string">&quot;John&quot;</span>, <span class="attr">age</span>: <span class="number">17</span> &#125; &#125;;</span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line">obj?.info?.name;</span><br><span class="line"><span class="comment">// &quot;John&quot;</span></span><br><span class="line">obj?.any?.name;</span><br><span class="line"><span class="comment">// undefined</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="ES10（ES2019）"><a href="#ES10（ES2019）" class="headerlink" title="ES10（ES2019）"></a>ES10（ES2019）</h3><h4 id="数组实例：-flat-和-flatMap"><a href="#数组实例：-flat-和-flatMap" class="headerlink" title="数组实例：.flat() 和 .flatMap()"></a>数组实例：<code>.flat()</code> 和 <code>.flatMap()</code></h4><p>ES2019 给数组添加了扁平化方法 <code>.flat(depth=1)</code>，这个方法接收一个参数 <code>depth</code> 表示需要提取的嵌套层数，默认为 1 层。这个方法会返回新的数组，不会影响原数组。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 默认只提取一层嵌套数组进行扁平化</span></span><br><span class="line">[<span class="number">1</span>, <span class="number">2</span>, [<span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, [<span class="number">6</span>, <span class="number">7</span>, [<span class="number">8</span>], <span class="number">9</span>], <span class="number">10</span>]].flat();</span><br><span class="line"><span class="comment">// (7) [1, 2, 3, 4, 5, Array(4), 10]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 可以指定层数，或者使用 `Infinity` 表示提取所有嵌套层数</span></span><br><span class="line">[<span class="number">1</span>, <span class="number">2</span>, [<span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, [<span class="number">6</span>, <span class="number">7</span>, [<span class="number">8</span>], <span class="number">9</span>], <span class="number">10</span>]].flat(<span class="literal">Infinity</span>);</span><br><span class="line"><span class="comment">// (10) [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]</span></span><br></pre></td></tr></table></figure>
+
+<p>ES2019 还给数组添加了另一个方法 <code>.flatMap(func[, thisArg])</code>，这个方法与 <code>.map()</code> 类似，但是会将返回的数组结果进行扁平化。同 <code>.map()</code> 一样，这个方法会返回新的数组。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> arr1 = [<span class="string">&quot;it&#x27;s Sunny in&quot;</span>, <span class="string">&quot;&quot;</span>, <span class="string">&quot;California&quot;</span>];</span><br><span class="line"></span><br><span class="line">arr1.map(<span class="function">(<span class="params">x</span>) =&gt;</span> x.split(<span class="string">&quot; &quot;</span>));</span><br><span class="line"><span class="comment">// [[&quot;it&#x27;s&quot;,&quot;Sunny&quot;,&quot;in&quot;],[&quot;&quot;],[&quot;California&quot;]]</span></span><br><span class="line"></span><br><span class="line">arr1.flatMap(<span class="function">(<span class="params">x</span>) =&gt;</span> x.split(<span class="string">&quot; &quot;</span>));</span><br><span class="line"><span class="comment">// [&quot;it&#x27;s&quot;,&quot;Sunny&quot;,&quot;in&quot;, &quot;&quot;, &quot;California&quot;]</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="字符串实例：-trimStart-和-trimEnd"><a href="#字符串实例：-trimStart-和-trimEnd" class="headerlink" title="字符串实例：.trimStart() 和 .trimEnd()"></a>字符串实例：<code>.trimStart()</code> 和 <code>.trimEnd()</code></h4><p>字符串的新方法 <code>.trimStart()</code> 和 <code>.trimEnd()</code> 执行如字面意思相同的处理，算是语法糖。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> str = <span class="string">&quot;    hello!    &quot;</span>;</span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line">str.trimStart();</span><br><span class="line"><span class="comment">// &quot;hello!    &quot;</span></span><br><span class="line">str.trimEnd();</span><br><span class="line"><span class="comment">// &quot;    hello!&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="ES9（ES2018）"><a href="#ES9（ES2018）" class="headerlink" title="ES9（ES2018）"></a>ES9（ES2018）</h3><h4 id="扩展运算符-Spread-Operator"><a href="#扩展运算符-Spread-Operator" class="headerlink" title="扩展运算符 Spread Operator"></a>扩展运算符 Spread Operator</h4><p>ES2018 引入了针对对象的扩展运算符。扩展运算符之前只能对数组使用，现在也能对对象进行方便的复制和合并。对对象使用时类似 <code>Object.assign()</code> 的效果，但是扩展运算符不会调用属性的 setter 而 <code>Object.assign()</code> 会。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> a = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br><span class="line"><span class="keyword">const</span> b = [<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>];</span><br><span class="line"><span class="keyword">const</span> c = [...a, <span class="number">3.5</span>, ...b];</span><br><span class="line"><span class="comment">// (7) [1, 2, 3, 3.5, 4, 5, 6]</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> obj = &#123; <span class="attr">name</span>: <span class="string">&quot;John&quot;</span>, <span class="attr">age</span>: <span class="number">17</span> &#125;;</span><br><span class="line"><span class="keyword">const</span> result = &#123; ...obj, <span class="attr">gender</span>: <span class="string">&quot;male&quot;</span> &#125;;</span><br><span class="line"><span class="comment">// &#123;name: &quot;John&quot;, age: 17, gender: &quot;male&quot;&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="Rest-参数"><a href="#Rest-参数" class="headerlink" title="Rest 参数"></a>Rest 参数</h4><p>扩展运算符用在方法参数上有相反的效果。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params">...args</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(args);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">test(<span class="string">&quot;many&quot;</span>, <span class="string">&quot;args&quot;</span>, <span class="string">&quot;here&quot;</span>);</span><br><span class="line"><span class="comment">// (3) [&quot;many&quot;, &quot;args&quot;, &quot;here&quot;]</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="异步迭代-Asynchronous-Iteration"><a href="#异步迭代-Asynchronous-Iteration" class="headerlink" title="异步迭代 Asynchronous Iteration"></a>异步迭代 Asynchronous Iteration</h4><p>我们知道对象是不能用 <code>for of</code> 语句遍历的，因为这个语句会调用目标的迭代器来完成便利。ES2015 引入的迭代器让我们通过给对象定义迭代器 Symbol 后可以对其使用迭代方法 <code>next()</code>。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> iterableObject = &#123;</span><br><span class="line">  <span class="attr">name</span>: <span class="string">&quot;John&quot;</span>,</span><br><span class="line">  <span class="attr">age</span>: <span class="number">17</span>,</span><br><span class="line">  *[<span class="built_in">Symbol</span>.iterator]() &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> key <span class="keyword">in</span> <span class="built_in">this</span>) <span class="keyword">yield</span> <span class="built_in">this</span>[key];</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> it = iterableObject[<span class="built_in">Symbol</span>.iterator]();</span><br><span class="line">it.next();</span><br><span class="line"><span class="comment">// &#123;value: &quot;John&quot;, done: false&#125;</span></span><br><span class="line">it.next();</span><br><span class="line"><span class="comment">// &#123;value: 17, done: false&#125;</span></span><br><span class="line">it.next();</span><br><span class="line"><span class="comment">// &#123;value: undefined, done: true&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>在 ES2018 中添加了<strong>异步迭代去</strong>，与普通迭代器返回一个包含 <code>value</code> 和 <code>done</code> 的对象不同，异步迭代器返回 Promise 对象。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> iterableObject = &#123;</span><br><span class="line">  <span class="attr">name</span>: <span class="string">&quot;John&quot;</span>,</span><br><span class="line">  <span class="attr">age</span>: <span class="number">17</span>,</span><br><span class="line">  <span class="keyword">async</span> *[<span class="built_in">Symbol</span>.asyncIterator]() &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> key <span class="keyword">in</span> <span class="built_in">this</span>) <span class="keyword">yield</span> <span class="built_in">this</span>[key];</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> it = iterableObject[<span class="built_in">Symbol</span>.asyncIterator]();</span><br><span class="line">it.next();</span><br><span class="line"><span class="comment">// Promise &#123;&lt;fulfilled&gt;: &#123;…&#125;&#125;</span></span><br><span class="line">it.next().then(<span class="function">(<span class="params">res</span>) =&gt;</span> <span class="built_in">console</span>.log(res));</span><br><span class="line"><span class="comment">// &#123;value: 17, done: false&#125;</span></span><br><span class="line">it.next().then(<span class="function">(<span class="params">res</span>) =&gt;</span> <span class="built_in">console</span>.log(res));</span><br><span class="line"><span class="comment">// &#123;value: undefined, done: true&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>与此配套还有 <code>for await of</code> 循环语句可以用来迭代异步生成器和异步函数。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> iterableObject = &#123;</span><br><span class="line">  <span class="attr">name</span>: <span class="string">&quot;John&quot;</span>,</span><br><span class="line">  <span class="attr">age</span>: <span class="number">17</span>,</span><br><span class="line">  <span class="keyword">async</span> *[<span class="built_in">Symbol</span>.asyncIterator]() &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> key <span class="keyword">in</span> <span class="built_in">this</span>) <span class="keyword">yield</span> <span class="built_in">this</span>[key];</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> <span class="keyword">await</span> (<span class="keyword">let</span> x <span class="keyword">of</span> iterableObject) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(x);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// John</span></span><br><span class="line"><span class="comment">// 17</span></span><br><span class="line"><span class="comment">// undefined</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="Promise-finally"><a href="#Promise-finally" class="headerlink" title="Promise .finally()"></a>Promise <code>.finally()</code></h4><p>这是 Promise 的新方法，类似 <code>try catch</code> 语句中的 <code>finally</code> 语句。以前我们想执行一些 cleanup 操作需要将逻辑分别写在 <code>.then()</code> 和 <code>.catch()</code> 中，现在可以统一在 <code>.finally()</code> 中了。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">fetch(API)</span><br><span class="line">  .then(<span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">/* do something */</span></span><br><span class="line">  &#125;)</span><br><span class="line">  .catch(<span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">/* do something */</span></span><br><span class="line">  &#125;)</span><br><span class="line">  .finally(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">/* clean up */</span></span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
+
+<h4 id="正则表达式的更新"><a href="#正则表达式的更新" class="headerlink" title="正则表达式的更新"></a>正则表达式的更新</h4><p>ES2018 对正则表达式做出了一些更新，让 JavaScript 对字符串的处理能力进一步提升。</p>
+<p>ES2018 添加了 <strong>Unicode 属性转义</strong>，可以使用 <code>\p&#123;PropertyName&#125;</code> 和 <code>\P&#123;PropertyName&#125;</code> 分别表示匹配的结果匹配或者不匹配某个 Unicode 属性，要注意使用这两个转义符时需要配合使用正则修饰符 <code>u</code> 声明处理 Unicode。Unicode 属性多种多样，所以这个特性的添加实际上很有用处，比如以往我们想要匹配汉字字符时会使用 Unicode 的码点范围来判断，但是随着汉字字符的增加，码点的范围也在不断扩大。现在可以通过下面这个属性 <code>Unified_Ideograph</code> 来判断了，这样这个正则就不需要维护了。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">/^\p&#123;Unified_Ideograph&#125;+$/u.test(<span class="string">&quot;这是汉字吗&quot;</span>);</span><br><span class="line"><span class="comment">// true</span></span><br><span class="line"><span class="regexp">/^\P&#123;Unified_Ideograph&#125;+$/u</span>.test(<span class="string">&quot;这是汉字吗&quot;</span>);</span><br><span class="line"><span class="comment">// false</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Unified_Ideograph 指表意文字，匹配中日韩越多汉字</span></span><br><span class="line"><span class="comment">// 这个属性外还有些属性可以针对匹配汉字，但是在范围上有一定差异</span></span><br><span class="line"><span class="regexp">/^\p&#123;Ideographic&#125;+$/u</span>.test(<span class="string">&quot;这是汉字吗&quot;</span>);</span><br><span class="line"><span class="comment">// true</span></span><br><span class="line"><span class="regexp">/^\p&#123;Script=Han&#125;+$/u</span>.test(<span class="string">&quot;这是汉字吗&quot;</span>);</span><br><span class="line"><span class="comment">// true</span></span><br><span class="line"><span class="regexp">/^\p&#123;Script_Extensions=Han&#125;+$/u</span>.test(<span class="string">&quot;这是汉字吗&quot;</span>);</span><br><span class="line"><span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+
+<p>ES2018 还给正则添加了<strong>具名捕获分组</strong>的特性。在之前获取分组内的数据只能通过下标完成，这会造成修改正则表达式的分组顺序将造成取值逻辑的修改。现在我们可以给分组命名获取数据了。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> result = <span class="regexp">/^(?&lt;year&gt;\d&#123;4&#125;)-(?&lt;month&gt;\d&#123;2&#125;)-(?&lt;day&gt;\d&#123;2&#125;)$/</span>.exec(</span><br><span class="line">  <span class="string">&quot;2021-09-10&quot;</span></span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(result.groups.year, result.groups.month, result.groups.day);</span><br><span class="line"><span class="comment">// 2021 09 10</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 具名捕获分组可以用对象结构给变量赋值</span></span><br><span class="line"><span class="keyword">const</span> &#123;</span><br><span class="line">  <span class="attr">groups</span>: &#123; year, month &#125;,</span><br><span class="line">&#125; = <span class="regexp">/^(?&lt;year&gt;\d&#123;4&#125;)-(?&lt;month&gt;\d&#123;2&#125;)$/</span>.exec(<span class="string">&quot;2021-09&quot;</span>);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">`Year: <span class="subst">$&#123;year&#125;</span>, Month: <span class="subst">$&#123;month&#125;</span>`</span>);</span><br><span class="line"><span class="comment">// Year: 2021, Month: 09</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 具名捕获分组也可以在字符串替换中使用</span></span><br><span class="line"><span class="string">&quot;2021/09&quot;</span>.replace(<span class="regexp">/^(?&lt;y&gt;\d&#123;4&#125;)\/(?&lt;m&gt;\d&#123;2&#125;)$/</span>, <span class="string">&quot;Year: $&lt;y&gt;, Month: $&lt;m&gt;!&quot;</span>);</span><br><span class="line"><span class="comment">// &quot;Year: 2021, Month: 09!&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 具名捕获分组可以使用 \k 转义符进行引用，来判断之前被捕获的内容是否重复出现</span></span><br><span class="line"><span class="regexp">/^(?&lt;var&gt;\d&#123;4&#125;)\?\k&lt;var&gt;\!$/</span>.test(<span class="string">&quot;2021?2021!&quot;</span>);</span><br><span class="line"><span class="comment">// true</span></span><br><span class="line"><span class="regexp">/^(?&lt;var&gt;\d&#123;4&#125;)\?\k&lt;var&gt;\!$/</span>.test(<span class="string">&quot;2021?2022!&quot;</span>);</span><br><span class="line"><span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>dotAll</strong> 模式。点（<code>.</code>）在正则中匹配所有字符，但是有 4 个字符除外，分别是 <code>\n</code>、<code>\r</code>、<code>U+2028</code>（行分隔符）、<code>U+2029</code>（段分隔符）。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 一般模式下点（.）不匹配换行</span></span><br><span class="line">/^.+$/.test(<span class="string">&quot;abc\ndef&quot;</span>);</span><br><span class="line"><span class="comment">// false</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 指定 s 修饰符使用 dotAll 模式，点将匹配换行</span></span><br><span class="line"><span class="regexp">/^.+$/</span>s.test(<span class="string">&quot;abc\ndef&quot;</span>);</span><br><span class="line"><span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+
+<p>ES2018 还添加了<strong>后行断言</strong>特性。在此之前 JavaScript 中的正则只支持先行断言和先行否定断言，也就是说断言放在匹配字符的后面，比如要匹配百分号前面的数字。后行断言和后行否定断言则相反。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 先行断言获取百分号前的数字</span></span><br><span class="line">/\d+(?=%)/.exec(<span class="string">&quot;Get the number part of 99%&quot;</span>);</span><br><span class="line"><span class="comment">// [&quot;99&quot;, index: 23, input: &quot;Get the number part of 99%&quot;, groups: undefined]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 先行否定断言获取非百分比的数字</span></span><br><span class="line"><span class="regexp">/\d+(?!%)/</span>.exec(<span class="string">&quot;Guess you&#x27;ll get the 123 or the 99%?&quot;</span>);</span><br><span class="line"><span class="comment">// [&quot;123&quot;, index: 21, input: &quot;Guess you&#x27;ll get the 123 or the 99%?&quot;, groups: undefined]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 后行断言获取美元符号后的数字</span></span><br><span class="line"><span class="regexp">/(?&lt;=\$)\d+/</span>.exec(<span class="string">&quot;Get the number part of $12345&quot;</span>);</span><br><span class="line"><span class="comment">// [&quot;12345&quot;, index: 24, input: &quot;Get the number part of $12345&quot;, groups: undefined]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 后行否定断言获取非金额的数字</span></span><br><span class="line"><span class="regexp">/(?&lt;!\$)\d+/</span>.exec(<span class="string">&quot;Guess you&#x27;ll get the 123 or the $12345?&quot;</span>);</span><br><span class="line"><span class="comment">// [&quot;123&quot;, index: 21, input: &quot;Guess you&#x27;ll get the 123 or the $12345?&quot;, groups: undefined]</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="ES8（ES2017）"><a href="#ES8（ES2017）" class="headerlink" title="ES8（ES2017）"></a>ES8（ES2017）</h3><h4 id="异步操作：async-和-await"><a href="#异步操作：async-和-await" class="headerlink" title="异步操作：async 和 await"></a>异步操作：<code>async</code> 和 <code>await</code></h4><p>ES2017 引入了异步函数 （Async Functions）。其本质上是 Promise 和生成器的组合，以简化 Promise 的调用。异步函数的写法实际上就是用 <code>async</code> 和 <code>await</code> 代替了生成器函数的 <code>*</code> 和 <code>yield</code> 关键字。</p>
+<h4 id="Object-values-和-Object-entries"><a href="#Object-values-和-Object-entries" class="headerlink" title="Object.values() 和 Object.entries()"></a><code>Object.values()</code> 和 <code>Object.entries()</code></h4><p>ES2017 给 <code>Object</code> 添加了 2 个静态方法用来方便对象的便利。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> obj = &#123; <span class="attr">name</span>: <span class="string">&quot;John&quot;</span>, <span class="attr">age</span>: <span class="number">17</span>, <span class="attr">gender</span>: <span class="string">&quot;male&quot;</span> &#125;;</span><br><span class="line"></span><br><span class="line"><span class="built_in">Object</span>.values(obj);</span><br><span class="line"><span class="comment">// (3) [&quot;John&quot;, 17, &quot;male&quot;]</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">Object</span>.entries(obj);</span><br><span class="line"><span class="comment">// (3) [Array(2), Array(2), Array(2)]</span></span><br><span class="line"><span class="comment">// 0: (2) [&quot;name&quot;, &quot;John&quot;]</span></span><br><span class="line"><span class="comment">// 1: (2) [&quot;age&quot;, 17]</span></span><br><span class="line"><span class="comment">// 2: (2) [&quot;gender&quot;, &quot;male&quot;]</span></span><br><span class="line"><span class="comment">// length: 3</span></span><br><span class="line"><span class="comment">// [[Prototype]]: Array(0)</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="Object-getOwnPropertyDescriptors"><a href="#Object-getOwnPropertyDescriptors" class="headerlink" title="Object.getOwnPropertyDescriptors()"></a><code>Object.getOwnPropertyDescriptors()</code></h4><p>ES2017 给 <code>Object</code> 添加了方法 <code>.getOwnPropertyDescriptors()</code> 用来获取对象非继承的所有属性的描述符。与 ES5 中存在的 <code>.getOwnPropertyDescriptor()</code> 功能类似，但是这次添加的方法返回<strong>所有</strong>属于对象自身的 property 的 attribute 数组。</p>
+<p>在 JavaScript 的对象中，每个 property 都有一组 attribute 描述这个属性的一些特性。由于这俩个词的中文含义相似，所以在一起出现时通常不做翻译，但如果遇到需要翻译时通常翻译为属性（property）和特性（attribute）。</p>
+<p>目前存在以下描述符（Descriptor）：</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>value</code></td>
+<td>属性值</td>
+</tr>
+<tr>
+<td><code>writable</code></td>
+<td>属性值是否可写入</td>
+</tr>
+<tr>
+<td><code>get</code></td>
+<td>属性的 getter</td>
+</tr>
+<tr>
+<td><code>set</code></td>
+<td>属性的 setter</td>
+</tr>
+<tr>
+<td><code>configurable</code></td>
+<td>属性是否可以配置，影响属性能否被删除以及其他属性能不能被修改</td>
+</tr>
+<tr>
+<td><code>enumerable</code></td>
+<td>属性是否可以可枚举</td>
+</tr>
+</tbody></table>
+<p>这个方法的添加是因为 <code>Object.assign()</code> 在复制对象时不会考虑属性的描述符，也就是说将定义了 <code>setter</code> 的 property 使用 <code>Object.assign()</code> 方式赋值给另一个对象时只有值（<code>value</code>）会被复制，<code>setter</code> 处理会被丢失。在 <code>.getOwnPropertyDescriptors()</code> 被添加后，可以使用 <code>Object.defineProperties()</code> 来配合复制描述符。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> obj = &#123;</span><br><span class="line">  <span class="keyword">set</span> <span class="title">name</span>(<span class="params">str</span>) &#123;</span><br><span class="line">    <span class="built_in">this</span>._name = str;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="keyword">get</span> <span class="title">name</span>() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">`Name: <span class="subst">$&#123;<span class="built_in">this</span>._name&#125;</span>`</span>;</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// obj 定义了 name 的 setter，在设置这个属性时会编辑字符串</span></span><br><span class="line">obj.name = <span class="string">&quot;John&quot;</span>;</span><br><span class="line">obj.name;</span><br><span class="line"><span class="comment">// &quot;Name: John&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 通过 Object.assign() 将 obj 的属性拷贝给 copied</span></span><br><span class="line"><span class="keyword">const</span> copied = <span class="built_in">Object</span>.assign(&#123;&#125;, obj);</span><br><span class="line"><span class="comment">// obj 已经编辑过的值被保留了</span></span><br><span class="line">copied.name;</span><br><span class="line"><span class="comment">// &quot;Name: John&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 尝试给 copied 的 name 重新复制</span></span><br><span class="line">copied.name = <span class="string">&quot;Howard&quot;</span>;</span><br><span class="line"><span class="comment">// obj 的 setter 没有被复制，所以属性被直接赋值</span></span><br><span class="line">copied.name;</span><br><span class="line"><span class="comment">// &quot;Howard&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 尝试给 obj 的 name 赋值</span></span><br><span class="line">obj.name = <span class="string">&quot;Howard&quot;</span>;</span><br><span class="line"><span class="comment">// setter 生效并编辑了字符串</span></span><br><span class="line">obj.name;</span><br><span class="line"><span class="comment">// &quot;Name: Howard&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用 .getOwnPropertyDescriptors() 进行复制并保留 setter</span></span><br><span class="line"><span class="keyword">const</span> kept = <span class="built_in">Object</span>.defineProperties(&#123;&#125;, <span class="built_in">Object</span>.getOwnPropertyDescriptors(obj));</span><br><span class="line">kept.name = <span class="string">&quot;Sheldon&quot;</span>;</span><br><span class="line">kept.name;</span><br><span class="line"><span class="comment">// &quot;Name: Sheldon&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="字符串实例：-padStart-和-padEnd"><a href="#字符串实例：-padStart-和-padEnd" class="headerlink" title="字符串实例：.padStart() 和 .padEnd()"></a>字符串实例：<code>.padStart()</code> 和 <code>.padEnd()</code></h4><p>ES2017 添加了字符串实例方法 <code>.padStart()</code> 和 <code>.padEnd()</code>，两功能就如字面意思。提升了字符串处理的能力。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> str = <span class="string">&quot;Test String&quot;</span>;</span><br><span class="line"><span class="comment">// Test String</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 只指定长度时将用空格填充</span></span><br><span class="line"><span class="built_in">console</span>.log(str.padStart(<span class="number">15</span>));</span><br><span class="line"><span class="comment">//     Test String</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 或者指定填充字符</span></span><br><span class="line"><span class="built_in">console</span>.log(str.padStart(<span class="number">15</span>, <span class="string">&quot;-&quot;</span>));</span><br><span class="line"><span class="comment">// ----Test String</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// padEnd 相同</span></span><br><span class="line"><span class="built_in">console</span>.log(str.padEnd(<span class="number">15</span>, <span class="string">&quot;!&quot;</span>));</span><br><span class="line"><span class="comment">// Test String!!!!</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="ES7（ES2016）"><a href="#ES7（ES2016）" class="headerlink" title="ES7（ES2016）"></a>ES7（ES2016）</h3><h4 id="数组实例：-includes"><a href="#数组实例：-includes" class="headerlink" title="数组实例：.includes()"></a>数组实例：<code>.includes()</code></h4><h3 id="ES6（ES2015）"><a href="#ES6（ES2015）" class="headerlink" title="ES6（ES2015）"></a>ES6（ES2015）</h3><p>ES6 是 ECMAScript 自 97 年的初版发布以来的最大的一次拓展性更新。ES6 的目标在于为大型应用开发、库的创建和以 ECMAScript 为标准的各种语言提供更好的支持。ES6 主要的更新内容包括模块化特性、类的声明、块级作用域、迭代器和生成器、非同步的 Promise、解构模式和尾调用优化。内置的库被扩展为支持新增的 map、set 和二进制数值数组结构，同时字符串和正则表达式支持新增的 Unicode 补充字符。这些内置库现在可以通过子类进行拓展。</p>
+<h4 id="let-和-const"><a href="#let-和-const" class="headerlink" title="let 和 const"></a><code>let</code> 和 <code>const</code></h4><h4 id="模版字符串-Template-Literals"><a href="#模版字符串-Template-Literals" class="headerlink" title="模版字符串 Template Literals"></a>模版字符串 Template Literals</h4><h4 id="对象解构-数组结构-Objects-Arrays-Destructuring"><a href="#对象解构-数组结构-Objects-Arrays-Destructuring" class="headerlink" title="对象解构/数组结构 Objects/Arrays Destructuring"></a>对象解构/数组结构 Objects/Arrays Destructuring</h4><h4 id="对象字面量-Object-Literals"><a href="#对象字面量-Object-Literals" class="headerlink" title="对象字面量 Object Literals"></a>对象字面量 Object Literals</h4><h4 id="for-of-循环"><a href="#for-of-循环" class="headerlink" title="for of 循环"></a><code>for of</code> 循环</h4><h4 id="箭头函数-Arrow-Functions"><a href="#箭头函数-Arrow-Functions" class="headerlink" title="箭头函数 Arrow Functions"></a>箭头函数 Arrow Functions</h4><h4 id="默认参数-Default-Params"><a href="#默认参数-Default-Params" class="headerlink" title="默认参数 Default Params"></a>默认参数 Default Params</h4><h4 id="类的声明-Class-Declaration"><a href="#类的声明-Class-Declaration" class="headerlink" title="类的声明 Class Declaration"></a>类的声明 Class Declaration</h4><h4 id="模块-Module"><a href="#模块-Module" class="headerlink" title="模块 Module"></a>模块 Module</h4><h4 id="数据结构：Set"><a href="#数据结构：Set" class="headerlink" title="数据结构：Set"></a>数据结构：<code>Set</code></h4><h4 id="Symbol"><a href="#Symbol" class="headerlink" title="Symbol"></a>Symbol</h4><h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
+<li><a href="https://en.wikipedia.org/wiki/ECMAScript">ECMAScript - Wikipedia</a></li>
+<li><a href="https://262.ecma-international.org/6.0/">ECMA-262 - Ecma International</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>study</category>
+        <category>js</category>
+      </categories>
+      <tags>
+        <tag>JavaScript</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>浏览器如何渲染网页？- DOM，CSSOM &amp; Render Tree</title>
     <url>/post/study/html/How-the-Browser-Renders-HTML-CSS/</url>
     <content><![CDATA[<p>使用浏览器打开一个网页，你会发现有一部分网页资源在加载完之前会阻塞浏览器的渲染进程，还有一部分网页资源可以被异步加载。前端开发时你偶尔会遇到这些问题：资源下载速度<strong>缓慢</strong>？首屏等待<strong>多余的文件</strong>下载和初始化？未应用 CSS 的内容<strong>一闪而过</strong>（flash of unstyled content，<code>FOUC</code>）？要避免它们，开发一个用户体验优秀的网站，你需要的是理解浏览器渲染网页的逻辑与顺序。</p>
