@@ -8,6 +8,8 @@ tags:
   - Binary Search Tree
   - Binary Tree
 title: 109. Convert Sorted List to Binary Search Tree (Medium)
+categories:
+  - leetcode
 ---
 
 你有一个链表的 `head` 元素，链表数组按照升序排列，现在你需要实现一个程序将其转换为高度平衡的二叉查找树。

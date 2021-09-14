@@ -4,6 +4,8 @@ tags:
   - String
   - Backtracking
 title: 22. Generate Parentheses (Medium)
+categories:
+  - leetcode
 ---
 
 给你一个数字 `n`，你需要用 `n` 对括号进行组合，找到所有可能的组合。
