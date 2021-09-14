@@ -4,6 +4,8 @@ tags:
   - String
   - DP
 title: 97. Interleaving String (Medium)
+categories:
+  - leetcode
 ---
 
 字符串问题。定义字符串交错指的是俩个字符串的字符交错出现构成一个新的字符串。比如对字符串 `s` 和 `t` 来说：

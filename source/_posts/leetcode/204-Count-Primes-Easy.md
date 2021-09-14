@@ -6,6 +6,8 @@ tags:
   - Enumeration
   - Number Theory
 title: 204. Count Primes (Easy)
+categories:
+  - leetcode
 ---
 
 计算所有小于非负整数 `n` 的质数的数量。

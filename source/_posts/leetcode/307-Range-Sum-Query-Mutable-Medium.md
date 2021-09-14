@@ -6,6 +6,8 @@ tags:
   - Binary Indexed Tree
   - Segment Tree
 title: 307. Range Sum Query - Mutable (Medium)
+categories:
+  - leetcode
 ---
 
 你有一个整数数组 `nums`，你需要实现一个程序处理下面两种类型的多次查询：
