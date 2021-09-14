@@ -3,6 +3,8 @@ date: '2021-06-17T15:36:05.546Z'
 tags:
   - Trie
 title: 745. Prefix and Suffix Search (Hard)
+categories:
+  - leetcode
 ---
 
 字典树题目。实现一个字典根据指定的前缀和后缀来定位单词，如果存在多个单词则返回最大的下标位置，如果不存在单词则返回 -1。

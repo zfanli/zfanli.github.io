@@ -3,7 +3,7 @@ title: JavaScript 语法标准整理 - ES6 及以后版本
 tags:
   - JavaScript
 categories:
-  - study
+  - leetcode
 ---
 
 我们通常说的 JavaScript 其实指的是 ECMAScript 的子集。JavaScript 遵从 ECMAScript 定义的语言标准提供接口，但是内部实现则完全取决于运行环境。根据 ECMAScript 规格实现的语言还有 ActionScript、JScript 等等。这些实现了同一个规范的语言可以类比做使用了同一种引擎的不同汽车，每辆车的外观都不尽相同，而每种语言都有其独特的风格。
