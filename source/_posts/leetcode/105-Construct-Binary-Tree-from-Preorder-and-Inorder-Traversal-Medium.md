@@ -7,8 +7,6 @@ tags:
   - Tree
   - Binary Tree
 date: '2021-08-18T09:05:26.952Z'
-categories:
-  - leetcode
 ---
 
 `No.106` 的镜像问题。你需要从一棵树的`前序遍历`数据和`中序遍历`数据中尝试重新构建出这棵二叉树。
