@@ -4,8 +4,6 @@ tags:
   - String
   - Stack
 title: 1047. Remove All Adjacent Duplicates In String (Easy)
-categories:
-  - leetcode
 ---
 
 给定一个由英文小写字母组成的字符串 `s`，要求去重并返回结果。去重的条件是 2 个字符必须接邻且相等。

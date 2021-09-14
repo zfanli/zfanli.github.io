@@ -4,8 +4,6 @@ tags:
   - Linked List
   - Two Pointers
 title: 19. Remove Nth Node From End of List (Medium)
-categories:
-  - leetcode
 ---
 
 删除链表的指定节点，返回修改后的链表 `head`。

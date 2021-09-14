@@ -6,8 +6,6 @@ tags:
   - Sorting
   - Heap (Priority Queue)
 title: 1383. Maximum Performance of a Team (Hard)
-categories:
-  - leetcode
 ---
 
 你需要从 `n` 个工程师中选择最多 `k` 位构成一个小组，并保证获得最好的绩效表现。
