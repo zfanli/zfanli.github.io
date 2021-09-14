@@ -5,8 +5,6 @@ tags:
   - Tree
   - DFS
 title: 589. N-ary Tree Preorder Traversal (Easy)
-categories:
-  - leetcode
 ---
 
 N 叉树前序遍历问题。和二叉树前序遍历的区别在于...多了几个 child，仅此而已。

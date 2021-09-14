@@ -5,8 +5,6 @@ tags:
   - Array
   - String
 title: 318. Maximum Product of Word Lengths (Medium)
-categories:
-  - leetcode
 ---
 
 字符串问题。给定一个字符串数组，求数组中字符串 A 和字符串 B 的长度的最大乘积，其中 A 和 B 中不能有任何相同的字母存在。

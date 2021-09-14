@@ -3,8 +3,6 @@ date: '2021-06-15T15:36:05.543Z'
 tags:
   - String
 title: 709. To Lower Case (Easy)
-categories:
-  - leetcode
 ---
 
 字符串问题。将给定的字符串中的大写字母转换为小写字母并返回。
