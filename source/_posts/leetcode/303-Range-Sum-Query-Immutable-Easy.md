@@ -5,6 +5,8 @@ tags:
   - Design
   - Prefix Sum
 title: 303. Range Sum Query - Immutable (Easy)
+categories:
+  - leetcode
 ---
 
 你有一个整数数组 `nums`，你需要实现一个程序处理范围求和的查询
