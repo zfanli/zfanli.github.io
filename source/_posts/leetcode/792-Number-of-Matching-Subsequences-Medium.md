@@ -6,6 +6,8 @@ tags:
   - Trie
   - Sorting
 title: 792. Number of Matching Subsequences (Medium)
+categories:
+  - leetcode
 ---
 
 字符串问题。找出匹配子序列（Subsequences）的数量。

@@ -6,6 +6,8 @@ tags:
   - DFS
   - BFS
 date: '2021-08-19T08:43:50.536Z'
+categories:
+  - leetcode
 ---
 
 你需要给一棵完全二叉树的每个一节点添加一个 `next` 指针，指向同一层的右边一个节点。

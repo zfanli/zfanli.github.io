@@ -4,6 +4,8 @@ tags:
   - Hash Table
   - Math
 title: 970. Powerful Integers (Medium)
+categories:
+  - leetcode
 ---
 
 给定 3 个整数 `x`， `y`， `bound`，求所有小于等于 `bound` 的强整数（Powerful Integers）。

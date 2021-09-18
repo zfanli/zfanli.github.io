@@ -5,6 +5,8 @@ tags:
   - Sliding Window
   - Prefix Sum
 title: 1423. Maximum Points You Can Obtain from Cards (Medium)
+categories:
+  - leetcode
 ---
 
 抽卡求最大得分问题。有一堆卡排成一行，每张卡的卡面有其对应的分值，你有 `k` 次机会抽取卡片，每次机会中你可以选择抽取最左边的一张卡，或者抽取最右边的一张卡。你所抽取的所有卡片的分值之和是你的得分。求你能获得的最大分数。
