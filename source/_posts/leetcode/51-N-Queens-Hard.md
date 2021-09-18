@@ -3,8 +3,6 @@ date: '2021-03-31T15:36:05.455Z'
 tags:
   - Backtracking
 title: 51. N-Queens (Hard)
-categories:
-  - leetcode
 ---
 
 国际象棋问题。给你一个 `n x n` 大小的棋盘，你需要在上面摆放 Queen 棋子，并且让棋子之间不能相互攻击。
