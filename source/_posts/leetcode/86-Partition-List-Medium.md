@@ -4,8 +4,6 @@ tags:
   - Linked List
   - Two Pointers
 title: 86. Partition List (Medium)
-categories:
-  - leetcode
 ---
 
 链表问题。链表分区，给你一个链表和整数 `x`，你需要在保证相对顺序的情况下，将小于 `x` 的值排在链表前面，大于等于 `x` 的值排在后面。

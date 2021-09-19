@@ -6,8 +6,6 @@ tags:
   - Design
   - Queue
 date: '2021-09-07T09:24:50.312Z'
-categories:
-  - leetcode
 ---
 
 设计并实现一个循环队列。循环队列是一个线性数据结构，遵循先进先出原则，队列头尾相互连接形成一个环，也叫做环形缓冲区（Ring Buffer）。
