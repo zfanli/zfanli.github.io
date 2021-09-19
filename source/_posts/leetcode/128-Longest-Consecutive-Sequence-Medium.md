@@ -5,6 +5,8 @@ tags:
   - Hash Table
   - Union Find
 title: 128. Longest Consecutive Sequence (Medium)
+categories:
+  - leetcode
 ---
 
 你有一个未排序的整数数组 `nums`，你要在 O(n) 时间复杂度内找到最长的连续子序列，返回其长度
