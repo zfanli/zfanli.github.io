@@ -2,10 +2,7 @@
 title: 28.Swift Automatic Reference Counting
 tags:
   - Swift
-date: '2019-07-13T15:28:35.099Z'
-categories:
-  - notes
-  - swift
+date: "2019-07-13T15:28:35.099Z"
 ---
 
 没想到这篇主题内容也是这么丰富。

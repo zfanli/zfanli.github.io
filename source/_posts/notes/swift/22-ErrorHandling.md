@@ -2,10 +2,7 @@
 title: 22.Swift Error Handling
 tags:
   - Swift
-date: '2019-07-04T14:28:35.099Z'
-categories:
-  - notes
-  - swift
+date: "2019-07-04T14:28:35.099Z"
 ---
 
 这部分内容还是复习。对于错误处理可以抛出可以处理。对于抛出介绍了 `guard` 和 `throw`，处理介绍了 do-catch、`try?` 和 `try!` 方法。
