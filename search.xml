@@ -1058,6 +1058,41 @@
       </tags>
   </entry>
   <entry>
+    <title>155. Min Stack (Easy)</title>
+    <url>/post/leetcode/155-Min-Stack-Easy/</url>
+    <content><![CDATA[<p>设计一个栈数据结构，需要支持入栈、出栈、查看栈顶和常量时间内获取最小值的操作。</p>
+<blockquote>
+<p>Implement the <code>MinStack</code> class:</p>
+<ul>
+<li><code>MinStack()</code> initializes the stack object.</li>
+<li><code>void push(val)</code> pushes the element val onto the stack.</li>
+<li><code>void pop()</code> removes the element on the top of the stack.</li>
+<li><code>int top()</code> gets the top element of the stack.</li>
+<li><code>int getMin()</code> retrieves the minimum element in the stack.</li>
+</ul>
+</blockquote>
+<span id="more"></span>
+
+<h2 id="思路：栈-小根堆"><a href="#思路：栈-小根堆" class="headerlink" title="思路：栈 + 小根堆"></a>思路：栈 + 小根堆</h2><p>看上去这道题要实现一个栈和小根堆结合的一个数据结构，数据的添加和删除是基于栈的后进先出的原则，与此同时每次数据操作我们更新一个小根堆来对这些数据进行排序，来确定最小数据的位置。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MinStack</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">        self.stack = []</span><br><span class="line">        self.heap = []</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">push</span>(<span class="params">self, val: <span class="built_in">int</span></span>) -&gt; <span class="literal">None</span>:</span></span><br><span class="line">        self.stack.append(val)</span><br><span class="line">        self.heap.append(val)</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(self.heap) - <span class="number">1</span>, <span class="number">0</span>, -<span class="number">1</span>):</span><br><span class="line">            <span class="keyword">if</span> self.heap[i] &lt; self.heap[i - <span class="number">1</span>]:</span><br><span class="line">                self.heap[i], self.heap[i - <span class="number">1</span>] = self.heap[i - <span class="number">1</span>], self.heap[i]</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">pop</span>(<span class="params">self</span>) -&gt; <span class="literal">None</span>:</span></span><br><span class="line">        val = self.stack.pop()</span><br><span class="line">        self.heap.pop(self.heap.index(val))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">top</span>(<span class="params">self</span>) -&gt; <span class="built_in">int</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.stack[-<span class="number">1</span>]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">getMin</span>(<span class="params">self</span>) -&gt; <span class="built_in">int</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.heap[<span class="number">0</span>]</span><br></pre></td></tr></table></figure>
+
+<h2 id="思路：单独的栈-val-min-pairs"><a href="#思路：单独的栈-val-min-pairs" class="headerlink" title="思路：单独的栈 + (val, min) pairs"></a>思路：单独的栈 + (val, min) pairs</h2><p>另一个思路，我们只要保证每一个元素加入栈时的最小值即可，换一句话说，就是我们每次添加一个元素时拿到上一个最小值比较，检查最小值是否变化即可，这样就算移出一个元素，上一轮计算的最小值还是有效的。</p>
+<p>要完成这个思路，我们将栈设计为每次储存一个元组，第一个元素为原始的值，第二个元素为最小值。每次添加新元素，取上次最小值判断。这个思路在时间复杂度上比上一个思路要高效，因为计算量上我们省去了排序的步骤。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MinStack</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">        self.stack = []</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">push</span>(<span class="params">self, val: <span class="built_in">int</span></span>) -&gt; <span class="literal">None</span>:</span></span><br><span class="line">        curr_min = self.getMin()</span><br><span class="line">        self.stack.append((val, val <span class="keyword">if</span> curr_min <span class="keyword">is</span> <span class="literal">None</span> <span class="keyword">else</span> <span class="built_in">min</span>(curr_min, val)))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">pop</span>(<span class="params">self</span>) -&gt; <span class="literal">None</span>:</span></span><br><span class="line">        self.stack.pop()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">top</span>(<span class="params">self</span>) -&gt; <span class="built_in">int</span>:</span></span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">len</span>(self.stack) == <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line">        <span class="keyword">return</span> self.stack[-<span class="number">1</span>][<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">getMin</span>(<span class="params">self</span>) -&gt; <span class="built_in">int</span>:</span></span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">len</span>(self.stack) == <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line">        <span class="keyword">return</span> self.stack[-<span class="number">1</span>][<span class="number">1</span>]</span><br></pre></td></tr></table></figure>
+
+<h2 id="思路：单独的栈，2-倍长度"><a href="#思路：单独的栈，2-倍长度" class="headerlink" title="思路：单独的栈，2 倍长度"></a>思路：单独的栈，2 倍长度</h2><p>上面的思路中栈每次存入一个元组依然会造成更多的空间使用，这次我们每次加入元素时向栈中加入 2 个值，第一次我们放入最小值，第二次放入原始值。然后为了方便起见，我们根据题目的约束删掉一些不必要的空值 check。</p>
+<p>这个思路可以有效优化空间复杂度，相对使用元组每次储存 2 个值，在一个数组中依次存入 2 个值会使用更少的空间。毕竟，元组本身也会占据内存空间。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MinStack</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">        self.stack = []</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">push</span>(<span class="params">self, val: <span class="built_in">int</span></span>) -&gt; <span class="literal">None</span>:</span></span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">len</span>(self.stack) &gt; <span class="number">0</span>:</span><br><span class="line">            self.stack.append(<span class="built_in">min</span>(self.stack[-<span class="number">2</span>], val))</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            self.stack.append(val)</span><br><span class="line">        self.stack.append(val)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">pop</span>(<span class="params">self</span>) -&gt; <span class="literal">None</span>:</span></span><br><span class="line">        self.stack.pop()</span><br><span class="line">        self.stack.pop()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">top</span>(<span class="params">self</span>) -&gt; <span class="built_in">int</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.stack[-<span class="number">1</span>]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">getMin</span>(<span class="params">self</span>) -&gt; <span class="built_in">int</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.stack[-<span class="number">2</span>]</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>Stack</tag>
+        <tag>Design</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>164. Maximum Gap (Hard)</title>
     <url>/post/leetcode/164-Maximum-Gap-Hard/</url>
     <content><![CDATA[<p>给定一个整数数组 <code>nums</code>，你需要将其排序后，找到相邻两个数之间的最大间隙（差）。如果不足两个元素则返回 0。</p>
@@ -1316,11 +1351,14 @@
     <content><![CDATA[<p>给定一个链表（LinkedList）的 <code>head</code> 节点，你需要反转并返回它。</p>
 <span id="more"></span>
 
-<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>翻转链表只需要将每一个节点的 <code>next</code> 与该节点的关系颠倒一下即可，为此我们需要 <code>prev</code> 和 <code>next</code> 变量帮助我们保存中间的值。</p>
+<h2 id="迭代思路"><a href="#迭代思路" class="headerlink" title="迭代思路"></a>迭代思路</h2><p>翻转链表只需要将每一个节点的 <code>next</code> 与该节点的关系颠倒一下即可，为此我们需要 <code>prev</code> 和 <code>next</code> 变量帮助我们保存中间的值。</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">reverseList</span>(<span class="params">self, head: <span class="type">Optional</span>[ListNode]</span>) -&gt; <span class="type">Optional</span>[ListNode]:</span></span><br><span class="line">        prev = <span class="built_in">next</span> = <span class="literal">None</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> head:</span><br><span class="line">            <span class="comment"># hold the next one, and reassign the prev one as current node&#x27;s next</span></span><br><span class="line">            <span class="built_in">next</span>, head.<span class="built_in">next</span> = head.<span class="built_in">next</span>, prev</span><br><span class="line">            <span class="comment"># hold the current node as the prev and the next as current</span></span><br><span class="line">            prev, head = head, <span class="built_in">next</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># the loop above ends with None as the head so the prev is the tail node</span></span><br><span class="line">        <span class="keyword">return</span> prev</span><br></pre></td></tr></table></figure>
 
 <p>实际上上面的 <code>next</code> 也可以消除掉，只需要 <code>prev</code> 一个变量即可。</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">reverseList</span>(<span class="params">self, head: <span class="type">Optional</span>[ListNode]</span>) -&gt; <span class="type">Optional</span>[ListNode]:</span></span><br><span class="line">        prev = <span class="literal">None</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> head:</span><br><span class="line">            head.<span class="built_in">next</span>, prev, head = prev, head, head.<span class="built_in">next</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> prev</span><br></pre></td></tr></table></figure>
+
+<h2 id="递归思路"><a href="#递归思路" class="headerlink" title="递归思路"></a>递归思路</h2><p>这道题的迭代思路比较简单，所以完全没有必要考虑递归方法。但是如果你就想写递归，也没人能拉住你。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">reverseList</span>(<span class="params">self, head: <span class="type">Optional</span>[ListNode]</span>) -&gt; <span class="type">Optional</span>[ListNode]:</span></span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">recu</span>(<span class="params">node, prev</span>):</span></span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">not</span> node:</span><br><span class="line">                <span class="keyword">return</span> prev</span><br><span class="line">            node.<span class="built_in">next</span>, prev = prev, node.<span class="built_in">next</span></span><br><span class="line">            <span class="keyword">return</span> recu(prev, node)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> recu(head, <span class="literal">None</span>)</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
         <category>leetcode</category>
@@ -1770,8 +1808,8 @@
         <tag>Tree</tag>
         <tag>DFS</tag>
         <tag>Stack</tag>
-        <tag>Queue</tag>
         <tag>Design</tag>
+        <tag>Queue</tag>
         <tag>Iterator</tag>
       </tags>
   </entry>
@@ -2132,8 +2170,8 @@
       <tags>
         <tag>Array</tag>
         <tag>Linked List</tag>
-        <tag>Queue</tag>
         <tag>Design</tag>
+        <tag>Queue</tag>
       </tags>
   </entry>
   <entry>
