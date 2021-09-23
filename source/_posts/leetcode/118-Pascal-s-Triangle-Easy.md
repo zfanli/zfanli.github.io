@@ -4,8 +4,6 @@ tags:
   - Array
   - DP
 title: 118. Pascal's Triangle (Easy)
-categories:
-  - leetcode
 ---
 
 杨辉三角问题。在杨辉三角中每个元素 `i` 的值由上一行同位置 `i` 的值加上上一行前一个位置 `i-1` 的值决定。

@@ -4,15 +4,13 @@ tags:
   - LinkedList
   - Recursion
 date: '2021-09-14T04:28:53.266Z'
-categories:
-  - leetcode
 ---
 
 给定一个链表（LinkedList）的 `head` 节点，你需要反转并返回它。
 
 <!-- more -->
 
-## 思路
+## 迭代思路
 
 翻转链表只需要将每一个节点的 `next` 与该节点的关系颠倒一下即可，为此我们需要 `prev` 和 `next` 变量帮助我们保存中间的值。
 
@@ -42,4 +40,21 @@ class Solution:
             head.next, prev, head = prev, head, head.next
 
         return prev
+```
+
+## 递归思路
+
+这道题的迭代思路比较简单，所以完全没有必要考虑递归方法。但是如果你就想写递归，也没人能拉住你。
+
+```python
+class Solution:
+    def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
+
+        def recu(node, prev):
+            if not node:
+                return prev
+            node.next, prev = prev, node.next
+            return recu(prev, node)
+
+        return recu(head, None)
 ```
