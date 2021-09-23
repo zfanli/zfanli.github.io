@@ -2,7 +2,10 @@
 title: 8.Swift Syntax Basics (错误处理)
 tags:
   - Swift
-date: "2019-06-20T15:28:35.099Z"
+date: '2019-06-20T15:28:35.099Z'
+categories:
+  - notes
+  - swift
 ---
 
 仔细一看，Swift 的错误处理比较 Java 系来看更加细致。在 do-cathc 块中必须要用 `try` 关键字指定哪一个函数调用会抛错误。其他也并无两样。
