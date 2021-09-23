@@ -8,6 +8,8 @@ tags:
   - Heap (Priority Queue)
   - Monotonic Queue
 title: 1696. Jump Game VI (Medium)
+categories:
+  - leetcode
 ---
 
 跳跃游戏问题。你有一个数组 `nums` 和一个步数 `k`，最初你站在 0 的位置。游戏每一回合你可以向前跳最多 `k` 步，你的得分就是向前跳的步数对于 `nums` 中的值。求你可以获得的最大得分。
