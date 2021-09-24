@@ -3,7 +3,9 @@ title: 20. Valid Parentheses (Easy)
 tags:
   - String
   - Stack
-date: "2021-09-24T15:16:09.972Z"
+date: '2021-09-24T15:16:09.972Z'
+categories:
+  - leetcode
 ---
 
 给你一个字符串仅由 `'('`、`')'`、`'{'`、`'}'`、`'['` 和 `']'` 组成。你需要判断这个字符串是否是有效的。
