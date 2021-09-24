@@ -3,9 +3,7 @@ title: 155. Min Stack (Easy)
 tags:
   - Stack
   - Design
-date: '2021-09-23T14:20:18.210Z'
-categories:
-  - leetcode
+date: "2021-09-23T14:20:18.210Z"
 ---
 
 设计一个栈数据结构，需要支持入栈、出栈、查看栈顶和常量时间内获取最小值的操作。

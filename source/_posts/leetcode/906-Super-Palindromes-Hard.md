@@ -4,8 +4,6 @@ tags:
   - Math
   - Enumeration
 title: 906. Super Palindromes (Hard)
-categories:
-  - leetcode
 ---
 
 嗯...暂且打表吧...

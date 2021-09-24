@@ -8,8 +8,6 @@ tags:
   - Queue
   - Iterator
 title: 341. Flatten Nested List Iterator (Medium)
-categories:
-  - leetcode
 ---
 
 你需要实现一个迭代器来扁平化一个嵌套的整数数组。嵌套整数数组中可能存在整数元素和嵌套整数数组两种元素。

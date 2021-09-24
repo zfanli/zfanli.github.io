@@ -7,8 +7,6 @@ tags:
   - Union Fold
   - Matrix
 title: 695. Max Area of Island (Medium)
-categories:
-  - leetcode
 ---
 
 给定一个尺寸为 `m x n` 的二进制值的矩阵。定义元素的值为 `1` 表示土地，元素值为 `0` 表示海水。
