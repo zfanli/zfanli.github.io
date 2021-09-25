@@ -138,7 +138,7 @@ site_state: true
 # Value before `||` delimiter is the target permalink, value after `||` delimiter is the name of Font Awesome icon.
 social:
   GitHub: https://github.com/zfanli || fab fa-github
-  E-Mail: mailto:yourname@gmail.com || fa fa-envelope
+  E-Mail: mailto:zfanli@outlook.com || fa fa-envelope
 
 social_icons:
   enable: true
