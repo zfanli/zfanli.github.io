@@ -30,6 +30,7 @@ jobs:
         run: npm install
       - name: Build
         run: |
+          set e
           echo "Apply prod configs"
           mv _config.prod.yml _config.yml
           mv _config.next.prod.yml _config.next.yml
