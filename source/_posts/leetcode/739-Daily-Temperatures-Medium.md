@@ -5,6 +5,8 @@ tags:
   - Stack
   - Monotonic Stack
 date: '2021-09-26T07:10:12.381Z'
+categories:
+  - leetcode
 ---
 
 你有一个数组 `temperatures` 表示每一天的气温，你需要返回一个相同长度的数组，每一个元素表示相同下标对应的日期之后需要多少天气温才会回暖，如果后续气温一直没有回暖则保持该位置的值为 `0`。

@@ -1,11 +1,13 @@
 ---
-date: "2021-06-21T15:36:05.550Z"
+date: '2021-06-21T15:36:05.550Z'
 tags:
   - Array
   - Hash Table
   - String
   - BFS
 title: 752. Open the Lock (Medium)
+categories:
+  - leetcode
 ---
 
 开锁游戏。你有一个圆盘锁，锁有 4 个转轮，每个转轮上有 0 ～ 9 共十个数字。
