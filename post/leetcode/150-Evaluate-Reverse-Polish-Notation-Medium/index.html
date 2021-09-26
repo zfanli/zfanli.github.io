@@ -261,7 +261,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">130</span>
+          <span class="site-state-item-count">131</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
@@ -272,7 +272,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">58</span>
+        <span class="site-state-item-count">59</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -368,7 +368,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>632</span>
+      <span>1.3k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -401,6 +401,9 @@
 <li>最终栈中存在的元素就是答案</li>
 </ul>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">evalRPN</span>(<span class="params">self, tokens: <span class="type">List</span>[<span class="built_in">str</span>]</span>) -&gt; <span class="built_in">int</span>:</span></span><br><span class="line">        stack = []</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> t <span class="keyword">in</span> tokens:</span><br><span class="line">            <span class="keyword">if</span> t <span class="keyword">not</span> <span class="keyword">in</span> &#123;<span class="string">&quot;+&quot;</span>, <span class="string">&quot;-&quot;</span>, <span class="string">&quot;*&quot;</span>, <span class="string">&quot;/&quot;</span>&#125;:</span><br><span class="line">                stack.append(<span class="built_in">int</span>(t))</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                right, left = stack.pop(), stack.pop()</span><br><span class="line">                <span class="comment"># print(left, t, right)</span></span><br><span class="line">                <span class="keyword">if</span> t == <span class="string">&#x27;+&#x27;</span>:</span><br><span class="line">                    stack.append(left + right)</span><br><span class="line">                <span class="keyword">elif</span> t == <span class="string">&#x27;-&#x27;</span>:</span><br><span class="line">                    stack.append(left - right)</span><br><span class="line">                <span class="keyword">elif</span> t == <span class="string">&#x27;*&#x27;</span>:</span><br><span class="line">                    stack.append(left * right)</span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    stack.append(trunc(left / right))</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> stack[<span class="number">0</span>]</span><br></pre></td></tr></table></figure>
+
+<p>用 Java 实现相同的算法。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">evalRPN</span><span class="params">(String[] tokens)</span> </span>&#123;</span><br><span class="line">        Deque&lt;Integer&gt; stack = <span class="keyword">new</span> LinkedList&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (String t : tokens) &#123;</span><br><span class="line">            <span class="keyword">if</span> (<span class="string">&quot;+&quot;</span>.equals(t)) &#123;</span><br><span class="line">                stack.offerLast(stack.pollLast() + stack.pollLast());</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="string">&quot;-&quot;</span>.equals(t)) &#123;</span><br><span class="line">                stack.offerLast(-stack.pollLast() + stack.pollLast());</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="string">&quot;*&quot;</span>.equals(t)) &#123;</span><br><span class="line">                stack.offerLast(stack.pollLast() * stack.pollLast());</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="string">&quot;/&quot;</span>.equals(t)) &#123;</span><br><span class="line">                Integer right = stack.pollLast(), left = stack.pollLast();</span><br><span class="line">                stack.offerLast(left / right);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                stack.offerLast(Integer.valueOf(t));</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> stack.peek();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
     </div>
 
@@ -473,13 +476,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">390k</span>
+    <span title="站点总字数">391k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">5:54</span>
+    <span title="站点阅读时长">5:56</span>
   </span>
 </div>
 <div class="busuanzi-count">
