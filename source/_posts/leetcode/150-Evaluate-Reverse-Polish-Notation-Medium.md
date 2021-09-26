@@ -5,8 +5,6 @@ tags:
   - Math
   - Stack
 title: 150. Evaluate Reverse Polish Notation (Medium)
-categories:
-  - leetcode
 ---
 
 演算反向波兰表示法。反向波兰表示法是一种为减少内存访问的使用 Stack 的演算表达法，这种方法按照先操作对象后操作符的方式表达算术运算。
@@ -47,4 +45,29 @@ class Solution:
                     stack.append(trunc(left / right))
 
         return stack[0]
+```
+
+用 Java 实现相同的算法。
+
+```java
+class Solution {
+    public int evalRPN(String[] tokens) {
+        Deque<Integer> stack = new LinkedList<>();
+        for (String t : tokens) {
+            if ("+".equals(t)) {
+                stack.offerLast(stack.pollLast() + stack.pollLast());
+            } else if ("-".equals(t)) {
+                stack.offerLast(-stack.pollLast() + stack.pollLast());
+            } else if ("*".equals(t)) {
+                stack.offerLast(stack.pollLast() * stack.pollLast());
+            } else if ("/".equals(t)) {
+                Integer right = stack.pollLast(), left = stack.pollLast();
+                stack.offerLast(left / right);
+            } else {
+                stack.offerLast(Integer.valueOf(t));
+            }
+        }
+        return stack.peek();
+    }
+}
 ```

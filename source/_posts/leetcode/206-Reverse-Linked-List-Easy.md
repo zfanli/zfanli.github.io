@@ -4,8 +4,6 @@ tags:
   - LinkedList
   - Recursion
 date: '2021-09-14T04:28:53.266Z'
-categories:
-  - leetcode
 ---
 
 给定一个链表（LinkedList）的 `head` 节点，你需要反转并返回它。
