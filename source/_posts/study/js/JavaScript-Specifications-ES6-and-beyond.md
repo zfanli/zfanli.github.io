@@ -2,10 +2,7 @@
 title: JavaScript 语法标准整理 - ES6 及以后版本
 tags:
   - JavaScript
-date: '2021-09-12T13:41:25.073Z'
-categories:
-  - study
-  - js
+date: "2021-09-12T13:41:25.073Z"
 ---
 
 我们通常说的 JavaScript 其实指的是 ECMAScript 的子集。JavaScript 遵从 ECMAScript 定义的语言标准提供接口，但是内部实现则完全取决于运行环境。根据 ECMAScript 规格实现的语言还有 ActionScript、JScript 等等。这些实现了同一个规范的语言可以类比做使用了同一种引擎的不同汽车，每辆车的外观都不尽相同，而每种语言都有其独特的风格。
@@ -135,7 +132,7 @@ const registry = new FinalizationRegistry((heldValue) => {
   // Do something here
 });
 
-//register any objects you want a cleanup callback for
+// register any objects you want a cleanup callback for
 registry.register(theObject, "some value");
 ```
 
@@ -1321,7 +1318,7 @@ ES6 提供了 11 个内置的 Symbol 值，指向语言内部使用的方法。
 | `Symbol.iterator`           | 定义对象的迭代器，在遇到需要迭代对象时会自动调用                                             |
 | `Symbol.toPrimitive`        | 对象被转为初始类型时会调用该方法                                                             |
 | `Symbol.toStringTag`        | 当调用对象的 `.toString()` 时会调用，用来替换 `[object Object]` 中的 `Object` 表示对象的类型 |
-| `Symbol.unscopables`        | 一些列属性在使用 `with` 关键字时会被 `with` 环境排除                                         |
+| `Symbol.unscopables`        | 一系列属性在使用 `with` 关键字时会被 `with` 环境排除                                         |
 
 ## References
 
