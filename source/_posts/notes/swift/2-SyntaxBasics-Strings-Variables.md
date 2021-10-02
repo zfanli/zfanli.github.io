@@ -2,10 +2,7 @@
 title: 2.Swift Syntax Basics (字符串和变量)
 tags:
   - Swift
-date: '2019-06-16T13:28:35.099Z'
-categories:
-  - notes
-  - swift
+date: "2019-06-16T13:28:35.099Z"
 ---
 
 参考官网的教程。

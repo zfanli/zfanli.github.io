@@ -2,10 +2,7 @@
 title: 16.Swift Closure
 tags:
   - Swift
-date: '2019-06-29T16:28:35.099Z'
-categories:
-  - notes
-  - swift
+date: "2019-06-29T16:28:35.099Z"
 ---
 
 闭包没多少内容。新东西是 `@excaping` 和 `@autoclosure` 自动闭包。

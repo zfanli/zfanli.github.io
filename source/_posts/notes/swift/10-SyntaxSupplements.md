@@ -2,10 +2,7 @@
 title: 10.Swift Syntax Supplements
 tags:
   - Swift
-date: '2019-06-22T13:28:35.099Z'
-categories:
-  - notes
-  - swift
+date: "2019-06-22T13:28:35.099Z"
 ---
 
 这部分和后面几个 chapters 是对官方文档的笔记。

@@ -2,10 +2,7 @@
 title: 13.Swift Collection Types
 tags:
   - Swift
-date: '2019-06-29T13:28:35.099Z'
-categories:
-  - notes
-  - swift
+date: "2019-06-29T13:28:35.099Z"
 ---
 
 Array、Set、Dictionary 是很经典的三个集合类型。流行语言都有对应的实现。本章比较详细的介绍了每种集合类型的各种操作，内容本身就是一个总结，也就不需要小结多说什么了。熟悉完这章内容基本就摸清了 Swift 的集合类型。

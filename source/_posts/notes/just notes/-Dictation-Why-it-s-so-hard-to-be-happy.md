@@ -1,14 +1,10 @@
 ---
-title: '[DICTATION] Why it''s so hard to be happy'
-tags:
-  - English
-date: '2021-08-31T16:04:20.725Z'
-categories:
-  - notes
-  - just notes
+title: "[DICTATION] Why it's so hard to be happy?"
+tags: English
+date: "2021-08-31T16:04:20.725Z"
 ---
 
-> 💡 英语听读练习[《为何幸福如此难以获得 - by Better Ideas》](https://www.youtube.com/watch?v=rQoS_S9K464)。
+> 💡 英语听读练习[《为何幸福如此困难？ - by Better Ideas》](https://www.youtube.com/watch?v=rQoS_S9K464)。
 
 A long time ago, humanity rose to become the dominant species on planet earth, and we were able to do this because of one specific trait. It certainly wasn't our physical prowess, pretty much any animal the same size as us would absolutely destroy us in a one-on-one physical altercation. And it wasn't even our ability to use tools because that's not unique to humans.
 
