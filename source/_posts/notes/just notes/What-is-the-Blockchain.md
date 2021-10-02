@@ -1,8 +1,11 @@
 ---
 title: 一个关于区块链概念的简单介绍
-date: 2019-07-02
 tags:
   - Blockchain
+categories:
+  - notes
+  - just notes
+date: 2019-07-02 00:00:00
 ---
 
 说到区块链就不得不提到比特币。

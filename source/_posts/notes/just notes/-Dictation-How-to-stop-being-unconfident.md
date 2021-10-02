@@ -1,7 +1,10 @@
 ---
-title: "[Dictation] How to stop being unconfident?"
+title: '[Dictation] How to stop being unconfident?'
 tags: English
-date: "2021-10-02T01:24:55.146Z"
+date: '2021-10-02T01:24:55.146Z'
+categories:
+  - notes
+  - just notes
 ---
 
 > 💡 英语听读练习[《如何停止不自信？ - by Better Ideas》](https://www.youtube.com/watch?v=oynKj-1m6Hg)。

@@ -2,7 +2,10 @@
 title: 31.Swift Advanced Operators
 tags:
   - Swift
-date: "2019-07-14T17:28:35.099Z"
+date: '2019-07-14T17:28:35.099Z'
+categories:
+  - notes
+  - swift
 ---
 
 高级操作符感觉通篇都让人感觉到 `Awwwwwwwa`，还可以这么玩。

@@ -2,7 +2,10 @@
 title: Homelab Step 0 - Install CentOS
 tags:
   - Homelab
-date: "2020-07-06T13:17:02.732Z"
+date: '2020-07-06T13:17:02.732Z'
+categories:
+  - notes
+  - homelab
 ---
 
 最近准备搭建一个 Homelab，用来方便生活&方便学习。在考虑购入合适硬件的同时，不妨用手头更新换代闲置的旧 PC 来先做一下尝试。我的旧 PC 当年配置尚可，相信现在还是可以胜任一个入门 Homelab 来耍耍。

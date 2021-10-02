@@ -2,7 +2,10 @@
 title: Homelab Step 4 - Change SSH Default Port
 tags:
   - Homelab
-date: "2020-07-30T13:17:02.732Z"
+date: '2020-07-30T13:17:02.732Z'
+categories:
+  - notes
+  - homelab
 ---
 
 Homelab 使用一段时间，有时 ssh 登陆上去会提示这样一段信息。

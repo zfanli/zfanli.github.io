@@ -1,7 +1,10 @@
 ---
-title: "[DICTATION] Why it's so hard to be happy?"
+title: '[DICTATION] Why it''s so hard to be happy?'
 tags: English
-date: "2021-08-31T16:04:20.725Z"
+date: '2021-08-31T16:04:20.725Z'
+categories:
+  - notes
+  - just notes
 ---
 
 > 💡 英语听读练习[《为何幸福如此困难？ - by Better Ideas》](https://www.youtube.com/watch?v=rQoS_S9K464)。

@@ -2,7 +2,10 @@
 title: 12.Swift Strings and Characters
 tags:
   - Swift
-date: "2019-06-27T13:28:35.099Z"
+date: '2019-06-27T13:28:35.099Z'
+categories:
+  - notes
+  - swift
 ---
 
 字符串相较其他语言没有太多不同点。Swift 有类似 Python 的三引号字符串允许换行。Swift 的字符串是基于 Unicode 驱动，所以虽然字符串可以用索引提取字符，但是由于每个字符字节数不同不能使用整数作为索引，编辑索引的方式稍有特殊。其他的比如拼接、截取、非空判断、前缀后缀等都没有太大区别。看下面的代码示例足够了。
