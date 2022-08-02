@@ -1541,10 +1541,10 @@ hexo-server@^2.0.0:
     open "^7.0.0"
     serve-static "^1.14.1"
 
-hexo-theme-next@^8.7.1:
-  version "8.7.1"
-  resolved "https://registry.yarnpkg.com/hexo-theme-next/-/hexo-theme-next-8.7.1.tgz#0c8a5ceda6baa7d77d5de925d36dd885db35b980"
-  integrity sha512-eJstBtUSyyLFJ8CpwkJ/1/XVuibaLzgVqPwZuh55kOGKubfJ6mSP/RFKex3kly5LCwCTZSSNGbuhNeJaz2Z67Q==
+hexo-theme-next@^8.12.3:
+  version "8.12.3"
+  resolved "https://registry.yarnpkg.com/hexo-theme-next/-/hexo-theme-next-8.12.3.tgz#c3ab75b01599794154230ef428e844031a0e804a"
+  integrity sha512-KWH8jrrvU8/3cJRqbc/0nucEeM4LKuGydnPil/oOTEXmMq2EenyanpC1mxuhQCSoJHvzJChayzIjtmiNdPJndA==
 
 hexo-util@2.4.0:
   version "2.4.0"
